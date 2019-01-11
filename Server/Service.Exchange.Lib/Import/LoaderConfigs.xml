@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ArrayOfLoaderConfig>
+  <!--<LoaderConfig>
+		<FileNameMask>SM#DDMMYY#.BA</FileNameMask> 
+  		<Separator>;</Separator> 
+	</LoaderConfig>
+  <LoaderConfig>
+    <FileNameMask>SM#HHDDMMYY#.BA</FileNameMask>
+    <Separator>;</Separator>
+  </LoaderConfig>-->
+  <LoaderConfig>
+    <XslFileName>mtg_utg.xsl</XslFileName>
+    <FileNameMask>mtg_utg.DO3</FileNameMask>
+    <Separator>;</Separator>
+  </LoaderConfig>
+  <LoaderConfig>
+    <XslFileName>samara.xsl</XslFileName>
+    <FileNameMask>SM#ddMMyyHH#.UG</FileNameMask>
+    <Separator>;</Separator>
+  </LoaderConfig>
+</ArrayOfLoaderConfig>

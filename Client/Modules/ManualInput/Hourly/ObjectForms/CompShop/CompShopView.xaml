@@ -1,0 +1,903 @@
+﻿<UserControl x:Class="GazRouter.ManualInput.Hourly.ObjectForms.CompShop.CompShopView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:controls1="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:converters1="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   xmlns:viewModel="clr-namespace:GazRouter.ManualInput.Hourly.ObjectForms"
+                   xmlns:compShop="clr-namespace:GazRouter.ManualInput.Hourly.ObjectForms.CompShop"
+                   mc:Ignorable="d"
+                   d:DesignHeight="0" 
+                   d:DesignWidth="600"
+                   d:DataContext="{d:DesignInstance compShop:CompShopViewModel}">
+
+    <Grid>
+
+        <Grid.Resources>
+            <converters1:PressureConverter x:Key="PressureConverter"/>
+            <converters1:TemperatureConverter x:Key="TemperatureConverter"/>
+            <converters1:CompUnitStateToNameConverter x:Key="State2NameConverter" />
+            <converters1:CompUnitStateToColorConverter x:Key="State2ColorConverter" />
+            <telerik:InvertedBooleanConverter x:Key="Inverter"/>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <telerik:RadBusyIndicator BusyContent="Загрузка..." 
+                                  IsBusy="{Binding Path=IsBusyLoading}" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Stretch">
+
+            <StackPanel Orientation="Vertical">
+                
+                <StackPanel Orientation="Horizontal" Margin="0, 0, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                        <controls1:SmartTextBlock Width="200"
+                                                  HorizontalAlignment="Left"
+                                                  Text="P газа на входе, [P]:"/>
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           FormatString="n2"
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding PressureInlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureConverter}}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding PressureInlet}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <controls1:SmartTextBlock Width="200"
+                                                  HorizontalAlignment="Left"
+                                                  Text="P газа на выходе, [P]:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           FormatString="n2"
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding PressureOutlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureConverter}}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding PressureOutlet}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+
+
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                        <controls1:SmartTextBlock Width="200"
+                                                  HorizontalAlignment="Left"
+                                                  Text="Т газа на входе, [T]:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           FormatString="n2"
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding TemperatureInlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureInlet}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <controls1:SmartTextBlock Width="200"
+                                                  HorizontalAlignment="Left"
+                                                  Text="Т газа на выходе, [T]:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           FormatString="n2"
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding TemperatureOutlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureOutlet}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <controls1:SmartTextBlock Width="200"
+                                                  HorizontalAlignment="Left"
+                                                  Text="Т газа после АВО, [T]:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           FormatString="n2"
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding TemperatureCooling.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureCooling}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Кол-во групп:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding GroupCount.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding GroupCount}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Кол-во ступеней:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding StageCount.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding StageCount}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Схема:" />
+                        <TextBlock Width="100"
+                                   Margin="0, 5, 0, 0"
+                                   FontWeight="Bold"
+                                   Text="{Binding Scheme}" 
+                                   HorizontalAlignment="Left" />
+                            
+                        
+                    </StackPanel>
+                </StackPanel>
+
+
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Q топливного газа, тыс.м³:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           FormatString="n3"
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding FuelGasConsumption.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding FuelGasConsumption}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Q перекачиваемого газа, тыс.м³:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           FormatString="n3"
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding Pumping.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding Pumping}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Кол-во АВО в работе:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding CoolingUnitsInUse.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding CoolingUnitsInUse}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Кол-во АВО в резерве:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding CoolingUnitsInReserve.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding CoolingUnitsInReserve}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Кол-во АВО в ремонте:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding CoolingUnitsUnderRepair.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding CoolingUnitsUnderRepair}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Кол-во пылеуловителей в работе:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding DustCatchersInUse.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding DustCatchersInUse}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Кол-во пылеуловителей в резерве:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding DustCatchersInReserve.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding DustCatchersInReserve}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Кол-во пылеуловителей в ремонте:" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding DustCatchersUnderRepair.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding DustCatchersUnderRepair}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                
+                
+                <telerik:RadTabControl Margin="0, 11, 0, 0">
+                    <telerik:RadTabItem Header="Основные">
+                        <telerik:RadGridView Margin="0, 0, 0, 0" 
+                                    CanUserFreezeColumns="False" 
+                                    RowIndicatorVisibility="Collapsed"
+                                    AutoGenerateColumns="False" 
+                                    ItemsSource="{Binding InUseUnitList}"
+                                    ShowGroupPanel="False"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                    IsFilteringAllowed="False"
+                                    CanUserSortColumns="False"
+                                    ValidatesOnDataErrors="InEditMode">
+
+                            <telerik:RadGridView.Columns>
+
+
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            MinWidth="80" 
+                                                            Header="ГПА" 
+                                                            IsReadOnly="True">
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+
+                                <!--Состояние-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False" 
+                                                            Header="Состояние"
+                                                            IsReadOnly="True">
+
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Rectangle StrokeThickness="0"
+                                                           Fill="{Binding State, Converter={StaticResource State2ColorConverter}}"
+                                                           Width="8" 
+                                                           Height="8"/>
+                                                <TextBlock Text="{Binding State, Converter={StaticResource State2NameConverter}}"
+                                                           Margin="5, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+
+                                <!--P перед ЦБН-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="70"
+                                                              HorizontalAlignment="Left"
+                                                              Text="P газа перед ЦБН, [P]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding PressureSuperchargerInlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding PressureSuperchargerInlet.Value, Converter={StaticResource PressureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding PressureSuperchargerInlet}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <!--P за ЦБН-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="78"
+                                                              HorizontalAlignment="Left"
+                                                              Text="P газа за ЦБН, [P]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding PressureSuperchargerOutlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding PressureSuperchargerOutlet.Value, Converter={StaticResource PressureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding PressureSuperchargerOutlet}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <!--Т перед ЦБН-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="70"
+                                                              HorizontalAlignment="Left"
+                                                              Text="T газа перед ЦБН, [T]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding TemperatureSuperchargerInlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding TemperatureSuperchargerInlet.Value, Converter={StaticResource TemperatureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureSuperchargerInlet}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <!--Т за ЦБН-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="78"
+                                                              HorizontalAlignment="Left"
+                                                              Text="T газа за ЦБН, [T]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding TemperatureSuperchargerOutlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding TemperatureSuperchargerOutlet.Value, Converter={StaticResource TemperatureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureSuperchargerOutlet}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <!--Обороты ЦБН-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <TextBlock Width="70" 
+                                                   HorizontalAlignment="Left" 
+                                                   TextWrapping="Wrap"
+                                                   Text="Обороты ЦБН, об/мин"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput Value="{Binding RpmSupercharger.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding RpmSupercharger.Value}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding RpmSupercharger}" 
+                                                                                       Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <!--Расход ТГ-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <TextBlock Width="78" 
+                                                   HorizontalAlignment="Left" 
+                                                   TextWrapping="Wrap"
+                                                   Text="Q топливного газа, тыс.м³"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n3" 
+                                                                           Value="{Binding FuelGasConsumption.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding FuelGasConsumption.Value, StringFormat=n3}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding FuelGasConsumption}" 
+                                                                                       Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <!--Объемный расход газа через нагнетатель-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <TextBlock Width="78" 
+                                                   HorizontalAlignment="Left" 
+                                                   TextWrapping="Wrap"
+                                                   Text="Q через нагнетатель, тыс.м³"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n3" 
+                                                                           Value="{Binding Pumping.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Pumping.Value, StringFormat=n3}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding Pumping}" 
+                                                                                       Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <!--dP на конфузоре-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="70"
+                                                              HorizontalAlignment="Left"
+                                                              Text="dP газа на конфузоре, [P]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding PressureFallConfusor.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding PressureFallConfusor.Value, Converter={StaticResource PressureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding PressureFallConfusor}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                            </telerik:RadGridView.Columns>
+                        </telerik:RadGridView>
+                    </telerik:RadTabItem>
+
+                    <telerik:RadTabItem Header="Прочие">
+                        <telerik:RadGridView Margin="0, 0, 0, 0" 
+                                    CanUserFreezeColumns="False" 
+                                    RowIndicatorVisibility="Collapsed"
+                                    AutoGenerateColumns="False" 
+                                    ItemsSource="{Binding InUseUnitList}"
+                                    ShowGroupPanel="False"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                    IsFilteringAllowed="False"
+                                    CanUserSortColumns="False"
+                                    ValidatesOnDataErrors="InEditMode">
+
+                            <telerik:RadGridView.Columns>
+
+
+                                <telerik:GridViewDataColumn Width="80" MinWidth="80" Header="ГПА" IsReadOnly="True">
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+
+                                <!--Состояние-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False" 
+                                                            Header="Состояние"
+                                                            IsReadOnly="True">
+
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Rectangle StrokeThickness="0"
+                                                           Fill="{Binding State, Converter={StaticResource State2ColorConverter}}"
+                                                           Width="8" 
+                                                           Height="8"/>
+                                                <TextBlock Text="{Binding State, Converter={StaticResource State2NameConverter}}"
+                                                           Margin="5, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+
+
+                                <!--Т перед ТВД-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="70"
+                                                              HorizontalAlignment="Left"
+                                                              Text="T газа перед ТВД, [T]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding TemperatureHighHeadTurbineInlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding TemperatureHighHeadTurbineInlet.Value, Converter={StaticResource TemperatureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureHighHeadTurbineInlet}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <!--Т за ТВД-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="78"
+                                                              HorizontalAlignment="Left"
+                                                              Text="T газа за ТВД, [T]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding TemperatureHighHeadTurbineOutlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding TemperatureHighHeadTurbineOutlet.Value, Converter={StaticResource TemperatureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureHighHeadTurbineOutlet}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <!--Обороты ТВД-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <TextBlock Width="80" 
+                                                   HorizontalAlignment="Left" 
+                                                   TextWrapping="Wrap"
+                                                   Text="Обороты ТВД, об/мин"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput Value="{Binding RpmHighHeadTurbine.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding RpmHighHeadTurbine.Value}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding RpmHighHeadTurbine}" 
+                                                                                       Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+
+                                <!--Т перед ТНД-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="70"
+                                                              HorizontalAlignment="Left"
+                                                              Text="T газа перед ТНД, [T]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding TemperatureLowHeadTurbineInlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding TemperatureLowHeadTurbineInlet.Value, Converter={StaticResource TemperatureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureLowHeadTurbineInlet}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <!--Т за ТНД-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="78"
+                                                              HorizontalAlignment="Left"
+                                                              Text="T газа за ТНД, [T]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding TemperatureLowHeadTurbineOutlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding TemperatureLowHeadTurbineOutlet.Value, Converter={StaticResource TemperatureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureLowHeadTurbineOutlet}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <!--Обороты ТНД-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <TextBlock Width="80" 
+                                                   HorizontalAlignment="Left" 
+                                                   TextWrapping="Wrap"
+                                                   Text="Обороты ТНД, об/мин"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput Value="{Binding RpmLowHeadTurbine.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding RpmLowHeadTurbine.Value}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding RpmLowHeadTurbine}" 
+                                                                                       Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+
+                                <!--Т перед СТ-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="70"
+                                                              HorizontalAlignment="Left"
+                                                              Text="T газа перед СТ, [T]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding TemperatureFreeTurbineInlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding TemperatureFreeTurbineInlet.Value, Converter={StaticResource TemperatureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureFreeTurbineInlet}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <!--Т за СТ-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="78"
+                                                              HorizontalAlignment="Left"
+                                                              Text="T газа за СТ, [T]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding TemperatureFreeTurbineOutlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding TemperatureFreeTurbineOutlet.Value, Converter={StaticResource TemperatureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureFreeTurbineOutlet}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                
+
+                                <!--Т перед ОК-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="78"
+                                                              HorizontalAlignment="Left"
+                                                              Text="T газа перед ОК, [T]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding TemperatureAxialFlowCompressorInlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding TemperatureAxialFlowCompressorInlet.Value, Converter={StaticResource TemperatureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureAxialFlowCompressorInlet}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+
+                                <!--P за ОК-->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False" 
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="70"
+                                                              HorizontalAlignment="Left"
+                                                              Text="P газа за ОК, [P]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding PressureAxialFlowCompressorOutlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding PressureAxialFlowCompressorOutlet.Value, Converter={StaticResource PressureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding PressureAxialFlowCompressorOutlet}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+
+                                <!--Т подшипника -->
+                                <telerik:GridViewDataColumn Width="80" 
+                                                            IsResizable="False"
+                                                            IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <controls1:SmartTextBlock Width="78"
+                                                              HorizontalAlignment="Left"
+                                                              Text="T подшипника, [T]"/>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <telerik:RadMaskedNumericInput FormatString="n2" 
+                                                                           Value="{Binding TemperatureBearing.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                                           HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="compShop:ManualInputCompUnit">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding TemperatureBearing.Value, Converter={StaticResource TemperatureConverter}, StringFormat=n2}" />
+                                                <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureBearing}" Margin="2, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                            </telerik:RadGridView.Columns>
+
+                        </telerik:RadGridView>
+                    </telerik:RadTabItem>
+                </telerik:RadTabControl>
+
+
+
+            </StackPanel>
+               
+                
+
+        </telerik:RadBusyIndicator>
+    </Grid>
+
+</UserControl>

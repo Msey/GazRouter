@@ -1,0 +1,1 @@
+﻿Файлы этой папки должны быть скопированы в %GazRouter%\Exchange\XslAstra

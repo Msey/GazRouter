@@ -1,0 +1,116 @@
+﻿<UserControl x:Class="GazRouter.Balances.Commercial.InputState.InputStateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:inputState="clr-namespace:GazRouter.Balances.Commercial.InputState"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance inputState:InputStateViewModel}"
+             x:Name="LayoutRoot">
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+
+            <Grid.Resources>
+                <converters:InputStateToColorConverter x:Key="InputStateToColorConverter"/>
+                <converters:InputStateToNameConverter x:Key="InputStateToNameConverter" />
+            </Grid.Resources>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar>
+                <telerik:RadButton Style="{StaticResource refreshButtonStyle}"
+                                   Command="{Binding RefreshCommand}"/>
+                <telerik:RadToolBarSeparator />
+                <telerik:RadButton Command="{Binding UnlockInputCommand}"
+                                   Margin="5, 0, 0, 0"
+                                   telerik:RadToolTipService.ToolTipContent="Разрешить ввод">
+                    <Image Source="/Common;component/Images/16x16/unlock.png"
+                           Stretch="None"/>
+                </telerik:RadButton>
+
+            </telerik:RadToolBar>
+
+            <telerik:RadGridView GridLinesVisibility="Both"
+                                 AutoGenerateColumns="False"
+                                 ItemsSource="{Binding ItemList}"
+                                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                 CanUserFreezeColumns="False"
+                                 RowIndicatorVisibility="Collapsed"
+                                 IsReadOnly="True"
+                                 AlternationCount="2"
+                                 ShowGroupPanel="False"
+                                 Grid.Row="1">
+
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="200"
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                Header="ЛПУ">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="inputState:InputStateItem">
+                                <TextBlock Text="{Binding SiteName}"
+                                           TextWrapping="Wrap"
+                                           Margin="5" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    
+                    <telerik:GridViewDataColumn Width="80"
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                Header="Состояние">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="inputState:InputStateItem">
+                                <Ellipse Fill="{Binding InputState.State, Converter={StaticResource InputStateToColorConverter}}"
+                                         telerik:RadToolTipService.ToolTipContent="{Binding InputState.State, Converter={StaticResource InputStateToNameConverter}}"
+                                         StrokeThickness="0"
+                                         Width="11"
+                                         Height="11"
+                                         Margin="5" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="120"
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                Header="Изменено">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="inputState:InputStateItem">
+                                <TextBlock Text="{Binding InputState.ChangeDate, StringFormat='dd.MM.yyyy HH:mm'}" 
+                                           TextWrapping="Wrap"
+                                           Margin="5"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="200"
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                Header="Пользователь">
+                            <telerik:GridViewDataColumn.CellTemplate>
+                                <DataTemplate DataType="inputState:InputStateItem">
+                                    <TextBlock Text="{Binding InputState.UserName}" 
+                                               TextWrapping="Wrap"
+                                               Margin="5"/>
+                                </DataTemplate>
+                            </telerik:GridViewDataColumn.CellTemplate>
+                        </telerik:GridViewDataColumn>
+
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+
+</UserControl>

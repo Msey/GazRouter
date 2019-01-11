@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Application xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:chromes="clr-namespace:Telerik.Windows.Controls.Chromes;assembly=Telerik.Windows.Controls" x:Class="GazRouter.Client.App" xmlns:spy="http://firstfloorsoftware.com/XamlSpy">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <!-- used by all assemblies-->
+                <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/Telerik.Windows.Controls.xaml" />
+
+                <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/system.windows.xaml" />
+                <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/telerik.windows.controls.input.xaml" />
+
+                <!--requires: System.Windows.xaml -->
+                <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/telerik.windows.controls.navigation.xaml" />
+
+                <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/telerik.windows.controls.chart.xaml" />
+
+                <!--requires: telerik.windows.controls.input.xaml -->
+                <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/telerik.windows.controls.data.xaml" />
+
+                <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/telerik.windows.controls.datavisualization.xaml" />
+
+                <!--requires: telerik.windows.controls.navigation.xaml -->
+                <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/telerik.windows.controls.docking.xaml" />
+
+                <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/telerik.windows.controls.ganttview.xaml" />
+
+                <!--requires: telerik.windows.controls.input.xaml -->
+                <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/telerik.windows.controls.gridview.xaml" />
+
+                <!--requires: telerik.windows.controls.spreadsheet.xaml -->
+                <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/telerik.windows.controls.spreadsheet.xaml" />
+
+                <!--requires: telerik.windows.controls.input.xaml,telerik.windows.controls.navigation.xaml -->
+                <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/telerik.windows.controls.ribbonview.xaml" />
+
+
+                <!--requires: System.Windows.xaml,telerik.windows.controls.input.xaml,telerik.windows.controls.navigation.xaml -->
+                <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/telerik.windows.controls.scheduleview.xaml" />
+
+                <ResourceDictionary Source="Styles/buttons.xaml" />
+                <ResourceDictionary Source="Styles/CSS.xaml" />
+                <ResourceDictionary Source="Styles/GridStyle.xaml" />
+                <ResourceDictionary Source="Styles/BusyIndicatorStyle.xaml" />
+                <ResourceDictionary Source="Styles/AddEditDialogStyle.xaml" />
+                <ResourceDictionary Source="Styles/RadPaneStyle.xaml" />
+                <ResourceDictionary Source="Styles/ToolbarStyle.xaml" />
+                <ResourceDictionary>
+
+                    <telerik:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" />
+                    <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                    <Style TargetType="telerik:RadUpDown" BasedOn="{StaticResource RadNumericUpDownStyle}" />
+                    <Style TargetType="telerik:RadBusyIndicator" BasedOn="{StaticResource RadBusyIndicatorBaseStyle}" />
+
+                    <Style x:Key="GridSplitterStyle" TargetType="sdk:GridSplitter">
+                        <Setter Property="Background" Value="{telerik:Windows8Resource ResourceKey=AccentBrush}" />
+                        <Setter Property="ShowsPreview" Value="True" />
+                        <Setter Property="BorderThickness" Value="0" />
+                    </Style>
+                    
+                    <Style x:Key="VerticalSplitterStyle" TargetType="sdk:GridSplitter" BasedOn="{StaticResource GridSplitterStyle}">
+                        <Setter Property="Width" Value="5" />
+                        <Setter Property="HorizontalAlignment" Value="Left" />
+                        <Setter Property="VerticalAlignment" Value="Stretch" />
+
+                    </Style>
+
+                    <Style x:Key="HorizontalSplitterStyle" TargetType="sdk:GridSplitter" BasedOn="{StaticResource GridSplitterStyle}">
+                        <Setter Property="Height" Value="5" />
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="VerticalAlignment" Value="Top" />
+                    </Style>
+
+                    <Style TargetType="telerik:RadMaskedNumericInput" BasedOn="{StaticResource RadMaskedNumericInputStyle}">
+                        <Setter Property="Mask" Value="" />
+                        <Setter Property="IsClearButtonVisible" Value="False" />
+                        <Setter Property="TextMode" Value="PlainText" />
+                    </Style>
+
+
+                    <Style x:Key="BaseTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
+                        <Setter Property="FontFamily" Value="Segoe UI" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TextBox">
+                                    <Grid x:Name="RootElement" spy:XamlMetadata.SpyServiceSettings="127.0.0.1|4530|53501|1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|106|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal" />
+                                                <VisualState x:Name="MouseOver">
+                                                    <!--<Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Duration="0:0:0" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush">
+                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{telerik:Windows8Resource ResourceKey=StrongBrush}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>-->
+                                                </VisualState>
+                                                <VisualState x:Name="Disabled">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Duration="0" Storyboard.TargetName="Border" Storyboard.TargetProperty="Opacity" To="0.3" />
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="ReadOnly">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ReadOnlyVisualElement" />
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                            <VisualStateGroup x:Name="FocusStates">
+                                                <VisualState x:Name="Focused">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Duration="0" Storyboard.TargetName="FocusedVisual" Storyboard.TargetProperty="Opacity" From="0" To="0.2" />
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Unfocused" />
+                                            </VisualStateGroup>
+                                            <VisualStateGroup x:Name="ValidationStates">
+                                                <VisualState x:Name="Valid" />
+                                                <VisualState x:Name="InvalidUnfocused">
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ValidationErrorElement" Storyboard.TargetProperty="Visibility">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="InvalidFocused">
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ValidationErrorElement" Storyboard.TargetProperty="Visibility">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ValidationErrorElement" Storyboard.TargetProperty="IsOpen">
+                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.1">
+                                                                <DiscreteObjectKeyFrame.Value>
+                                                                    <system:Boolean>True</system:Boolean>
+                                                                </DiscreteObjectKeyFrame.Value>
+                                                            </DiscreteObjectKeyFrame>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|161|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                                            <Grid spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|162|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                                                <Border x:Name="ReadOnlyVisualElement" Background="Transparent" Opacity="0" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|163|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                                <ScrollViewer x:Name="ContentElement" Padding="{TemplateBinding Padding}" BorderThickness="0" Background="Transparent" Foreground="{TemplateBinding Foreground}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|164|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                            </Grid>
+                                        </Border>
+                                        <Border x:Name="FocusedVisual" Opacity="0" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{telerik:Windows8Resource ResourceKey=MarkerBrush}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|173|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                        <chromes:ValidationTooltip x:Name="ValidationErrorElement" Visibility="Collapsed" TooltipPlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" TooltipContent="{Binding Path=(Validation.Errors), RelativeSource={RelativeSource TemplatedParent}}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|174|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style TargetType="TextBox" BasedOn="{StaticResource BaseTextBoxStyle}" />
+                    <Style TargetType="TextBox" x:Key="MultiLineStyle" BasedOn="{StaticResource BaseTextBoxStyle}">
+                        <Setter Property="AcceptsReturn" Value="True" />
+                        <Setter Property="VerticalContentAlignment" Value="Top" />
+                        <Setter Property="TextWrapping" Value="Wrap" />
+                        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+                    </Style>
+
+<!--                    оключен стиль телерика, из-за бага с курсором -->
+                    <Style TargetType="PasswordBox" />
+
+
+                    <DataTemplate x:Key="GanttDragResizeVisualCueTemplate2">
+                        <Grid Margin="{Binding Margin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=telerik:GanttDragResizeVisualCue}}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|197|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                            <StackPanel Orientation="Vertical" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|198|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                                <TextBlock Text="{Binding TargetItem.Title}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|199|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln"></TextBlock>
+                                <StackPanel Orientation="Horizontal" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|200|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                                    <TextBlock Text="{Binding DestinationSlot.Start, StringFormat='dd.MM.yyyy'}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|201|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                    <TextBlock Text=" - " spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|202|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                    <TextBlock Text="{Binding DestinationSlot.End, StringFormat='dd.MM.yyyy'}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\App.xaml|203|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+
+                    <Style BasedOn="{StaticResource GanttDragResizeVisualCueStyle}" TargetType="telerik:GanttDragResizeVisualCue">
+                        <Setter Property="CueTemplateSelector">
+                            <Setter.Value>
+                                <telerik:GanttDragVisualCueContentTemplateSelector DragTemplate="{StaticResource GanttDragResizeVisualCueTemplate2}" ResizeTemplate="{StaticResource GanttDragResizeVisualCueTemplate2}" CreateDependencyTemplate="{StaticResource GanttCreateDependencyTemplate}" DragReorderTemplate="{StaticResource GanttDragReorderTemplate}" />
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template" Value="{StaticResource GanttDragResizeVisualCueControlTemplate}" />
+                    </Style>
+
+
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>

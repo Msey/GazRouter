@@ -1,0 +1,511 @@
+﻿<UserControl x:Class="GazRouter.Controls.Trends.TrendsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:periodPickerEx="clr-namespace:GazRouter.Controls.Dialogs.PeriodPickerEx;assembly=Controls"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:periodTypes="clr-namespace:GazRouter.DTO.Dictionaries.PeriodTypes;assembly=PortableDTO"
+             xmlns:trends="clr-namespace:GazRouter.Controls.Trends"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             HorizontalContentAlignment="Stretch"
+             x:Name="Trends"
+             d:DataContext="{d:DesignInstance trends:TrendsViewModel}">
+
+    <UserControl.Resources>
+        <Style x:Key="TrackBallInfoControlStyle"
+               TargetType="telerik:TrackBallInfoControl">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="DarkGray" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="telerik:TrackBallInfoControl">
+                        <Grid>
+                            <Rectangle StrokeThickness="0" 
+                                       Fill="{TemplateBinding Background}" />
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <ContentControl
+                                    Content="{TemplateBinding Header}"
+                                    ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Margin="4 0 4 4"
+                                    FontWeight="Bold" />
+                                <StackPanel Name="panel" 
+                                            Grid.Row="1" 
+                                            Margin="0 0 0 4" />
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            
+            <Setter Property="DataPointInfoTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Grid>
+                            <TextBlock Text="{Binding DisplayContent}" 
+                                       Margin="0, 5, 0, 0" />
+                        </Grid>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <telerik:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+        <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+
+        <converters:EntityTypeToNameConverter x:Key="EntityTypeToName" />
+        <converters:EntityTypeToImageSourceConverter x:Key="EntityTypeToImage" />
+        <converters:PeriodTypeToNameConverter x:Key="PeriodTypeToName" />
+
+    </UserControl.Resources>
+
+    <telerik:RadBusyIndicator DisplayAfter="0" 
+                              IsBusy="{Binding IsBusyLoading}">
+
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="150" />
+                <RowDefinition Height="3*" />
+
+            </Grid.RowDefinitions>
+            <telerik:RadToolBar VerticalAlignment="Center">
+                
+                <periodPickerEx:PeriodPickerEx SelectedPeriod="{Binding TimebarPeriod, Mode=TwoWay}"
+                                               Width="200" />
+
+                <telerik:RadToolBarSeparator />
+
+
+                <telerik:RadButton Command="{Binding AddTrendCommand}"
+                                   Style="{StaticResource addButtonStyle}" />
+
+                <telerik:RadButton Command="{Binding DuplicateTrendCommand}"
+                                   telerik:RadToolTipService.ToolTipContent="Создать копию тренда">
+                    <Image Source="/Common;component/Images/16x16/clone.png"/>
+                </telerik:RadButton>
+
+                <telerik:RadButton Command="{Binding RemoveTrendCommand}"
+                                   Style="{StaticResource deleteButtonStyle}" />
+                    
+                
+
+                <telerik:RadToolBarSeparator />
+
+
+                <telerik:RadRibbonDropDownButton SmallImage="/Common;component/Images/16x16/export.png"
+                                                 DropDownButtonPosition="Right">
+                    <telerik:RadRibbonDropDownButton.DropDownContent>
+                        <telerik:RadContextMenu>
+                            <telerik:RadMenuItem Header="Экспорт в Excel"
+                                                 Command="{Binding ExportExcelCommand}" />
+                            <telerik:RadMenuItem Header="Экспорт в PDF"
+                                                 Click="OnExportPDFButtonClicked"/>
+                        </telerik:RadContextMenu>
+                    </telerik:RadRibbonDropDownButton.DropDownContent>
+                </telerik:RadRibbonDropDownButton>
+
+                <!--<telerik:RadToolBarSeparator />
+
+                <CheckBox IsChecked="{Binding IsPointsVisible, Mode=TwoWay}"
+                          VerticalAlignment="Center"
+                          Content="Отображать точки" />-->
+
+            </telerik:RadToolBar>
+
+
+            <telerik:RadGridView Grid.Row="1"
+                                 AutoGenerateColumns="False"
+                                 IsReadOnly="False"
+                                 ItemsSource="{Binding TrendList}"
+                                 RowIndicatorVisibility="Collapsed"
+                                 GridLinesVisibility="Both"
+                                 ShowGroupPanel="False"
+                                 ShowColumnHeaders="True"
+                                 CanUserFreezeColumns="False"
+                                 SelectedItem="{Binding SelectedTrend, Mode=TwoWay}">
+                <telerik:RadGridView.Columns>
+
+
+                    <telerik:GridViewDataColumn Width="40"
+                                                IsSortable="False"
+                                                IsFilterable="False"
+                                                IsReadOnly="True">
+
+                        <telerik:GridViewDataColumn.Header>
+                            <Image Source="/Common;component/Images/16x16/trace.png"
+                                   Stretch="None" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="trends:Trend">
+                                <CheckBox IsChecked="{Binding IsVisible, Mode=TwoWay}"
+                                          HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Header="Вид"
+                                                Width="50"
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                IsReadOnly="False">
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="trends:Trend">
+                                <Rectangle Width="30"
+                                           Height="{Binding Thickness}"
+                                           Fill="{Binding Color, Converter={StaticResource ColorToBrushConverter}}"
+                                           StrokeThickness="0" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="trends:Trend">
+                                <telerik:RadRibbonDropDownButton HorizontalContentAlignment="Center"
+                                                                 VerticalContentAlignment="Center">
+                                    <telerik:RadRibbonDropDownButton.Content>
+                                        <Rectangle Width="30"
+                                                   Height="{Binding Thickness}"
+                                                   Fill="{Binding Color, Converter={StaticResource ColorToBrushConverter}}"
+                                                   StrokeThickness="0" />
+                                    </telerik:RadRibbonDropDownButton.Content>
+
+                                    <telerik:RadRibbonDropDownButton.DropDownContent>
+                                        <StackPanel Margin="11">
+                                            <TextBlock Text="Цвет:" />
+                                            <telerik:RadColorPicker SelectedColor="{Binding Color, Mode=TwoWay}"
+                                                                    Margin="0, 5, 0, 0"
+                                                                    x:Name="ColorPicker"
+                                                                    HorizontalAlignment="Left">
+                                                <telerik:RadColorPicker.ContentTemplate>
+                                                    <DataTemplate>
+                                                        <Rectangle Width="16"
+                                                                   Height="16"
+                                                                   Fill="{Binding SelectedColor, Converter={StaticResource ColorToBrushConverter}, ElementName=ColorPicker}"
+                                                                   StrokeThickness="0" />
+                                                    </DataTemplate>
+                                                </telerik:RadColorPicker.ContentTemplate>
+                                            </telerik:RadColorPicker>
+
+                                            <TextBlock Text="Толщина:"
+                                                       Margin="0, 11, 0, 0" />
+                                            <telerik:RadComboBox ItemsSource="{Binding ThicknessList}"
+                                                                 SelectedItem="{Binding Thickness, Mode=TwoWay}"
+                                                                 Margin="0, 5, 0, 0"
+                                                                 HorizontalAlignment="Left">
+                                                <telerik:RadComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Rectangle Width="30"
+                                                                   Height="{Binding }"
+                                                                   Fill="Black"
+                                                                   StrokeThickness="0"
+                                                                   Margin="0, 5, 0, 0" />
+                                                    </DataTemplate>
+                                                </telerik:RadComboBox.ItemTemplate>
+                                            </telerik:RadComboBox>
+                                        </StackPanel>
+                                    </telerik:RadRibbonDropDownButton.DropDownContent>
+                                </telerik:RadRibbonDropDownButton>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="100"
+                                                IsReadOnly="True"
+                                                Header="Тип объекта"
+                                                IsSortable="False"
+                                                IsFilterable="False">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="trends:Trend">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Source="{Binding Entity.EntityType, Converter={StaticResource EntityTypeToImage}}"
+                                        Stretch="None"
+                                        VerticalAlignment="Center" />
+                                    <TextBlock
+                                        Text="{Binding Entity.EntityType, Converter={StaticResource EntityTypeToName}}"
+                                        Margin="5, 0, 0, 0"
+                                        FontSize="11"
+                                        VerticalAlignment="Center"
+                                        TextWrapping="Wrap"
+                                        Width="70" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="200"
+                                                IsReadOnly="True"
+                                                DataMemberBinding="{Binding Entity.ShortPath}"
+                                                Header="Объект"
+                                                IsSortable="False"
+                                                IsFilterable="False"
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="trends:Trend">
+                                <TextBlock Text="{Binding Entity.ShortPath}"
+                                           TextWrapping="Wrap"
+                                           Margin="5" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Header="Свойство"
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                Width="100">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="trends:Trend">
+                                <TextBlock Text="{Binding PropertyTypeDto.Name}" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="trends:Trend">
+                                <telerik:RadComboBox ItemsSource="{Binding PropertyTypeList}"
+                                                     SelectedValue="{Binding PropertyType, Mode=TwoWay}"
+                                                     DisplayMemberPath="Name"
+                                                     SelectedValuePath="PropertyType" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Header="Период"
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                Width="100">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="trends:Trend">
+                                <TextBlock Text="{Binding PeriodType, Converter={StaticResource PeriodTypeToName}}" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="trends:Trend">
+                                <telerik:RadComboBox ItemsSource="{Binding Path=PeriodTypeList}"
+                                                     SelectedItem="{Binding PeriodType, Mode=TwoWay}">
+                                    <telerik:RadComboBox.ItemTemplate>
+                                        <DataTemplate DataType="periodTypes:PeriodType">
+                                            <TextBlock Text="{Binding Converter={StaticResource PeriodTypeToName}}" />
+                                        </DataTemplate>
+                                    </telerik:RadComboBox.ItemTemplate>
+                                </telerik:RadComboBox>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="70"
+                                                IsReadOnly="True"
+                                                DataMemberBinding="{Binding Min}"
+                                                Header="Min"
+                                                IsSortable="False"
+                                                IsFilterable="False"
+                                                IsGroupable="False"
+                                                TextAlignment="Center" />
+
+
+                    <telerik:GridViewDataColumn Width="70"
+                                                IsReadOnly="True"
+                                                DataMemberBinding="{Binding Avg}"
+                                                Header="Avg"
+                                                IsSortable="False"
+                                                IsFilterable="False"
+                                                IsGroupable="False"
+                                                TextAlignment="Center" />
+
+
+                    <telerik:GridViewDataColumn Width="70"
+                                                IsReadOnly="True"
+                                                DataMemberBinding="{Binding Max}"
+                                                Header="Max"
+                                                IsSortable="False"
+                                                IsFilterable="False"
+                                                IsGroupable="False"
+                                                TextAlignment="Center" />
+
+
+                    <telerik:GridViewDataColumn Header="Ед.изм."
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                DataMemberBinding="{Binding UnitName}"
+                                                Width="70"
+                                                TextAlignment="Center" />
+
+
+                    
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+
+
+            <telerik:RadTimeBar Grid.Row="2"
+                                IsSnapToIntervalEnabled="True"
+                                PeriodStart="{Binding PeriodBegin, Mode=TwoWay}"
+                                PeriodEnd="{Binding PeriodEnd, Mode=TwoWay}"
+                                VisiblePeriodStart="{Binding VisiblePeriodBegin, Mode=TwoWay}"
+                                VisiblePeriodEnd="{Binding VisiblePeriodEnd, Mode=TwoWay}"
+                                MinSelectionRange="1.00:00:00"
+                                SelectionStart="{Binding TrendPeriodBegin, Mode=TwoWay}"
+                                SelectionEnd="{Binding TrendPeriodEnd, Mode=TwoWay}"
+                                BorderThickness="0"
+                                Height="150"
+                                EnableSparklineVirtualization="True">
+                <telerik:RadTimeBar.Intervals>
+                    <telerik:YearInterval />
+                    <telerik:MonthInterval />
+                    <telerik:DayInterval />
+                    <telerik:HourInterval />
+                </telerik:RadTimeBar.Intervals>
+                <ItemsControl ItemsSource="{Binding TrendList}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Grid />    
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="trends:Trend">
+                            <telerik:RadLinearSparkline LineStroke="{Binding Color, Converter={StaticResource ColorToBrushConverter}}"
+                                                        ItemsSource="{Binding AllData}"
+                                                        XValuePath="Date"
+                                                        YValuePath="Value"
+                                                        AutoRange="False"
+                                                        MinYValue="{Binding DataContext.Min, RelativeSource={RelativeSource FindAncestor, AncestorType=ItemsControl}}"
+                                                        MaxYValue="{Binding DataContext.Max, RelativeSource={RelativeSource FindAncestor, AncestorType=ItemsControl}}"
+                                                        Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibility}}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </telerik:RadTimeBar>
+
+
+            <telerik:RadCartesianChart Grid.Row="3" 
+                                       EmptyContent="Нет данных"
+                                       Palette="Summer"
+                                       Background="GhostWhite"
+                                       x:Name="Chart">
+                
+                
+                <telerik:RadCartesianChart.TrackBallInfoStyle>
+                    <Style TargetType="telerik:TrackBallInfoControl"
+                           BasedOn="{StaticResource TrackBallInfoControlStyle}">
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding }" />
+                                    </StackPanel>
+                                    
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </telerik:RadCartesianChart.TrackBallInfoStyle>
+                
+                <telerik:RadCartesianChart.TrackBallLineStyle>
+                    <Style TargetType="Polyline">
+                        <Setter Property="Stroke" Value="Gray" />
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Setter Property="StrokeThickness" Value="1" />
+                        <Setter Property="StrokeDashArray" Value="1, 2" />
+                    </Style>
+                </telerik:RadCartesianChart.TrackBallLineStyle>
+                
+                <telerik:RadCartesianChart.Behaviors>
+                    <telerik:ChartTrackBallBehavior ShowIntersectionPoints="True"
+                                                    ShowTrackInfo="True"
+                                                    TrackInfoUpdated="ChartTrackBallBehavior_OnTrackInfoUpdated"/>
+                    <telerik:ChartSelectionBehavior DataPointSelectionMode="Multiple" />
+                </telerik:RadCartesianChart.Behaviors>
+
+                
+                <telerik:RadCartesianChart.HorizontalAxis>
+                    <telerik:DateTimeContinuousAxis LabelRotationAngle="315" 
+                                                    LabelFitMode="Rotate"
+                                                    PlotMode="OnTicksPadded"
+                                                    MajorStepUnit="Hour"
+                                                    MajorStep="{Binding Step}">
+                        <telerik:DateTimeContinuousAxis.LabelTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding StringFormat='dd.MM.yyyy'}" />
+                                    <TextBlock Text="{Binding StringFormat='HH:mm'}" FontSize="12"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:DateTimeContinuousAxis.LabelTemplate>
+                    </telerik:DateTimeContinuousAxis>
+
+                </telerik:RadCartesianChart.HorizontalAxis>
+                
+                
+                
+                <telerik:RadCartesianChart.VerticalAxis>
+                    <telerik:LinearAxis LineThickness="1" Maximum="{Binding TrendMax}"/>
+                </telerik:RadCartesianChart.VerticalAxis>
+
+            
+                
+                <telerik:RadCartesianChart.SeriesProvider>
+                    <telerik:ChartSeriesProvider Source="{Binding TrendList}" >
+                        <telerik:ChartSeriesProvider.SeriesDescriptors>
+                            
+                            <telerik:CategoricalSeriesDescriptor ItemsSourcePath="TrendData"
+                                                                 ValuePath="Value"
+                                                                 CategoryPath="Date">
+                                <telerik:CategoricalSeriesDescriptor.Style>
+                                    <Style TargetType="telerik:LineSeries" BasedOn="{StaticResource LineSeriesStyle}">
+                                        <Setter Property="RenderMode" Value="Full" />
+                                        <Setter Property="StrokeThickness" Value="{Binding Thickness}" />
+                                        <Setter Property="Stroke" Value="{Binding Color, Converter={StaticResource ColorToBrushConverter}}" />
+                                        <Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource BooleanToVisibility}}"/>
+                                        <Setter Property="TrackBallInfoTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Rectangle Width="20"
+                                                                   Height="{Binding DataPoint.DataItem.Trend.Thickness}"
+                                                                   StrokeThickness="0"
+                                                                   Fill="{Binding DataPoint.DataItem.Trend.Color, Converter={StaticResource ColorToBrushConverter}}"
+                                                                   VerticalAlignment="Center" />
+                                                        
+                                                        <TextBlock Text="{Binding DataPoint.Value}"
+                                                                   Margin="11, 0, 0, 0"
+                                                                   VerticalAlignment="Center" />
+
+                                                        <TextBlock Text="{Binding DataPoint.DataItem.Trend.UnitName}"
+                                                                   Margin="3, 0, 0, 0"
+                                                                   VerticalAlignment="Center" />
+                                                        
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </telerik:CategoricalSeriesDescriptor.Style>
+                            </telerik:CategoricalSeriesDescriptor>
+                        </telerik:ChartSeriesProvider.SeriesDescriptors>
+                    </telerik:ChartSeriesProvider>
+                    
+                </telerik:RadCartesianChart.SeriesProvider>
+                
+            </telerik:RadCartesianChart>
+
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

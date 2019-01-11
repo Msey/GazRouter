@@ -1,0 +1,9 @@
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\Utils\bin\Release\Utils.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\Utils\bin\Release\Utils.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\Utils\obj\Release\Utils.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\Utils\obj\Release\Utils.pdb
+G:\GPA_GazRouter\MainSolution\Shared\Utils\bin\Release\Utils.dll
+G:\GPA_GazRouter\MainSolution\Shared\Utils\bin\Release\Utils.pdb
+G:\GPA_GazRouter\MainSolution\Shared\Utils\obj\Release\Utils.csprojResolveAssemblyReference.cache
+G:\GPA_GazRouter\MainSolution\Shared\Utils\obj\Release\Utils.dll
+G:\GPA_GazRouter\MainSolution\Shared\Utils\obj\Release\Utils.pdb

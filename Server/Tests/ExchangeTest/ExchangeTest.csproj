@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{508C6872-EF9B-4446-BD84-C3DEBBFC4E3A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ExchangeTest</RootNamespace>
+    <AssemblyName>ExchangeTest</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Chaykovsky|AnyCPU'">
+    <OutputPath>bin\Chaykovsky\</OutputPath>
+    <DefineConstants>TRACE;CHAYKOVSKY</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Chaykovsky|x64'">
+    <OutputPath>bin\x64\Chaykovsky\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mod|AnyCPU'">
+    <OutputPath>bin\Mod\</OutputPath>
+    <DefineConstants>TRACE;MOD</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mod|x64'">
+    <OutputPath>bin\x64\Mod\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Saratov|AnyCPU'">
+    <OutputPath>bin\Saratov\</OutputPath>
+    <DefineConstants>TRACE;SARATOV</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Saratov|x64'">
+    <OutputPath>bin\x64\Saratov\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Tomsk|AnyCPU'">
+    <OutputPath>bin\Tomsk\</OutputPath>
+    <DefineConstants>TRACE;TOMSK</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Tomsk|x64'">
+    <OutputPath>bin\x64\Tomsk\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Volgograd|AnyCPU'">
+    <OutputPath>bin\Volgograd\</OutputPath>
+    <DefineConstants>TRACE;VOLGOGRAD</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Volgograd|x64'">
+    <OutputPath>bin\x64\Volgograd\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Yugorsk|AnyCPU'">
+    <OutputPath>bin\Yugorsk\</OutputPath>
+    <DefineConstants>TRACE;YUGORSK</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Yugorsk|x64'">
+    <OutputPath>bin\x64\Yugorsk\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.76.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Library\ClosedXml\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WinSCPnet">
+      <HintPath>..\..\..\Library\WinSCP\WinSCPnet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="AsduExchangeTest.cs" />
+    <Compile Include="ExcelHelperTests.cs" />
+    <Compile Include="ExchangeObjectTests.cs" />
+    <Compile Include="FileToolsTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\PortableDTO\PortableDTO.csproj">
+      <Project>{351f17b0-88ec-4255-b351-1d7e86e411a0}</Project>
+      <Name>PortableDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DAL.Core\DAL.Core.csproj">
+      <Project>{9eefcb2c-de66-42cb-9bbd-d2db95d0feba}</Project>
+      <Name>DAL.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DAL\DAL.csproj">
+      <Project>{0f9fd4c7-37f4-4a20-9cf1-c0d04126432d}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Service.Exchange.Lib\Service.Exchange.Lib.csproj">
+      <Project>{562b2811-c03b-49f3-b685-1afb1492ea48}</Project>
+      <Name>Service.Exchange.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestBase\TestBase.csproj">
+      <Project>{2a242bf2-e1c3-406d-b886-d7ee53028088}</Project>
+      <Name>TestBase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\Library\WinSCP\WinSCP.exe">
+      <Link>WinSCP.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App.config" />
+    <Content Include="Resources\ASTRA\Import\ASTRA_Import_PIPE.xslt" />
+    <Content Include="Resources\ASTRA\Import\ASTRA_Import_CSHOP.xslt" />
+    <Content Include="Resources\ASTRA\Export\ASTRA_Export_KC.xslt">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\ASTRA\Export\ASTRA_Export_KR.xslt">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\ASTRA\Export\ASTRA_Export_PZG.xslt" />
+    <Content Include="Resources\ASTRA\ГТЧ\ASTRA_Export_KC.xslt" />
+    <Content Include="Resources\ASTRA\ГТЧ\ASTRA_Export_KR.xslt" />
+    <Content Include="Resources\ASTRA\ГТЧ\ASTRA_Export_PZG.xslt" />
+    <Content Include="Resources\GT Chaikovsky\Export\CHA_Export_GTNizhnNovg_day.xslt" />
+    <Content Include="Resources\GT Chaikovsky\Export\CHA_Export_Izhevsk.xslt" />
+    <Content Include="Resources\GT Chaikovsky\Export\CHA_Export_GTUfa.xslt" />
+    <Content Include="Resources\GT Chaikovsky\Export\CHA_Export_PHG_hour.xslt" />
+    <Content Include="Resources\GT Chaikovsky\Import\CHA_Import_GTNizhnNovg.xslt">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\GT Chaikovsky\Import\CHA_Import_GTUfa.xslt" />
+    <Content Include="Resources\GT Chaikovsky\Export\CHA_Export_PHG_day.xslt" />
+    <Content Include="Resources\GT Chaikovsky\Import\CHA_Import_PHG_day.xslt" />
+    <Content Include="Resources\GT Chaikovsky\Import\CHA_Import_PHG_hour.xslt" />
+    <Content Include="Resources\GT Saratov\Export\SAR_Export_GTMoscow_v1.xslt" />
+    <Content Include="Resources\GT Saratov\Export\SAR_Export_GTSamara_v1.xslt">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\GT Saratov\Export\SAR_Export_PHG_v1.xslt" />
+    <Content Include="Resources\GT Saratov\Import\SAR_Import_GTMoscow_v1.xslt" />
+    <Content Include="Resources\GT Saratov\Import\SAR_Import_GTSamara_v1.xslt" />
+    <Content Include="Resources\GT Saratov\Import\SAR_Import_PHG_ELSH_2h.xslt" />
+    <Content Include="Resources\GT Saratov\Import\SAR_Import_PHG_PUM_2h.xslt" />
+    <Content Include="Resources\GT Saratov\Import\SAR_Import_PHG_STE_2h.xslt">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\GT Tomsk\Export\TOM_Export_GTSurgut.xslt" />
+    <Content Include="Resources\GT Tomsk\Import\TOM_Import_GTSurgut.xslt" />
+    <Content Include="Resources\GT Tomsk\Import\TOM_Import_Tomskgazprom.xslt" />
+    <Content Include="Resources\GT Volgograd\Export\VOL_Export_GTKrasnodar.xslt" />
+    <Content Include="Resources\GT Volgograd\Export\VOL_Export_GTMoscow.xslt" />
+    <Content Include="Resources\GT Volgograd\Export\VOL_Export_GTStavropol.xslt" />
+    <Content Include="Resources\GT Volgograd\Import\VOL_Import_GTMoscow_v1.xslt">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\GT Yugorsk\Export\YUG_Export_GTEkaterinburg.xslt" />
+    <Content Include="Resources\GT Yugorsk\Export\YUG_Export_GTSurgut.xslt">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\GT Yugorsk\Export\YUG_Export_GTUhta.xslt" />
+    <Content Include="Resources\GT Yugorsk\Import\YUG_Import_GDNadym.xslt" />
+    <Content Include="Resources\GT Yugorsk\Import\YUG_Import_GDUrengoi.xslt" />
+    <Content Include="Resources\GT Yugorsk\Import\YUG_Import_GDYamburg.xslt" />
+    <Content Include="Resources\GT Yugorsk\Import\YUG_Import_GTEkaterinburg.xslt" />
+    <Content Include="Resources\GT Yugorsk\Import\YUG_Import_GTSurgut.xslt" />
+    <Content Include="Resources\GT Yugorsk\Import\YUG_Import_GTUhta.xslt">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\GT Yugorsk\Export\YUG_Export_gazeks.xslt" />
+    <Content Include="Resources\ImportTemplate_v1.xslt" />
+    <None Include="1.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\samara.xsl">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\mtg_utg.xsl">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="template_pressureInput.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="template_pressureInput1.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.Chaykovsky.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.Debug.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.Mod.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.Release.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.Saratov.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.Tomsk.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.Volgograd.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.Yugorsk.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
+  <Target Name="AfterCompile" Condition="exists('app.$(Configuration).config')">
+    <!-- Generate transformed app config in the intermediate directory -->
+    <TransformXml Source="app.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="app.$(Configuration).config" />
+    <!-- Force build process to use the transformed configuration file from now on. -->
+    <ItemGroup>
+      <AppConfigWithTargetPath Remove="app.config" />
+      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
+        <TargetPath>$(TargetFileName).config</TargetPath>
+      </AppConfigWithTargetPath>
+    </ItemGroup>
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

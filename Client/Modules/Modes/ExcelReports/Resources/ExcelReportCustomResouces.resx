@@ -1,0 +1,752 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+	
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>1.3</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+  <data name="File" xml:space="preserve">
+    <value>Файл</value>
+  </data>
+  <data name="File_New" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="File_Open" xml:space="preserve">
+    <value>Открыть</value>
+  </data>
+  <data name="File_Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="File_Print" xml:space="preserve">
+    <value>Печать</value>
+  </data>
+  <data name="File_Print_Print " xml:space="preserve">
+    <value>Печать</value>
+  </data>
+  <data name="File_Print_Copies" xml:space="preserve">
+    <value>Копии</value>
+  </data>
+  <data name="File_Print_Settings" xml:space="preserve">
+    <value>Настройка</value>
+  </data>
+  <data name="File_Print_PageSetup" xml:space="preserve">
+    <value>Параметры страницы</value>
+  </data>
+  <data name="File_Print_Collated" xml:space="preserve">
+    <value>Разобрать по копиям</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Главная</value>
+  </data>
+  <data name="Home_Paste" xml:space="preserve">
+    <value>Вставить</value>
+  </data>
+  <data name="Home_Paste(Ctrl+V)Tooltip" xml:space="preserve">
+    <value>Вставить (Ctrl+V)</value>
+  </data>
+  <data name="Home_Paste_Paste" xml:space="preserve">
+    <value>Вставить </value>
+  </data>
+  <data name="Home_Paste_Formulas" xml:space="preserve">
+    <value>Формула</value>
+  </data>
+  <data name="Home_Paste_FormulasAndNumberFormatting" xml:space="preserve">
+    <value>Формула и числовой формат</value>
+  </data>
+  <data name="Home_Paste_ColumnWidths" xml:space="preserve">
+    <value>Ширина столбца</value>
+  </data>
+  <data name="Home_Paste_Values" xml:space="preserve">
+    <value>Значения</value>
+  </data>
+  <data name="Home_Paste_ValuesAndNumberFormatting" xml:space="preserve">
+    <value>Значения и числовой формат</value>
+  </data>
+    <data name="Home_Paste_OtherPasteOptions" xml:space="preserve">
+    <value>Другие варианты вставки</value>
+  </data>
+  <data name="Home_Paste_Formatting" xml:space="preserve">
+    <value>Форматирование</value>
+  </data>  
+  <data name="Home_Cut" xml:space="preserve">
+    <value>Вырезать</value>
+  </data>
+    <data name="Home_CutDescription" xml:space="preserve">
+    <value>Вырезать выделенное и положить в буфер обмена</value>
+  </data>
+  <data name="Home_Copy" xml:space="preserve">
+    <value>Копировать</value>
+  </data>
+  <data name="Home_CopyTooltip" xml:space="preserve">
+    <value>Копировать (Ctrl+С)</value>
+  </data>
+  <data name="Home_Clipboard" xml:space="preserve">
+    <value>Буфер обмена</value>
+  </data>
+  <data name="Home_FontTooltip" xml:space="preserve">
+    <value>Шрифт</value>
+  </data>
+  <data name="Home_FontSizeTooltip" xml:space="preserve">
+    <value>Размер шрифта</value>
+  </data>
+  <data name="Home_IncreaseFontSizeTooltip" xml:space="preserve">
+    <value>Увеличить размер шрифта</value>
+  </data>
+  <data name="Home_DecreaseFontSizeTooltip" xml:space="preserve">
+    <value>Уменьшить размер шрифта</value>
+  </data>
+  <data name="Home_BoldCtrlBTooltip" xml:space="preserve">
+    <value>Полужирный (Ctrl+B)</value>
+  </data>
+  <data name="Home_ItalicCtrlITooltip" xml:space="preserve">
+    <value>Курсив (Ctrl+I)</value>
+  </data>
+  <data name="Home_UnderlineCtrlUTooltip" xml:space="preserve">
+    <value>Подчеркнутый (Ctrl+U)</value>
+  </data>
+  <data name="Home_Borders" xml:space="preserve">
+    <value>Границы</value>
+  </data>
+  <data name="Home_Borders_BottomBorder" xml:space="preserve">
+    <value>Нижняя граница</value>
+  </data>
+  <data name="Home_Borders_TopBorder" xml:space="preserve">
+    <value>Верхняя граница</value>
+  </data>
+  <data name="Home_Borders_LeftBorder" xml:space="preserve">
+    <value>Левая граница</value>
+  </data>
+  <data name="Home_Borders_RightBorder" xml:space="preserve">
+    <value>Правая граница</value>
+  </data>
+  <data name="Home_Borders_NoBorder" xml:space="preserve">
+    <value>Нет границы</value>
+  </data>
+  <data name="Home_Borders_AllBorder" xml:space="preserve">
+    <value>Все границы</value>
+  </data>
+  <data name="Home_Borders_OutsideBorder" xml:space="preserve">
+    <value>Внешние границы</value>
+  </data>
+  <data name="Home_Borders_ThickBoxBorder" xml:space="preserve">
+    <value>Толстая внешняя граница</value>
+  </data>
+  <data name="Home_Borders_ThickBottomBorder" xml:space="preserve">
+    <value>Толстая нижняя граница</value>
+  </data>
+  <data name="Home_Borders_TopandBottomBorder" xml:space="preserve">
+    <value>Верхняя и нижняя границы</value>
+  </data>
+  <data name="Home_Borders_TopandThickBottomBorder" xml:space="preserve">
+    <value>Верхняя и толстая нижняя границы</value>
+  </data>
+  <data name="Home_Borders_DrawBorders" xml:space="preserve">
+    <value>Нарисовать гарницы</value>
+  </data>
+  <data name="Home_Borders_LineColor" xml:space="preserve">
+    <value>Цвет линии</value>
+  </data>
+  <data name="Home_Borders_LineColor_Automatic" xml:space="preserve">
+    <value>Авто</value>
+  </data>
+  <data name="Home_Borders_LineColor_OficceColors" xml:space="preserve">
+    <value>Цвета темы</value>
+  </data>
+  <data name="Home_Borders_LineColor_Colors" xml:space="preserve">
+    <value>Стандартные цвета</value>
+  </data>
+  <data name="Home_Borders_LineColor_MoreColors…" xml:space="preserve">
+    <value>Другие цвета</value>
+  </data>
+  <data name="Home_Borders_LineStyle" xml:space="preserve">
+    <value>Вид линии</value>
+  </data>
+  <data name="Home_Borders_LineStyle_NoBorder" xml:space="preserve">
+    <value>нет границы</value>
+  </data>
+  <data name="Home_Borders_MoreBorders" xml:space="preserve">
+    <value>Другие границы</value>
+  </data>
+  <data name="Home_FillColorTooltip" xml:space="preserve">
+    <value>Цвет заливки</value>
+  </data>
+  <data name="Home_FillColorTooltip_NoFill" xml:space="preserve">
+    <value>Нет заливки</value>
+  </data>
+  <data name="Home_FillColorTooltip_MoreColors" xml:space="preserve">
+    <value>Другие цвета</value>
+  </data>
+  <data name="Home_TextHighlightColorTooltip" xml:space="preserve">
+    <value>Цвет текста</value>
+  </data>
+  <data name="Home_TextHighlightColorTooltip_Automatic" xml:space="preserve">
+    <value>Авто</value>
+  </data>
+  <data name="Home_TextHighlightColorTooltip_MoreColors" xml:space="preserve">
+    <value>Другие цвета</value>
+  </data>
+  <data name="Home_Font" xml:space="preserve">
+    <value>Шрифт</value>
+  </data>
+  <data name="Home_Alignment" xml:space="preserve">
+    <value>Выравнивание</value>
+  </data>
+  <data name="Home_TopAlignTooltip" xml:space="preserve">
+    <value>По верхнему краю</value>
+  </data>
+  <data name="Home_MiddleAlignTooltip" xml:space="preserve">
+    <value>Выровнять по середине</value>
+  </data>
+  <data name="Home_BottomAlignTooltip" xml:space="preserve">
+    <value>По нижнему краю</value>
+  </data>
+  <data name="Home_AlignTextLeftTooltip" xml:space="preserve">
+    <value>Выровнять текст по левому краю</value>
+  </data>
+  <data name="Home_CenterTooltip" xml:space="preserve">
+    <value>Выровнять по центру</value>
+  </data>
+  <data name="Home_AlignTextRightTooltip" xml:space="preserve">
+    <value>Выровнять текст по правому краю</value>
+  </data>
+  <data name="Home_DecreaseIndentTooltip" xml:space="preserve">
+    <value>Уменьшить отступ</value>
+  </data>
+  <data name="Home_IncreaseIndentTooltip" xml:space="preserve">
+    <value>Увеличить отступ</value>
+  </data>
+  <data name="Home_WrapText" xml:space="preserve">
+    <value>Перенос текста</value>
+  </data>
+  <data name="Home_MergeAndCenter" xml:space="preserve">
+    <value>Объединить и центрировать</value>
+  </data>
+  <data name="Home_MergeAndCenter_MergeAndCenter" xml:space="preserve">
+    <value>Объединить и центрировать</value>
+  </data>
+  <data name="Home_MergeAndCenter_MergeAcross" xml:space="preserve">
+    <value>Объединить по строкам</value>
+  </data>
+  <data name="Home_MergeAndCenter_MergeCells" xml:space="preserve">
+    <value>Объединить ячейки</value>
+  </data>
+  <data name="Home_MergeAndCenter_UnmergeCells" xml:space="preserve">
+    <value>Отменить объединение ячеек</value>
+  </data>
+  <data name="Home_Number" xml:space="preserve">
+    <value>Число</value>
+  </data>
+  <data name="Home_NumberFormatTooltip" xml:space="preserve">
+    <value>Числовой формат</value>
+  </data>
+  <data name="Home_NumberFormat_MoreNumberingFormat…" xml:space="preserve">
+    <value>Другие числовые форматы</value>
+  </data>
+  <data name="Home_AccountingNumberFormatTooltip" xml:space="preserve">
+    <value>Финансовый числовой формат</value>
+  </data>
+  <data name="Home_AccountingNumberFormat_MoreAccountingNumberFormat" xml:space="preserve">
+    <value>Другие финансовые форматы</value>
+  </data>
+  <data name="Home_PercentStyle(Ctrl+Shift+%)Tooltip" xml:space="preserve">
+    <value>Процентный формат (Ctrl+Shift+%)</value>
+  </data>
+  <data name="Home_CommaStyleTooltip" xml:space="preserve">
+    <value>Формат с разделителями</value>
+  </data>
+  <data name="Home_IncreaseDecimalTooltip" xml:space="preserve">
+    <value>Увеличить разрядность</value>
+  </data>
+  <data name="Home_DecreaseDecimalTooltip" xml:space="preserve">
+    <value>Уменьшить разрядность</value>
+  </data>  
+  <data name="Home_Styles" xml:space="preserve">
+    <value>Стили</value>
+  </data>
+  <data name="Home_Cells" xml:space="preserve">
+    <value>Ячейки</value>
+  </data>
+  <data name="Home_Insert" xml:space="preserve">
+    <value>Вставить</value>
+  </data>
+  <data name="Home_InsertCellsTooltip" xml:space="preserve">
+    <value>Вставить ячейки</value>
+  </data>
+  <data name="Home_Insert_InsertCells..." xml:space="preserve">
+    <value>Вставить ячейки</value>
+  </data>
+  <data name="Home_Insert_InsertSheetRows" xml:space="preserve">
+    <value>Вставить строки на лист</value>
+  </data>
+  <data name="Home_Insert_InsertSheetColumns" xml:space="preserve">
+    <value>Вставить столбцы на лист</value>
+  </data>
+  <data name="Home_Insert_InsertSheet" xml:space="preserve">
+    <value>Вставить лист</value>
+  </data>
+  <data name="Home_Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="Home_DeleteCellsTooltip" xml:space="preserve">
+    <value>Удалить ячейки </value>
+  </data>
+  <data name="Home_Delete_DeleteCells..." xml:space="preserve">
+    <value>Удалить ячейки</value>
+  </data>
+  <data name="Home_Delete_DeleteSheetRows" xml:space="preserve">
+    <value>Удалить строки с листа</value>
+  </data>
+  <data name="Home_Delete_DeleteSheetColumns" xml:space="preserve">
+    <value>Удалить столбцы с листа</value>
+  </data>
+  <data name="Home_Delete_DeleteSheet" xml:space="preserve">
+    <value>Удалить лист</value>
+  </data>
+  <data name="Home_Format" xml:space="preserve">
+    <value>Формат</value>
+  </data>
+  <data name="Home_Format_CellsSize" xml:space="preserve">
+    <value>Размер ячейки</value>
+  </data>
+  <data name="Home_Format_RowHeight…" xml:space="preserve">
+    <value>Высота строки</value>
+  </data>
+  <data name="Home_Format_AutoFitRowHeight" xml:space="preserve">
+    <value>Автоподбор высоты строки</value>
+  </data>
+  <data name="Home_Format_DefaultHeight…" xml:space="preserve">
+    <value>Высота по умолчанию</value>
+  </data>
+  <data name="Home_Format_ColumnWidth…" xml:space="preserve">
+    <value>Ширина столбца</value>
+  </data>
+  <data name="Home_Format_AutofitColumnWidth" xml:space="preserve">
+    <value>Автоподбор ширины столбца</value>
+  </data>
+  <data name="Home_Format_DefaultWidth…" xml:space="preserve">
+    <value>Ширина по умолчанию</value>
+  </data>
+  <data name="Home_Format_HideRows" xml:space="preserve">
+    <value>Скрыть строки</value>
+  </data>
+  <data name="Home_Format_HideColumns" xml:space="preserve">
+    <value>Скрыть столбцы</value>
+  </data>
+  <data name="Home_Format_UnhideRows" xml:space="preserve">
+    <value>Показать строки</value>
+  </data>
+  <data name="Home_Format_UnhideColumns" xml:space="preserve">
+    <value>Показать столбцы</value>
+  </data>
+  <data name="Home_Format_FormatCells…" xml:space="preserve">
+    <value>Формат ячеек</value>
+  </data>
+  <data name="Home_Editing" xml:space="preserve">
+    <value>Редактирование</value>
+  </data>
+  <data name="Home_Fill" xml:space="preserve">
+    <value>Заполнить</value>
+  </data>
+  <data name="Home_Fill_Down" xml:space="preserve">
+    <value>Вниз</value>
+  </data>
+  <data name="Home_Fill_Right" xml:space="preserve">
+    <value>Вправо</value>
+  </data>
+  <data name="Home_Fill_Up" xml:space="preserve">
+    <value>Вверх</value>
+  </data>
+  <data name="Home_Fill_Left" xml:space="preserve">
+    <value>Влево</value>
+  </data>
+  <data name="Home_Fill_Series…" xml:space="preserve">
+    <value>Прогрессия</value>
+  </data>
+  <data name="Home_Clear" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="Home_Clear_ClearAll" xml:space="preserve">
+    <value>Очистить все</value>
+  </data>
+  <data name="Home_Clear_ClearFormats" xml:space="preserve">
+    <value>Очистить форматы</value>
+  </data>
+  <data name="Home_Clear_ClearContents" xml:space="preserve">
+    <value>Очистить содержимое</value>
+  </data>
+  <data name="Home_Clear_ClearHyperlinks" xml:space="preserve">
+    <value>Очистить гиперссылки</value>
+  </data>
+  <data name="Home_Clear_RemoveHyperlink" xml:space="preserve">
+    <value>Удалить гиперссылки</value>
+  </data>
+  <data name="Home_SortAndFilter" xml:space="preserve">
+    <value>Сортировка и фильтр</value>
+  </data>
+  <data name="Home_SortAndFilter_SortAtoZ" xml:space="preserve">
+    <value>Сортировка от А до Я</value>
+  </data>
+  <data name="Home_SortAndFilter_SortZtoA" xml:space="preserve">
+    <value>Сортировка от Я до А</value>
+  </data>
+  <data name="Home_SortAndFilter_Customsort…" xml:space="preserve">
+    <value>Настраиваемая сортировка</value>
+  </data>
+  <data name="Home_SortAndFilter_Filter" xml:space="preserve">
+    <value>Фильтр</value>
+  </data>
+  <data name="Home_SortAndFilter_Clear" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="Home_SortAndFilter_Reapply" xml:space="preserve">
+    <value>Повторить</value>
+  </data>
+  <data name="Home_Find" xml:space="preserve">
+    <value>Найти</value>
+  </data>
+  <data name="Insert" xml:space="preserve">
+    <value>Вставка</value>
+  </data>
+  <data name="Insert_Hyperlink" xml:space="preserve">
+    <value>Гиперссылка</value>
+  </data>
+  <data name="Insert_AddaHyperlinkTooltip" xml:space="preserve">
+    <value>Добавить гиперссылку</value>
+  </data>
+  <data name="Insert_Pictures" xml:space="preserve">
+    <value>Рисунок</value>
+  </data>
+  <data name="Insert_FromFileTooltip" xml:space="preserve">
+    <value>Вставить рисунок из файла</value>
+  </data>
+  <data name="PageLayout" xml:space="preserve">
+    <value>Разметка страницы</value>
+  </data>
+  <data name="PageLayout_Themes" xml:space="preserve">
+    <value>Темы</value>
+  </data>
+  <data name="PageLayout_Colors" xml:space="preserve">
+    <value>Цвета</value>
+  </data>
+  <data name="PageLayout_ThemeColorsTooltip" xml:space="preserve">
+    <value>Цвета темы</value>
+  </data>  
+  <data name="PageLayout_Colors_CreateNewThemeColors…" xml:space="preserve">
+    <value>Создать новые цвета темы</value>
+  </data> 
+  <data name="PageLayout_Fonts" xml:space="preserve">
+    <value>Шрифты</value>
+  </data>
+  <data name="PageLayout_ThemeFontsTooltip" xml:space="preserve">
+    <value>Шрифты темы</value>
+  </data>
+  <data name="PageLayout_Colors_CreateNewThemeFonts…" xml:space="preserve">
+    <value>Создать новые шрифты темы</value>
+  </data>
+  <data name="PageLayout_PrintArea" xml:space="preserve">
+    <value>Область печати</value>
+  </data>
+  <data name="PageLayout_PrintArea_SetPrintArea" xml:space="preserve">
+    <value>Задать область печати</value>
+  </data>
+  <data name="PageLayout_PrintArea_ClearPrintArea" xml:space="preserve">
+    <value>Убрать область печати</value>
+  </data>
+  <data name="PageLayout_PrintArea_AddtoPrintArea" xml:space="preserve">
+    <value>Добавить область печати</value>
+  </data>
+  <data name="PageLayout_PageSetup" xml:space="preserve">
+    <value>Параметры страницы</value>
+  </data>
+  <data name="PageLayout_Breaks" xml:space="preserve">
+    <value>Разрывы</value>
+  </data>
+  <data name="PageLayout_Breaks_InsertPageBreak" xml:space="preserve">
+    <value>Вставить разрыв страницы</value>
+  </data>
+  <data name="PageLayout_Breaks_RemovePageBreak" xml:space="preserve">
+    <value>Удалить разрыв страницы</value>
+  </data>
+  <data name="PageLayout_Breaks_ResetAllPageBreak" xml:space="preserve">
+    <value>Сброс разрывов страниц</value>
+  </data>
+  <data name="PageLayout_SheetOptions" xml:space="preserve">
+    <value>Параметры листа</value>
+  </data>
+  <data name="PageLayout_Gridlines" xml:space="preserve">
+    <value>Сетка</value>
+  </data>
+  <data name="PageLayout_Headings" xml:space="preserve">
+    <value>Заголовки</value>
+  </data>
+  <data name="PageLayout_Gridlines_View" xml:space="preserve">
+    <value>Вид</value>
+  </data>
+  <data name="PageLayout_Gridlines_ViewTooltip" xml:space="preserve">
+    <value>Отобразить сетку</value>
+  </data>
+  <data name="PageLayout_Gridlines_Print" xml:space="preserve">
+    <value>Печать</value>
+  </data>
+  <data name="PageLayout_Gridlines_PrintTooltip" xml:space="preserve">
+    <value>Печать сетки</value>
+  </data>
+  <data name="PageLayout_Headings_View" xml:space="preserve">
+    <value>Вид</value>
+  </data>
+  <data name="PageLayout_Headings_ViewTooltip" xml:space="preserve">
+    <value>Просмотр заголовков</value>
+  </data>
+  <data name="PageLayout_Headings_Print" xml:space="preserve">
+    <value>Печать</value>
+  </data>
+  <data name="PageLayout_Headings_PrintTooltip" xml:space="preserve">
+    <value>Печать заголовков</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Данные</value>
+  </data>
+  <data name="Data_SortAndFilter" xml:space="preserve">
+    <value>Сортировка и фильтр</value>
+  </data>
+  <data name="Data_Sort" xml:space="preserve">
+    <value>Сортировка</value>
+  </data>
+  <data name="Data_SortAtoZTooltip" xml:space="preserve">
+    <value>Сортировка от А до Я</value>
+  </data>
+  <data name="Data_SortZtoATooltip" xml:space="preserve">
+    <value>Сортировка от Я до А</value>
+  </data>
+  <data name="Data_Filter" xml:space="preserve">
+    <value>Фильтр</value>
+  </data>
+  <data name="Data_Clear" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="Data_Reapply" xml:space="preserve">
+    <value>Повторить</value>
+  </data>
+  <data name="Data_DataValidation" xml:space="preserve">
+    <value>Проверка данных</value>
+  </data>
+  <data name="Data_DataTools" xml:space="preserve">
+    <value>Работа с данными</value>
+  </data>
+  <data name="Data_DataValidation_DataValidation…" xml:space="preserve">
+    <value>Проверка данных</value>
+  </data>
+  <data name="Data_DataValidation_CircleInvalidData" xml:space="preserve">
+    <value>Обвести неверные данные</value>
+  </data>
+  <data name="Data_DataValidation_ClearValidationCircles" xml:space="preserve">
+    <value>Удалить обводку неверных данных</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Вид</value>
+  </data>
+  <data name="View_Window" xml:space="preserve">
+    <value>Окно</value>
+  </data>
+  <data name="View_FreezePanes" xml:space="preserve">
+    <value>Закрепить области</value>
+  </data>
+  <data name="View_FreezePanes_UnfreezePanes" xml:space="preserve">
+    <value>Закрепить области</value>
+  </data>
+  <data name="View_FreezePanes_FreezeTopRow" xml:space="preserve">
+    <value>Закрепить верхнюю строку</value>
+  </data>
+  <data name="View_FreezePanes_FreezeFirstColumn" xml:space="preserve">
+    <value>Закрепить первый столбец</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Рецензирование</value>
+  </data>
+  <data name="Review_Changes" xml:space="preserve">
+    <value>Изменения</value>
+  </data>
+  <data name="Review_ProtectSheet" xml:space="preserve">
+    <value>Защитить лист</value>
+  </data>
+  <data name="Review_ProtectWorkbook" xml:space="preserve">
+    <value>Защитить книгу</value>
+  </data>
+  <data name="" xml:space="preserve">
+    <value></value>
+  </data>
+
+  
+  
+  <data name="RadSpreadsheet_ContextMenu_Cut" xml:space="preserve">
+    <value>Вырезать</value>
+  </data>
+  <data name="RadSpreadsheet_ContextMenu_Copy" xml:space="preserve">
+    <value>Копировать</value>
+  </data>
+    <data name="RadSpreadsheet_ContextMenu_RemoveCells" xml:space="preserve">
+    <value>Удалить ячейки</value>
+  </data>
+    <data name="RadSpreadsheet_ContextMenu_InsertCells" xml:space="preserve">
+    <value>Вставить ячейки</value>
+  </data>
+    <data name="RadSpreadsheet_ContextMenu_Past" xml:space="preserve">
+    <value>Вставить</value>
+  </data>
+    <data name="RadSpreadsheet_ContextMenu_InsertRows" xml:space="preserve">
+    <value>Вставить строки</value>
+  </data>
+  <data name="RadSpreadsheet_ContextMenu_RemoveRows" xml:space="preserve">
+    <value>Удалить строки</value>
+  </data>
+    <data name="RadSpreadsheet_ContextMenu_InsertColumns" xml:space="preserve">
+    <value>Вставить колонки</value>
+  </data>
+  <data name="RadSpreadsheet_ContextMenu_RemoveColumns" xml:space="preserve">
+    <value>Удалить колонки</value>
+  </data>
+    <data name="RadSpreadsheet_ContextMenu_ClearContents" xml:space="preserve">
+    <value>Очистить содержимое</value>
+  </data>
+    <data name="RadSpreadsheet_ContextMenu_FormatCells" xml:space="preserve">
+    <value>Форматировать ячейки</value>
+  </data>
+    <data name="RadSpreadsheet_ContextMenu_HideColumns" xml:space="preserve">
+    <value>Скрыть</value>
+  </data>
+    <data name="RadSpreadsheet_ContextMenu_UnhideColumns" xml:space="preserve">
+    <value>Показать</value>
+  </data>
+    <data name="RadSpreadsheet_ContextMenu_HideRows" xml:space="preserve">
+    <value>Скрыть</value>
+  </data>
+    <data name="RadSpreadsheet_ContextMenu_UnhideRows" xml:space="preserve">
+    <value>Показать</value>
+  </data>
+  <data name="RadSpreadsheet_ContextMenu_Hyperlink" xml:space="preserve">
+    <value>Гиперссылка</value>
+  </data>
+  <data name="RadSpreadsheet_ContextMenu_RemoveHyperlink" xml:space="preserve">
+    <value>Удалить гиперссылку</value>
+  </data>
+  <data name="RadSpreadsheet_ContextMenu_BringForward" xml:space="preserve">
+    <value>Вынести вперед</value>
+  </data>
+  <data name="RadSpreadsheet_ContextMenu_SendBackward" xml:space="preserve">
+    <value>Вынести на задний план</value>
+  </data>
+  <data name="RadSpreadsheet_ContextMenu_SendBack" xml:space="preserve">
+    <value>Вынести назад</value>
+  </data>
+  <data name="RadSpreadsheet_ContextMenu_BringToFront" xml:space="preserve">
+    <value>Вынести на передний план</value>
+  </data>
+  <data name="Rotate" xml:space="preserve">
+    <value>Поворот</value>
+  </data>
+  <data name="RotateLeft" xml:space="preserve">
+    <value>Поворот налево</value>
+  </data>
+  <data name="RotateRight" xml:space="preserve">
+    <value>Поворот направо</value>
+  </data>
+<data name="FlipVertical" xml:space="preserve">
+    <value>Переворот вертикальный</value>
+  </data>
+<data name="FlipHorizontal" xml:space="preserve">
+    <value>Переворот горизонтальный</value>
+  </data>
+</root>

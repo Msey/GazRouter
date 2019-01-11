@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="GazRouter.ObjectModel.Model.Tabs.Segments.SegmentViewer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+        <ScrollViewer x:Name="Scroll">
+            <Canvas x:Name="Cnv" Background="WhiteSmoke">
+                <telerik:RadContextMenu.ContextMenu>
+                    <telerik:RadContextMenu>
+                        <telerik:RadMenuItem Click="OnEdit" Header="Изменить..." />
+                        <telerik:RadMenuItem Click="OnDelete" Header="Удалить" />
+                    </telerik:RadContextMenu>
+                </telerik:RadContextMenu.ContextMenu>
+            </Canvas>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

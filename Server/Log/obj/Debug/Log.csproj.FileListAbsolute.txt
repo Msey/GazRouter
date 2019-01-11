@@ -1,0 +1,6 @@
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Log\bin\Debug\Log.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Log\bin\Debug\Log.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Log\bin\Debug\NLog.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Log\bin\Debug\NLog.xml
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Log\obj\Debug\Log.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Log\obj\Debug\Log.pdb

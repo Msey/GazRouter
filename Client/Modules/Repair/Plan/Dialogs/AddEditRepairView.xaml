@@ -1,0 +1,603 @@
+﻿<telerik:RadWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   mc:Ignorable="d"
+                   x:Class="GazRouter.Repair.Plan.Dialogs.AddEditRepairView"
+                   xmlns:controls1="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:dialogs1="clr-namespace:GazRouter.Repair.Plan.Dialogs"
+                   xmlns:dialogs="clr-namespace:GazRouter.Repair.Dialogs"
+                   xmlns:dialogsRW="clr-namespace:GazRouter.Repair.RepWorks.Dialogs"
+                   xmlns:agree="clr-namespace:GazRouter.Repair.Agreement"
+                   xmlns:attach="clr-namespace:GazRouter.Repair.Attachment"
+                   xmlns:repair="clr-namespace:GazRouter.Repair"
+                   xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   Header="{Binding Caption}"
+                   attachedProperties1:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   Height="730"
+                   Name="EditRepairWindows"
+                   Style="{StaticResource DialogWindowStyle}"
+                   d:DataContext="{d:DesignInstance dialogs1:AddEditRepairViewModel}">
+
+
+    <telerik:RadWindow.Resources>
+        <telerik:InvertedBooleanConverter x:Key="InvertBoolConverter" />
+        <telerik:BooleanToVisibilityConverter x:Key="boolToVisibility" />
+        <telerik:InvertedBooleanToVisibilityConverter x:Key="invertedBoolToVisibility" />
+        <telerik:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+        <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
+        <converters:TimeSpanHourConverter x:Key="TimeSpanHourConverter" />
+        <dialogsRW:AddEditRepairViewWindowWidthConverter x:Key="AddEditRepairViewWindowWidthConverter" />
+
+        <DataTemplate x:Key="KilometerTemplate" DataType="repair:KilometerItem">
+            <ContentControl Content="{Binding }">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="repair:ValveKilometer">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Valve.Name}" />
+                            <TextBlock Text="{Binding Valve.Kilometer, StringFormat='({0} км.)'}"
+                                       VerticalAlignment="Center"
+                                       FontSize="9"
+                                       Margin="5, 0, 0, 0" />
+                            <TextBlock Text="{Binding Valve.CompStationName}"
+                                       VerticalAlignment="Center"
+                                       FontSize="9"
+                                       Foreground="CadetBlue"
+                                       Margin="5, 0, 0, 0" />
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="repair:PipeEdgeKilometer">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Km, StringFormat='0.###'}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+        </DataTemplate>
+
+
+    </telerik:RadWindow.Resources>
+    <telerik:RadWindow.Width>
+        <Binding ElementName="TabControl" Path="SelectedIndex"  Converter="{StaticResource AddEditRepairViewWindowWidthConverter}" FallbackValue="600.0" TargetNullValue="600.0"/>
+    </telerik:RadWindow.Width>
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+
+            <telerik:RadTabControl x:Name="TabControl" BorderThickness="0"
+                                   Margin="-2, 0, -2, 0">
+
+                <telerik:RadTabItem Header="Объект">
+                    <StackPanel Margin="11">
+
+                        <TextBlock Text="Объект:" Margin="0, 5, 0, 0" />
+                        <!--<StackPanel Orientation="Horizontal">
+                            <controls1:EntityPicker x:Name="SelectedEntityControl"
+                                                    x:FieldModifier="public"
+                                                    HorizontalAlignment="Stretch"
+                                                    IsEnabled="{Binding IsEdit, Converter={StaticResource InvertBoolConverter}}"
+                                                    SelectedItem="{Binding SelectedEntity, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                    AllowedTypes="{Binding AllowedType, Mode=TwoWay}"
+                                                    Margin="0, 5, 0, 0" />
+                            <TextBlock Text="{Binding PipelineSegment}" Margin="11, 5, 0, 0" />
+                        </StackPanel>-->
+                        <controls1:EntityPicker x:Name="SelectedEntityControl"
+                                                x:FieldModifier="public"
+                                                HorizontalAlignment="Stretch"
+                                                IsEnabled="{Binding IsEdit, Converter={StaticResource InvertBoolConverter}}"
+                                                SelectedItem="{Binding SelectedEntity, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                AllowedTypes="{Binding AllowedType, Mode=TwoWay}"
+                                                Margin="0, 5, 0, 0" />
+
+
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel>
+                                <TextBlock Text="Дата начала работ:"
+                                           Margin="0, 11, 0, 0" />
+                                <telerik:RadDatePicker
+                                    SelectedDate="{Binding StartDate, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                    Width="150"
+                                    DisplayDateStart="{Binding AllowedDateRangeStart}"
+                                    DisplayDateEnd="{Binding AllowedDateRangeEnd}"
+                                    SelectableDateStart="{Binding AllowedDateRangeStart}"
+                                    SelectableDateEnd="{Binding AllowedDateRangeEnd}"
+                                    Margin="0, 5, 0, 0" />
+                            </StackPanel>
+
+                            <StackPanel Margin="11, 0, 0, 0">
+                                <TextBlock Text="Дата окончания работ:"
+                                           Margin="0, 11, 0, 0" />
+                                <telerik:RadDatePicker
+                                    SelectedDate="{Binding EndDate, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                    Margin="0, 5, 0, 0"
+                                    Width="150"
+                                    HorizontalAlignment="Left"
+                                    DisplayDateStart="{Binding AllowedDateRangeStart}"
+                                    DisplayDateEnd="{Binding AllowedDateRangeEnd}"
+                                    SelectableDateStart="{Binding AllowedDateRangeStart}" />
+                            </StackPanel>
+
+                            <StackPanel Margin="11, 0, 0, 0">
+                                <TextBlock Text="Продолжительность (часов):"
+                                           Margin="0, 11, 0, 0" />
+                                <!--<TextBlock Text="{Binding Duration, Converter={StaticResource TimeSpanHourConverter}}"
+                                           Margin="0, 5, 0, 0" />
+                               
+                                <TextBlock Text="{Binding Duration, Converter={StaticResource TimeSpanHourConverter}}"
+                                           Margin="0, 5, 0, 0" />-->
+                                <telerik:RadMaskedNumericInput FormatString="n0" 
+                                                               Value="{Binding Duration, Mode=TwoWay}"
+                                                               UpdateValueEvent="LostFocus" 
+                                                               Width="100"
+                                                               Margin="0, 5, 0, 0" />
+                            </StackPanel>
+                            <!--
+                            <StackPanel Margin="11, 0, 0, 0">
+                                <TextBlock Text="№ плана:"
+                                           Margin="0, 11, 0, 0" />
+                                <TextBox Text="{Binding GazpromPlanID, Mode=TwoWay}" Width="80"
+                                           Margin="0, 5, 0, 0" />
+                            </StackPanel>
+                            -->
+                        </StackPanel>
+
+
+                        <TextBlock Text="Дата поставки МТР:"
+                                   Margin="0, 11, 0, 0" />
+                        <telerik:RadDatePicker
+                            SelectedDate="{Binding PartsDeliveryDate, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                            Width="150"
+                            HorizontalAlignment="Left"
+                            DisplayDateStart="{Binding AllowedDateRangeStart}"
+                            SelectableDateStart="{Binding AllowedDateRangeStart}"
+                            DisplayDateEnd="{Binding AllowedDateRangeEnd}"
+                            SelectableDateEnd="{Binding AllowedDateRangeEnd}"
+                            Margin="0, 5, 0, 0" />
+
+
+                        <TextBlock Text="Вид ремонтных работ:" Margin="0, 11, 0, 0" />
+                        <telerik:RadComboBox ItemsSource="{Binding RepairTypeList}"
+                                             SelectedItem="{Binding SelectedRepairType, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                             IsEnabled="{Binding IsEntitySelected}"
+                                             HorizontalAlignment="Left"
+                                             DisplayMemberPath="Name"
+                                             IsEditable="False"
+                                             CanAutocompleteSelectItems="True"
+                                             EmptyText="Выберите вид ремонтных работ..."
+                                             Width="350"
+                                             Margin="0, 5, 0, 0" />
+
+                        <TextBlock Text="Вид огневых работ:" Margin="0, 11, 0, 0" />
+                        <telerik:RadComboBox ItemsSource="{Binding FireTypeList, Mode=TwoWay}"
+                                             SelectedItem="{Binding SelectedFireType, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                             IsEnabled="{Binding IsEntitySelected}"
+                                             HorizontalAlignment="Left"
+                                             DisplayMemberPath="Name"
+                                             IsEditable="False"
+                                             CanAutocompleteSelectItems="True"
+                                             EmptyText="Выберите вид огневых работ..."
+                                             Width="350"
+                                             Margin="0, 5, 0, 0" />
+
+                        <TextBlock Text="Способ ведения работ:" Margin="0, 11, 0, 0" />
+                        <telerik:RadComboBox ItemsSource="{Binding ExecutionMeansList}"
+                                             SelectedItem="{Binding SelectedExecutionMeans, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                             IsEnabled="{Binding IsEntitySelected}"
+                                             HorizontalAlignment="Left"
+                                             DisplayMemberPath="Name"
+                                             IsEditable="False"
+                                             CanAutocompleteSelectItems="True"
+                                             EmptyText="Выберите способ ведения работ..."
+                                             Width="350"
+                                             Margin="0, 5, 0, 0" />
+
+                        <CheckBox Content="Влияет на транспорт газа"
+                                  IsChecked="{Binding Path=IsTransferRelation,Mode=TwoWay}"
+                                  Margin="0, 11, 0, 0" />
+
+
+                        <TextBlock Text="Описание:" Margin="0, 11, 0, 0" />
+                        <TextBox
+                            Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                            Margin="0, 5, 0, 0" Height="90" AcceptsReturn="True" TextWrapping="Wrap"
+                            VerticalScrollBarVisibility="Visible" HorizontalAlignment="Stretch"
+                            VerticalContentAlignment="Top" />
+
+                        <TextBlock Text="Примечание:" Margin="0, 11, 0, 0" />
+                        <TextBox Text="{Binding DescriptionGtp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0, 5, 0, 0" Height="90" AcceptsReturn="True" TextWrapping="Wrap"
+                                 VerticalScrollBarVisibility="Visible" HorizontalAlignment="Stretch"
+                                 VerticalContentAlignment="Top" />
+                    </StackPanel>
+                </telerik:RadTabItem>
+
+
+                <!--СОСТОЯНИЕ-->
+                <telerik:RadTabItem IsEnabled="{Binding IsEntitySelected}" Header="Состояние">
+                    <Grid>
+                        <telerik:RadGridView ItemsSource="{Binding RepairWorkList, Mode=TwoWay}"
+                                             CanUserFreezeColumns="False"
+                                             RowIndicatorVisibility="Collapsed"
+                                             ShowGroupPanel="False"
+                                             AutoGenerateColumns="False"
+                                             IsReadOnly="false">
+
+                            <telerik:RadGridView.Columns>
+                                <telerik:GridViewDataColumn Header=""
+                                                            DataMemberBinding="{Binding IsSelected, Mode=TwoWay}"
+                                                            IsFilterable="False"
+                                                            IsSortable="False">
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="repair:RepairWork">
+                                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+
+                                <telerik:GridViewDataColumn Header="Наименование"
+                                                            DataMemberBinding="{Binding Dto.Name}"
+                                                            Width="300"
+                                                            IsReadOnly="True"
+                                                            IsFilterable="False"
+                                                            IsResizable="False"
+                                                            IsSortable="False" />
+
+                                <telerik:GridViewDataColumn IsFilterable="False"
+                                                            IsSortable="False"
+                                                            IsResizable="False"
+                                                            Width="65"
+                                                            IsVisible="{Binding DataContext.IsPipelineSelected, ElementName=EditRepairWindows}"
+                                                            IsReadOnlyBinding="{Binding IsSelected, Converter={StaticResource InvertBoolConverter}}"
+                                                            DataMemberBinding="{Binding KilometerStart, StringFormat='{}{0:0.###}'}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <StackPanel Margin="5">
+                                            <TextBlock Text="Начало," />
+                                            <TextBlock Text="км" />
+                                        </StackPanel>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate>
+                                            <ContentControl Content="{Binding }">
+                                                <ContentControl.Resources>
+                                                    <DataTemplate DataType="repair:RepairWork">
+                                                        <telerik:RadComboBox ItemsSource="{Binding KilometerStartList}"
+                                                                             SelectedValue="{Binding KilometerStart, Mode=TwoWay}"
+                                                                             SelectedValuePath="Km"
+                                                                             ItemTemplate="{StaticResource KilometerTemplate}" />
+                                                    </DataTemplate>
+                                                    <DataTemplate DataType="repair:RepairWorkCustomKilometer">
+                                                        <telerik:RadMaskedNumericInput FormatString="n3"
+                                                                                       Value="{Binding KilometerStart, Mode=TwoWay}"
+                                                                                       UpdateValueEvent="LostFocus" />        
+                                                    </DataTemplate>
+                                                </ContentControl.Resources>
+                                            </ContentControl>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <telerik:GridViewDataColumn IsFilterable="False"
+                                                            IsSortable="False"
+                                                            IsResizable="False"
+                                                            Width="65"
+                                                            IsVisible="{Binding DataContext.IsPipelineSelected, ElementName=EditRepairWindows}"
+                                                            IsReadOnlyBinding="{Binding IsSelected, Converter={StaticResource InvertBoolConverter}}"
+                                                            DataMemberBinding="{Binding KilometerEnd, StringFormat='{}{0:0.###}'}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <StackPanel Margin="5">
+                                            <TextBlock Text="Конец," />
+                                            <TextBlock Text="км" />
+                                        </StackPanel>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate>
+                                            <ContentControl Content="{Binding }">
+                                                <ContentControl.Resources>
+                                                    <DataTemplate DataType="repair:RepairWork">
+                                                        <telerik:RadComboBox ItemsSource="{Binding KilometerEndList}"
+                                                                             SelectedValue="{Binding KilometerEnd, Mode=TwoWay}"
+                                                                             SelectedValuePath="Km"
+                                                                             ItemTemplate="{StaticResource KilometerTemplate}" />
+                                                    </DataTemplate>
+                                                    <DataTemplate DataType="repair:RepairWorkCustomKilometer">
+                                                        <telerik:RadMaskedNumericInput FormatString="n3"
+                                                                                       Value="{Binding KilometerEnd, Mode=TwoWay}"
+                                                                                       UpdateValueEvent="LostFocus" />
+                                                    </DataTemplate>
+                                                </ContentControl.Resources>
+                                            </ContentControl>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                </telerik:GridViewDataColumn>
+
+<!--
+                                <telerik:GridViewDataColumn IsFilterable="False"
+                                                            IsSortable="False"
+                                                            IsResizable="False"
+                                                            Width="65"
+                                                            IsVisible="{Binding DataContext.IsPipelineSelected, ElementName=EditRepairWindows}"
+                                                            DataMemberBinding="{Binding KilometerEnd, StringFormat='{}{0:0.###}'}"
+                                                            IsReadOnlyBinding="{Binding IsSelected, Converter={StaticResource InvertBoolConverter}}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <StackPanel Margin="5">
+                                            <TextBlock Text="Конец," />
+                                            <TextBlock Text="км" />
+                                        </StackPanel>
+                                    </telerik:GridViewDataColumn.Header>
+                                    <telerik:GridViewDataColumn.CellEditTemplate>
+                                        <DataTemplate DataType="repair:RepairWork">
+                                            <DataTemplate>
+                                                <ContentControl Content="{Binding }">
+                                                    <ContentControl.Resources>
+                                                        <DataTemplate DataType="repair:RepairWork">
+                                                            <telerik:RadComboBox ItemsSource="{Binding KilometerEndList}"
+                                                                             SelectedValue="{Binding KilometerEnd, Mode=TwoWay}"
+                                                                             SelectedValuePath="Km"
+                                                                             ItemTemplate="{StaticResource KilometerTemplate}" />
+                                                        </DataTemplate>
+                                                        <DataTemplate DataType="repair:RepairWorkCustomKilometer">
+                                                            <telerik:RadMaskedNumericInput FormatString="n3"
+                                                                                       Value="{Binding KilometerEnd, Mode=TwoWay}"
+                                                                                       UpdateValueEvent="LostFocus" />
+                                                        </DataTemplate>
+                                                    </ContentControl.Resources>
+                                                </ContentControl>
+                                            </DataTemplate>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellEditTemplate>
+                                </telerik:GridViewDataColumn>
+-->
+                                <telerik:GridViewDataColumn IsFilterable="False"
+                                                            IsSortable="False"
+                                                            IsResizable="False"
+                                                            IsReadOnly="True"
+                                                            Width="65"
+                                                            IsVisible="{Binding DataContext.IsPipelineSelected, ElementName=EditRepairWindows}"
+                                                            DataMemberBinding="{Binding Length, StringFormat='{}{0:0.###}'}">
+                                    <telerik:GridViewDataColumn.Header>
+                                        <StackPanel Margin="5">
+                                            <TextBlock Text="Длина," />
+                                            <TextBlock Text="км" />
+                                        </StackPanel>
+                                    </telerik:GridViewDataColumn.Header>
+                                </telerik:GridViewDataColumn>
+
+                                <telerik:GridViewDataColumn IsFilterable="False"
+                                                            IsSortable="False"
+                                                            IsResizable="False"
+                                                            IsReadOnly="True"
+                                                            IsVisible="{Binding DataContext.IsPipelineSelected, ElementName=EditRepairWindows}"
+                                                            Header="">
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate DataType="repair:RepairWork">
+                                            <telerik:RadButton Command="{Binding KmCloneCommand}"
+                                                               Content=">"
+                                                               BorderThickness="0"
+                                                               Visibility="{Binding IsSelected, Converter={StaticResource boolToVisibility}}"/>
+
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                            </telerik:RadGridView.Columns>
+                        </telerik:RadGridView>
+                    </Grid>
+                </telerik:RadTabItem>
+
+
+                <!--РЕЖИМНЫЕ ДАННЫЕ-->
+                <telerik:RadTabItem Header="Режимные данные" VerticalContentAlignment="Top">
+
+                    <StackPanel Margin="11">
+
+                        <StackPanel>
+                            <TextBlock Text="Объем стравливаемого газа, млн.м³:" />
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Left"
+                                        Margin="0, 5, 0, 0">
+                                <telerik:RadMaskedNumericInput FormatString="n3"
+                                                               Value="{Binding BleedAmount,Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                               Width="90" />
+                                <!--<telerik:RadButton IsEnabled="False" Width="22" Height="22" Content="..."
+                                                HorizontalAlignment="Right" />-->
+                            </StackPanel>
+                        </StackPanel>
+
+
+                        <TextBlock Text="Объем выработанного газа, млн.м³:" Margin="0, 11, 0, 0" />
+                        <telerik:RadMaskedNumericInput FormatString="n3"
+                                                       Margin="0, 5, 0, 0"
+                                                       Value="{Binding SavingAmount, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                       Width="90" />
+
+
+                        <StackPanel>
+                            <!--Visibility="{Binding IsPipelineSelected, Converter={StaticResource boolToVisibility}}">-->
+                            <telerik:GroupBox Header="Достигнутый объем транспорта газа на участке, млн.м³/сут:"
+                                              Margin="0, 11, 0, 0">
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Margin="5, 0, 0, 0">
+                                        <TextBlock Text="Зима:" Margin="0, 5, 0, 0" />
+                                        <telerik:RadMaskedNumericInput FormatString="n3"
+                                                                       Width="90"
+                                                                       Value="{Binding MaxTransferWinter,Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                                       Margin="0, 5, 0, 0" />
+
+                                    </StackPanel>
+                                    <StackPanel Margin="11, 0, 0, 0">
+                                        <TextBlock Text="Лето:" Margin="0, 5, 0, 0" />
+                                        <telerik:RadMaskedNumericInput Width="90"
+                                                                       FormatString="n3"
+                                                                       Value="{Binding MaxTransferSummer,Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                                       Margin="0, 5, 0, 0" />
+                                    </StackPanel>
+                                    <StackPanel Margin="11, 0, 0, 0">
+                                        <TextBlock Text="Межсезонье:" Margin="0, 5, 0, 0" />
+                                        <telerik:RadMaskedNumericInput Width="90"
+                                                                       FormatString="n3"
+                                                                       Value="{Binding MaxTransferTransition,Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                                       Margin="0, 5, 0, 0" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </telerik:GroupBox>
+
+
+                            <telerik:GroupBox Header="Расчетная пропускная способность на участке, млн.м³/сут:"
+                                              Margin="0, 11, 0, 0">
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Margin="5, 0, 0, 0">
+                                        <TextBlock Text="Зима:" Margin="0, 5, 0, 0" />
+                                        <telerik:RadMaskedNumericInput Width="90"
+                                                                       FormatString="n3"
+                                                                       Value="{Binding CapacityWinter,Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                                       Margin="0, 5, 0, 0" />
+                                    </StackPanel>
+                                    <StackPanel Margin="11, 0, 0, 0">
+                                        <TextBlock Text="Лето:" Margin="0, 5, 0, 0" />
+                                        <telerik:RadMaskedNumericInput Width="90"
+                                                                       FormatString="n3"
+                                                                       Value="{Binding CapacitySummer,Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                                       Margin="0, 5, 0, 0" />
+                                    </StackPanel>
+                                    <StackPanel Margin="11, 0, 0, 0">
+                                        <TextBlock Text="Межсезонье:" Margin="0, 5, 0, 0" />
+                                        <telerik:RadMaskedNumericInput Width="90"
+                                                                       FormatString="n3"
+                                                                       Value="{Binding CapacityTransition,Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                                       Margin="0, 5, 0, 0" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </telerik:GroupBox>
+
+                            <TextBlock Text="Рассчетный объем транспорта газа во время проведения работ, млн.м³/сут:"
+                                       TextWrapping="Wrap"
+                                       Margin="0, 11, 0, 0" />
+                            <telerik:RadMaskedNumericInput FormatString="n3"
+                                                           HorizontalAlignment="Left"
+                                                           Width="90"
+                                                           Value="{Binding CalculatedTransfer,Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                           Margin="0, 5, 0, 0" />
+                        </StackPanel>
+
+                    </StackPanel>
+                </telerik:RadTabItem>
+
+                <telerik:RadTabItem Header="Разрешения/План/Состояние">
+                    <StackPanel Margin="11">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Margin="11, 0, 0, 0">
+                                <TextBlock Text="№ плана:"
+                                           Margin="0, 11, 0, 0" />
+                                <TextBox Text="{Binding GazpromPlanID, Mode=TwoWay}" Width="80"
+                                           Margin="0, 5, 0, 0" />
+                            </StackPanel>
+                            <StackPanel Margin="11, 0, 0, 0">
+                                <TextBlock Text="Дата регистрации плана:"
+                                           Margin="0, 11, 0, 0" />
+                                <telerik:RadDatePicker
+                                    SelectedDate="{Binding PlanRegDate, Mode=TwoWay}"
+                                    Width="150"                                   
+                                    Margin="0, 5, 0, 0" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Состояние потребителей:"
+                                           Margin="0, 11, 0, 0" />
+                            <TextBox Text="{Binding ConsumersState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0, 11, 0, 0" Height="80" AcceptsReturn="True" TextWrapping="Wrap" Width="350"
+                                 VerticalScrollBarVisibility="Visible" HorizontalAlignment="Stretch"
+                                 VerticalContentAlignment="Top" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Margin="5">
+                                <TextBlock Text="Дата разрешения (Газпром):"
+                                           Margin="0, 11, 0, 0" />
+                                <telerik:RadDatePicker
+                                    SelectedDate="{Binding ResolutionDateCpdd, Mode=TwoWay}"
+                                    Width="150"                                   
+                                    Margin="0, 5, 0, 0" />
+                            </StackPanel>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="Номер разрешения (Газпром):"
+                                           Margin="0, 11, 0, 0" />
+                                <TextBox
+                                    Text="{Binding ResolutionNumCpdd, Mode=TwoWay}"
+                                    Width="150"                                   
+                                    Margin="0, 5, 0, 0" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Margin="5">
+                                <TextBlock Text="Дата разрешения (ПДС):"
+                                           Margin="0, 11, 0, 0" />
+                                <telerik:RadDatePicker
+                                    SelectedDate="{Binding ResolutionDate, Mode=TwoWay}"
+                                    Width="150"                                   
+                                    Margin="0, 5, 0, 0" />
+                            </StackPanel>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="Номер разрешения (ПДС):"
+                                           Margin="0, 11, 0, 0" />
+                                <TextBox
+                                    Text="{Binding ResolutionNum, Mode=TwoWay}"
+                                    Width="150"                                   
+                                    Margin="0, 5, 0, 0" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </telerik:RadTabItem>
+
+                <telerik:RadTabItem Header="Прикрепленные файлы" IsEnabled="{Binding HasID}">
+                    <attach:RepairAttachmentsView DataContext="{Binding Attachments}" />
+                </telerik:RadTabItem>
+
+                <telerik:RadTabItem Header="Лист согласования" IsEnabled="{Binding HasID}">
+                    <agree:AgreementListView  DataContext="{Binding AgreementList}"/>
+                </telerik:RadTabItem>
+
+            </telerik:RadTabControl>
+
+            <!--
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+                
+                <telerik:RadButton Content="{Binding ButtonSaveCaption}" Command="{Binding SaveCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+
+                <telerik:RadButton Content="Отмена" Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+
+            -->
+            
+           
+                <Grid Grid.Row="1" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                <telerik:RadButton Grid.Column="0" Content="Задать статус Черновик" Command="{Binding ProcessCommand}"  Style="{StaticResource StyleConfirmationButton}"
+                          HorizontalAlignment="Left" Width="200" 
+                                           Margin="5,5,5,5" Visibility="{Binding AllowToProcess, Converter={StaticResource boolToVisibility}}"
+                                           />
+                        
+                        <StackPanel Grid.Column="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+                            <telerik:RadButton Content="{Binding ButtonSaveCaption}" Command="{Binding SaveCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+
+                            <telerik:RadButton Content="Отмена" Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+                        </StackPanel>
+            </Grid>
+                
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

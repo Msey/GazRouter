@@ -1,0 +1,52 @@
+﻿<telerik:RadWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:dialogs="clr-namespace:GazRouter.Repair.Dialogs"
+                   mc:Ignorable="d" x:Class="GazRouter.Repair.Plan.Dialogs.AddEditComplexView"
+                   Width="350" Height="Auto"   
+                   Header="{Binding Caption}"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DataContext="{d:DesignInstance dialogs:AddEditComplexViewModel}" Style="{StaticResource DialogWindowStyle}">
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid Margin="11">
+
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="Auto"/>
+                <RowDefinition  Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel>
+                <TextBlock TextWrapping="Wrap" Text="Наименование комплекса:" />
+                <TextBox Text="{Binding ComplexName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0, 5, 0, 0" />
+
+                <TextBlock TextWrapping="Wrap" Text="Дата начала:" Margin="0,11,0,0" />
+                <telerik:RadDatePicker 
+                    SelectedDate="{Binding StartDate, Mode=TwoWay}" 
+                    DisplayDateStart="{Binding AllowedDateRangeStart}"
+                    SelectableDateStart="{Binding AllowedDateRangeStart}"
+                    DisplayDateEnd="{Binding AllowedDateRangeEnd}"
+                    SelectableDateEnd="{Binding AllowedDateRangeEnd}" 
+                    Margin="0, 5, 0, 0" />
+
+                <TextBlock TextWrapping="Wrap" Text="Дата окончания:" Margin="0,11,0,0" />
+                <telerik:RadDatePicker 
+                    SelectedDate="{Binding EndDate, Mode=TwoWay}" 
+                    DisplayDateStart="{Binding AllowedDateRangeStart}"
+                    SelectableDateStart="{Binding AllowedDateRangeStart}"
+                    DisplayDateEnd="{Binding AllowedDateRangeEnd}"
+                    SelectableDateEnd="{Binding AllowedDateRangeEnd}" 
+                    Margin="0, 5, 0, 0" />
+
+                <TextBlock Text="{Binding DurationString}" Margin="0,11,0,0" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+                <telerik:RadButton Command="{Binding SaveCommand}" Content="{Binding ButtonSaveCaption}" Style="{StaticResource StyleConfirmationButton}" />
+                <telerik:RadButton Command="{Binding CancelCommand}" Content="Отмена" Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

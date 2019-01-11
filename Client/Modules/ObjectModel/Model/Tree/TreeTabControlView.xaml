@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="GazRouter.ObjectModel.Model.Tree.TreeTabControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:tabs="clr-namespace:GazRouter.ObjectModel.Model.Tabs"
+             xmlns:tree="clr-namespace:GazRouter.ObjectModel.Model.Tree"
+             xmlns:coolingRecomended="clr-namespace:GazRouter.ObjectModel.Model.Tabs.CoolingRecomended"
+             xmlns:propertyValues="clr-namespace:GazRouter.ObjectModel.Model.Tabs.PropertyValues"
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance tree:PointObjectsManagerViewModel}">
+    <UserControl.Resources>
+        <DataTemplate DataType="propertyValues:PropertiesValuesViewModel">
+            <propertyValues:PropertiesValuesView />
+        </DataTemplate>
+        <DataTemplate DataType="coolingRecomended:CompStationCoolingRecomendedViewModel">
+            <coolingRecomended:CompStationCoolingRecomendedView />
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <tree:EditableFullTreeView DataContext="{Binding Path=EditableFullTreeVM}" />
+        </Grid>
+        
+        <sdk:GridSplitter Grid.Column="1" Style="{StaticResource VerticalSplitterStyle}" />
+        
+        <Grid Grid.Column="1" Margin="5,0,0,0">
+            <telerik:RadTabControl SelectedItem="{Binding SelectedTabItem, Mode=TwoWay}"
+                                   ItemsSource="{Binding TabItems}" 
+                                   DisplayMemberPath="Header"
+                                   Margin="0, -4, 0, 0" />
+        </Grid>
+    </Grid>
+
+</UserControl>

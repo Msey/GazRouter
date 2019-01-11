@@ -1,0 +1,200 @@
+﻿<UserControl x:Class="GazRouter.Controls.Dialogs.EntityPicker.EntityPickerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:controls="clr-namespace:GazRouter.Controls"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters"
+             xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+             xmlns:entityPicker="clr-namespace:GazRouter.Controls.Dialogs.EntityPicker">
+    <UserControl.Resources>
+        
+        <Style TargetType="controls:HighlightingTextBlock">
+            <Setter Property="HighlightBrush" Value="Blue" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="controls:HighlightingTextBlock">
+                        <TextBlock x:Name="Text" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <DataTemplate x:Key="HighlightCellTemplate3">
+            <controls:HighlightingTextBlock 
+                Text="{Binding Path=DisplayShortPath}"
+                HighlightText="{Binding DataContext.HighlightTextPath, RelativeSource={RelativeSource FindAncestor, AncestorType=telerik:RadGridView}}"
+                HighlightBrush="OrangeRed" 
+                HighlightFontWeight="ExtraBold" />
+        </DataTemplate>
+
+        <converters:EntityTypeToNameConverter x:Key="EntityTypeNameConverter" />
+
+        <telerik:BooleanToVisibilityConverter x:Name="Bool2VisibilityConverter" />
+
+        <DataTemplate x:Key="EntityTypeDataTemplate" 
+                      DataType="entityPicker:EntityTypeWrapper">
+            <Border Background="{telerik:Windows8Resource ResourceKey=AccentBrush}" 
+                    MinWidth="35" 
+                    MaxHeight="23">
+                <TextBlock Text="{Binding Name}"
+                           Margin="2, 2, 2, 2"
+                           TextWrapping="Wrap"
+                           FontFamily="Segoe UI Light"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center"
+                           Foreground="WhiteSmoke" />
+            </Border>
+        </DataTemplate>
+
+        <ItemsPanelTemplate x:Key="RadListBoxItemsPanel">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        </ItemsPanelTemplate>
+
+    </UserControl.Resources>
+    
+    <Grid Margin="11">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding NamePart, Mode= TwoWay}" 
+                         Width="200" 
+                         HorizontalAlignment="Left" />
+                <telerik:RadButton Command="{Binding ApplyFilterCommand}"
+                                   Width="23"
+                                   HorizontalAlignment="Left"
+                                   Margin="2,0,0,0"
+                                   VerticalAlignment="Center"
+                                   Style="{StaticResource StyleConfirmationButton}"
+                                   telerik:RadWindow.ResponseButton="Accept">
+                    <Image Source="/Common;component/Images/16x16/search.png"
+                           Stretch="None"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center" />
+                </telerik:RadButton>
+            </StackPanel>
+
+
+            <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                <telerik:RadListBox ItemsSource="{Binding FastEntityTypeList}"
+                                    SelectedValue="{Binding SelectedEntityType, Mode=TwoWay}"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                    HorizontalAlignment="Left"
+                                    BorderThickness="0"
+                                    ItemTemplate="{StaticResource EntityTypeDataTemplate}"
+                                    ItemsPanel="{StaticResource RadListBoxItemsPanel}" />
+
+                <telerik:RadComboBox Margin="5,0,0,0"
+                                     Height="23"
+                                     VerticalAlignment="Center"
+                                     ItemsSource="{Binding OtherEntityTypeList}"
+                                     Visibility="{Binding IsOtherEntityTypeSelectorVisible, Converter={StaticResource Bool2VisibilityConverter}}"
+                                     DisplayMemberPath="Name"
+                                     SelectedValue="{Binding SelectedEntityType, Mode=TwoWay}"
+                                     Width="150" 
+                                     HorizontalAlignment="Left" />
+                
+
+                <telerik:RadComboBox Margin="5,0,0,0"
+                                     Height="23"
+                                     ClearSelectionButtonVisibility="Visible"
+                                     ClearSelectionButtonContent="Все"
+                                     EmptyText="Все"
+                                     ItemsSource="{Binding SiteList}"
+                                     Width="220"
+                                     SelectedItem="{Binding SelectedSite, Mode=TwoWay}"
+                                     DisplayMemberPath="Name"
+                                     HorizontalAlignment="Left"/>
+            </StackPanel>
+
+
+            <StackPanel Margin="0,11,0,0"
+                        Visibility="{Binding IsPipelineTypeSelectorVisible, Converter={StaticResource Bool2VisibilityConverter}}">
+                <TextBlock Text="Тип газопровода:" />
+                <telerik:RadComboBox ClearSelectionButtonVisibility="Visible"
+                                     ClearSelectionButtonContent="Все"
+                                     Margin="0,5,0,0"
+                                     EmptyText="Все"
+                                     ItemsSource="{Binding PipelineTypeList}"
+                                     DisplayMemberPath="Name"
+                                     SelectedItem="{Binding SelectedPipelineType, Mode=TwoWay}"
+                                     Width="225"
+                                     HorizontalAlignment="Left" />
+            </StackPanel>
+        </StackPanel>
+
+
+        <telerik:RadBusyIndicator Grid.Row="1" 
+                                  BusyContent="Идёт загрузка..." 
+                                  DisplayAfter="0"
+                                  IsBusy="{Binding IsBusyLoading}">
+
+
+            <StackPanel Margin="0, 11, 0, 0">
+                <telerik:RadGridView
+                    attachedProperties:ExtendedEvents.MouseLeftDoubleClickEvent="{Binding SelectCommand}"
+                    x:Name="radGridView"
+                    ItemsSource="{Binding Items}"
+                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                    AutoGenerateColumns="False"
+                    Height="600"
+                    IsReadOnly="True"
+                    ShowGroupPanel="False"
+                    RowIndicatorVisibility="Collapsed"
+                    AlternationCount="2"
+                    GridLinesVisibility="Both"
+                    CanUserFreezeColumns="False">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Width="400"
+                                                    DataMemberBinding="{Binding Path=DisplayShortPath}"
+                                                    Header="Наименование"
+                                                    TextWrapping="Wrap"
+                                                    IsSortable="True"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"
+                                                    CellTemplate="{StaticResource HighlightCellTemplate3}"/>
+
+                        <telerik:GridViewDataColumn Width="120"
+                                                    DataMemberBinding="{Binding Path=EntityType, Converter={StaticResource EntityTypeNameConverter}}"
+                                                    Header="Тип"
+                                                    IsSortable="True"
+                                                    TextAlignment="Left"
+                                                    TextWrapping="Wrap"
+                                                    IsFilterable="False" />
+
+                        <telerik:GridViewDataColumn Width="200"
+                                                    DataMemberBinding="{Binding Path=SiteName}"
+                                                    Header="ЛПУ"
+                                                    TextWrapping="Wrap"
+                                                    IsSortable="True"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="false" />
+                        
+
+<!--  для отладки!      <telerik:GridViewDataColumn Width="Auto"-->
+<!--                                                    DataMemberBinding="{Binding Path=SiteId}"-->
+<!--                                                    Header="ЛПУ guid"-->
+<!--                                                    TextWrapping="Wrap"-->
+<!--                                                    IsSortable="True"-->
+<!--                                                    TextAlignment="Left"-->
+<!--                                                    IsFilterable="False" />-->
+                        
+
+                    </telerik:RadGridView.Columns>
+
+                </telerik:RadGridView>
+                <telerik:RadDataPager x:Name="radDataPager"
+                                      PageSize="{Binding PageSize}"
+                                      Source="{Binding Items,ElementName=radGridView}"
+                                      DisplayMode="All"
+                                      AutoEllipsisMode="Both"
+                                      NumericButtonCount="15"
+                                      IsTotalItemCountFixed="True" />
+            </StackPanel>
+        </telerik:RadBusyIndicator>
+    </Grid>
+</UserControl>

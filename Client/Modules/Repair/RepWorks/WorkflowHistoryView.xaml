@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="GazRouter.Repair.RepWorks.WorkflowHistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+             xmlns:behaviors="clr-namespace:GazRouter.Common.Ui.Behaviors;assembly=Common"
+             xmlns:converters="clr-namespace:GazRouter.Repair.Converters"
+             xmlns:repworks="clr-namespace:GazRouter.Repair.RepWorks"
+             xmlns:repairWorks="clr-namespace:GazRouter.DTO.Repairs.RepairWorks;assembly=PortableDTO"
+             xmlns:converters1="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance repworks:WorkflowHistoryViewModel}">
+    
+    <UserControl.Resources>
+        <telerik:BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        <telerik:InvertedBooleanToVisibilityConverter x:Key="InvertedBoolToVisibility" />
+        <converters:StartDateToColorConverter x:Key="StartDateToColorConverter" />
+        <converters1:TimeSpanConverter x:Key="TimeSpanConverter" />
+        <converters1:EntityTypeToImageSourceConverter x:Key="EntityTypeToImageConverter" />
+        <converters1:DailyDateTimeConverter x:Key="DailyDateTimeConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        
+        <telerik:RadGridView x:Name="Grid"
+                             ItemsSource="{Binding HistoryList}"
+                             ShowGroupPanel="False"
+                             CanUserFreezeColumns="False"
+                             RowIndicatorVisibility="Collapsed"
+                             AutoGenerateColumns="False"
+                             IsReadOnly="True"
+                             IsFilteringAllowed="True"
+                             CanUserSortColumns="True">
+
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn Width="100"
+                                            Header="Дата изменения" 
+                                            DataMemberBinding="{Binding EventDate, StringFormat='dd.MM.yyyy HH:mm'}"/>
+
+
+                <telerik:GridViewDataColumn Width="150"
+                                            Header="Статус согласования"
+                                            DataMemberBinding="{Binding WFState}"/>
+                <telerik:GridViewDataColumn Width="150"
+                                            Header="Статус работ"
+                                            DataMemberBinding="{Binding WState}"/>
+
+
+                <telerik:GridViewColumn Width="200" Header="Сотрудник внесший изменение" IsFilterable="False">
+                    <telerik:GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding UserName}" />
+                                <TextBlock Text="{Binding UserDescription}" FontSize="10" Foreground="Gray"/>
+                                <TextBlock Text="{Binding SiteName}" FontSize="10" Foreground="Gray"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:GridViewColumn.CellTemplate>
+                </telerik:GridViewColumn>
+
+            </telerik:RadGridView.Columns>
+
+
+        </telerik:RadGridView>
+
+    </Grid>
+</UserControl>

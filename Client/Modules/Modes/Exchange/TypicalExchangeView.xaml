@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="GazRouter.Modes.Exchange.TypicalExchangeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:controls1="clr-namespace:GazRouter.Controls;assembly=Controls"
+             xmlns:exchange="clr-namespace:GazRouter.Modes.Exchange"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400" d:DataContext="{d:DesignInstance exchange:TypicalExchangeViewModel}">
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+          
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal"  >
+                <TextBlock Text="Список предприятий для обмена:" Margin="5"/>
+                <telerik:RadComboBox Margin="5" ItemsSource="{Binding ExchangeEnterprises}" SelectedItem="{Binding SelectedEnterprise, Mode=TwoWay}"
+                                     SelectedValuePath="Id" DisplayMemberPath="Name" IsEditable="False" 
+                                     CanAutocompleteSelectItems="True" EmptyText="..." >
+                </telerik:RadComboBox>
+
+                <TextBlock Margin="5">Типы:</TextBlock>
+                <telerik:RadComboBox ItemsSource="{Binding EntityTypeList,Mode=TwoWay}" Margin="5"
+                                     SelectedItem="{Binding SelectedEntityType,Mode=TwoWay}"  DisplayMemberPath="Name"></telerik:RadComboBox>
+
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" >
+                <telerik:RadButton Content="..." Command="{Binding ImportCommand}"
+                                                       Width="Auto"
+                                                       ToolTipService.ToolTip="Файл импорта" />
+
+
+                <TextBlock Text="Метка времени" Margin="5"></TextBlock>
+                <telerik:RadDateTimePicker SelectedValue="{Binding Path=SelectedTimeStamp,Mode=TwoWay}" Margin="5" />
+                <telerik:RadButton Command="{Binding DownloadCommand}" ToolTipService.ToolTip="Сохранить файл" Style="{StaticResource saveButtonStyle}"  Margin="5" />
+
+            </StackPanel>
+
+            <Grid Grid.Row="1" ColumnSpan="2" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <telerik:RadGridView Margin="5" IsReadOnly="True" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" ItemsSource="{Binding EntityList, Mode=TwoWay}" Grid.Column="0" AutoGenerateColumns="False" ShowGroupPanel="False" >
+                    <telerik:RadGridView.Columns >
+                        <telerik:GridViewDataColumn SortingState="Ascending" Header="Наименование объекта" DataMemberBinding="{Binding Path=ShortPath}" Width="500">
+                        <telerik:GridViewDataColumn.FilteringControl>
+                            <controls1:FilterControl Value="" />
+                        </telerik:GridViewDataColumn.FilteringControl>
+                        </telerik:GridViewDataColumn>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <telerik:RadButton Command="{Binding PickItemCommand}"  Content="+" Margin="10" Width="Auto" Height="Auto"></telerik:RadButton>
+                    <telerik:RadButton Command="{Binding UnPickItemCommand}"  Content="-" Margin="10" Width="Auto" Height="Auto"></telerik:RadButton>
+                </StackPanel>
+
+                <telerik:RadGridView Margin="5" IsReadOnly="True" SelectedItem="{Binding SelectedPickedEntity, Mode=TwoWay}"  ItemsSource="{Binding PickedEntityList, Mode=TwoWay}"  Grid.Column="2" AutoGenerateColumns="False" ShowGroupPanel="False" >
+                    <telerik:RadGridView.Columns >
+                        <telerik:GridViewDataColumn SortingState="Ascending" Header="Наименование объекта" DataMemberBinding="{Binding Path=Path}" Width="200" >
+                        <telerik:GridViewDataColumn.FilteringControl>
+                            <controls1:FilterControl Value="" />
+                        </telerik:GridViewDataColumn.FilteringControl>
+                        </telerik:GridViewDataColumn>
+                        <telerik:GridViewDataColumn SortingState="Ascending" Header="Тип" DataMemberBinding="{Binding Path=Name}" Width="Auto"/>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </Grid>
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

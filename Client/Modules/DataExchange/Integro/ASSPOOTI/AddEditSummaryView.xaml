@@ -1,0 +1,116 @@
+﻿<telerik:RadWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:mapping="clr-namespace:GazRouter.DataExchange.Integro.ASSPOOTI"
+                   mc:Ignorable="d"
+                   Width="600" 
+                   Height="Auto"   
+                   Header="{Binding Caption}"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   Style="{StaticResource DialogWindowStyle}"
+                   d:DataContext="{d:DesignInstance mapping:AddEditSummaryViewModel}">
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid Margin="11">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <telerik:RadTabControl AllTabsEqualHeight="True" BorderThickness="0" Margin="-2, 0, -2, 0" >
+                    <telerik:RadTabItem  Header="Основные" Width="150">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="25" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" >
+                                <TextBlock Text="Наименование:" />
+                                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="0, 5, 0, 0" />
+
+                                <TextBlock Text="Описание:"  Margin="0, 11, 0, 0" />
+                                <TextBox Text="{Binding Descriptor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="100"
+                                         Style="{StaticResource MultiLineStyle}"/>
+
+                                <TextBlock Text="Маска имени файла:" />
+                                <TextBox Text="{Binding FileNameMask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0, 5, 0, 0" />
+                            </StackPanel>
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Тип данных:"  Margin="0, 11, 0, 0" />
+                                <telerik:RadComboBox Grid.Row="1" Grid.Column="0"
+                                     ItemsSource="{Binding Path=PeriodTypes}" 
+                                     Width="150"
+                                     Margin="0, 5, 0, 0" 
+                                     HorizontalAlignment="Left"
+                                     SelectedItem="{Binding Path=SelectedPeriodType, Mode=TwoWay}" 
+                                     DisplayMemberPath="Name" 
+                                     IsEditable="False"
+                                     CanAutocompleteSelectItems="True" />
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="Тип сводки:" Margin="0, 11, 0, 0" />
+                                <telerik:RadComboBox  Grid.Row="1" Grid.Column="1"
+                                     ItemsSource="{Binding Path=SessionDataTypes}" 
+                                     Width="150"
+                                     Margin="0, 5, 0, 0" 
+                                     HorizontalAlignment="Left"
+                                     SelectedItem="{Binding Path=SelectedSessionDataType, Mode=TwoWay}" 
+                                     DisplayMemberPath="Name" 
+                                     IsEditable="False"
+                                     CanAutocompleteSelectItems="True" />
+                                <TextBlock Grid.Row="0" Grid.Column="2" Text="Час сводки:" Margin="0, 11, 0, 0" 
+                                           Visibility="{Binding IsExcludeHourVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                <telerik:RadComboBox  Grid.Row="1" Grid.Column="2"
+                                     Visibility="{Binding IsExcludeHourVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                     ItemsSource="{Binding Path=ExcludeHourList}" 
+                                     Width="150"
+                                     Margin="0, 5, 0, 0" 
+                                     HorizontalAlignment="Left"
+                                     SelectedItem="{Binding Path=SelectedExcludeHour, Mode=TwoWay}"                                      
+                                     IsEditable="False"
+                                     CanAutocompleteSelectItems="True" />
+                            </Grid>
+                            <Grid Grid.Row="2" >
+                                <CheckBox HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0, 10, 0, 0"  IsChecked="{Binding IsUsedInExchange, Mode=TwoWay}"  Content="Используется в обмене" />
+                            </Grid>
+                        </Grid>
+                    </telerik:RadTabItem>
+                    <telerik:RadTabItem Header="Преобразование" Width="150" Visibility="{Binding IsAsspooti, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <StackPanel Margin="11">
+                            <CheckBox IsChecked="{Binding IsTransform, Mode=TwoWay}" 
+                                  Content="Включить преобразование" />
+
+                            <TextBlock Text="Преобразование (XSLT):" Margin="0, 11, 0, 0" />
+                            <TextBox IsEnabled="{Binding IsTransform, Mode=TwoWay}" 
+                                 Text="{Binding Transformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource MultiLineStyle}"  
+                                 Height="350"
+                                 Margin="0, 5, 0, 0"
+                                 FontSize="11" />
+                        </StackPanel>
+                    </telerik:RadTabItem>
+                </telerik:RadTabControl>
+            </Grid>
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+                <telerik:RadButton Command="{Binding SaveCommand}" 
+                                   Content="Сохранить"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+                <telerik:RadButton Command="{Binding CancelCommand}" 
+                                   Content="Отмена"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

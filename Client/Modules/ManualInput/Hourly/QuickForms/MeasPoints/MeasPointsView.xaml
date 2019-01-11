@@ -1,0 +1,824 @@
+﻿<UserControl x:Class="GazRouter.ManualInput.Hourly.QuickForms.MeasPoints.MeasPointsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:vm="clr-namespace:GazRouter.ManualInput.Hourly.QuickForms.MeasPoints"
+             xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+             xmlns:measurings1="clr-namespace:GazRouter.Controls.Measurings;assembly=Controls"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="300" 
+             d:DesignWidth="400" 
+             d:DataContext="{d:DesignInstance vm:MeasPointsViewModel}"
+             x:Name="LayoutRoot">
+
+    
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            <Grid.Resources>
+                <converters:EntityTypeToImageSourceConverter x:Key="EntityTypeToImageSourceConverter"/>
+            </Grid.Resources>
+
+            <telerik:RadGridView GridLinesVisibility="Both"
+                                 AutoGenerateColumns="False"
+                                 IsReadOnly="{Binding IsReadOnly}"
+                                 ItemsSource="{Binding Items}"
+                                 CanUserFreezeColumns="False"
+                                 RowIndicatorVisibility="Collapsed"
+                                 ShowGroupPanel="False"
+                                 ShowColumnFooters="True"
+                                 AlternationCount="2">
+
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="250" 
+                                                Header="Место измерения" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsReadOnly="True">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <Grid Margin="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding ParentType, Converter={StaticResource EntityTypeToImageSourceConverter}}"
+                                           Stretch="None" />
+                                    <TextBlock Text="{Binding ParentName}" 
+                                               Margin="5, 0, 0, 0"
+                                               TextWrapping="Wrap"
+                                               Grid.Column="1"/>
+                                </Grid>
+                                
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.DewPoint, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="T т.р. по влаге, [T]"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.DewPointColor}" Margin="1,3,1,3">
+                                    <measurings1:MeasuringBlock DataContext="{Binding DewPoint}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding DewPoint.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.DewPointHydrocarbon, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="T т.р. по углеводородам, [T]"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.DewPointHydrocarbonColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding DewPointHydrocarbon}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding DewPointHydrocarbon.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.Density, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Плотность газа, кг/м3"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.DensityColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding Density}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n3" 
+                                                               Value="{Binding Density.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.DensityStandard, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Плотность газа при ст.усл., кг/м3"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.DensityStandardColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding DensityStandard}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n3" 
+                                                               Value="{Binding DensityStandard.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.CombustionHeatLow, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Теплота сгорания низшая, [C]"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.CombustionHeatLowColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding CombustionHeatLow}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n0" 
+                                                               Value="{Binding CombustionHeatLow.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.CombustionHeatHigh, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Теплота сгорания высшая, [C]"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.CombustionHeatHighColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding CombustionHeatHigh}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n0" 
+                                                               Value="{Binding CombustionHeatHigh.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.Wobbe, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Число Воббе, [C]"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.WobbeColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding Wobbe}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n0" 
+                                                               Value="{Binding Wobbe.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+                    
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentNitrogen, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание азота (N2), %"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentNitrogenColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ContentNitrogen}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding ContentNitrogen.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentCarbonDioxid, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание углекислого газа (СО2), %"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentCarbonDioxidColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ContentCarbonDioxid}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding ContentCarbonDioxid.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentMethane, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание метана (CH4), %"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentMethaneColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ContentMethane}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding ContentMethane.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentEthane, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание этана (C2H6), %"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentEthaneColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ContentEthane}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding ContentEthane.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentPropane, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание пропана (C3H8), %"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentPropaneColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ContentPropane}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding ContentPropane.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentButane, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание n-бутана (n-C4H10), %"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentButaneColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ContentButane}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding ContentButane.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentIsobutane, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание i-бутана (i-C4H10), %"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentIsoButaneColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ContentIsobutane}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding ContentIsobutane.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentPentane, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание n-пентана (n-C5H12), %"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentPentaneColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ContentPentane}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding ContentPentane.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentIsopentane, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание i-пентана (i-C5H12), %"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentIsopentaneColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ContentIsopentane}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding ContentIsopentane.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentNeopentane, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание нео-пентана (neo-C5H12), %"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentNeopentaneColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ContentNeopentane}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding ContentNeopentane.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentHexane, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание гексана (C6H14), %"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentHexaneColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ContentHexane}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding ContentHexane.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentHydrogen, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание водорода (H2), %"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentHydrogenColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ContentHydrogen}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding ContentHydrogen.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentHelium, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание гелия (He), %"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentHeliumColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ContentHelium}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n1" 
+                                                               Value="{Binding ContentHelium.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ConcentrationSourSulfur, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Концентрация меркаптановой серы, г/м3"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ConcentrationSourSulfurColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ConcentrationSourSulfur}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n3" 
+                                                               Value="{Binding ConcentrationSourSulfur.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ConcentrationHydrogenSulfide, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Концентрация сероводорода, г/м3"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ConcentrationHydrogenSulfideColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ConcentrationHydrogenSulfide}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n3" 
+                                                               Value="{Binding ConcentrationHydrogenSulfide.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ConcentrationOxygen, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Концентрация кислорода, г/м3"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ConcentrationOxygenColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding ConcentrationOxygen}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n3" 
+                                                               Value="{Binding ConcentrationOxygen.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.Dryness, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Влагосодержание, г/м3"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.DrynessColor}" Margin="1,3,1,3">
+                                <measurings1:MeasuringBlock DataContext="{Binding Dryness}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n3" 
+                                                               Value="{Binding Dryness.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsVisible="{Binding DataContext.ColumnVisibility.ContentImpurities, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Содержание мех. примесей, г/м3"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <StackPanel Background="{Binding ItemColorTemplate.ContentImpuritiesColor}" Margin="1,3,1,3">
+                                    <measurings1:MeasuringBlock DataContext="{Binding ContentImpurities}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="vm:MeasPointItem">
+                                <telerik:RadMaskedNumericInput FormatString="n3" 
+                                                               Value="{Binding ContentImpurities.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" KeyDown="RadMaskedNumericInput_KeyDown"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+
+
+
+
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+
+            
+        </Grid>
+    </telerik:RadBusyIndicator>
+    
+</UserControl>

@@ -1,0 +1,81 @@
+﻿<telerik:RadWindow x:Class="GazRouter.ObjectModel.Model.Dialogs.Errors.ErrorsView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:errors="clr-namespace:GazRouter.ObjectModel.Model.Dialogs.Errors"
+                   xmlns:converters="clr-namespace:GazRouter.Controls.Converters"
+                   mc:Ignorable="d" 
+                   d:DesignHeight="200" 
+                   d:DesignWidth="300"
+                   Header="Ошибки модели" 
+                   Height="500" 
+                   Style="{StaticResource DialogWindowStyle}"
+                   attachedProperties1:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DataContext="{d:DesignInstance errors:ErrorsViewModel}" 
+                   HideMaximizeButton="True"
+                   HideMinimizeButton="True" 
+                   ResizeMode="CanResize">
+    
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid Margin="11">
+
+            <Grid.Resources>
+                <converters:IsCriticalToImageConverter x:Key="CriticalToImageConverter"/>
+            </Grid.Resources>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <telerik:RadGridView attachedProperties1:ExtendedEvents.MouseLeftDoubleClickEvent="{Binding SelectCommand}"
+                                 AutoGenerateColumns="False" 
+                                 IsReadOnly="True" 
+                                 ItemsSource="{Binding Path=List}"
+                                 SelectedItem="{Binding Path=SelectedError, Mode=TwoWay}"
+                                 RowIndicatorVisibility="Collapsed" 
+                                 ShowGroupPanel="False"
+                                 CanUserFreezeColumns="False">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="30" 
+                                                DataMemberBinding="{Binding Inconsistency.IsCritical}"
+                                                Header="" 
+                                                IsSortable="True" 
+                                                IsFilterable="True"
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="errors:InconsistencyWrap">
+                                <Image Source="{Binding Inconsistency.IsCritical, Converter={StaticResource CriticalToImageConverter}}"
+                                       Stretch="None"
+                                       Margin="3"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="400" 
+                                                DataMemberBinding="{Binding Path=DTO.EntityName}"
+                                                Header="Объект" 
+                                                IsSortable="False" 
+                                                IsFilterable="False"
+                                                TextWrapping="Wrap" />
+                    
+                    <telerik:GridViewDataColumn Width="300" 
+                                                DataMemberBinding="{Binding Path=Inconsistency.Name}"
+                                                Header="Тип ошибки" 
+                                                IsSortable="True" 
+                                                IsFilterable="True"
+                                                TextWrapping="Wrap" />
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+
+                <telerik:RadButton Content="Закрыть" Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

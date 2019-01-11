@@ -1,0 +1,1311 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:visuals="clr-namespace:GazRouter.Flobus.Visuals"
+    xmlns:commands="clr-namespace:GazRouter.Flobus.Commands"
+    xmlns:flobus="clr-namespace:GazRouter.Flobus"
+    xmlns:thumbnail="clr-namespace:GazRouter.Flobus.Thumbnail"
+    xmlns:misc="clr-namespace:GazRouter.Flobus.Misc"
+    xmlns:primitives="clr-namespace:GazRouter.Flobus.Primitives"
+    xmlns:utilites="clr-namespace:GazRouter.Flobus.Utilites">
+
+    <Style x:Key="PipelineElementCaptionStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="LineHeight" Value="11" />
+        <Setter Property="LineStackingStrategy" Value="BlockLineHeight"></Setter>
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="MaxWidth" Value="100" />
+    </Style>
+    <Style x:Key="ContainerStyle" TargetType="Grid">
+        <Setter Property="Background" Value="LightGray" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Opacity="0.5" ShadowDepth="2" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <SolidColorBrush x:Key="DiagramBackgroundBrush" Color="WhiteSmoke" />
+    <SolidColorBrush x:Key="FoundStoke" Color="Orange" />
+
+    <misc:Scale2PercentConverter x:Key="PercentageConverter" />
+    <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <telerik:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" />
+    <utilites:GeometryConverter x:Key="GeometryConverter" />
+    <telerik:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+    <DropShadowEffect x:Key="DiagramEffect" ShadowDepth="0" BlurRadius="0" Color="#FD000000" Opacity="0" />
+
+
+    <DataTemplate x:Key="NavigationPaneMapTemplate">
+        <Path Fill="{Binding Foreground,RelativeSource={RelativeSource AncestorType=ContentControl,Mode=FindAncestor}}"
+              Stretch="None"
+              Data="M8,0 L11,3 L9,3 L9,7 L13,7 L13,5 L16,8.1 L13,11 L13,9 L9,9 L9,13 L11,13 L8,16 L5,13 L7,13 L7,9 L3,9 L3,11 L0,7.9 L3,5 L3,7 L7,7 L7,3 L5,3 z" />
+    </DataTemplate>
+    <Style TargetType="primitives:ManipulationAdorner" x:Key="ManipulationAdornerStyle">
+        <Setter Property="RenderTransformOrigin" Value="0.5 0.5" />
+        <Setter Property="Background" Value="#00FFFFFF" />
+        <Setter Property="BorderBrush" Value="#FF282828" />
+        <Setter Property="Width" Value="36" />
+        <Setter Property="Height" Value="36" />
+        <Setter Property="Template">
+            <Setter.Value>
+                    <ControlTemplate TargetType="primitives:ManipulationAdorner">
+                        <Grid>
+                        <Rectangle Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}"
+								   StrokeDashArray="3 3" StrokeThickness="1" IsHitTestVisible="False" />
+                        <Rectangle x:Name="BottomRightResizeHandle" Stroke="#FF848484" Fill="White" Width="7" Height="7" StrokeThickness="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 -3 -3"></Rectangle>
+                        </Grid>
+                    </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="primitives:PipelineManipulationAdorner">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="primitives:PipelineManipulationAdorner">
+                    <Grid>
+                        <Canvas x:Name="PipelineManipulationPointsSurface"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPipelineAdornerActive, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <DataTemplate x:Key="NavigationPaneToggleTemplate">
+        <Grid>
+            <Grid Background="Transparent"
+                  Visibility="{Binding Path=IsChecked, RelativeSource={RelativeSource AncestorType=telerik:RadToggleButton, Mode=FindAncestor}, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
+                  ToolTipService.ToolTip="Открыть">
+                <Path
+                    Fill="{Binding Foreground,RelativeSource={RelativeSource AncestorType=ContentControl, Mode=FindAncestor}}"
+                    Stretch="fill"
+                    Height="12"
+                    Width="12"
+                    Data="M12.0,2.1 C9.8,2.1 7.8,3.7 7.2,5.9 C7.1,6.3 7.1,6.7 7.1,7.1 C7.1,8.1 7.4,9.1 7.9,9.9 C8.7,10.9 9.4,11.3 9.4,11.3 C9.8,11.6 10.3,11.8 10.8,11.9 C11.2,12.0 11.6,12.1 12.0,12.1 C14.2,12.1 16.3,10.5 16.8,8.3 C16.9,7.9 17.0,7.5 17.0,7.1 C17.0,4.9 15.5,2.8 13.2,2.3 C12.8,2.2 12.4,2.1 12.0,2.1 z M12.0,0 C12.6,0 13.2,0.0 13.7,0.2 C17.0,1.0 19.2,3.9 19.2,7.1 C19.2,7.7 19.1,8.2 19.0,8.8 L19.0,8.8 C18.2,12.1 15.2,14.2 12.0,14.2 C11.5,14.2 10.9,14.2 10.3,14.0 C9.6,13.9 9.0,13.6 8.4,13.3 L8.4,13.3 L8.4,13.2 L3.1,18.6 C2.7,19.0 2.2,19.2 1.8,19.2 C1.3,19.2 0.8,19.0 0.5,18.6 C-0.1,17.9 -0.1,16.8 0.5,16.1 L5.8,10.7 L5.7,10.5 C5.2,9.4 4.9,8.3 4.9,7.1 C4.9,6.5 4.9,6.0 5.1,5.4 C5.9,2.1 8.8,-0.0 12.0,0 z" />
+            </Grid>
+
+            <Grid Background="Transparent"
+                  Visibility="{Binding Path=IsChecked, RelativeSource={RelativeSource AncestorType=telerik:RadToggleButton, Mode=FindAncestor}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                  ToolTipService.ToolTip="Закрыть">
+                <Image Source="/Common;component/Images/16x16/clear.png"
+                       Stretch="None" />
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+
+    <ControlTemplate TargetType="RepeatButton" x:Key="HandleRepeatButton">
+        <Grid x:Name="Root" Background="Transparent">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="MouseOver">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Path"
+                                                           Storyboard.TargetProperty="Fill">
+                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                        Value="{telerik:Windows8Resource ResourceKey=MarkerBrush}" />
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Path"
+                                                           Storyboard.TargetProperty="Fill">
+                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                        Value="{telerik:Windows8Resource ResourceKey=MarkerBrush}" />
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <Storyboard>
+                            <DoubleAnimation Duration="0" Storyboard.TargetName="Path"
+                                             Storyboard.TargetProperty="Opacity" To="0.5" />
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="FocusStates">
+                    <VisualState x:Name="Focused">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual"
+                                                           Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Visible</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Unfocused" />
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Path
+                Fill="{telerik:Windows8Resource ResourceKey=StrongBrush}"
+                x:Name="Path"
+                Stretch="Fill"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                RenderTransformOrigin="0.5,0.5"
+                Data="M4,0 L4,6 0,3 z"
+                Width="4"
+                Height="4" />
+            <Border x:Name="FocusVisual" Visibility="Collapsed" BorderThickness="1"
+                    BorderBrush="{telerik:Windows8Resource ResourceKey=MarkerBrush}" Opacity="0.2" />
+        </Grid>
+    </ControlTemplate>
+
+
+    <ControlTemplate TargetType="RepeatButton" x:Key="HandleRepeatButtonTemplate">
+        <Grid x:Name="Root">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="MouseOver">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                           Storyboard.TargetProperty="BorderBrush" Duration="0:0:0">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0"
+                                                        Value="{telerik:Windows8Resource ResourceKey=StrongBrush}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                           Storyboard.TargetProperty="Background" Duration="0:0:0">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0"
+                                                        Value="{telerik:Windows8Resource ResourceKey=StrongBrush}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="path"
+                                                           Storyboard.TargetProperty="Fill">
+                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                        Value="{telerik:Windows8Resource ResourceKey=MarkerBrush}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerBorder"
+                                                           Storyboard.TargetProperty="BorderBrush" Duration="0:0:0">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Transparent" />
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                           Storyboard.TargetProperty="BorderBrush" Duration="0:0:0">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="#FFD6D4D4" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                           Storyboard.TargetProperty="Background" Duration="0:0:0">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0"
+                                                        Value="{telerik:Windows8Resource ResourceKey=BasicBrush}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="path"
+                                                           Storyboard.TargetProperty="Fill">
+                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                        Value="{telerik:Windows8Resource ResourceKey=MarkerBrush}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerBorder"
+                                                           Storyboard.TargetProperty="BorderBrush" Duration="0:0:0">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Transparent" />
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                           Storyboard.TargetProperty="Background">
+                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                        Value="{telerik:Windows8Resource ResourceKey=BasicBrush}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                           Storyboard.TargetProperty="BorderBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                        Value="{telerik:Windows8Resource ResourceKey=BasicBrush}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="path"
+                                                           Storyboard.TargetProperty="Fill">
+                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                        Value="{telerik:Windows8Resource ResourceKey=BasicBrush}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerBorder"
+                                                           Storyboard.TargetProperty="BorderBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FFF8F8F8" />
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="FocusStates">
+                    <VisualState x:Name="Focused">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual"
+                                                           Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Visible</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Unfocused" />
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Border x:Name="Border"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    Background="{TemplateBinding Background}"
+                    CornerRadius="1">
+                <Border x:Name="InnerBorder"
+                        BorderThickness="1"
+                        CornerRadius="1"
+                        BorderBrush="#00FFFFFF" />
+            </Border>
+            <Grid>
+                <Path x:Name="path"
+                      Stretch="None"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      RenderTransformOrigin="0.5,0.5"
+                      Fill="{telerik:Windows8Resource ResourceKey=StrongBrush}"
+                      Data="{Binding Content, RelativeSource={RelativeSource TemplatedParent} , Converter={StaticResource GeometryConverter}}" />
+            </Grid>
+            <Border x:Name="FocusVisual"
+                    BorderBrush="{telerik:Windows8Resource ResourceKey=MarkerBrush}"
+                    Visibility="Collapsed"
+                    BorderThickness="1"
+                    CornerRadius="1" />
+        </Grid>
+    </ControlTemplate>
+
+
+    <Style x:Key="IncreaseHandleStyle" TargetType="RepeatButton">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="Template" Value="{StaticResource HandleRepeatButton}" />
+        <Setter Property="Width" Value="18" />
+        <Setter Property="Height" Value="18" />
+        <Setter Property="Margin" Value="2 0 0 0" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="-1" ScaleY="1" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="DecreaseHandleStyle" TargetType="RepeatButton">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="Template" Value="{StaticResource HandleRepeatButton}" />
+        <Setter Property="Width" Value="18" />
+        <Setter Property="Height" Value="18" />
+        <Setter Property="Margin" Value="0 0 2 0" />
+    </Style>
+
+
+    <Style x:Key="IncreaseNavigationPaneButtonStyle" TargetType="RepeatButton"
+           BasedOn="{StaticResource IncreaseHandleStyle}">
+        <Setter Property="Margin" Value="2 0" />
+        <Setter Property="Content" Value="M4,0 L6,0 6,4 10,4 10,6 6,6 6,10 4,10 4,6 0,6 0,4 4,4 z" />
+        <Setter Property="Background" Value="#00FFFFFF" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Template" Value="{StaticResource HandleRepeatButtonTemplate}" />
+    </Style>
+
+
+    <Style x:Key="DecreaseNavigationPaneButtonStyle" TargetType="RepeatButton"
+           BasedOn="{StaticResource DecreaseHandleStyle}">
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="Background" Value="#00FFFFFF" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Content" Value="M0,0 L10,0 L10,2 L0,2 z" />
+        <Setter Property="Template" Value="{StaticResource HandleRepeatButtonTemplate}" />
+    </Style>
+
+
+    <Style x:Key="ThumbnailSliderStyle" TargetType="telerik:RadSlider" BasedOn="{StaticResource RadSliderStyle}">
+        <Setter Property="MinWidth" Value="140" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HandlesVisibility" Value="Visible" />
+        <Setter Property="IsSnapToTickEnabled" Value="True" />
+        <Setter Property="IsMoveToPointEnabled" Value="True" />
+        <Setter Property="TickFrequency" Value="0.1" />
+        <Setter Property="SmallChange" Value="0.1" />
+        <Setter Property="LargeChange" Value="0.1" />
+        <Setter Property="Background" Value="{telerik:Windows8Resource ResourceKey=BasicBrush}" />
+        <Setter Property="IncreaseHandleStyle" Value="{StaticResource IncreaseNavigationPaneButtonStyle}" />
+        <Setter Property="DecreaseHandleStyle" Value="{StaticResource DecreaseNavigationPaneButtonStyle}" />
+    </Style>
+    <Style TargetType="primitives:BackgroundGrid">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Canvas x:Name="LinesPanel" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="flobus:Schema" x:Key="SchemaStyle">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="{StaticResource DiagramBackgroundBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="flobus:Schema">
+                    <telerik:RadBusyIndicator x:Name="BusyIndicator">
+                        <Grid>
+                            <telerik:RadContextMenu.ContextMenu>
+                                <telerik:RadContextMenu x:Name="ContextMenu" Placement="MousePoint" />
+                            </telerik:RadContextMenu.ContextMenu>
+
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" />
+                            <Grid>
+                                <Grid>
+                                    <primitives:BackgroundGrid x:Name="BackgroundGrid" />
+                                </Grid>
+                                <Grid x:Name="MainPanel" RenderTransformOrigin="0.5, 0.5">
+                                    <primitives:SchemaSurface Background="Transparent" x:Name="ItemsHost" />
+                                    <Canvas Background="{x:Null}" x:Name="DiagramSurface">
+                                        <Rectangle x:Name="SelectionRectangle" Visibility="Collapsed"
+                                                   StrokeDashArray="3 3"
+                                                   Stroke="#FF767676" Fill="Transparent" />
+                                        <primitives:PipelineManipulationAdorner x:Name="PipelineManipulationAdorner" />
+
+                                    </Canvas>
+                                </Grid>
+                                <Canvas
+                                    Visibility="{Binding IsInformationAdornerVisibile, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <primitives:ItemInformationAdorner x:Name="ItemInformationAdorner" />
+                                    <primitives:ManipulationAdorner x:Name="ManipulationAdorner" Visibility="Collapsed" />
+                                </Canvas>
+                            </Grid>
+                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top"
+                                  Background="{StaticResource DiagramBackgroundBrush}">
+                                <TextBlock
+                                    x:Name="SchemaInfo"
+                                    FontSize="10" Margin="5"
+                                    Visibility="{Binding ShowInfo, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                <Rectangle StrokeDashArray="1 1" StrokeThickness="3" Stroke="Gray" />
+                            </Grid>
+
+
+                        </Grid>
+                    </telerik:RadBusyIndicator>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style TargetType="visuals:CompressorShopWidget" x:Key="CompressorShopWidgetStyle">
+        <Setter Property="Caption" Value="{Binding ShortPath}" />
+        <Setter Property="IsFound" Value="{Binding IsFound}" />
+        <Setter Property="Id" Value="{Binding Id}" />
+        <Setter Property="Height" Value="110" />
+        <Setter Property="Width" Value="150" />
+        <Setter Property="Position" Value="{Binding Position, Mode=TwoWay}"/>
+        <Setter Property="Background" Value="LightGray" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visuals:CompressorShopWidget">
+                    <Grid x:Name="LayoutRoot">
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="FoundStates">
+                                <VisualState x:Name="NotFound" />
+                                <VisualState x:Name="Found">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot"
+                                                                       Storyboard.TargetProperty="Background"
+                                                                       RepeatBehavior="Forever" Duration="0:0:1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource FoundStoke}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <SolidColorBrush Color="{TemplateBinding Background}" />
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+
+                                        </ObjectAnimationUsingKeyFrames>
+
+                                    </Storyboard>
+                                </VisualState>
+
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectionRect"
+                                                                       Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unselected" />
+                            </VisualStateGroup>
+
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid>
+                            <Grid x:Name="Rect"
+                                  Background="{TemplateBinding Background}"
+                                  Grid.Row="0"
+                                  Margin="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Grid.Effect>
+                                    <DropShadowEffect Opacity="0.5" ShadowDepth="2" />
+                                </Grid.Effect>
+                                <TextBlock Grid.Row="0"
+                                           Text="{TemplateBinding Caption}"
+                                           FontSize="10"
+                                           FontFamily="Segoe UI"
+                                           TextWrapping="Wrap"
+                                           TextAlignment="Center"
+                                           FontWeight="Bold"
+                                           Margin="0, 5, 0, 5" />
+                                <Rectangle Grid.Row="1"
+                                           Height="2"
+                                           HorizontalAlignment="Stretch"
+                                           StrokeThickness="0"
+                                           Fill="{StaticResource DiagramBackgroundBrush}" />
+
+                                <ContentPresenter Grid.Row="2" />
+                            </Grid>
+
+                            <Rectangle Grid.Row="0"
+                                       x:Name="SelectionRect"
+                                       Fill="Transparent"
+                                       Stroke="DodgerBlue"
+                                       StrokeThickness="1"
+                                       StrokeDashArray="1, 2"
+                                       Visibility="Collapsed" />
+
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="visuals:PipelineConnectionHintWidget" x:Key="PipelineConnectionHintWidgetStyle">
+        <Setter Property="Background" Value="{StaticResource DiagramBackgroundBrush}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="ZIndex" Value="800"/>
+        <Setter Property="Template">
+
+            <Setter.Value>
+                <ControlTemplate TargetType="visuals:PipelineConnectionHintWidget">
+
+                    <Canvas Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" MinHeight="{TemplateBinding MinHeight}" MinWidth="{TemplateBinding MinWidth}">
+
+                        <Ellipse x:Name="Figure"  VerticalAlignment="Stretch"
+                                 RenderTransformOrigin="0.5, 0.5" 
+                                 StrokeThickness="1" Stroke="{TemplateBinding Background}">
+                            <!--             <ToolTipService.ToolTip>
+                                <ToolTip Content="{Binding  Km, StringFormat='0.##'}"
+                                         Style="{StaticResource WidgetToolTip}" />
+                            </ToolTipService.ToolTip>-->
+                        </Ellipse>
+
+                        <Line x:Name="Line" StrokeThickness="2" Stroke="Red" StrokeDashArray="1 3"
+                              StrokeDashCap="Round" />
+                    </Canvas>
+                    <!--                    </Grid>-->
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <SolidColorBrush x:Key="PipelineElementCaptionBackground" Color="Transparent" />    
+    
+    <Style TargetType="visuals:ReducingStationWidget" x:Key="ReducingStationWidgetStyle">
+        <Setter Property="ContainerPosition" Value="{Binding ContainerPosition}" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Caption" Value="{Binding Name}" />
+        <Setter Property="Width" Value="12" />
+        <Setter Property="Height" Value="12" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TranslateTransform X="-6" Y="-6" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visuals:ReducingStationWidget">
+                    <Canvas x:Name="LayoutRoot">
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="FoundStates">
+                                <VisualState x:Name="NotFound" />
+                                <VisualState x:Name="Found">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot"
+                                                                       Storyboard.TargetProperty="Background"
+                                                                       RepeatBehavior="Forever" Duration="0:0:1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource FoundStoke}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <SolidColorBrush Color="{TemplateBinding Background}" />
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+
+                                        </ObjectAnimationUsingKeyFrames>
+
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid x:Name="Figure">
+                            <Ellipse x:Name="Ellipse" Fill="Gray" Stroke="Gray" StrokeThickness="1"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center" Width="12" Height="12" />
+                            <TextBlock Text="R" FontWeight="Bold" FontSize="10" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                        </Grid>
+                        <Border x:Name="Label" Background="{StaticResource PipelineElementCaptionBackground}">
+                            <TextBlock Text="{TemplateBinding Caption}"
+                                       Style="{StaticResource PipelineElementCaptionStyle}" />
+                        </Border>
+                        <Grid x:Name="Container" Width="51" Height="40" Style="{StaticResource ContainerStyle}" Visibility="{TemplateBinding ContainerVisibility}">
+                            <ContentPresenter />
+                        </Grid>
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style TargetType="visuals:DistributingStationWidget" x:Key="DistributingStationWidgetStyle">
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TranslateTransform X="-5" Y="-5" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Caption" Value="{Binding Name}" />
+        <Setter Property="ContainerPosition" Value="{Binding ContainerPosition}" />
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visuals:DistributingStationWidget">
+                    <Canvas x:Name="LayoutRoot" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="FoundStates">
+                                <VisualState x:Name="NotFound" />
+                                <VisualState x:Name="Found">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot"
+                                                                       Storyboard.TargetProperty="Background"
+                                                                       RepeatBehavior="Forever" Duration="0:0:1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource FoundStoke}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <SolidColorBrush Color="{TemplateBinding Background}" />
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected" />
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Duration="0"
+                                                                       Storyboard.TargetName="Figure"
+                                                                       Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Red" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Border x:Name="Label" Background="{StaticResource PipelineElementCaptionBackground}">
+                            <TextBlock Text="{TemplateBinding Caption}"
+                                       Style="{StaticResource PipelineElementCaptionStyle}" />
+                        </Border>
+                        <Polygon x:Name="Figure" Points="0,0 0,10 10,5" Fill="Green" Stroke="Black"
+                                 StrokeThickness="0.5">
+                            <Polygon.RenderTransform>
+                                <CompositeTransform TranslateX="5" CenterX="0" CenterY="5"
+                                                    Rotation="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                            </Polygon.RenderTransform>
+                        </Polygon>
+
+                        <Grid x:Name="Container" Width="{TemplateBinding Width}" MinWidth="40" MinHeight="40" Height="{TemplateBinding Height}" Style="{StaticResource ContainerStyle}" Visibility="{TemplateBinding ContainerVisibility}">
+                            <ContentPresenter />
+                        </Grid>
+
+
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="visuals:MeasuringLineWidget" x:Key="MeasuringLineWidgetStyle">
+        <Setter Property="ContainerPosition" Value="{Binding ContainerPosition}" />
+        <Setter Property="Width" Value="12" />
+        <Setter Property="Height" Value="12" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TranslateTransform X="-6" Y="-6" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visuals:MeasuringLineWidget">
+                    <Canvas x:Name="LayoutRoot">
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="FoundStates">
+                                <VisualState x:Name="NotFound" />
+                                <VisualState x:Name="Found">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot"
+                                                                       Storyboard.TargetProperty="Background"
+                                                                       RepeatBehavior="Forever" Duration="0:0:1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource FoundStoke}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <SolidColorBrush Color="{TemplateBinding Background}" />
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+
+                                        </ObjectAnimationUsingKeyFrames>
+
+                                    </Storyboard>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected" />
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Duration="0"
+                                                                       Storyboard.TargetName="ArrowPath"
+                                                                       Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Red" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border x:Name="Label" Background="{StaticResource PipelineElementCaptionBackground}">
+                            <TextBlock Text="{Binding Name}" Style="{StaticResource PipelineElementCaptionStyle}" TextAlignment="Center"/>
+                        </Border>
+                        <Grid x:Name="Figure">
+<!--
+                            <Grid.RenderTransform>
+                                <RotateTransform
+                                    Angle="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                            </Grid.RenderTransform>
+-->
+                            <Ellipse Fill="LightGray" Height="12"
+                                     Width="12" />
+                            <Path x:Name="ArrowPath"
+                                  Data="M11.8215,6.76717 L11.9456,6.80866 L11.9326,6.9021 C11.4975,9.78783 9.00709,12 6,12 C4.03249,12 2.28616,11.053 1.19199,9.5899 L1.15091,9.53213 z M0.762839,3.07087 L10.0805,6.18526 L0.610493,8.63914 L0.591665,8.60125 C0.21249,7.81433 0,6.93198 0,6 C0,4.96447 0.262333,3.9902 0.724168,3.14004 z M6,0 C9.15838,0 11.7468,2.44035 11.9825,5.53836 L11.9921,5.68993 L11.8575,5.72482 L1.34769,2.21197 L1.37011,2.18344 C2.4706,0.849959 4.13604,0 6,0 z"
+                                  Fill="Gray" Stretch="Fill" UseLayoutRounding="False" />
+
+
+                        </Grid>
+                        <Grid x:Name="Container" Width="41" Height="46" Style="{StaticResource ContainerStyle}"
+                              Margin="3,3,0,2" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{TemplateBinding ContainerVisibility}">
+                            <ContentPresenter />
+                        </Grid>
+
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="visuals:PlugWidget" x:Key="PlugWidgetStyle">
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TranslateTransform X="-5" Y="-5" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Caption" Value="{Binding Name}" />
+        <Setter Property="Background" Value="{StaticResource DiagramBackgroundBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visuals:PlugWidget">
+                    <Canvas x:Name="LayoutRoot" Background="{TemplateBinding Background}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Style="{StaticResource WidgetToolTip}"
+                                         Content="{Binding Tooltip, Mode=OneTime}" />
+                        </ToolTipService.ToolTip>
+                        <Rectangle x:Name="Figure" Width="10" Height="10" Fill="White" Stroke="Black" StrokeThickness="0.8">
+                            <Rectangle.RenderTransform>
+                                <CompositeTransform TranslateX="5" CenterX="0" CenterY="5"
+                                                    Rotation="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="visuals:ValveWidget" x:Key="ValveWidgetStyle">
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TranslateTransform X="-5" Y="-5" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Caption" Value="{Binding Name}" />
+        <Setter Property="Width" Value="10" />
+        <Setter Property="ValveBrush" Value="Gray" />
+        <Setter Property="Background" Value="{StaticResource DiagramBackgroundBrush}" />
+        <Setter Property="Height" Value="10" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visuals:ValveWidget">
+                    <Canvas x:Name="LayoutRoot" Background="{TemplateBinding Background}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip Style="{StaticResource WidgetToolTip}"
+                                         Content="{Binding Tooltip, Mode=OneTime}" />
+                        </ToolTipService.ToolTip>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="FoundStates">
+                                <VisualState x:Name="NotFound" />
+                                <VisualState x:Name="Found">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot"
+                                                                       Storyboard.TargetProperty="Background"
+                                                                       RepeatBehavior="Forever" Duration="0:0:1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource FoundStoke}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <SolidColorBrush Color="{TemplateBinding Background}" />
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+
+                                        </ObjectAnimationUsingKeyFrames>
+
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Polygon x:Name="Figure" Points="0,0 10,10 10,0 0,10" Fill="{TemplateBinding ValveBrush}"
+                                 Stroke="Black"
+                                 StrokeThickness="0.5">
+                            <Polygon.RenderTransform>
+                                <RotateTransform CenterX="5" CenterY="5"
+                                                 Angle="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                            </Polygon.RenderTransform>
+                        </Polygon>
+                        <Border x:Name="Label" Background="{StaticResource PipelineElementCaptionBackground}">
+                            <TextBlock Text="{TemplateBinding Caption}" TextAlignment="Center"
+                                       Style="{StaticResource PipelineElementCaptionStyle}" LineStackingStrategy="MaxHeight" />
+                        </Border>
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style TargetType="visuals:PipelineEditPointControl" x:Key="PipelineEditPointControlStyle">
+        <Setter Property="Width" Value="8" />
+        <Setter Property="Height" Value="8" />
+        <Setter Property="Position" Value="{Binding Position}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="Canvas.ZIndex" Value="1000"/>
+        <Setter Property="Template">
+
+            <Setter.Value>
+                <ControlTemplate TargetType="visuals:PipelineEditPointControl">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="DragGroup">
+                                <VisualState x:Name="NoDrag" />
+                                <VisualState x:Name="Drag" />
+                                <VisualState x:Name="DragIsAligned">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Duration="0"
+                                                                       Storyboard.TargetName="Figure"
+                                                                       Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="#FF005945" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Ellipse x:Name="Figure" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                 RenderTransformOrigin="0.5, 0.5" Fill="#FFDC143C"
+                                 StrokeThickness="0">
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    Content="{Binding  Km, StringFormat='0.## км', RelativeSource={RelativeSource TemplatedParent}}"
+                                    Style="{StaticResource WidgetToolTip}" />
+                            </ToolTipService.ToolTip>
+                        </Ellipse>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="WidgetToolTip" TargetType="ToolTip" BasedOn="{StaticResource ToolTipStyle}">
+        <Setter Property="Background" Value="#FFFFD700" />
+        <Setter Property="Padding" Value="3,0,3,0" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Border x:Name="Root"
+                            CornerRadius="2"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#FFB8860B"
+                                              ShadowDepth="2" />
+                        </Border.Effect>
+                        <Grid>
+                            <Border CornerRadius="1"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock FontFamily="Segoe UI"
+                               FontSize="11"
+                               FontWeight="Bold"
+                               MaxWidth="200"
+                               TextWrapping="Wrap"
+                               Text="{Binding}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="visuals:PipelineWidget" x:Key="PipelineWidgetStyle">
+        <Setter Property="Stroke" Value="{Binding Color, Mode=TwoWay}" />
+        <Setter Property="StrokeThickness" Value="{Binding Thickness, Mode=TwoWay}" />
+
+
+
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visuals:PipelineWidget">
+
+                    <Canvas x:Name="Panel">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="FoundStates">
+                                <VisualState x:Name="NotFound" />
+                                <VisualState x:Name="Found">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GeometryPath"
+                                                                       Storyboard.TargetProperty="Stroke"
+                                                                       RepeatBehavior="Forever" Duration="0:0:1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource FoundStoke}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <SolidColorBrush Color="{TemplateBinding Background}" />
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+
+                                        </ObjectAnimationUsingKeyFrames>
+
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Path x:Name="DeferredPath"
+                              Stroke="{Binding Stroke, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ColorToBrushConverter}}"
+                              Opacity="0.7"
+                              Fill="{TemplateBinding Background}"
+                              StrokeThickness="{TemplateBinding StrokeThickness}"
+                              StrokeDashArray="2 2" />
+                        <Path x:Name="GeometryPath" StrokeLineJoin="Round"
+                              Stroke="{Binding Stroke, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ColorToBrushConverter}}"
+                              StrokeThickness="{TemplateBinding StrokeThickness}">
+                            <ToolTipService.ToolTip>
+                                <ToolTip Style="{StaticResource WidgetToolTip}"
+                                         Content="{Binding Tooltip, Mode=OneTime}" />
+                            </ToolTipService.ToolTip>
+                        </Path>
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style TargetType="thumbnail:SchemaNaviagationPane">
+        <Setter Property="Background" Value="White" />
+        <Setter Property="BorderBrush" Value="#FFD6D4D4" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="thumbnail:SchemaNaviagationPane">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        UseLayoutRounding="True" Effect="{StaticResource DiagramEffect}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Grid
+                                Visibility="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <thumbnail:SchemaThumbnail x:Name="Thumbnail" Schema="{TemplateBinding Schema}"
+                                                           Height="161" Margin="2 2 2 3" />
+                                <Rectangle Fill="{TemplateBinding BorderBrush}" HorizontalAlignment="Stretch"
+                                           Height="1" VerticalAlignment="Bottom" />
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <telerik:RadButton
+                                    Width="22" Margin="2 2 0 2"
+                                    ContentTemplate="{StaticResource NavigationPaneMapTemplate}"
+                                    CommandTarget="{TemplateBinding Schema}" Command="commands:SchemaCommands.AutoFit"
+                                    ToolTipService.ToolTip="Автоподгонка" />
+
+                                <telerik:RadToggleButton
+                                    Grid.Column="1"
+                                    ContentTemplate="{StaticResource NavigationPaneToggleTemplate}"
+                                    IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Margin="2"
+                                    Padding="1"
+                                    Width="22" />
+
+                                <Rectangle
+                                    Grid.Column="2"
+                                    Visibility="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    Width="1"
+                                    Height="22"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Fill="{TemplateBinding BorderBrush}"
+                                    Margin="0" />
+                                <TextBox
+                                    Grid.Column="3"
+                                    IsHitTestVisible="False"
+                                    Visibility="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    Background="White"
+                                    FontSize="12"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Width="43"
+                                    Margin="2 0 0 0"
+                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Schema.Zoom, Converter={StaticResource PercentageConverter}}" />
+                                <telerik:RadSlider
+                                    Grid.Column="4"
+                                    x:Name="ZoomSlider"
+                                    Visibility="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Schema.Zoom, Mode=TwoWay}"
+                                    Style="{StaticResource ThumbnailSliderStyle}" SmallChange="0.05" LargeChange="0.05"
+                                    IsSnapToTickEnabled="False" IsMoveToPointEnabled="False" />
+                                <Border BorderThickness="1" BorderBrush="Transparent" Grid.ColumnSpan="5"
+                                        Grid.Column="0" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="thumbnail:SchemaThumbnail">
+        <Setter Property="Background" Value="White" />
+        <Setter Property="Height" Value="280" />
+        <Setter Property="Width" Value="280" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="thumbnail:SchemaThumbnail">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                        <Grid>
+                            <Image Source="{TemplateBinding ImageSource}" Stretch="None" />
+                            <Canvas x:Name="PART_mainCanvas">
+                                <Rectangle x:Name="PART_viewportRect" StrokeThickness="2" Stroke="Red" Opacity="1" />
+                            </Canvas>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <DataTemplate x:Key="PositionTipTemplate">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10 2">
+            <TextBlock Text="X:" />
+            <TextBlock Text="{Binding X, StringFormat=n2}" Margin="2 0 0 0" />
+            <TextBlock Text="Y:" Margin="5 0 0 0" />
+            <TextBlock Text="{Binding Y, StringFormat=n2}" Margin="2 0 0 0" />
+        </StackPanel>
+    </DataTemplate>
+    
+    
+    <Style TargetType="primitives:ItemInformationAdorner">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="AntiqueWhite" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="primitives:ItemInformationAdorner">
+                    <Grid>
+                        <Canvas x:Name="InformationTipPanel" Visibility="Collapsed" HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom">
+                            <Grid Canvas.Top="10">
+                                <ContentPresenter x:Name="InformationTipPresenter"
+                                                  ContentTemplate="{StaticResource PositionTipTemplate}" />
+                            </Grid>
+                        </Canvas>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+    <telerik:BooleanToFontWeightConverter x:Key="BooleanToFontWeightConverter" />
+    <telerik:BooleanToFontStyleConverter x:Key="BooleanToFontStyleConverter" />
+    <Style TargetType="visuals:TextWidget" x:Key="TextWidgetStyle">
+        <Setter Property="Position" Value="{Binding Position, Mode=TwoWay}"/>
+        <Setter Property="Text" Value="{Binding Text, Mode=TwoWay}"/>
+        <Setter Property="TextAngle" Value="{Binding TextAngle, Mode=TwoWay}"/>
+        <Setter Property="Width" Value="{Binding Width, Mode=TwoWay}"/>
+        <Setter Property="Height" Value="{Binding Height, Mode=TwoWay}"/>
+        <Setter Property="MinHeight" Value="20"/>
+        <Setter Property="MinWidth" Value="30"/>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="RenderTransformOrigin" Value="0.5 0.5" />
+        
+        <Setter Property="FontSize" Value="{Binding FontSize, Mode=TwoWay}" />
+        <Setter Property="FontWeight" Value="{Binding FontBold, Mode=TwoWay, Converter={StaticResource BooleanToFontWeightConverter}}" />
+        <Setter Property="FontStyle" Value="{Binding FontItalic, Mode=TwoWay, Converter={StaticResource BooleanToFontStyleConverter}}" />
+        <Setter Property="Foreground" Value="{Binding TextColor, Mode=TwoWay, Converter={StaticResource ColorToBrushConverter}}" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="ZIndex" Value="2" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="Content" Value="{Binding Text,RelativeSource={RelativeSource Self}}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visuals:TextWidget">
+                    <Grid UseLayoutRounding="True">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Selected" />
+                                <VisualState x:Name="SelectedInGroup">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Duration="0"
+												Storyboard.TargetName="SelectedInGroupBorder"
+												Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unselected" />
+                                <VisualState x:Name="SelectedAsGroup" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid RenderTransformOrigin="0.5, 0.5">
+                            <Grid.RenderTransform>
+                                <RotateTransform Angle="{Binding TextAngle, RelativeSource={RelativeSource TemplatedParent}}" />
+                            </Grid.RenderTransform>
+                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"/>
+                            <Border x:Name="ActiveSelectedBorder" Visibility="Collapsed"
+									BorderBrush="#7FC92931" BorderThickness="2">
+                           
+                            </Border>
+                            <TextBlock Text="{TemplateBinding Text}" x:Name="NormalContent" Margin="{TemplateBinding Padding}"
+									HorizontalAlignment="Center" TextWrapping="Wrap" 
+									VerticalAlignment="Center" LineStackingStrategy="BlockLineHeight">
+                               
+                            </TextBlock>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="visuals:PolyLineWidget" x:Key="PolyLineWidgetStyle">
+        <Setter Property="Stroke" Value="{Binding Color, Mode=TwoWay}" />
+        <Setter Property="StrokeThickness" Value="{Binding Thickness, Mode=TwoWay}" />
+        <Setter Property="Position" Value="{Binding Position, Mode=TwoWay}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visuals:PolyLineWidget">
+                    <Canvas x:Name="LayoutRoot" Background="{TemplateBinding Background}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip Style="{StaticResource WidgetToolTip}"
+                                         Content="{Binding}" >
+                                <ToolTip.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="{Binding Name}" FontWeight="Bold"/>
+                                            <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="{Binding Description}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ToolTip.ContentTemplate>
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="FoundStates">
+                                <VisualState x:Name="NotFound" />
+                                <VisualState x:Name="Found">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PolyLine"
+                                                                       Storyboard.TargetProperty="Stroke"
+                                                                       RepeatBehavior="Forever" Duration="0:0:1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource FoundStoke}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <SolidColorBrush Color="{TemplateBinding Background}" />
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+
+                                        </ObjectAnimationUsingKeyFrames>
+
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>                         
+                        </VisualStateManager.VisualStateGroups>
+                        <Polyline x:Name="PolyLine"
+                                  Stroke="{Binding Stroke, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ColorToBrushConverter}}" 
+                                  StrokeThickness="{TemplateBinding StrokeThickness}"
+                                  >                            
+                        </Polyline>
+                        <Ellipse x:Name="StartPoint" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="6" Width="6" Visibility="Collapsed" 
+                                 Fill="{Binding Stroke, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ColorToBrushConverter}}"
+                                 RenderTransformOrigin="0.5, 0.5" Stroke="{Binding Stroke, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ColorToBrushConverter}}"
+                                 StrokeThickness="1"/>
+                        <Ellipse x:Name="EndPoint" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="6" Width="6" Visibility="Collapsed" 
+                                 Fill = "{Binding Stroke, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ColorToBrushConverter}}" 
+                                 RenderTransformOrigin="0.5, 0.5" Stroke="{Binding Stroke, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ColorToBrushConverter}}" 
+                                 StrokeThickness="1"/>
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="visuals:CheckValveWidget" x:Key="CheckValveWidgetStyle">
+        <Setter Property="Position" Value="{Binding Position, Mode=TwoWay}"/>
+        <Setter Property="ValveBrush" Value ="WhiteSmoke" />
+        <Setter Property="Width" Value="10" />
+        <Setter Property="Height" Value="10" />
+        <Setter Property="Tooltip" Value="{Binding Tooltip, Mode=TwoWay}"/>
+        <Setter Property="Angle" Value="{Binding Angle, Mode=TwoWay}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visuals:CheckValveWidget">
+                    <Canvas x:Name="LayoutRoot" Background="{TemplateBinding Background}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip Style="{StaticResource WidgetToolTip}"
+                                         Content="{Binding Tooltip, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="FoundStates">
+                                <VisualState x:Name="NotFound" />
+                                <VisualState x:Name="Found">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot"
+                                                                       Storyboard.TargetProperty="Background"
+                                                                       RepeatBehavior="Forever" Duration="0:0:1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource FoundStoke}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <SolidColorBrush Color="{TemplateBinding Background}" />
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+
+                                        </ObjectAnimationUsingKeyFrames>
+
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Polygon Points="0,0 5,5 10,0" Fill="{TemplateBinding ValveBrush}"
+                                 Stroke="Black"
+                                 StrokeThickness="0.5">
+                            <Polygon.RenderTransform>
+                                <RotateTransform CenterX="5" CenterY="5"
+                                                 Angle="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                            </Polygon.RenderTransform>
+                        </Polygon>
+                        <Polygon Points="10,10 5,5 0,10" Fill="Black"
+                                 Stroke="Black"
+                                 StrokeThickness="0.5">
+                            <Polygon.RenderTransform>
+                                <RotateTransform CenterX="5" CenterY="5"
+                                                 Angle="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                            </Polygon.RenderTransform>
+                        </Polygon>
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="primitives:ManipulationAdorner" BasedOn="{StaticResource ManipulationAdornerStyle}"/>
+    <Style TargetType="visuals:DistributingStationWidget" BasedOn="{StaticResource DistributingStationWidgetStyle }" />
+    <Style TargetType="visuals:PipelineConnectionHintWidget" BasedOn="{StaticResource PipelineConnectionHintWidgetStyle }" />
+    <Style TargetType="visuals:ReducingStationWidget" BasedOn="{StaticResource ReducingStationWidgetStyle}" />
+    <Style TargetType="visuals:CompressorShopWidget" BasedOn="{StaticResource CompressorShopWidgetStyle}" />
+    <Style TargetType="visuals:ValveWidget" BasedOn="{StaticResource ValveWidgetStyle}" />
+    <Style TargetType="visuals:PlugWidget" BasedOn="{StaticResource PlugWidgetStyle}" />
+    <Style TargetType="visuals:MeasuringLineWidget" BasedOn="{StaticResource MeasuringLineWidgetStyle}" />
+    <Style TargetType="visuals:PipelineWidget" BasedOn="{StaticResource PipelineWidgetStyle}" />
+    <Style TargetType="visuals:PipelineEditPointControl" BasedOn="{StaticResource PipelineEditPointControlStyle}" />
+    <Style TargetType="visuals:TextWidget" BasedOn="{StaticResource TextWidgetStyle}" />
+    <Style TargetType="visuals:PolyLineWidget" BasedOn="{StaticResource PolyLineWidgetStyle}" />
+    <Style TargetType="visuals:CheckValveWidget" BasedOn="{StaticResource CheckValveWidgetStyle}" />
+
+    <Style TargetType="flobus:Schema" BasedOn="{StaticResource SchemaStyle}" />
+</ResourceDictionary>

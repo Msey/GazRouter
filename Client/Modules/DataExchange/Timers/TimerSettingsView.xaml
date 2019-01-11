@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="DataExchange.Timers.TimerSettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:timers="clr-namespace:DataExchange.Timers"
+             mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400"
+    d:DataContext="{d:DesignInstance timers:TimerSettingsViewModel}">
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <telerik:RadToolBar>
+                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" >
+                    <telerik:RadButton Command="{Binding StartCommand}" ToolTipService.ToolTip="Запустить службу" Style="{StaticResource runButtonStyle}" />
+                    <telerik:RadButton Command="{Binding StopCommand}"   ToolTipService.ToolTip="Остановить службу" Style="{StaticResource stopButtonStyle}" />
+                    <telerik:RadButton Command="{Binding EditCommand}" ToolTipService.ToolTip="Редактировать параметры службы" Style="{StaticResource editButtonStyle}" />
+                </StackPanel>
+            </telerik:RadToolBar>
+        </Grid>
+        <telerik:RadGridView Grid.Row="1" Margin="5" IsReadOnly="True" 
+                             Grid.Column="0" ItemsSource="{Binding TimerSettings}" SelectedItem="{Binding SelectedTimer, Mode=TwoWay}" SelectionMode="Single"
+                             AutoGenerateColumns="False" ShowGroupPanel="False">
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn  Width="250" TextWrapping="Wrap" DataMemberBinding="{Binding TimerName}" >
+                    <telerik:GridViewDataColumn.Header>
+                        <TextBlock TextWrapping="Wrap" Text="Наименование службы"  />
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn  HeaderTextAlignment="Left"   Width="70" TextWrapping="Wrap" DataMemberBinding="{Binding Frequency}">
+                    <telerik:GridViewDataColumn.Header>
+                        <TextBlock TextWrapping="Wrap" Text="Периодичность запуска" />
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn  Width="100" TextWrapping="Wrap" DataMemberBinding="{Binding TimerStatus}" >
+                    <telerik:GridViewDataColumn.Header>
+                        <TextBlock TextWrapping="Wrap" Text="Статус" />
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+    
+    </Grid>
+</UserControl>

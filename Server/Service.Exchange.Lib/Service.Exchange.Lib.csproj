@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{562B2811-C03B-49F3-B685-1AFB1492EA48}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GazRouter.Service.Exchange.Lib</RootNamespace>
+    <AssemblyName>Service.Exchange.Lib</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\..\packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\NPOI\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Integro.Interfaces">
+      <HintPath>..\..\Integro\Integro.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Integro.IUSExchange">
+      <HintPath>..\..\Integro\Integro.IUSExchange.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit, Version=1.16.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MailKit.1.16.1\lib\net45\MailKit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.JScript" />
+    <Reference Include="MimeKit, Version=1.16.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MimeKit.1.16.1\lib\net45\MimeKit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\NPOI\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\NPOI\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\NPOI\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\NPOI\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Oracle.ManagedDataAccess.12.1.2400\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="saxon9he-api, Version=9.8.0.4, Culture=neutral, PublicKeyToken=e1fdd002d5083fe6, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Saxon-HE.9.8.0.4\lib\net40\saxon9he-api.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WinSCPnet">
+      <HintPath>..\..\Library\WinSCP\WinSCPnet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AsduEsg\AsduEsgExchangeHelper.cs" />
+    <Compile Include="AsduEsg\AsduEsgExchangeObjectExporter.cs" />
+    <Compile Include="AsduEsg\ExchangeFormat\XmlInDateTime.cs" />
+    <Compile Include="AsduEsg\ExchangeFormat\XmlElementId.cs" />
+    <Compile Include="AsduEsg\ExchangeFormat\XmlAtDateTime.cs" />
+    <Compile Include="AsduEsg\ExchangeFormat\XmlDateTime.cs" />
+    <Compile Include="AsduEsg\ExchangeFormat\GuidExtensions.cs" />
+    <Compile Include="AsduEsg\ExchangeFormat\PeriodExportAsduHelper.cs" />
+    <Compile Include="AsduEsg\XmlExchangeObject.cs" />
+    <Compile Include="AsduEsg\DateTimeMoscowExtension.cs" />
+    <Compile Include="AsduEsg\PeriodTypeManager.cs" />
+    <Compile Include="Asdu\AsduExchangeObject.cs" />
+    <Compile Include="Cryptography\Cryptography.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Excel\CellEvaluators\CellEvaluator.cs" />
+    <Compile Include="Excel\CellEvaluators\GsVolumeCellEvaluator.cs" />
+    <Compile Include="Excel\CellEvaluators\GsVolumeChangeEntCellEvaluator.cs" />
+    <Compile Include="Excel\CellEvaluators\GsVolumeEntCellEvaluator.cs" />
+    <Compile Include="Excel\CellEvaluators\PvCellEvaluator.cs" />
+    <Compile Include="Excel\CellEvaluators\SqlCellEvaluator.cs" />
+    <Compile Include="Excel\CellEvaluators\StnEntCellEvaluator.cs" />
+    <Compile Include="Excel\CellEvaluators\StnObjCellEvaluator.cs" />
+    <Compile Include="Excel\CellEvaluators\StnSiteCellEvaluator.cs" />
+    <Compile Include="Excel\CellEvaluators\TimeStampCellEvaluator.cs" />
+    <Compile Include="Excel\ExcelHelper.cs" />
+    <Compile Include="Excel\ExcelProcessor.cs" />
+    <Compile Include="Excel\CellEvaluators\GsVolumeChangeCellEvaluator.cs" />
+    <Compile Include="Asdu\AsduExchangeObjectExporter.cs" />
+    <Compile Include="Export\ExchangeObjectExporterBase.cs" />
+    <Compile Include="Export\ExchangeSoapExporter.cs" />
+    <Compile Include="Import\AstraExchangeImporter.cs" />
+    <Compile Include="Import\Astra\AstraDTO.cs" />
+    <Compile Include="Import\ExchangeImporter.cs" />
+    <Compile Include="Import\FileTools.cs" />
+    <Compile Include="Import\SpecificExchangeImporter.cs" />
+    <Compile Include="Import\TypicalExchangeImporter.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Run\AsduEsgExchangeAgent.cs" />
+    <Compile Include="Run\AsduExchangeAgent.cs" />
+    <Compile Include="Run\AsspootiExchangeAgent.cs" />
+    <Compile Include="Run\ExcelGeneratorAgent.cs" />
+    <Compile Include="Run\ExchangeExportAgent.cs" />
+    <Compile Include="Export\SpecificExchangeObjectExporter.cs" />
+    <Compile Include="Run\ExchangeImportAgent.cs" />
+    <Compile Include="FileWatcher.cs" />
+    <Compile Include="Run\IncidentSituationsDispatcherTasksAgent.cs" />
+    <Compile Include="Run\ExchangeTaskScheduler.cs" />
+    <Compile Include="TimerSettings.cs" />
+    <Compile Include="Transport\BaseTransport.cs" />
+    <Compile Include="ExchangeHelper.cs" />
+    <Compile Include="Transport\MailKitEmailTransport.cs" />
+    <Compile Include="Transport\NetworkShareAccesser.cs" />
+    <Compile Include="Transport\TransportAgent.cs" />
+    <Compile Include="ExchangeObject.cs" />
+    <Compile Include="Transport\LocalTransport.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transport\WinScpFtpTransport.cs" />
+    <Compile Include="Export\TypicalExchangeObjectExporter.cs" />
+    <Compile Include="XlsGenerator.cs" />
+    <Compile Include="XmlHelper.cs" />
+    <Compile Include="XmlValidationHelper.cs" />
+    <Compile Include="XsltProcessor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\PortableDTO\PortableDTO.csproj">
+      <Project>{351f17b0-88ec-4255-b351-1d7e86e411a0}</Project>
+      <Name>PortableDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shared\Utils\Utils.csproj">
+      <Project>{01B8B942-8E9B-468B-8873-2514DD40532C}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL.Core\DAL.Core.csproj">
+      <Project>{9eefcb2c-de66-42cb-9bbd-d2db95d0feba}</Project>
+      <Name>DAL.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{0f9fd4c7-37f4-4a20-9cf1-c0d04126432d}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataServices.Infrastructure\DataServices.Infrastructure.csproj">
+      <Project>{6D6A7056-0F82-40DD-864B-1BEFED916A61}</Project>
+      <Name>DataServices.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Log\Log.csproj">
+      <Project>{302ACDEE-66B2-426A-840F-6AF32EDF2E9D}</Project>
+      <Name>Log</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\Library\WinSCP\WinSCP.exe">
+      <Link>WinSCP.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Export\Astra\ASTRA_Export_KC.xslt">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Export\Astra\ASTRA_Export_KR.xslt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Export\Astra\ASTRA_Export_PZG.xslt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Export\Astra\readme.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Import\Astra\ASTRA_Import_CSHOP.xslt" />
+    <Content Include="Import\Astra\ASTRA_Import_PIPE.xslt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

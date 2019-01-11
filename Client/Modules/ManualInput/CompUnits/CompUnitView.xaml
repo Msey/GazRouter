@@ -1,0 +1,410 @@
+﻿<UserControl x:Class="GazRouter.ManualInput.CompUnits.CompUnitView"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+              xmlns:vm="clr-namespace:GazRouter.ManualInput.CompUnits"
+              xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+              xmlns:compUnitStates="clr-namespace:GazRouter.DTO.ManualInput.CompUnitStates;assembly=PortableDTO"
+              xmlns:attachments="clr-namespace:GazRouter.DTO.Attachments;assembly=PortableDTO"
+              xmlns:attachment="clr-namespace:GazRouter.Controls.Attachment;assembly=Controls"
+              mc:Ignorable="d"
+              d:DesignHeight="300" 
+              d:DesignWidth="400" 
+              d:DataContext="{d:DesignInstance vm:CompUnitViewModel}">
+
+    
+
+    <telerik:RadBusyIndicator BusyContent="Идёт загрузка..." 
+                              DisplayAfter="0" 
+                              IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            
+            <Grid.Resources>
+                <converters:CompUnitStateToNameConverter x:Key="State2NameConverter" />
+                <converters:CompUnitStateToColorConverter x:Key="State2ColorConverter" />
+                <telerik:BooleanToVisibilityConverter x:Key="Bool2VisibilityConverter"/>
+                <converters:CompUnitRepairTypeToNameConverter x:Key="RepairType2NameConverter"/>
+                <converters:CompUnitFailureCauseToNameConverter x:Key="FailureCauseToNameConverter"/>
+                <converters:CompUnitFailureFeatureToNameConverter x:Key="FailureFeatureToNameConverter"/>
+                <converters:CompUnitStopTypeToNameConverter x:Key="StopTypeToNameConverter"/>
+                <converters:CompUnitTypeToNameConverter x:Key="UnitTypeToNameConverter" />
+                
+
+                <DataTemplate x:Key="FailureDetail2" DataType="vm:GridItem">
+                    <Grid Visibility="{Binding IsFailure, Converter={StaticResource Bool2VisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*" MinHeight="150"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="250"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <Border Background="WhiteSmoke" Margin="0, 5, 0, 5" Grid.RowSpan="2" Grid.Column="0"/>
+                            
+
+                        <Border Background="WhiteSmoke" Margin="5, 5, 0, 0" Grid.Row="0" Grid.Column="1">
+                            <TextBlock Text="Внешнее проявление" 
+                                       FontWeight="Bold" 
+                                       Margin="5"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Background="WhiteSmoke" Margin="5, 5, 0, 5" Grid.Row="1" Grid.Column="1">
+                            <TextBlock Text="{Binding StateDto.FailureDetails.FailureExternalView}" 
+                                       Margin="5"
+                                       FontSize="11"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Top" 
+                                       HorizontalAlignment="Center"/>
+                        </Border>
+
+                        
+                        
+                        <Border Background="WhiteSmoke" Margin="5, 5, 0, 0" Grid.Row="0" Grid.Column="2">
+                            <TextBlock Text="Описание причины" 
+                                       FontWeight="Bold" 
+                                       Margin="5"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Background="WhiteSmoke" Margin="5, 5, 0, 5" Grid.Row="1" Grid.Column="2">
+                            <TextBlock Text="{Binding StateDto.FailureDetails.FailureCauseDescription}" 
+                                       Margin="5"
+                                       FontSize="11"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Top" 
+                                       HorizontalAlignment="Center"/>
+                        </Border>
+
+
+
+                        <Border Background="WhiteSmoke" Margin="5, 5, 0, 0" Grid.Row="0" Grid.Column="3">
+                            <TextBlock Text="Выполненные работы" 
+                                       Margin="5"
+                                       FontWeight="Bold" 
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Background="WhiteSmoke" Margin="5, 5, 0, 5" Grid.Row="1" Grid.Column="3">
+                            <TextBlock Text="{Binding StateDto.FailureDetails.FailureWorkPerformed}" 
+                                       Margin="5"
+                                       FontSize="11"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Top" 
+                                       HorizontalAlignment="Center"/>
+                        </Border>
+
+
+                        <Border Background="WhiteSmoke" Margin="5, 5, 0, 0" Grid.Row="0" Grid.Column="4">
+                            <TextBlock Text="Зависимые пуски" 
+                                       Margin="5"
+                                       FontWeight="Bold" 
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Background="WhiteSmoke" Margin="5, 5, 0, 5" Grid.Row="1" Grid.Column="4">
+                            <ItemsControl ItemsSource="{Binding StateDto.FailureDetails.UnitStartList}"
+                                          Margin="5">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="compUnitStates:FailureRelatedUnitStartDTO">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Margin="0, 0, 0, 7">
+                                                <TextBlock Text="{Binding StateChangeDate, StringFormat='dd.MM.yyyy HH:mm'}"
+                                                       FontSize="11" />
+                                                <TextBlock Text="{Binding CompUnitName}"/>
+                                                <TextBlock Text="{Binding CompUnitTypeId, StringFormat='({0})', Converter={StaticResource UnitTypeToNameConverter}}"
+                                                       FontSize="11"
+                                                       Foreground="CadetBlue"/>
+                                            </StackPanel>
+                                            <HyperlinkButton Grid.Column="1" 
+                                                             Content="x"
+                                                             Command="{Binding DataContext.DeleteFailureDependencyCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                                             CommandParameter="{Binding StateChangeId}"
+                                                             Foreground="Crimson"
+                                                             Margin="11, 0, 0, 0"
+                                                             VerticalAlignment="Center"
+                                                             ToolTipService.ToolTip="Разорвать зависимость" />
+                                        </Grid>
+                                            
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Border>
+
+
+                        
+                        <Border Background="WhiteSmoke" Margin="5, 5, 0, 0" Grid.Row="0" Grid.Column="5">
+                            <TextBlock Text="Прикрепленные документы" 
+                                       Margin="5"
+                                       FontWeight="Bold" 
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Background="WhiteSmoke" Margin="5, 5, 0, 5" Grid.Row="1" Grid.Column="5">
+                            <ItemsControl ItemsSource="{Binding StateDto.FailureDetails.AttachmentList}"
+                                          Margin="5">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="attachments:AttachmentBaseDTO">
+                                        <attachment:AttachmentItemView 
+                                            Dto="{Binding }"
+                                            ShowImage="True"
+                                            DeleteCommand="{Binding DataContext.DeleteFailureAttachmentCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                            Margin="0, 11, 0, 0"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Border>
+
+                    </Grid>
+                </DataTemplate>
+
+            </Grid.Resources>
+            
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar>
+                <telerik:RadComboBox ItemsSource="{Binding SiteList}"
+                                     Width="220"
+                                     Margin="5, 0, 0, 0"
+                                     SelectedItem="{Binding SelectedSite, Mode=TwoWay}"
+                                     DisplayMemberPath="Name"/>
+
+                <telerik:RadToolBarSeparator />
+                <telerik:RadButton Command="{Binding RefreshCommand}" Style="{StaticResource refreshButtonStyle}" />
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadRibbonDropDownButton Margin="0, 0, 0, 0" 
+                                                 SmallImage="/Common;component/Images/16x16/edit.png"
+                                                 DropDownButtonPosition="Right" 
+                                                 telerik:StyleManager.Theme="Windows7"
+                                                 IsEnabled="{Binding IsEditPermission}"
+                                                 >
+                    <telerik:RadRibbonDropDownButton.DropDownContent>
+                        <telerik:RadContextMenu BorderThickness="0">
+                            <telerik:RadMenuItem Header="Изменить состояние" Command="{Binding AddNewStateCommand}"/>
+                            <telerik:RadMenuItem Header="Изменить информацию о текущем состоянии" Command="{Binding UpdateStateInfoCommand}"/>
+                            <telerik:RadMenuItem Header="Вернуться к предыдущему состоянию" Command="{Binding ToPrevStateCommand}"/>
+                            <telerik:RadMenuSeparatorItem />
+                            <telerik:RadMenuItem Header="Найти зависимости" Command="{Binding FindFailureDependencesCommand}"/>
+                            <telerik:RadMenuItem Header="Прикрепить документ" Command="{Binding AddFailureAttachmentCommand}"/>
+                        </telerik:RadContextMenu>
+                    </telerik:RadRibbonDropDownButton.DropDownContent>
+                </telerik:RadRibbonDropDownButton>
+                <telerik:RadButton Command="{Binding ExportExcelCommand}" ToolTipService.ToolTip="Сохранить в Excel"  Margin="5,0,0,0">
+                    <Image Width="16" Height="16" Source="/Common;component/Images/16x16/export.png" />
+                </telerik:RadButton>
+            </telerik:RadToolBar>
+
+            <telerik:RadTreeListView Grid.Row="1" 
+                                     GridLinesVisibility="Both"
+                                     AutoExpandItems="True" 
+                                     AutoGenerateColumns="False"
+                                     IsReadOnly="True"
+                                     ItemsSource="{Binding Items}"
+                                     SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                     SelectionMode="Single" 
+                                     SelectionUnit="FullRow"
+                                     CanUserFreezeColumns="False"
+                                     RowIndicatorVisibility="Collapsed"
+                                     RowDetailsTemplate="{StaticResource FailureDetail2}"
+                                     RowDetailsVisibilityMode="VisibleWhenSelected"
+                                     ColumnWidth="100"
+                                     x:Name="TreeListView">
+                
+                <telerik:RadTreeListView.Columns>
+
+
+                    
+                    <telerik:GridViewDataColumn Width="200" 
+                                                Header="Наименование" 
+                                                IsFilterable="False" 
+                                                IsSortable="True" 
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:GridItem">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding CompUnitTypeName}"
+                                               FontSize="10"
+                                               Foreground="CadetBlue" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    
+                    <telerik:GridViewDataColumn Width="100" 
+                                                Header="Состояние" 
+                                                IsFilterable="False" 
+                                                IsSortable="false" 
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:GridItem">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle StrokeThickness="0"
+                                               Fill="{Binding State, Converter={StaticResource State2ColorConverter}}"
+                                               Width="8" 
+                                               Height="8"/>
+                                    <TextBlock Margin="5, 0, 0, 0" 
+                                               Text="{Binding State, Converter={StaticResource State2NameConverter}}"/>
+                                    
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="120">
+                        <telerik:GridViewDataColumn.Header>
+                            <TextBlock Text="Дата изменения состояния" 
+                                       TextWrapping="Wrap" 
+                                       Width="90"
+                                       Margin="3"/>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:GridItem">
+                                <StackPanel Margin="5" HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding StateChangeDate, StringFormat='dd.MM.yyyy'}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding StateChangeDate, StringFormat='HH:mm'}" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    
+
+                    <telerik:GridViewDataColumn Width="150" 
+                                                IsFilterable="True" 
+                                                IsSortable="False">
+                        <telerik:GridViewDataColumn.Header>
+                            <TextBlock TextWrapping="Wrap" 
+                                       Width="100"
+                                       HorizontalAlignment="Left"
+                                       Text="Дополнительная информация"
+                                       Margin="3"/>
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:GridItem">
+                                <StackPanel>
+                                    <StackPanel Visibility="{Binding IsRepair, Converter={StaticResource Bool2VisibilityConverter}}">
+                                        <TextBlock
+                                            Text="{Binding StateDto.RepairType, Converter={StaticResource RepairType2NameConverter}}"
+                                            TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding StateDto.CompletionDatePlan, StringFormat='до dd.MM.yyyy HH:mm'}" />
+                                        <TextBlock Text="(Нарушены сроки)"
+                                                   FontSize="10"
+                                                   Foreground="Red"
+                                                   Visibility="{Binding StateDto.IsDelayed, Converter={StaticResource Bool2VisibilityConverter}}" />
+                                    </StackPanel>
+                                    <StackPanel Visibility="{Binding IsReserve, Converter={StaticResource Bool2VisibilityConverter}}">
+                                        <TextBlock Text="Резерв с последующим ремонтом"
+                                                   TextWrapping="Wrap"
+                                                   Visibility="{Binding StateDto.IsRepairNext, Converter={StaticResource Bool2VisibilityConverter}}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="150" 
+                                                IsFilterable="True" 
+                                                IsSortable="False">
+                        <telerik:GridViewDataColumn.Header>
+                            <TextBlock TextWrapping="Wrap" 
+                                       Width="100"
+                                       HorizontalAlignment="Left"
+                                       Text="Информация о вынужденном или аварийном останове"
+                                       Margin="3"/>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:GridItem">
+                                <StackPanel
+                                    Visibility="{Binding IsFailure, Converter={StaticResource Bool2VisibilityConverter}}"
+                                    Margin="5">
+
+                                    <TextBlock
+                                        Text="{Binding StateDto.StopType, Converter={StaticResource StopTypeToNameConverter}, StringFormat='{0} останов'}"
+                                        Foreground="Red"
+                                        FontSize="10"
+                                        TextWrapping="Wrap" />
+
+                                    <TextBlock
+                                        Text="{Binding StateDto.FailureDetails.FailureFeature, Converter={StaticResource FailureFeatureToNameConverter}}"
+                                        Margin="0, 5, 0, 0"
+                                        TextWrapping="Wrap" />
+
+                                    <TextBlock
+                                        Text="{Binding StateDto.FailureDetails.FailureCause, Converter={StaticResource FailureCauseToNameConverter}}"
+                                        Margin="0, 5, 0, 0"
+                                        TextWrapping="Wrap" />
+
+                                    <TextBlock
+                                        Text="Влияет на транспорт газа"
+                                        Visibility="{Binding IsCritical, Converter={StaticResource Bool2VisibilityConverter}}"
+                                        Foreground="Red"
+                                        FontSize="10"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="120">
+                        <telerik:GridViewDataColumn.Header>
+                            <TextBlock Text="Изменено" 
+                                       TextWrapping="Wrap" 
+                                       Width="90" />
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="vm:GridItem">
+                                <StackPanel Margin="5">
+                                    <TextBlock Text="{Binding StateDto.UserName}" 
+                                               HorizontalAlignment="Center"
+                                               TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding StateDto.UserSite}" 
+                                               HorizontalAlignment="Center"
+                                               Margin="0, 3, 0, 0"
+                                               FontSize="10"
+                                               TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                </telerik:RadTreeListView.Columns>
+
+                <telerik:RadTreeListView.ChildTableDefinitions>
+                    <telerik:TreeListViewTableDefinition ItemsSource="{Binding Children}">
+                    </telerik:TreeListViewTableDefinition>
+                </telerik:RadTreeListView.ChildTableDefinitions>
+               
+                
+            </telerik:RadTreeListView>
+            
+        </Grid>
+    </telerik:RadBusyIndicator>
+    
+</UserControl>

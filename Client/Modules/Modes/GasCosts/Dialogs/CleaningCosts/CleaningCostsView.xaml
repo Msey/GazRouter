@@ -1,0 +1,335 @@
+﻿<telerik:RadWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:maskedInput="clr-namespace:Telerik.Windows.Controls.MaskedInput;assembly=Telerik.Windows.Controls.Input"
+                   xmlns:controls1="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:converters1="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   xmlns:cleaningCosts="clr-namespace:GazRouter.Modes.GasCosts.Dialogs.CleaningCosts"
+                   xmlns:measuringLoader="clr-namespace:GazRouter.Modes.GasCosts.MeasuringLoader"
+                   mc:Ignorable="d"
+                   x:Class="GazRouter.Modes.GasCosts.Dialogs.CleaningCosts.CleaningCostsView" 
+                   Header="Расчет расхода газа при очистке внутренней полости участков, при проведении внутритрубной диагностики"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DesignHeight="0" 
+                   d:DesignWidth="600"
+                   d:DataContext="{d:DesignInstance cleaningCosts:CleaningCostsViewModel}" 
+                   Style="{StaticResource DialogWindowStyle}">
+
+    <Grid Margin="11">
+
+        <Grid.Resources>
+            <converters1:PressureToDoubleConverter x:Key="PressureToDoubleConverter"/>
+            <converters1:TemperatureToDoubleConverter x:Key="TemperatureToDoubleConverter"/>
+            <telerik:InvertedBooleanConverter x:Key="InvertedBoolConverter" />
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <telerik:RadBusyIndicator BusyContent="Загрузка..." IsBusy="{Binding Path=IsBusyLoading}">
+
+            <StackPanel Orientation="Vertical">
+
+                <!--<TextBlock TextWrapping="Wrap" Text="Дата события:" />
+                <telerik:RadDatePicker SelectedValue="{Binding EventDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" 
+                                       VerticalAlignment="Center" Width="150" HorizontalAlignment="Left"
+                                       DisplayDateStart="{Binding EventDateRangeStart}" 
+                                       DisplayDateEnd="{Binding EventDateRangeEnd}" 
+                                       Margin="0, 5, 0, 0"  />-->
+
+                <TextBlock TextWrapping="Wrap" Text="Дата события:" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0, 5, 0, 0">
+                        <telerik:RadDatePicker Grid.Column="0" SelectedValue="{Binding EventDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" 
+                                               VerticalAlignment="Center" Width="150" HorizontalAlignment="Left"
+                                               DisplayDateStart="{Binding EventDateRangeStart}" 
+                                               DisplayDateEnd="{Binding EventDateRangeEnd}" 
+                                               IsEnabled="{Binding ShowDayly, Converter={StaticResource InvertedBoolConverter}}"
+                                               Margin="0, 5, 0, 0"  />
+                        <measuringLoader:MeasuringLoaderView DataContext="{Binding MeasuringLoader}" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Width="25" Command="{Binding ShowListingCommand}" 
+                        ToolTipService.ToolTip="Просмотр значений расчета" 
+                        HorizontalAlignment="Right">
+                        <Image Source="/Common;component/Images/32x32/variable48.png"  />
+                    </Button>
+                </Grid>
+
+
+                <TextBlock TextWrapping="Wrap" 
+                           Text="Газопровод:" 
+                           Margin="0, 11, 0, 0" />
+                <controls1:EntityPicker
+                    SelectedItem="{Binding Path=Entity, Mode=OneTime}" 
+                                       IsReadOnly="True" 
+                                       Margin="0, 5, 0, 0"/>
+
+
+                <StackPanel Margin="0, 11, 0, 0">
+                    <TextBlock TextWrapping="Wrap" 
+                               Width="250" 
+                               HorizontalAlignment="Left" 
+                               Text="Количество пропусков очистного устройства (циклов очистки):" />
+                    <telerik:RadMaskedNumericInput Width="100" 
+                                                   Value="{Binding Count, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                   HorizontalAlignment="Left" 
+                                                   Margin="0, 5, 0, 0"  />
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock TextWrapping="Wrap" 
+                                   Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Геометрический объем КЗОУ, м³:" />
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       FormatString="n1"
+                                                       Value="{Binding StartChamberVolume, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                       HorizontalAlignment="Left" 
+                                                       Margin="0, 5, 0, 0" />
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock TextWrapping="Wrap" 
+                                   Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Геометрический объем участка газопровода перед КЗОУ, м³:"/>
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <TextBox Width="100" 
+                                     IsReadOnly="True"
+                                     IsTabStop="False"
+                                     TextAlignment="Right"
+                                     Text="{Binding StartPipingVolume, ValidatesOnNotifyDataErrors=True, Mode=TwoWay}" 
+                                     HorizontalAlignment="Left" />
+                            <telerik:RadButton Margin="1, 0, 0, 0" 
+                                               Command="{Binding OpenStartPipingVolumeCalculator}" 
+                                               ToolTipService.ToolTip="Калькулятор" Content="..." />
+                        </StackPanel>
+                        
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                        <controls1:SmartTextBlock Width="200"
+                                                  HorizontalAlignment="Left"
+                                                  Text="Давление газа в КЗОУ до опорожнения, [P]:"/>
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       FormatString="n2"
+                                                       Value="{Binding StartChamberPressure, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureToDoubleConverter}}" 
+                                                       HorizontalAlignment="Left" 
+                                                       Margin="0, 5, 0, 0" />
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <controls1:SmartTextBlock Width="200"
+                                                  HorizontalAlignment="Left"
+                                                  Text="Температура газа в КЗОУ до опорожнения, [T]:"/>
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       FormatString="n1"
+                                                       Value="{Binding StartChamberTemperature, ValidatesOnNotifyDataErrors=True, Mode=TwoWay, Converter={StaticResource TemperatureToDoubleConverter}}" 
+                                                       HorizontalAlignment="Left" 
+                                                       Margin="0, 5, 0, 0"  />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock TextWrapping="Wrap" 
+                                   Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Геометрический объем КПОУ, м³:" />
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       FormatString="n1"
+                                                       Value="{Binding EndChamberVolume, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                       HorizontalAlignment="Left" 
+                                                       Margin="0, 5, 0, 0" />
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock TextWrapping="Wrap" 
+                                   Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Геометрический объем участка газопровода перед КПОУ, м³:"/>
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <TextBox Width="100" 
+                                     IsReadOnly="True"
+                                     TextAlignment="Right"
+                                     IsTabStop="False" 
+                                     Text="{Binding EndPipingVolume, ValidatesOnNotifyDataErrors=True, Mode=TwoWay}" 
+                                     HorizontalAlignment="Left"/>
+                            <telerik:RadButton Margin="1, 0, 0, 0" 
+                                               Command="{Binding OpenEndPipingVolumeCalculator}"
+                                               ToolTipService.ToolTip="Калькулятор" 
+                                               Content="..." />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock TextWrapping="Wrap" 
+                                   Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Геометрический объем конденсатосборника, м³:"/>
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       FormatString="n1"
+                                                       Value="{Binding CondensateTankVolume, ValidatesOnNotifyDataErrors=True, Mode=TwoWay}" 
+                                                       HorizontalAlignment="Left" 
+                                                       Margin="0, 5, 0, 0"  />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                        <controls1:SmartTextBlock Width="200"
+                                                  HorizontalAlignment="Left"
+                                                  Text="Давление газа в КПОУ до опорожнения, [P]:"/>
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       FormatString="n2"
+                                                       Value="{Binding EndChamberPressure, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureToDoubleConverter}}" 
+                                                       HorizontalAlignment="Left" 
+                                                       Margin="0, 5, 0, 0" />
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <controls1:SmartTextBlock Width="200"
+                                                  HorizontalAlignment="Left"
+                                                  Text="Температура газа в КПОУ до опорожнения, [T]:"/>
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       FormatString="n1"
+                                                       Value="{Binding EndChamberTemperature, ValidatesOnNotifyDataErrors=True, Mode=TwoWay, Converter={StaticResource TemperatureToDoubleConverter}}" 
+                                                       HorizontalAlignment="Left" 
+                                                       Margin="0, 5, 0, 0"  />
+                    </StackPanel>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0">
+                        <TextBlock TextWrapping="Wrap" 
+                                   Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Диаметр свечного крана, м:"/>
+                        <telerik:RadComboBox Width="100" 
+                                             ItemsSource="{Binding Path=BleederList}" 
+                                             DisplayMemberPath="Diameter"
+                                             SelectedItem="{Binding Path=SelectedBleeder, Mode=TwoWay}"
+                                             EmptyText="Выберите диаметр..."
+                                             HorizontalAlignment="Left"
+                                             IsEditable="False"
+                                             Margin="0, 5, 0, 0" />
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0">
+                        <TextBlock TextWrapping="Wrap" 
+                                   Width="200" 
+                                   HorizontalAlignment="Left" 
+                                   Text="Длина дренажной линии, м:" />
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       Value="{Binding Length, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                       HorizontalAlignment="Left" 
+                                                       Margin="0, 5, 0, 0"  />
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0">
+                        <TextBlock TextWrapping="Wrap" 
+                                   Width="200" 
+                                   HorizontalAlignment="Left" 
+                                   Text="Время продувки, с:" />
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       Value="{Binding PurgeTime, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                       HorizontalAlignment="Left" 
+                                                       Margin="0, 5, 0, 0"  />
+                    </StackPanel>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0">
+                        <TextBlock TextWrapping="Wrap" 
+                                   Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Плотность газа, кг/м³:"/>
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       FormatString="n3" 
+                                                       Value="{Binding Density, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                       HorizontalAlignment="Left" 
+                                                       Margin="0, 5, 0, 0"  />
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0">
+                        <TextBlock TextWrapping="Wrap" 
+                                   Width="200" 
+                                   HorizontalAlignment="Left"
+                                   Text="Содержание азота в газе (мол.доля), %:"/>
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       FormatString="n2"
+                                                       Value="{Binding NitrogenContent, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                       HorizontalAlignment="Left" 
+                                                       Margin="0, 5, 0, 0"  />
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0">
+                        <TextBlock TextWrapping="Wrap" Width="200" HorizontalAlignment="Left"
+                                   Text="Содержание CO2 в газе (мол.доля), %:"/>
+                        <telerik:RadMaskedNumericInput Width="100" FormatString="n2"
+                                                       Value="{Binding CarbonDioxideContent, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                       HorizontalAlignment="Left" Margin="0, 5, 0, 0"  />
+                    </StackPanel>
+
+
+                </StackPanel>
+
+
+                <TextBlock Margin="0, 11, 0, 0" 
+                           TextWrapping="Wrap" 
+                           Width="250" 
+                           HorizontalAlignment="Left"
+                           Text="Давление атмосферное, мм рт.ст.:" />
+                <telerik:RadMaskedNumericInput Width="100" 
+                                               Value="{Binding PressureAir, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                               HorizontalAlignment="Left" 
+                                               Margin="0, 5, 0, 0" />
+
+                
+                
+
+
+                <StackPanel Margin="0, 20, 0, 0">
+                    <TextBlock TextWrapping="Wrap" Text="{Binding VolumeType,StringFormat='Расход газа, {0} (Расчет):'}" FontWeight="Bold" />
+                    <TextBox Width="100" 
+                             Text="{Binding Result, Mode=TwoWay}" 
+                             FontWeight="Bold" 
+                             IsReadOnly="True" 
+                             HorizontalAlignment="Left"
+                             TextAlignment="Right"
+                             Margin="0, 5, 0, 0" />
+                </StackPanel>
+
+                <StackPanel Margin="0, 11, 0, 0">
+                    <TextBlock TextWrapping="Wrap" Text="{Binding VolumeType,StringFormat='Расход газа, {0} (Измерение):'}" FontWeight="Bold" />
+                    <telerik:RadMaskedNumericInput Width="100" Value="{Binding MeasuredInputField, Mode=TwoWay}" FontWeight="Bold" 
+                                                   FormatString="{Binding FormatType}" IsEnabled="{Binding IsFact}"
+                                                   HorizontalAlignment="Left" Margin="0, 5, 0, 0" 
+                                                   maskedInput:MaskedInputExtensions.AllowNull="True" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0" HorizontalAlignment="Right">
+                    <telerik:RadButton Width="85" Margin="7, 0, 0, 0" Command="{Binding SaveCommand}" Content="Сохранить" telerik:RadWindow.ResponseButton="Accept" />
+                    <telerik:RadButton Width="85" Margin="7, 0, 0, 0" Command="{Binding CancelCommand}" Style="{StaticResource StyleConfirmationButton}" telerik:RadWindow.ResponseButton="Cancel">Отмена</telerik:RadButton>
+                </StackPanel>
+            </StackPanel>
+
+        </telerik:RadBusyIndicator>
+    </Grid>
+
+</telerik:RadWindow>

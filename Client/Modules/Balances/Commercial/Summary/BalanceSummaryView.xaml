@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="GazRouter.Balances.Commercial.Summary.BalanceSummaryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:common="clr-namespace:GazRouter.Balances.Commercial.Common"
+             xmlns:summary="clr-namespace:GazRouter.Balances.Commercial.Summary"
+             xmlns:volumeValue="clr-namespace:GazRouter.Controls.Volume;assembly=Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance summary:BalanceSummaryViewModel}"
+             x:Name="LayoutRoot">
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+
+            <Grid.Resources>
+                <converters:ValueDeltaToColorConverter x:Key="DeltaColorConverter" />
+            </Grid.Resources>
+
+
+            <telerik:RadTreeListView GridLinesVisibility="Both"
+                                     AutoGenerateColumns="False"
+                                     ItemsSource="{Binding Tree}"
+                                     CanUserFreezeColumns="False"
+                                     RowIndicatorVisibility="Collapsed"
+                                     IsReadOnly="True"
+                                     AlternationCount="2"
+                                     IsExpandedBinding="{Binding IsExpanded}">
+
+                <telerik:RadTreeListView.Columns>
+                    <telerik:GridViewDataColumn Width="250"
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                Header="Статья">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="summary:SummaryItemBase">
+                                <TextBlock Text="{Binding Name}"
+                                           TextWrapping="Wrap"
+                                           FontStyle="{Binding FontStyle}"
+                                           Margin="5" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    
+
+                    <telerik:GridViewDataColumn Width="130"
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                Header="Факт"
+                                                IsVisible="{Binding DataContext.ShowFact, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="summary:SummaryItemBase">
+                                <volumeValue:VolumeValue Volume="{Binding FactValue}" 
+                                                         FormatString="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.ValueFormat}"
+                                                         Margin="5"
+                                                         FontStyle="{Binding FontStyle}"
+                                                         HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    
+                    
+                    <telerik:GridViewDataColumn Width="130"
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                Header="План"
+                                                IsVisible="{Binding DataContext.ShowPlan, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="summary:SummaryItemBase">
+                                <volumeValue:VolumeValue Volume="{Binding PlanValue}" 
+                                                         FormatString="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.ValueFormat}"
+                                                         Margin="5"
+                                                         FontStyle="{Binding FontStyle}"
+                                                         HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    
+
+                    <telerik:GridViewDataColumn Width="130"
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                Header="Откл."
+                                                IsVisible="{Binding DataContext.ShowDelta, ElementName=LayoutRoot, Mode=TwoWay}">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="summary:SummaryItemBase">
+                                <volumeValue:VolumeValue Volume="{Binding Delta}" 
+                                                         FormatString="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.DeltaFormat}"
+                                                         Margin="5"
+                                                         FontStyle="{Binding FontStyle}"
+                                                         HorizontalAlignment="Right"
+                                                         Foreground="{Binding Delta, Converter={StaticResource DeltaColorConverter}}"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                </telerik:RadTreeListView.Columns>
+
+                <telerik:RadTreeListView.ChildTableDefinitions>
+                    <telerik:TreeListViewTableDefinition ItemsSource="{Binding Childs}" />
+                </telerik:RadTreeListView.ChildTableDefinitions>
+
+            </telerik:RadTreeListView>
+
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+
+</UserControl>

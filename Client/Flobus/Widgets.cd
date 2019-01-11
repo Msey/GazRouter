@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="GazRouter.Flobus.Visuals.PipelineWidget" Collapsed="true">
+    <Position X="3.25" Y="0.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QOQOggAAUqBYyQMKLNJQCEAQgphQBxCEYSSQQqAQxgk=</HashCode>
+      <FileName>Visuals\PipelineWidget.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ManipulationPoints" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GazRouter.Flobus.Visuals.PipelinePointsManager">
+    <Position X="9.25" Y="1" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Private" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="GazRouter.Flobus.Visuals.PipelinePointsManager.PipelinePoint" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Visuals\PipelinePointsManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAKgAgACAKAAgQI0ABiAAAQSIAAAEAgQAQAwAAEBAAg=</HashCode>
+      <FileName>Visuals\PipelinePointsManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="GazRouter.Flobus.Model.IPipelineEditPoint" Collapsed="true">
+    <Position X="6.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAACAAEAAAAgAgAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Model\IPipelineEditPoint.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

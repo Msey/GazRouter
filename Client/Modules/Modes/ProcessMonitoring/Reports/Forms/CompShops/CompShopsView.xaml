@@ -1,0 +1,426 @@
+﻿<UserControl x:Class="GazRouter.Modes.ProcessMonitoring.Reports.Forms.CompShops.CompShopsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:vm="clr-namespace:GazRouter.Modes.ProcessMonitoring.Reports.Forms.CompShops"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+             xmlns:measurings1="clr-namespace:GazRouter.Controls.Measurings;assembly=Controls"
+             xmlns:entityName="clr-namespace:GazRouter.Controls.EntityName;assembly=Controls"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:compShop="clr-namespace:GazRouter.Modes.ProcessMonitoring.ObjectStory.CompShop"
+             xmlns:pipelineTrend="clr-namespace:GazRouter.Modes.ProcessMonitoring.PipelineTrend"
+             mc:Ignorable="d"
+             d:DesignHeight="300" 
+             d:DesignWidth="400" 
+             d:DataContext="{d:DesignInstance vm:CompShopsViewModel}">
+
+
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            <Grid.Resources>
+                <telerik:BooleanToVisibilityConverter x:Key="Bool2VisibilityConverter"/>
+                <converters:CompUnitStateToColorConverter x:Key="CompUnitStateToColorConverter"/>
+                <converters:CompUnitStateToNameConverter x:Key="CompUnitStateToNameConverter"/>
+            </Grid.Resources>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            
+            
+            <telerik:RadTreeListView Grid.Row="0" 
+                                     GridLinesVisibility="Both"
+                                     AutoExpandItems="True" 
+                                     AutoGenerateColumns="False"
+                                     IsReadOnly="True"
+                                     ItemsSource="{Binding Items}"
+                                     SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                     CanUserFreezeColumns="False"
+                                     RowIndicatorVisibility="Collapsed" Grid.RowSpan="{Binding CombineRows}"
+> 
+
+                <telerik:RadTreeListView.Columns>
+                    <telerik:GridViewDataColumn Width="250" 
+                                                Header="Наименование" 
+                                                IsFilterable="False" 
+                                                IsSortable="False" 
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}"
+                                                HorizontalAlignment="Left">
+                                    <ContentControl.Resources>
+                                        <DataTemplate DataType="vm:ShopItem">
+                                            <StackPanel Margin="5">
+                                                <entityName:EntityNameBlock Entity="{Binding Dto}"
+                                                                            IsMenuEnable="True"
+                                                                            UseShortPathAsName="{Binding UseShortPathAsName}"
+                                                                            DisplayIcon="True"
+                                                                            HorizontalContentAlignment="Left"
+                                                                            HorizontalAlignment="Left"/>
+                                                <TextBlock Text="{Binding Dto.KmOfConn, StringFormat='{0}км.'}"
+                                                           FontSize="10"
+                                                           Foreground="CadetBlue"
+                                                           Margin="20, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+
+                                        <DataTemplate DataType="vm:ItemBase">
+                                            <entityName:EntityNameBlock Entity="{Binding Dto}"
+                                                                        IsMenuEnable="True"
+                                                                        HorizontalContentAlignment="Left"
+                                                                        HorizontalAlignment="Left"
+                                                                        DisplayIcon="True"
+                                                                        Margin="5" 
+                                                                        FontWeight="Bold"/>        
+                                            
+                                        </DataTemplate>
+                                    </ContentControl.Resources>
+                                </ContentControl>
+                            </DataTemplate>
+                            
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="85" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                Header="Типы ГПА"
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}"
+                                                HorizontalAlignment="Center">
+                                    <ContentControl.Resources>
+                                        <DataTemplate DataType="vm:ShopItem">
+                                            <TextBlock Text="{Binding UnitTypes}"
+                                                       FontSize="11"
+                                                       TextWrapping="Wrap"
+                                                       Margin="5" /> 
+                                        </DataTemplate>
+                                        <DataTemplate DataType="vm:ItemBase" />
+                                    </ContentControl.Resources>
+                                </ContentControl>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="25" 
+                                                IsFilterable="False" 
+                                                IsSortable="False">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}"
+                                                HorizontalAlignment="Center">
+                                    <ContentControl.Resources>
+                                        <DataTemplate DataType="vm:ShopItem">
+                                            <Ellipse Width="8"
+                                                     Height="8"
+                                                     StrokeThickness="0"
+                                                     Fill="ForestGreen"
+                                                     Visibility="{Binding InWork, Converter={StaticResource Bool2VisibilityConverter}}"/>
+                                        </DataTemplate>
+                                        <DataTemplate DataType="vm:ItemBase" />
+                                    </ContentControl.Resources>
+                                </ContentControl>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                Header="Схема"
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}"
+                                                HorizontalAlignment="Center">
+                                    <ContentControl.Resources>
+                                        <DataTemplate DataType="vm:ShopItem">
+                                            <measurings1:MeasuringBlock DataContext="{Binding Pattern}" />
+                                        </DataTemplate>
+                                        <DataTemplate DataType="vm:ItemBase" />
+                                    </ContentControl.Resources>
+                                </ContentControl>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    
+                    <telerik:GridViewDataColumn Width="50" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="P вх.," />
+                                <controls:SmartTextBlock Text="[P]"/>    
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}"
+                                                HorizontalAlignment="Center">
+                                    <ContentControl.Resources>
+                                        <DataTemplate DataType="vm:ShopItem">
+                                            <measurings1:MeasuringBlock DataContext="{Binding PressureInlet}" />
+                                        </DataTemplate>
+                                        <DataTemplate DataType="vm:ItemBase" />
+                                    </ContentControl.Resources>
+                                </ContentControl>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    
+                    
+                    <telerik:GridViewDataColumn Width="50" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="P вых.," />
+                                <controls:SmartTextBlock Text="[P]"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}"
+                                                HorizontalAlignment="Center">
+                                    <ContentControl.Resources>
+                                        <DataTemplate DataType="vm:ShopItem">
+                                            <measurings1:MeasuringBlock DataContext="{Binding PressureOutlet}" />
+                                        </DataTemplate>
+                                        <DataTemplate DataType="vm:ItemBase" />
+                                    </ContentControl.Resources>
+                                </ContentControl>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                TextWrapping="Wrap"
+                                                Header="E">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}"
+                                                HorizontalAlignment="Center">
+                                    <ContentControl.Resources>
+                                        <DataTemplate DataType="vm:ShopItem">
+                                            <measurings1:MeasuringBlock DataContext="{Binding CompressionRatio}" />
+                                        </DataTemplate>
+                                        <DataTemplate DataType="vm:ItemBase" />
+                                    </ContentControl.Resources>
+                                </ContentControl>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="T вх.," />
+                                <controls:SmartTextBlock Text="[T]"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}"
+                                                HorizontalAlignment="Center">
+                                    <ContentControl.Resources>
+                                        <DataTemplate DataType="vm:ShopItem">
+                                            <measurings1:MeasuringBlock DataContext="{Binding TemperatureInlet}" />
+                                        </DataTemplate>
+                                        <DataTemplate DataType="vm:ItemBase" />
+                                    </ContentControl.Resources>
+                                </ContentControl>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="T вых.," />
+                                <controls:SmartTextBlock Text="[T]"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}"
+                                                HorizontalAlignment="Center">
+                                    <ContentControl.Resources>
+                                        <DataTemplate DataType="vm:ShopItem">
+                                            <measurings1:MeasuringBlock DataContext="{Binding TemperatureOutlet}" />
+                                        </DataTemplate>
+                                        <DataTemplate DataType="vm:ItemBase" />
+                                    </ContentControl.Resources>
+                                </ContentControl>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="T АВО.," />
+                                <controls:SmartTextBlock Text="[T]"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}"
+                                                HorizontalAlignment="Center">
+                                    <ContentControl.Resources>
+                                        <DataTemplate DataType="vm:ShopItem">
+                                            <measurings1:MeasuringBlock DataContext="{Binding TemperatureCooling}" />
+                                        </DataTemplate>
+                                        <DataTemplate DataType="vm:ItemBase" />
+                                    </ContentControl.Resources>
+                                </ContentControl>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="80" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="Q тг.," />
+                                <TextBlock Text="тыс.м3/ч." />
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}"
+                                                HorizontalAlignment="Center">
+                                    <ContentControl.Resources>
+                                        <DataTemplate DataType="vm:ShopItem">
+                                            <measurings1:MeasuringBlock DataContext="{Binding FuelGasConsumption}" />
+                                        </DataTemplate>
+                                        <DataTemplate DataType="vm:ItemBase" />
+                                    </ContentControl.Resources>
+                                </ContentControl>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="180" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                TextWrapping="Wrap"
+                                                Header="Состояние ГПА">
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding}"
+                                                HorizontalAlignment="Center">
+                                    <ContentControl.Resources>
+                                        <DataTemplate DataType="vm:ShopItem">
+                                            <ItemsControl ItemsSource="{Binding UnitStateList}"
+                                                          Margin="5">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="vm:CompUnitStateItem">
+                                                        <Border BorderThickness="0"
+                                                                Background="{Binding State, Converter={StaticResource CompUnitStateToColorConverter}}"
+                                                                telerik:RadToolTipService.ToolTipContent="{Binding State, Converter={StaticResource CompUnitStateToNameConverter}}"
+                                                                Width="12"
+                                                                Height="16"
+                                                                Margin="0, 0, 2, 0">
+                                                            <entityName:EntityNameBlock Entity="{Binding Dto}"
+                                                                                        Alias="{Binding Dto.CompUnitNum}"
+                                                                                        FontSize="11"
+                                                                                        Foreground="GhostWhite"
+                                                                                        IsMenuEnable="True"
+                                                                                        HorizontalContentAlignment="Center"
+                                                                                        HorizontalAlignment="Center"/>
+                                                        </Border>
+                                                        
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </DataTemplate>
+                                        <DataTemplate DataType="vm:ItemBase" />
+                                    </ContentControl.Resources>
+                                </ContentControl>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                </telerik:RadTreeListView.Columns>
+
+                <telerik:RadTreeListView.ChildTableDefinitions>
+                    <telerik:TreeListViewTableDefinition ItemsSource="{Binding Childs}" />
+                </telerik:RadTreeListView.ChildTableDefinitions>
+                
+            </telerik:RadTreeListView>
+            
+            
+
+            <sdk:GridSplitter Style="{StaticResource HorizontalSplitterStyle}" 
+                              Grid.Row="1"
+                              Visibility="{Binding ShowDetails, Converter={StaticResource Bool2VisibilityConverter}}" />
+
+
+            <Grid Grid.Row="1" 
+                  Margin="0, 5, 0, 0"
+                  Visibility="{Binding ShowDetails, Converter={StaticResource Bool2VisibilityConverter}}"
+                  MinHeight="200">
+                <Grid Visibility="{Binding IsPipelineSelected, Converter={StaticResource Bool2VisibilityConverter}}">
+                    <pipelineTrend:PipelineTrendView DataContext="{Binding PipelineTrend}" />
+                </Grid>
+
+                <Grid Visibility="{Binding IsCompShopSelected, Converter={StaticResource Bool2VisibilityConverter}}">
+                    <compShop:CompShopStoryView DataContext="{Binding CompShopStory}" />
+                </Grid>
+            </Grid>
+
+
+
+
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+    
+</UserControl>

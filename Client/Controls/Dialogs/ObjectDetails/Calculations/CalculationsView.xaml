@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="GazRouter.Controls.Dialogs.ObjectDetails.Calculations.CalculationsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:calculations="clr-namespace:GazRouter.Controls.Dialogs.ObjectDetails.Calculations"
+             xmlns:calculation="clr-namespace:GazRouter.DTO.Calculations.Calculation;assembly=PortableDTO"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance calculations:CalculationsViewModel}">
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            <Grid.Resources>
+                <converters:PeriodTypeToNameConverter x:Key="PeriodTypeToNameConverter"/>
+            </Grid.Resources>
+            
+            
+
+            <telerik:RadGridView AutoGenerateColumns="False"
+                                 IsReadOnly="True"
+                                 ItemsSource="{Binding CalculationList}"
+                                 RowIndicatorVisibility="Collapsed"
+                                 CanUserFreezeColumns="False"
+                                 SelectionMode="Single"
+                                 ShowGroupPanel="False">
+                <telerik:RadGridView.Columns>
+
+                    <telerik:GridViewDataColumn Width="120"
+                                                Header="Расчет"
+                                                IsSortable="False"
+                                                IsFilterable="False">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="calculation:CalculationDTO">
+                                <TextBlock Text="{Binding SysName}"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Left"
+                                           Margin="5" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="120"
+                                                Header="Описание"
+                                                IsSortable="False"
+                                                IsFilterable="False">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="calculation:CalculationDTO">
+                                <TextBlock Text="{Binding Description}"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Left"
+                                           Margin="5" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="100"
+                                                Header="Период"
+                                                IsSortable="False"
+                                                IsFilterable="False">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="calculation:CalculationDTO">
+                                <TextBlock Text="{Binding PerionTypeId, Converter={StaticResource PeriodTypeToNameConverter}}"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Left"
+                                           Margin="5"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </Grid>
+    </telerik:RadBusyIndicator>
+
+</UserControl>

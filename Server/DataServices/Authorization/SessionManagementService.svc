@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="GazRouter.DataServices.Authorization.SessionManagementService" CodeBehind="SessionManagementService.svc.cs" %>

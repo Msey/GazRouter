@@ -1,0 +1,334 @@
+﻿<UserControl x:Class="GazRouter.Modes.DispatcherTasks.Enterprise.TaskRecordsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             mc:Ignorable="d"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:enterprise="clr-namespace:GazRouter.Modes.DispatcherTasks.Enterprise"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:entityName="clr-namespace:GazRouter.Controls.EntityName;assembly=Controls"
+             xmlns:recordUrgency="clr-namespace:GazRouter.Modes.DispatcherTasks.Common.RecordUrgency"
+             xmlns:recordComments="clr-namespace:GazRouter.Modes.DispatcherTasks.Common.RecordComments"
+             d:DesignHeight="300" 
+             d:DesignWidth="500" 
+             d:DataContext="{d:DesignInstance enterprise:TaskRecordsViewModel}">
+    
+    <UserControl.Resources>
+        <telerik:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:PropertyTypeToUnitNameConverter x:Key="UnitNameConverter" />
+        <recordUrgency:RecordUrgencyToColorConverter x:Key="RecordUrgencyToColorConverter"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <telerik:RadToolBar>
+            <telerik:RadButton Command="{Binding RefreshCommand}" 
+                               Style="{StaticResource refreshButtonStyle}"/>
+
+            <telerik:RadToolBarSeparator />
+
+            <telerik:RadButton Command="{Binding AddCommand}" 
+                               Style="{StaticResource addButtonStyle}"/>
+            
+            <telerik:RadButton Command="{Binding EditCommand}" 
+                               Style="{StaticResource editButtonStyle}"/>
+            
+            <telerik:RadButton Command="{Binding DeleteCommand}" 
+                               Style="{StaticResource deleteButtonStyle}"/>
+            
+            <telerik:RadToolBarSeparator />
+            
+            <!--<telerik:RadButton Command="{Binding SetExecutedCommand}" 
+                               ToolTipService.ToolTip="Пометить выполненым"
+                               Margin="5, 0, 0, 0">
+                <Image Source="/Common;component/Images/16x16/flag_green.png" 
+                       Stretch="None" />
+            </telerik:RadButton>-->
+
+            <telerik:RadButton Command="{Binding ResetExecutedCommand}"
+                               ToolTipService.ToolTip="Пометить невыполненым">
+                <Image Source="/Common;component/Images/16x16/flag_red.png" 
+                       Stretch="None" />
+            </telerik:RadButton>
+
+            <telerik:RadToolBarSeparator />
+
+            <telerik:RadButton Command="{Binding SetControlCommand }"
+                               ToolTipService.ToolTip="Поставить на контроль">
+                <Image Source="/Common;component/Images/16x16/trace_start.png" 
+                       Stretch="None" />
+            </telerik:RadButton>
+
+            <telerik:RadButton Command="{Binding ResetControlCommand }"
+                               ToolTipService.ToolTip="Снять с контроля">
+                <Image Source="/Common;component/Images/16x16/trace_end.png" 
+                       Stretch="None" />
+            </telerik:RadButton>
+        </telerik:RadToolBar>
+
+
+        <telerik:RadBusyIndicator Grid.Row="1" 
+                                  IsBusy="{Binding IsBusyLoading}">
+
+            <telerik:RadGridView AutoGenerateColumns="False" 
+                                 IsReadOnly="True" 
+                                 ItemsSource="{Binding RecordList}"
+                                 SelectedItem="{Binding SelectedRecord, Mode=TwoWay}"
+                                 RowIndicatorVisibility="Collapsed"
+                                 ShowGroupPanel="False" 
+                                 CanUserFreezeColumns="False"
+                                 GridLinesVisibility="Both">
+                
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="40" 
+                                                IsReadOnly="True"
+                                                IsSortable="True" 
+                                                IsFilterable="True" 
+                                                IsReorderable="False"
+                                                DataMemberBinding="{Binding Dto.IsSpecialControl}"
+                                                Header="">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="enterprise:RecordItem">
+                                <Image Source="/Common;component/Images/16x16/trace.png"
+                                       Visibility="{Binding Dto.IsSpecialControl, Converter={StaticResource BoolToVisibilityConverter}}"
+                                       Stretch="None">
+                                    <ToolTipService.ToolTip>
+                                        <TextBlock Text="{Binding Dto.SpecialControlUserName}" 
+                                                   TextWrapping="Wrap" />
+                                    </ToolTipService.ToolTip>
+                                </Image>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="40" 
+                                                IsReadOnly="True"
+                                                IsSortable="True" 
+                                                IsFilterable="True" 
+                                                IsReorderable="False"
+                                                Header="">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="enterprise:RecordItem">
+                                <Image Source="/Common;component/Images/16x16/ok2.png"
+                                       Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityConverter}}"
+                                       Stretch="None" 
+                                       ToolTipService.ToolTip="Выполнено" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="120" 
+                                                DataMemberBinding="{Binding Dto.SiteName}" 
+                                                Header="ЛПУ"
+                                                IsReorderable="False"
+                                                IsSortable="True" 
+                                                IsFilterable="True">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="enterprise:RecordItem">
+                                <TextBlock Text="{Binding Dto.SiteName}"
+                                           Margin="5"
+                                           TextWrapping="Wrap"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    
+
+                    <telerik:GridViewDataColumn Width="120" 
+                                                DataMemberBinding="{Binding Dto.Description}"
+                                                Header="Задание" 
+                                                IsSortable="False" 
+                                                IsFilterable="False">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="enterprise:RecordItem">
+                                <TextBlock Text="{Binding Dto.Description}"
+                                           Margin="5"
+                                           TextWrapping="Wrap"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="150" 
+                                                DataMemberBinding="{Binding Dto.Entity.Name}" 
+                                                Header="Объект"
+                                                IsSortable="True" 
+                                                IsFilterable="True">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="enterprise:RecordItem">
+                                <entityName:EntityNameBlock Entity="{Binding Dto.Entity}" 
+                                                            DisplayIcon="True"
+                                                            IsMenuEnable="True"
+                                                            UseShortPathAsName="True"
+                                                            DisplayType="True"
+                                                            HorizontalContentAlignment="Left"
+                                                            HorizontalAlignment="Left"
+                                                            Margin="5" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="120" 
+                                                DataMemberBinding="{Binding Dto.Parameter}"
+                                                Header="Параметр" 
+                                                TextWrapping="Wrap" 
+                                                IsSortable="False" 
+                                                IsFilterable="False">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="enterprise:RecordItem">
+                                <TextBlock Text="{Binding Dto.PropertyTypeName}"
+                                           Margin="5"
+                                           TextWrapping="Wrap"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                DataMemberBinding="{Binding Dto.TargetValue}"
+                                                Header="Знач." 
+                                                TextWrapping="Wrap" 
+                                                IsSortable="True" 
+                                                IsFilterable="False"/>
+                    
+
+                    <telerik:GridViewDataColumn Width="50"
+                                                DataMemberBinding="{Binding Dto.PropertyTypeId, Converter={StaticResource UnitNameConverter}}"
+                                                Header="Ед.изм." 
+                                                TextWrapping="Wrap" 
+                                                IsReorderable="False"
+                                                IsSortable="True" 
+                                                IsFilterable="False" />
+                    
+
+                    <telerik:GridViewDataColumn Width="110"
+                                                DataMemberBinding="{Binding Dto.CompletionDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"
+                                                Header="Срок выполнения" 
+                                                TextWrapping="Wrap"
+                                                IsSortable="True" 
+                                                IsFilterable="True">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="enterprise:RecordItem">
+                                <StackPanel Margin="5">
+                                    <TextBlock Text="{Binding Dto.CompletionDate, StringFormat='{}{0:dd.MM.yyyy}'}"
+                                               HorizontalAlignment="Center" />
+                                    <TextBlock Text="{Binding Dto.CompletionDate, StringFormat='{}{0:HH:mm}'}"
+                                               HorizontalAlignment="Center" />
+                                    <Rectangle Width="50"
+                                               Height="5"
+                                               StrokeThickness="0"
+                                               Fill="{Binding Urgency, Converter={StaticResource RecordUrgencyToColorConverter}}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    
+
+                    <telerik:GridViewDataColumn Width="110" 
+                                                DataMemberBinding="{Binding Dto.ExecutedUserName}"
+                                                Header="Выполнено" 
+                                                TextWrapping="Wrap"
+                                                IsSortable="True" 
+                                                IsFilterable="True" 
+                                                IsReorderable="False">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="enterprise:RecordItem">
+                                <Grid Margin="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding Dto.ExecutedDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"/>
+                                    <TextBlock Text="{Binding Dto.ExecutedUserName}" 
+                                               TextWrapping="Wrap"
+                                               Margin="0, 5, 0, 0"
+                                               Grid.Row="1"/>
+                                    <TextBlock Text="{Binding Dto.ExecutedUserDescription, StringFormat='{}({0})'}"
+                                               TextWrapping="Wrap"
+                                               Foreground="CadetBlue"
+                                               FontSize="10"
+                                               Margin="0, 3, 0, 0"
+                                               Grid.Row="2"/>
+                                </Grid>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="110" 
+                                                DataMemberBinding="{Binding Dto.AckUserName}"
+                                                Header="Квитировано" 
+                                                TextWrapping="Wrap"
+                                                IsSortable="True" 
+                                                IsFilterable="True" 
+                                                IsReorderable="False">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="enterprise:RecordItem">
+                                <Grid Margin="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding Dto.AckDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"/>
+                                    <TextBlock Text="{Binding Dto.AckUserName}" 
+                                               TextWrapping="Wrap"
+                                               Margin="0, 5, 0, 0"
+                                               Grid.Row="1"/>
+                                    <TextBlock Text="{Binding Dto.AckUserDescription, StringFormat='{}({0})'}"
+                                               TextWrapping="Wrap"
+                                               Foreground="CadetBlue"
+                                               FontSize="10"
+                                               Margin="0, 3, 0, 0"
+                                               Grid.Row="2"/>
+                                </Grid>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="110"
+                                                DataMemberBinding="{Binding Dto.CreateUserName}"
+                                                Header="Создал"
+                                                TextWrapping="Wrap"
+                                                IsSortable="True" 
+                                                IsFilterable="True">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="enterprise:RecordItem">
+                                <Grid Margin="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding Dto.CreateUserName}" 
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding Dto.CreateUserDescription, StringFormat='{}({0})'}"
+                                               TextWrapping="Wrap"
+                                               Foreground="CadetBlue"
+                                               FontSize="10"
+                                               Margin="0, 3, 0, 0"
+                                               Grid.Row="1"/>
+                                </Grid>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </telerik:RadBusyIndicator>
+
+        <sdk:GridSplitter Grid.Row="2" 
+                          Style="{StaticResource HorizontalSplitterStyle}" />
+        
+        <recordComments:RecordCommentsView DataContext="{Binding CommentsViewModel}"
+                                       Margin="0, 5, 0, 0"
+                                       Grid.Row="2"/>
+    </Grid>
+</UserControl>

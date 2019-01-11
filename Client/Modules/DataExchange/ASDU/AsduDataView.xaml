@@ -1,0 +1,207 @@
+﻿<UserControl x:Class="DataExchange.ASDU.AsduDataView"
+   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:asdu="clr-namespace:DataExchange.ASDU"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400" d:DataContext="{d:DesignInstance asdu:AsduDataViewModel}">
+
+
+    <telerik:EventToCommandBehavior.EventBindings>
+        <telerik:EventBinding Command="{Binding LoadedCommand}" EventName="Loaded" />
+    </telerik:EventToCommandBehavior.EventBindings>
+
+    <UserControl.Resources>
+        <asdu:ErrorCountToColorConverter x:Key="ErrorCountToColorConverter" />
+        <asdu:DataNodeTypeToImageConverter x:Key="NodeTypeToImageConverter"/>
+        <asdu:LinkedToImageConverter x:Key="LinkedToImageConverter"/>
+        <asdu:DataEqualityToColorConverter x:Key="DataEqualityToColorConverter"/>
+    </UserControl.Resources>
+
+    <telerik:RadBusyIndicator BusyContent="{Binding BusyMessage}" IsBusy="{Binding IsBusyLoading}">
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <telerik:RadToolBar Grid.ColumnSpan="2">
+                <telerik:RadButton telerik:RadToolTipService.ToolTipContent="Обновить..." Command="{Binding RefreshCommand}" Margin="8,4,4,4">
+                    <Image Source="img/refresh_26px.png"></Image>
+                </telerik:RadButton>
+                <telerik:RadButton telerik:RadToolTipService.ToolTipContent="Связать" Command="{Binding LinkCommand}" IsEnabled="{Binding CanLink}"  Margin="8,4,4,4">
+                    <Image Source="img/link_26px.png"></Image>
+                </telerik:RadButton>
+                <telerik:RadButton telerik:RadToolTipService.ToolTipContent="Разорвать связь" Command="{Binding UnLinkCommand}" IsEnabled="{Binding CanUnLink}"  Margin="8,4,4,4">
+                    <Image Source="img/unlink_26px.png"></Image>
+                </telerik:RadButton>
+                <telerik:RadToggleButton x:Name="cbLinkDisplayMode" telerik:RadToolTipService.ToolTipContent="Режим отображения связей" IsChecked="{Binding IsInLinkDisplayMode, Mode=TwoWay}" Margin="4,4,4,4">
+                    <Image Source="img/tree structure_26px.png"></Image>
+                </telerik:RadToggleButton>
+                <telerik:RadButton telerik:RadToolTipService.ToolTipContent="Список заявок" Command="{Binding ShowRequestsCommand}" Margin="4,4,4,4">
+                    <Image Source="img/list_26px.png"></Image>
+                </telerik:RadButton>
+                <!--<telerik:RadButton telerik:RadToolTipService.ToolTipContent="Выгрузить отчет..." Command="{Binding ExportToExcelCommand}" Margin="4,4,4,4">
+                    <Image Source="img/excel_26px.png"></Image>
+                </telerik:RadButton>-->
+            </telerik:RadToolBar>
+            <telerik:RadToolBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                <TextBlock Margin="4,4,4,2">Корневые объекты</TextBlock>
+                <telerik:RadComboBox Margin="4" MinWidth="200" ItemsSource="{Binding PossibleRootTypes}" IsReadOnly="True" DisplayMemberPath="MiscInfo" SelectedValue="{Binding SelectedRootTypes, Mode=TwoWay}"/>
+                <TextBlock Margin="4,4,4,2">Заявка</TextBlock>
+                <telerik:RadComboBox Margin="4" MinWidth="200" ItemsSource="{Binding AsduRequests}" IsReadOnly="True" DisplayMemberPath="Name" SelectedValue="{Binding SelectedRequest, Mode=TwoWay}"/>
+            </telerik:RadToolBar>
+            
+            <telerik:RadToolBar Grid.Row="2" Grid.Column="0">
+                <TextBlock Margin="4,4,4,2">Показать</TextBlock>
+                <telerik:RadComboBox Margin="4" MinWidth="120" ItemsSource="{Binding LinkStates}" IsReadOnly="True" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding IusLinkState, Mode=TwoWay}"/>
+            </telerik:RadToolBar>
+            <telerik:RadTreeListView Grid.Row="3" Grid.Column="0" Margin="4" IsReadOnly="True" x:Name="IusTree"
+                                     RowIndicatorVisibility="Collapsed"
+                                     IsSynchronizedWithCurrentItem="True"
+                                     AutoGenerateColumns="False"
+                                     CanUserFreezeColumns="False"
+                                     IsBusy="{Binding IsIusTreeBusy}"
+                                     ItemsSource="{Binding IusTreeRootItemsView}"
+                                     SelectedItem="{Binding SelectedIusItem, Mode=TwoWay}"
+                                     IsExpandedBinding="{Binding IsExpanded, Mode=TwoWay}"
+                                     IsFilteringAllowed="False" CopyingCellClipboardContent="Tree_CopyingCellClipboardContent">
+                <telerik:RadContextMenu.ContextMenu>
+                    <telerik:RadContextMenu x:Name="IusTreeContextMenu" ItemsSource="{Binding IusMenuItems}" Opening="TreeContextMenu_Opening" >
+                        <telerik:RadContextMenu.ItemContainerStyle>
+                            <Style TargetType="telerik:RadMenuItem" BasedOn="{StaticResource RadMenuItemStyle}">
+                                <Setter Property="Header" Value="{Binding Text}"/>
+                                <Setter Property="Command" Value="{Binding Command}"/>
+                                <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
+                                <Setter Property="ItemsSource" Value="{Binding SubItems}"></Setter>
+                            </Style>
+                        </telerik:RadContextMenu.ItemContainerStyle>
+                    </telerik:RadContextMenu>
+                </telerik:RadContextMenu.ContextMenu>
+                <telerik:EventToCommandBehavior.EventBindings>
+                    <telerik:EventBinding Command="{Binding IusTreeExpandedCommand}" EventName="RowIsExpandedChanged"/>
+                </telerik:EventToCommandBehavior.EventBindings>
+                <telerik:RadTreeListView.ChildTableDefinitions>
+                    <telerik:TreeListViewTableDefinition ItemsSource="{Binding ChildrenView}" />
+                </telerik:RadTreeListView.ChildTableDefinitions>
+                <telerik:RadTreeListView.Columns>
+                    <telerik:GridViewDataColumn Header="Название">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal"
+                                            Background="{Binding ErrorCount, Mode=OneWay, Converter={StaticResource ErrorCountToColorConverter}}">
+                                    <Image Height="13" Width="13" Source="{Binding NodeType, Mode=OneWay, Converter={StaticResource NodeTypeToImageConverter}}" Margin="0,0,4,0"/>
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                    <Image Height="13" Width="13" Source="{Binding LinkedId, Mode=OneWay, Converter={StaticResource LinkedToImageConverter}}" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                        <telerik:GridViewDataColumn.ToolTipTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding MiscInfo}" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.ToolTipTemplate>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn Header="Значение">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal"
+                                            Background="{Binding Equality, Converter={StaticResource DataEqualityToColorConverter}}">
+                                    <TextBlock Text="{Binding Value}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn Header="Тип" DataMemberBinding="{Binding NodeTypeHumanReadable}" />
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Id}"
+                                                Header="Идентификатор" />
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding LinkedId}"
+                                                Header="связанный ID М АСДУ" />
+                </telerik:RadTreeListView.Columns>
+            </telerik:RadTreeListView>
+            <sdk:GridSplitter Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Width="10"
+                              VerticalAlignment="Stretch" HorizontalAlignment="Right" />
+            <telerik:RadToolBar Grid.Row="2" Grid.Column="1">
+                <TextBlock Margin="4,4,4,2">Показать</TextBlock>
+                <telerik:RadComboBox Margin="4" MinWidth="120" ItemsSource="{Binding LinkStates}" IsReadOnly="True" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding AsduLinkState, Mode=TwoWay}"/>
+            </telerik:RadToolBar>
+            <telerik:RadTreeListView Grid.Row="3" Grid.Column="1" Margin="4" IsReadOnly="True" x:Name="AsduTree"
+                                     RowIndicatorVisibility="Collapsed"
+                                     IsSynchronizedWithCurrentItem="True"
+                                     AutoGenerateColumns="False"
+                                     CanUserFreezeColumns="False"
+                                     IsBusy="{Binding IsAsduTreeBusy}"
+                                     ItemsSource="{Binding AsduTreeRootItemsView}"
+                                     SelectedItem="{Binding SelectedAsduItem, Mode=TwoWay}"
+                                     IsExpandedBinding="{Binding IsExpanded, Mode=TwoWay}"
+                                     IsFilteringAllowed="False" CopyingCellClipboardContent="Tree_CopyingCellClipboardContent">
+                <telerik:RadContextMenu.ContextMenu>
+                    <telerik:RadContextMenu x:Name="AsduTreeContextMenu" ItemsSource="{Binding AsduMenuItems}" Opening="TreeContextMenu_Opening" >
+                        <telerik:RadContextMenu.ItemContainerStyle>
+                            <Style TargetType="telerik:RadMenuItem" BasedOn="{StaticResource RadMenuItemStyle}">
+                                <Setter Property="Header" Value="{Binding Text}"/>
+                                <Setter Property="Command" Value="{Binding Command}"/>
+                                <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
+                                <Setter Property="ItemsSource" Value="{Binding SubItems}"></Setter>
+                            </Style>
+                        </telerik:RadContextMenu.ItemContainerStyle>
+                    </telerik:RadContextMenu>
+                </telerik:RadContextMenu.ContextMenu>
+                <telerik:EventToCommandBehavior.EventBindings>
+                    <telerik:EventBinding Command="{Binding AsduTreeExpandedCommand}" EventName="RowIsExpandedChanged"/>
+                </telerik:EventToCommandBehavior.EventBindings>
+                <telerik:RadTreeListView.ChildTableDefinitions>
+                    <telerik:TreeListViewTableDefinition ItemsSource="{Binding ChildrenView}" />
+                </telerik:RadTreeListView.ChildTableDefinitions>
+                <telerik:RadTreeListView.Columns>
+                    <telerik:GridViewDataColumn Header="Название">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal"
+                                            Background="{Binding ErrorCount, Mode=OneWay, Converter={StaticResource ErrorCountToColorConverter}}">
+                                    <Image Height="13" Width="13" Source="{Binding NodeType, Mode=OneWay, Converter={StaticResource NodeTypeToImageConverter}}" Margin="0,0,4,0"/>
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                    <Image Height="13" Width="13" Source="{Binding LinkedId, Mode=OneWay, Converter={StaticResource LinkedToImageConverter}}" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                        <telerik:GridViewDataColumn.ToolTipTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding MiscInfo}" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.ToolTipTemplate>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn Header="Значение">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal"
+                                            Background="{Binding Equality, Mode=OneWay, Converter={StaticResource DataEqualityToColorConverter}}">
+                                    <TextBlock Text="{Binding Value}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn Header="Тип" DataMemberBinding="{Binding NodeTypeHumanReadable}" />
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Id}"
+                                                Header="Идентификатор" />
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding RawId}"
+                                                Header="GUID В М АСДУ" />
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding LinkedId}"
+                                                Header="связанный ID ИУС Т" />
+                </telerik:RadTreeListView.Columns>
+            </telerik:RadTreeListView>
+
+            <Canvas x:Name="DrawingRoot" Grid.Row="0" Grid.Column="0"
+                    Grid.ColumnSpan="{Binding ElementName=LayoutRoot, Path=ColumnDefinitions.Count}"
+                    Grid.RowSpan="{Binding ElementName=LayoutRoot, Path=RowDefinitions.Count}" />
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

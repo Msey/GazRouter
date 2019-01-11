@@ -1,0 +1,5 @@
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\Utils\bin\Debug\Utils.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\Utils\bin\Debug\Utils.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\Utils\obj\Debug\Utils.csprojResolveAssemblyReference.cache
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\Utils\obj\Debug\Utils.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\Utils\obj\Debug\Utils.pdb

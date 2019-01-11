@@ -1,0 +1,107 @@
+<UserControl x:Class="GazRouter.Controls.DictionaryPicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:chromes="clr-namespace:Telerik.Windows.Controls.Chromes;assembly=Telerik.Windows.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400" x:Name="selector" BorderThickness="1" 
+             Background="{telerik:Windows8Resource ResourceKey=MainBrush}"
+             BorderBrush="{telerik:Windows8Resource ResourceKey=BasicBrush}">
+    
+    <Grid Background="White" MinWidth="150">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal"/>
+                <VisualState x:Name="MouseOver" />
+                <VisualState x:Name="Disabled" />
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="FocusStates">
+                <VisualState x:Name="Focused">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="BorderThickness">
+                            <DiscreteObjectKeyFrame KeyTime="0" >
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Thickness>1</Thickness>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Visible</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Unfocused" />
+            </VisualStateGroup>
+
+            <VisualStateGroup x:Name="ValidationStates">
+                <VisualState x:Name="Valid" />
+                <VisualState x:Name="InvalidUnfocused">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ValidationTooltip" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Visible</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="InvalidFocused">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ValidationTooltip" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Visible</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames
+                                                Storyboard.TargetName="ValidationTooltip"
+                                                Storyboard.TargetProperty="IsOpen">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0.1">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <system:Boolean>True</system:Boolean>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+
+        </VisualStateManager.VisualStateGroups>
+
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Border x:Name="BackgroundVisual" Grid.ColumnSpan="2"
+								BorderBrush="{Binding BorderBrush, ElementName=selector}" Background="{Binding Background, ElementName=selector}"
+								BorderThickness="{Binding BorderThickness, ElementName=selector}"/>
+
+        <Border x:Name="DisabledVisual" Visibility="Collapsed" Grid.ColumnSpan="2" Grid.Column="0"
+                IsHitTestVisible="False" Opacity="0.5" MinHeight="{Binding MinHeight, ElementName=selector}"
+								BorderBrush="{Binding BorderBrush, ElementName=selector}"
+								BorderThickness="{Binding BorderThickness, ElementName=selector}" />
+
+
+        <TextBox Name="txtName" IsReadOnly="True" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Grid.Column="0" />
+
+        <telerik:RadButton Grid.Column="1" Click="Button_Click" HorizontalAlignment="Right" TabIndex="1" Margin="-1 0 0 0"
+                                Padding="3 0 3 0" Content="..."  >
+        </telerik:RadButton>
+
+        <chromes:ValidationTooltip x:Name="ValidationTooltip"
+                                Grid.ColumnSpan="2" Grid.Column="0" Visibility="Collapsed"
+                                telerik:StyleManager.Theme="Windows8"
+                                TooltipPlacementTarget="{Binding ElementName=selector}"
+                                TooltipContent="{Binding Path=(Validation.Errors), ElementName=selector}" />
+    </Grid>
+</UserControl>

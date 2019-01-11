@@ -1,0 +1,108 @@
+﻿<telerik:RadWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:pipingVolumeCalculator="clr-namespace:GazRouter.Controls.Dialogs.PipingVolumeCalculator"
+                   mc:Ignorable="d"
+                   x:Class="GazRouter.Controls.Dialogs.PipingVolumeCalculator.PipingVolumeCalculatorView" 
+                   Header="Расчет геометрического объема газопроводов"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DesignHeight="0" d:DesignWidth="600"
+                   d:DataContext="{d:DesignInstance pipingVolumeCalculator:PipingVolumeCalculatorViewModel}" 
+                   Style="{StaticResource DialogWindowStyle}">
+    <telerik:RadWindow.Resources>
+    </telerik:RadWindow.Resources>
+    <Grid Margin="11">
+
+        <StackPanel>
+            <TextBlock Text="{Binding TotalVolume, StringFormat='ИТОГО: {0} м³'}" 
+                       FontSize="18" 
+                       FontFamily="Segoe UI Light"
+                       HorizontalAlignment="Right"/>
+            
+            <telerik:RadGridView ItemsSource="{Binding Path=PipingList}"
+                                    AutoGenerateColumns="False"
+                                    GridLinesVisibility="Both"
+                                    SelectionMode="Single"
+                                    SelectionUnit="FullRow"
+                                    ShowGroupPanel="False"
+                                    RowIndicatorVisibility="Collapsed"
+                                    Margin="0, 11, 0, 0"
+                                    Height="300" Width="560">
+
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Header="Диаметр" 
+                                                Width="120" 
+                                                DataMemberBinding="{Binding Name}" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="True" 
+                                                Background="Lavender"/>
+
+                    <telerik:GridViewComboBoxColumn Header="Внешний диаметр / толщина стенок"
+                                                    Width="240"
+                                                    SelectedValueMemberPath="ID"
+                                                    ItemsSourceBinding="{Binding ExternalDiameters}"
+                                                    DataMemberBinding="{Binding SelectedExternalDiameterID}"
+                                                    IsLightweightModeEnabled ="True"
+                                                    DisplayMemberPath="Text"
+                                                    EditTriggers="CellClick"
+                                                    IsSortable="False" 
+                                                    IsFilterable="False">
+                        <telerik:GridViewComboBoxColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding SelectedExternalDiameterText}" />
+                                    <Path Grid.Column="1"
+                                        Data="M0,0 L6,0 L3,4 z" Stretch="Fill" Fill="{telerik:Office2013Resource ResourceKey=StrongBrush}"
+                                        Width="6" Height="4" Margin="5 0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </telerik:GridViewComboBoxColumn.CellTemplate>
+                    </telerik:GridViewComboBoxColumn>
+
+                    <telerik:GridViewDataColumn Header="Длина, м" 
+                                                Width="80" 
+                                                DataMemberBinding="{Binding Length, Mode=TwoWay}" 
+                                                IsSortable="False" 
+                                                IsFilterable="False"
+                                                EditTriggers="CellClick"/>
+                    
+                    <telerik:GridViewDataColumn Header="Объем, м³" 
+                                                Width="80"
+                                                DataMemberBinding="{Binding Volume}" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="True"
+                                                Background="Lavender"/>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+                        
+            <StackPanel Orientation="Horizontal" 
+                        Margin="0, 11, 0, 0" 
+                        HorizontalAlignment="Right">
+                
+                <telerik:RadButton Width="85" 
+                                   Margin="7, 0, 0, 0" 
+                                   Command="{Binding AcceptCommand}" 
+                                   Content="Принять" 
+                                   telerik:RadWindow.ResponseButton="Accept" />
+                
+                <telerik:RadButton Width="85" 
+                                   Margin="7, 0, 0, 0" 
+                                   Command="{Binding CancelCommand}" 
+                                   Content="Отмена" 
+                                   telerik:RadWindow.ResponseButton="Cancel" />
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+
+</telerik:RadWindow>

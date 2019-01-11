@@ -1,0 +1,23 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Controls.Trends.TrendsWindow"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:trends="clr-namespace:GazRouter.Controls.Trends"
+                   mc:Ignorable="d" 
+                   Header="Тренды" 
+                   d:DesignHeight="300"
+                   d:DesignWidth="400" 
+                   Width="900"
+                   Height="750"
+                   HorizontalContentAlignment="Stretch"
+                   VerticalContentAlignment="Stretch"
+                   WindowStartupLocation="CenterOwner" 
+                   WindowState="Normal" 
+                   Style="{StaticResource RadWindowStyle}">
+
+    <Grid>
+        <trends:TrendsView x:Name="TrendsControl" />
+    </Grid>
+</telerik:RadWindow>

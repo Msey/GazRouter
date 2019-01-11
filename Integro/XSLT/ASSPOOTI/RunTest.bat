@@ -1,0 +1,1 @@
+msxsl.exe  test.xml ToASSPOOTI.xslt -o result.txt

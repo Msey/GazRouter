@@ -1,0 +1,230 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:templates="clr-namespace:GazRouter.Common.Ui.Templates"
+    >
+<!-- styles -->
+    <Style x:Key="StnParameterCellStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="CellStyleBold" TargetType="telerik:GridViewCell">
+        <Setter Property="Margin" Value="3,0,0,0"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    <Style x:Key="CellStyleCenter" TargetType="telerik:GridViewCell">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    <!-- stn -->    
+    <Style x:Key="HeaderBorderStyle" TargetType="Border">
+        <Setter Property="BorderBrush" Value="DeepSkyBlue"/>
+        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+    </Style>
+
+    <Style x:Key="TableBorderStyle" TargetType="Border">
+        <Setter Property="BorderBrush" Value="DarkGray"/>
+        <Setter Property="BorderThickness" Value="1,1,0,0"/>
+    </Style>
+
+    <Style x:Key="CellBorderStyle" TargetType="Border">
+        <Setter Property="BorderBrush" Value="DarkGray"/>
+        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+    </Style>
+    <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="5,0,0,0"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="Foreground" Value="Gray"></Setter>
+        <Setter Property="TextWrapping" Value="Wrap"></Setter>
+    </Style>
+    <Style x:Key="CellTextStyle" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+    <Style x:Key="ResultCellTextStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="0,0,5,0"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+    <!-- templates -->
+    <DataTemplate x:Key="StnTableHeader">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Style="{StaticResource HeaderBorderStyle}">
+                <TextBlock Style="{StaticResource HeaderTextStyle}" Text="Параметр"/>
+            </Border>
+            <Border Grid.Column="1" Style="{StaticResource HeaderBorderStyle}">
+                <TextBlock Style="{StaticResource HeaderTextStyle}" Text="Обозначение"/>
+            </Border>
+            <Border Grid.Column="2" Style="{StaticResource HeaderBorderStyle}">
+                <TextBlock Style="{StaticResource HeaderTextStyle}" Text="Ед. измерения"/>
+            </Border>
+            <Border Grid.Column="3" Style="{StaticResource HeaderBorderStyle}">
+                <TextBlock Style="{StaticResource HeaderTextStyle}" Text="Значение"/>
+            </Border>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="Formula3">
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" 
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Right" 
+                               Text="{Binding BigText}"
+                               FontSize="16"/>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" 
+                                   Text="{Binding TopText}"
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Bottom"
+                                   Height="12"
+                                   FontSize="10"
+                                   />
+                <TextBlock Grid.Row="1"
+                                   Text="{Binding BottomText}"
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top"
+                                   Height="12"
+                                   FontSize="10"  
+                                   />
+            </Grid>
+        </Grid>
+    </DataTemplate>
+    <templates:CompUnitsHeatingCostsTemplateSelector x:Key="CompUnitsHeatingCostsTemplateSelector">
+        <templates:CompUnitsHeatingCostsTemplateSelector.Default>
+            <DataTemplate>
+                <TextBlock Text="{Binding Designation}"></TextBlock>
+            </DataTemplate>
+        </templates:CompUnitsHeatingCostsTemplateSelector.Default>
+        <templates:CompUnitsHeatingCostsTemplateSelector.Formula2Template>
+            <DataTemplate>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <telerik:Label Grid.Column="0"
+                               HorizontalAlignment="Right" 
+                               Content="q"
+                               FontSize="15"/>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <telerik:Label Grid.Row="1"
+                                   Content="BA"
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top"
+                                   Height="Auto"
+                                   FontSize="10"
+                                   Margin="-8,0,0,0"/>
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+        </templates:CompUnitsHeatingCostsTemplateSelector.Formula2Template>
+        <templates:CompUnitsHeatingCostsTemplateSelector.Formula3Template>
+            <DataTemplate>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <telerik:Label Grid.Column="0"
+                               HorizontalAlignment="Right" 
+                               Content="Q"
+                               FontSize="20"/>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <telerik:Label Grid.Row="0" 
+                                   Content="кц"
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Bottom"
+                                   Height="Auto"
+                                   FontSize="12"
+                                   Margin="-8,0,0,0"/>
+                        <telerik:Label Grid.Row="1"
+                                   Content="укр"
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top"
+                                   Height="Auto"
+                                   FontSize="12"
+                                   Margin="-8,0,0,0"/>
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+        </templates:CompUnitsHeatingCostsTemplateSelector.Formula3Template>
+    </templates:CompUnitsHeatingCostsTemplateSelector >
+    <!-- todo удалить -->
+    <DataTemplate x:Key="Formula30">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <telerik:Label Grid.Column="0"
+                               HorizontalAlignment="Right" 
+                               Content="{Binding BigText}"
+                               FontSize="20"/>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <telerik:Label Grid.Row="0" 
+                                   Content="{Binding BottomText}"
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Bottom"
+                                   Height="Auto"
+                                   FontSize="12"
+                                   Margin="-8,0,0,0"/>
+                <telerik:Label Grid.Row="1"
+                                   Content="{Binding TopText}"
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top"
+                                   Height="Auto"
+                                   FontSize="12"
+                                   Margin="-8,0,0,0"/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

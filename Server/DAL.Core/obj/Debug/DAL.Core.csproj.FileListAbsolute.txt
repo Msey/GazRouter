@@ -1,0 +1,11 @@
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL.Core\bin\Debug\DAL.Core.dll.config
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL.Core\bin\Debug\DAL.Core.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL.Core\bin\Debug\DAL.Core.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL.Core\bin\Debug\Log.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL.Core\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL.Core\bin\Debug\NLog.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL.Core\bin\Debug\Log.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL.Core\bin\Debug\NLog.xml
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL.Core\obj\Debug\DAL.Core.csprojResolveAssemblyReference.cache
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL.Core\obj\Debug\DAL.Core.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL.Core\obj\Debug\DAL.Core.pdb

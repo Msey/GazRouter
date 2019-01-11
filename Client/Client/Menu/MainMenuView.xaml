@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="GazRouter.Client.Menu.MainMenuView" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:menu="clr-namespace:GazRouter.Client.Menu"
+             xmlns:a="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+             >
+    <Grid x:Name="LayoutRoot" 
+          Background="#f0eff1"
+          Height="Auto"
+          VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <menu:DropMenuView DataContext="{Binding MonitoringDropViewModel}"/>
+            <menu:DropMenuView DataContext="{Binding EventLogDropViewModel}" Margin="9, 0, 0, 0"/>
+            <menu:DropMenuView DataContext="{Binding TasksListDropViewModel}" Margin="9, 0, 0, 0"/>
+            <menu:DropMenuView DataContext="{Binding BalanceDropViewModel}" Margin="9, 0, 0, 0"/>
+            <menu:DropMenuView DataContext="{Binding RepairsDropViewModel}" Margin="9, 0, 0, 0"/>
+            <menu:DropMenuView DataContext="{Binding InputDropViewModel}" Margin="9, 0, 0, 0"/>
+            <menu:DropMenuView DataContext="{Binding SetupDropViewModel}" Margin="9, 0, 0, 0"/>
+            <menu:DropMenuView DataContext="{Binding ReportDropViewModel}" Margin="9, 0, 0, 0"/>
+            <menu:DropMenuView DataContext="{Binding UserDropViewModel}" Margin="9, 0, 0, 0"/>
+        </StackPanel>
+        <StackPanel Background="#cccfd5" Grid.Row="1" />
+        <ContentControl Grid.Row="0" Content="{Binding Media}"  />
+    </Grid>
+</UserControl>

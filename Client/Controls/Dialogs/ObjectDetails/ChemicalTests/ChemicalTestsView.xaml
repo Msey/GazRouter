@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="GazRouter.Controls.Dialogs.ObjectDetails.ChemicalTests.ChemicalTestsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:periodPickerEx="clr-namespace:GazRouter.Controls.Dialogs.PeriodPickerEx"
+             xmlns:chemicalTests1="clr-namespace:GazRouter.Controls.Dialogs.ObjectDetails.ChemicalTests"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance chemicalTests1:ChemicalTestsViewModel}">
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+
+            <Grid.Resources>
+                <telerik:BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar>
+                <periodPickerEx:PeriodPickerEx SelectedPeriod="{Binding SelectedPeriod, Mode=TwoWay}"
+                                               Width="200" />
+            </telerik:RadToolBar>
+
+            <telerik:RadGridView AutoGenerateColumns="False"
+                                 IsReadOnly="True"
+                                 ItemsSource="{Binding Items}"
+                                 RowIndicatorVisibility="Collapsed"
+                                 CanUserFreezeColumns="False"
+                                 SelectionMode="Single"
+                                 SelectionUnit="Cell"
+                                 ShowGroupPanel="False"
+                                 Grid.Row="1">
+                <telerik:RadGridView.Columns>
+
+                    <telerik:GridViewDataColumn Width="200" 
+                                                IsFilterable="False"
+                                                Header="Параметр">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="chemicalTests1:GridItem">
+                                <TextBlock Text="{Binding Name}"
+                                           TextWrapping="Wrap"
+                                           Margin="11, 5, 5, 5" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="60" 
+                                                IsFilterable="False"
+                                                Header="Ед.изм">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="chemicalTests1:GridItem">
+                                <TextBlock Text="{Binding Eu}"
+                                           HorizontalAlignment="Center"
+                                           Margin="5" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="90" 
+                                                IsFilterable="False"
+                                                Header="Значение">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="chemicalTests1:GridItem">
+                                <TextBlock Text="{Binding Value}"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"
+                                           Margin="5" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="120" 
+                                                IsFilterable="False"
+                                                Header="Отклонение">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="chemicalTests1:GridItem">
+                                <Border Background="Red" 
+                                        Margin="5"
+                                        Visibility="{Binding HasWarnings, Converter={StaticResource Bool2Visibility}}">
+                                    <TextBlock Text="{Binding WarningMessage}"
+                                               FontSize="10"
+                                               Foreground="WhiteSmoke"
+                                               TextWrapping="Wrap"
+                                               Margin="3"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"/>
+                                </Border>
+
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

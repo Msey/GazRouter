@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="GazRouter.ActionsRolesUsers.Views.RolesView2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:styles="clr-namespace:GazRouter.Common.Ui.Styles;assembly=Common">
+    <UserControl.Resources>
+        <styles:PermissionCellStyle x:Key="permissionStyle" >
+            <styles:PermissionCellStyle.DeniedStyle>
+                <Style TargetType="telerik:GridViewCell" BasedOn="{StaticResource  GridViewCellStyle}">
+                    <Setter Property="Background" Value="#FE2E2E"/>
+                </Style>
+            </styles:PermissionCellStyle.DeniedStyle>
+            <styles:PermissionCellStyle.ReadStyle>
+                <Style TargetType="telerik:GridViewCell" BasedOn="{StaticResource  GridViewCellStyle}">
+                    <Setter Property="Background" Value="Yellow"/>
+                </Style>
+            </styles:PermissionCellStyle.ReadStyle>
+            <styles:PermissionCellStyle.WriteStyle>
+                <Style TargetType="telerik:GridViewCell" BasedOn="{StaticResource  GridViewCellStyle}">
+                    <Setter Property="Background" Value="Chartreuse"/>
+                </Style>
+            </styles:PermissionCellStyle.WriteStyle>
+        </styles:PermissionCellStyle>
+    </UserControl.Resources>
+    
+    <Grid x:Name="LayoutRoot">
+        <telerik:RadBusyIndicator Grid.Row="0" 
+                                  Grid.Column="0"
+                                  IsBusy="{Binding IsBusyLoading}"
+                                  BusyContent="{Binding BusyMessage}"
+                                  Margin="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition/>                    
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="500"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <telerik:RadToolBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                                    IsOverflowOpen="False" 
+                                    OverflowButtonVisibility="Collapsed"
+                                    GripVisibility="Collapsed">
+                    <telerik:RadButton Margin="3" 
+                                       Style="{StaticResource addButtonStyle}"
+                                       Command="{Binding AddRoleCommand}" 
+                                       />
+                    <telerik:RadButton Margin="3" Style="{StaticResource deleteButtonStyle}"
+                                       Command="{Binding RemoveRoleCommand}" />
+                    <telerik:RadButton Margin="3" Style="{StaticResource saveButtonStyle}"
+                                       Command="{Binding SaveRolesCommand}" 
+                                       />
+                </telerik:RadToolBar>
+                <telerik:RadGridView Grid.Row="1" Grid.Column="0" 
+                                     ItemsSource="{Binding Roles}"
+                                     SelectedItem="{Binding SelectedRole, Mode=TwoWay}"
+                                     AutoGenerateColumns="False"
+                                     IsReadOnly="True"
+                                     IsFilteringAllowed="False" 
+                                     RowIndicatorVisibility="Collapsed" 
+                                     ShowGroupPanel="False" 
+                                     CanUserFreezeColumns="False"
+                                     ShowColumnFooters="False">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Width="*" DataMemberBinding="{Binding Path=Name}"
+                                                    Header="Наименование" />
+                        <telerik:GridViewDataColumn Width="*"
+                                                    DataMemberBinding="{Binding Path=Description}"
+                                                    Header="Описание" />
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+                <telerik:RadTreeListView Grid.Row="1" Grid.Column="1" 
+                                         ItemsSource="{Binding RoleMenu}"
+                                         AutoGenerateColumns="False"
+                                         RowIndicatorVisibility="Collapsed"
+                                         GridLinesVisibility="Both"
+                                         CanUserFreezeColumns="False">
+                    <telerik:RadTreeListView.ChildTableDefinitions>
+                        <telerik:TreeListViewTableDefinition ItemsSource="{Binding Path=Items}" />
+                    </telerik:RadTreeListView.ChildTableDefinitions>
+                    <telerik:RadTreeListView.Columns>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding Path=Name}" 
+                                                    Header="Модули"
+                                                    IsFilterable="False" 
+                                                    IsSortable="False" 
+                                                    IsReadOnly="True"/>
+                        <telerik:GridViewComboBoxColumn DataMemberBinding="{Binding Permission}" 
+                                                        ItemsSource="{Binding Path=DataContext.Permissionses, ElementName=LayoutRoot}"
+                                                        DisplayMemberPath="DisplayMember"
+                                                        SelectedValueMemberPath="PermissionType"
+                                                        Header="Привилегии"
+                                                        CellStyleSelector="{StaticResource permissionStyle}"
+                                                        />
+                    </telerik:RadTreeListView.Columns>
+                </telerik:RadTreeListView>
+            </Grid>
+        </telerik:RadBusyIndicator>
+    </Grid>
+</UserControl>
+
+<!--SelectedItem="{Binding SelectedMenuItem, Mode=TwoWay}"-->
+<!--                    <telerik:RadButton Margin="3" Style="{StaticResource editButtonStyle}"-->
+<!--                                       Command="{Binding EditRoleCommand}" />-->

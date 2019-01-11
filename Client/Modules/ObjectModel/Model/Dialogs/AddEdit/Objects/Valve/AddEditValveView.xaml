@@ -1,0 +1,162 @@
+﻿<telerik:RadWindow x:Class="GazRouter.ObjectModel.Model.Dialogs.AddEdit.Objects.Valve.AddEditValveView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:dialogs="clr-namespace:GazRouter.ObjectModel.Model.Dialogs"
+                   xmlns:valve="clr-namespace:GazRouter.ObjectModel.Model.Dialogs.AddEdit.Objects.Valve"
+                   mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="400"
+                   Height="Auto" Width="350" attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   Header="{Binding Caption}" Name="MainWindow" Style="{StaticResource DialogWindowStyle}"
+                   d:DataContext="{d:DesignInstance valve:AddEditValveViewModel}">
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid Margin="11">
+
+            <Grid.Resources>
+                <telerik:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
+                <telerik:InvertedBooleanConverter x:Name="InvertedBooleanConverter" />
+
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel>
+                <Border Background="LightGoldenrodYellow" 
+                        Visibility="{Binding IsWarningMessageVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock TextWrapping="Wrap" Margin="5" FontSize="10" Text="{Binding WarningMessage}" />
+                </Border>
+                
+                <TextBlock Text="Наименование:" />
+                <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0" >
+                    <TextBox Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Width="300" />
+                    <telerik:RadButton Background="DodgerBlue" Width="16" BorderThickness="0"
+                                       Margin="2, 0, 0, 0" Command="{Binding ShowNamingHint}"
+                                       Visibility="{Binding IsNamingHintButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <TextBlock Text="?" Foreground="WhiteSmoke"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </telerik:RadButton>
+                    
+                </StackPanel>
+
+                <Border Background="LightGoldenrodYellow" 
+                        Visibility="{Binding IsNamingHintVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock TextWrapping="Wrap" Margin="5" FontSize="10">
+                        В соответсвии с <Bold>СТО Газпром 2-3.5-454-2010</Bold> кран на перемычке нумеруется следующим образом:
+                        <Bold>1234.12.0</Bold>, 
+                        где <Bold>1234</Bold> - соответсвует километражу расположения линейных кранов на газопроводе, 
+                        рядом с которыми располагается перемычка; 
+                                
+                        индекс <Bold>12</Bold> указывает на перемычку между нитками 1 и 2 
+                        (в случае если на перемычке установлено два крана, 
+                        то для крана со стороны второй нитки указывается индекс 21, например 1234.21.0);  
+                                
+                        индекс <Bold>0</Bold> указывает на положение перемычки до линейного крана, 
+                        если перемычка располагается после линейных кранов, то указывается индекс <Bold>9</Bold>.
+                    </TextBlock>
+                </Border>
+
+
+                <TextBlock Text="Километр установки:" Margin="0, 11, 0, 0" />
+                <telerik:RadMaskedNumericInput  FormatString="n3" 
+                                               Margin="0, 5, 0, 0" Width="120" 
+                                               HorizontalAlignment="Left"
+                                               IsEnabled="{Binding IsBusyLoading, Converter={StaticResource InvertedBooleanConverter}}"
+                                               Value="{Binding Kilometer,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+
+
+                <TextBlock Text="Тип линейного крана:" Margin="0, 11, 0, 0" />
+                <telerik:RadComboBox ItemsSource="{Binding Path=ListTypeValve}"
+                                     IsEnabled="{Binding IsBusyLoading, Converter={StaticResource InvertedBooleanConverter}}"
+                                     HorizontalAlignment="Left"
+                                     Width="120"
+                                     Margin="0, 5, 0, 0"
+                                     SelectedItem="{Binding Path=SelectedTypeValve, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                     DisplayMemberPath="Name" 
+                                     IsEditable="False"
+                                     CanAutocompleteSelectItems="True" EmptyText="Выберите тип ..." />
+
+
+                <TextBlock Text="Назначение крана:" Margin="0, 11, 0, 0" />
+                <telerik:RadComboBox ItemsSource="{Binding Path=ListValvePurpose}" Margin="0, 5, 0, 0"
+                                     SelectedItem="{Binding Path=SelectedValvePurpose, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" DisplayMemberPath="Name" IsEditable="False"
+                                     CanAutocompleteSelectItems="True" EmptyText="Выберите тип ..." />
+
+                <StackPanel Visibility="{Binding  IsCsEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Text="Компрессорный цех:" Margin="0, 11, 0, 0" />
+                    <controls:EntityPicker x:Name="SelectedEntityControl" 
+                                           x:FieldModifier="public" 
+                                           Margin="0, 5, 0, 0"
+                                           AllowedTypes="{Binding AllowedType}" 
+                                           SelectedItemId="{Binding Path=SelectedCompShopId, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" />
+                </StackPanel>
+                
+                
+                <!--BYPASSES-->
+
+                <TextBlock Text="Тип обводного крана 1:" Margin="0, 11, 0, 0" />
+                <telerik:RadComboBox ItemsSource="{Binding Path=ListTypeValve}"
+                                     DisplayMemberPath="Name" 
+                                     IsEditable="False"
+                                     HorizontalAlignment="Left"
+                                     Width="120"
+                                     Margin="0, 5, 0, 0"
+                                     SelectedValue="{Binding Path=Bypass1TypeId, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                     SelectedValuePath="Id"
+                                     ClearSelectionButtonContent="Кран отсутствует"
+                                     ClearSelectionButtonVisibility="Visible"
+                                     CanAutocompleteSelectItems="True" 
+                                     EmptyText="Нет байпаса" />
+
+                <StackPanel Visibility="{Binding HasBypass1, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Text="Тип обводного крана 2:" Margin="0, 11, 0, 0" />
+                    <telerik:RadComboBox ItemsSource="{Binding Path=ListTypeValve}"
+                                         DisplayMemberPath="Name"
+                                         HorizontalAlignment="Left"
+                                         Width="120"
+                                         Margin="0, 5, 0, 0"
+                                         SelectedValue="{Binding Path=Bypass2TypeId, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                         SelectedValuePath="Id"
+                                         IsEditable="False"
+                                         ClearSelectionButtonContent="Кран отсутствует"
+                                         ClearSelectionButtonVisibility="Visible"
+                                         CanAutocompleteSelectItems="True" EmptyText="Нет байпаса" />
+                </StackPanel>
+
+                <StackPanel Visibility="{Binding HasBypass2, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Text="Тип обводного крана 3:" Margin="0, 11, 0, 0" />
+                    <telerik:RadComboBox ItemsSource="{Binding Path=ListTypeValve}"
+                                         DisplayMemberPath="Name"
+                                         HorizontalAlignment="Left"
+                                         Width="120"
+                                         Margin="0, 5, 0, 0"
+                                         SelectedValue="{Binding Path=Bypass3TypeId, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                         SelectedValuePath="Id"
+                                         IsEditable="False"
+                                         ClearSelectionButtonContent="Кран отсутствует"
+                                         ClearSelectionButtonVisibility="Visible"
+                                         CanAutocompleteSelectItems="True" EmptyText="Нет байпаса" />
+                </StackPanel>
+
+                <CheckBox Content="Контрольная точка"
+                          IsChecked="{Binding IsControlPoint, Mode=TwoWay}"
+                          Margin="0, 11, 0, 0"/>
+
+                
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+
+                <telerik:RadButton Content="{Binding ButtonSaveCaption}" Command="{Binding SaveCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}">
+                </telerik:RadButton>
+                <telerik:RadButton Content="Отмена" Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="GazRouter.Repair.RepWorks.AttachmentsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:converters1="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:attachments="clr-namespace:GazRouter.DTO.DispatcherTasks.Attachments;assembly=PortableDTO"
+             xmlns:common="clr-namespace:GazRouter.Repair.RepWorks"
+             xmlns:attachment="clr-namespace:GazRouter.Controls.Attachment;assembly=Controls"
+             mc:Ignorable="d" d:DesignHeight="300"
+             
+             d:DataContext="{d:DesignInstance common:CurrentWorksViewModel}">
+
+    <UserControl.Resources>
+        <converters1:DailyDateTimeConverter x:Key="DailyDateTimeConverter" />
+        <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <telerik:RadToolBar Visibility="{Binding IsAttachReportVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <telerik:RadButton Command="{Binding AddAttachmentCommand}" 
+                               Style="{StaticResource addButtonStyle}" />
+
+
+            <telerik:RadButton Command="{Binding DeleteAttachmentCommand}" 
+                               Style="{StaticResource deleteButtonStyle}"/>
+        </telerik:RadToolBar>
+
+        <telerik:RadBusyIndicator Grid.Row="1" IsBusy="{Binding IsBusyLoading}">
+            
+            <telerik:RadGridView AutoGenerateColumns="False" 
+                                 IsReadOnly="True" 
+                                 ItemsSource="{Binding ReportAttachmentsList}"
+                                 SelectedItem="{Binding SelectedAttachment, Mode=TwoWay}"
+                                 RowIndicatorVisibility="Collapsed" 
+                                 ShowGroupPanel="False"
+                                 GridLinesVisibility="Both"
+                                 CanUserFreezeColumns="False"
+                                 AlternationCount="2">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="120"
+                                                DataMemberBinding="{Binding CreationDate, StringFormat='dd.MM.yyyy HH:mm'}"
+                                                Header="Дата добавления" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" />
+
+                    
+                    <telerik:GridViewColumn Width="300" 
+                                            Header="Вложение">
+                        <telerik:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <attachment:AttachmentItemView Dto="{Binding }"
+                                                               Margin="5"
+                                                               Width="250"
+                                                               ShowImage="True"
+                                                               HorizontalAlignment="Left" />
+                                                               
+                            </DataTemplate>
+                        </telerik:GridViewColumn.CellTemplate>
+                    </telerik:GridViewColumn>
+                    
+
+                    <telerik:GridViewDataColumn Width="200"
+                                                Header="Добавил" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" DataMemberBinding="{Binding CreateUser}" 
+                                               TextWrapping="Wrap"/>
+
+                </telerik:RadGridView.Columns>
+
+            </telerik:RadGridView>
+        </telerik:RadBusyIndicator>
+
+    </Grid>
+</UserControl>

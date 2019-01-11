@@ -1,0 +1,162 @@
+﻿<UserControl x:Class="GazRouter.ManualInput.Hourly.ObjectForms.CoolingStation.CoolingStationView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:controls1="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:viewModel="clr-namespace:GazRouter.ManualInput.Hourly.ObjectForms"
+                   xmlns:converters1="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   mc:Ignorable="d"
+                   d:DesignHeight="0" 
+                   d:DesignWidth="600"
+                   d:DataContext="{d:DesignInstance viewModel:CoolingStationViewModel}">
+
+    <Grid>
+
+        <Grid.Resources>
+            <converters1:PressureConverter x:Key="PressureConverter"/>
+            <converters1:TemperatureConverter x:Key="TemperatureConverter"/>
+            <telerik:InvertedBooleanConverter x:Key="Inverter"/>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <telerik:RadBusyIndicator BusyContent="Загрузка..." 
+                                  IsBusy="{Binding Path=IsBusyLoading}" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Stretch">
+
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left">
+                
+                <StackPanel Orientation="Horizontal" Margin="0, 0, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                        <controls1:SmartTextBlock Width="200"
+                                                  HorizontalAlignment="Left"
+                                                  Text="P газа на входе, [P]:"/>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           FormatString="n2"
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding PressureInlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureConverter}}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding PressureInlet}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <controls1:SmartTextBlock Width="200"
+                                                  HorizontalAlignment="Left"
+                                                  Text="P газа на выходе, [P]:" />
+
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           FormatString="n2"
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding PressureOutlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureConverter}}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding PressureOutlet}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+
+                    <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                        <controls1:SmartTextBlock Width="200"
+                                                  HorizontalAlignment="Left"
+                                                  Text="Т газа на входе, [T]:" />
+
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           FormatString="n2"
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding TemperatureInlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureInlet}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+
+                    </StackPanel>
+
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <controls1:SmartTextBlock Width="200"
+                                                  HorizontalAlignment="Left"
+                                                  Text="Т газа на выходе, [T]:" />
+
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           FormatString="n2"
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding TemperatureOutlet.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureOutlet}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                    
+                </StackPanel>
+
+
+
+
+
+
+                <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                    <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left" 
+                                   Text="Количество ТХА в работе:" />
+
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100"
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding UnitsInUse.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding UnitsInUse}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left" 
+                                   Text="Количество ТХА в резерве:" />
+
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100"
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding UnitsInReserve.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding UnitsInReserve}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+
+                    <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                        <TextBlock Width="200" 
+                                   HorizontalAlignment="Left" 
+                                   Text="Количество ТХА в ремонте:" />
+
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <telerik:RadMaskedNumericInput Width="100" 
+                                                           IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                           Value="{Binding UnitsInRepair.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                           HorizontalAlignment="Left" />
+                            <viewModel:ManualInputWarningIndicator DataContext="{Binding UnitsInRepair}" Margin="2, 0, 0, 0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+                
+
+        </telerik:RadBusyIndicator>
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,137 @@
+﻿<telerik:RadWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"                    
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                   xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:converters1="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   xmlns:measurings1="clr-namespace:GazRouter.Controls.Measurings;assembly=Controls"
+                   xmlns:imports="clr-namespace:GazRouter.Modes.GasCosts.Dialogs.FuelGasInputVolumes"
+                   mc:Ignorable="d"
+                   x:Class="GazRouter.Modes.GasCosts.Dialogs.FuelGasInputVolumes.FuelGasInputVolumeView" 
+                   Header="Ввод топливного газа по КЦ"
+                   attachedProperties1:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DesignHeight="500" d:DesignWidth="600"
+                   d:DataContext="{d:DesignInstance imports:FuelGasInputVolumeViewModel}" 
+                   xmlns:maskedInput="clr-namespace:Telerik.Windows.Controls.MaskedInput;assembly=Telerik.Windows.Controls.Input"
+                   Style="{StaticResource DialogWindowStyle}"
+                   Height="500" 
+                   >
+    <telerik:RadBusyIndicator DisplayAfter="0" IsBusy="{Binding IsBusyLoading}">
+
+        <Grid x:Name="LayoutRoot" Background="White" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <Grid.Resources>
+                <converters1:TimeSpanHourConverter x:Key="TimeSpanHourConverter"/>
+                <telerik:BooleanToVisibilityConverter x:Name="BoolToVisibilityConverter" />
+            </Grid.Resources>
+            
+            <TextBlock Grid.Row="0" Text="{Binding InputDate}" Margin="11"/>
+            <telerik:RadTreeListView Grid.Row="1" Margin="10,10,10,0"  
+                                     GridLinesVisibility="Both" 
+                                     AutoGenerateColumns="False"
+                                     ItemsSource="{Binding Items}"
+                                     CanUserFreezeColumns="False"
+                                     AutoExpandItems="False"
+                                     RowIndicatorVisibility="Collapsed"
+                                     ShowGroupPanel="False" x:Name="TreeListView">
+                <telerik:RadTreeListView.Columns>
+                    <telerik:GridViewDataColumn Width="150" 
+                                                Header="КЦ" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsReadOnly="True">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="imports:FuelGasInputItem">
+                                <TextBlock Text="{Binding StationName}"
+                                           Margin="3"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn Width="150" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsReadOnly="False"
+                                                TextWrapping="NoWrap"
+                                                >
+                        <telerik:GridViewDataColumn.Header> <!--<TextBlock Text="{Binding VolumeType}" />-->                            
+                            <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=telerik:RadWindow},
+                                                      Path=DataContext.VolumeType}" />
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="imports:FuelGasInputItem">
+                                <telerik:RadMaskedNumericInput IsClearButtonVisible="False" 
+                                      FormatString="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=telerik:RadWindow}, 
+                                                             Path=DataContext.FormatType}" MinWidth="100" 
+                                      maskedInput:MaskedInputExtensions.Minimum="0"
+                                      Value="{Binding GasVolume, Mode=TwoWay}"
+                                      Visibility="{Binding IsEditorVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+                                      IsReadOnly="{Binding IsReadOnly}"
+                                      HorizontalAlignment="Stretch" />
+                            </DataTemplate>
+                            
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn Width="80" 
+                                                IsFilterable="False" 
+                                                IsSortable="False"
+                                                IsReadOnly="True"
+                                                TextWrapping="Wrap"
+                                                >
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel>
+                                <TextBlock Text="Время" />
+                                <TextBlock Text="работы ГПА" />
+                                <TextBlock Text="(за сутки)" />
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="imports:FuelGasInputItem">
+                                <measurings1:MeasuringBlock DataContext="{Binding WorkedHoursts, 
+                                    Converter={StaticResource TimeSpanHourConverter}}"
+                                                            Margin="5"
+                                                            HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+
+                        <telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate DataType="imports:FuelGasInputItem">
+                                <telerik:RadMaskedNumericInput FormatString="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=telerik:RadWindow}, Path=DataContext.FormatType}"
+                                                               Value="{Binding PressureInlet.EditableValue, Mode=TwoWay}" 
+                                                               HorizontalAlignment="Stretch"
+                                                               SelectionOnFocus="SelectAll" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>
+                    </telerik:GridViewDataColumn>
+                </telerik:RadTreeListView.Columns>
+                
+                <telerik:RadTreeListView.ChildTableDefinitions>
+                    <telerik:TreeListViewTableDefinition ItemsSource="{Binding Children}">
+                    </telerik:TreeListViewTableDefinition>
+                </telerik:RadTreeListView.ChildTableDefinitions>
+            </telerik:RadTreeListView>
+
+            <StackPanel Grid.Row="2" 
+                        Orientation="Horizontal" 
+                        Margin="11" 
+                        HorizontalAlignment="Right">
+                <telerik:RadButton Width="85" 
+                                   Margin="7, 0, 0, 0" 
+                                   Command="{Binding SaveCommand}" 
+                                   Content="Сохранить" 
+                                   telerik:RadWindow.ResponseButton="Accept"/>
+                <telerik:RadButton Width="85" 
+                                   Margin="7, 0, 0, 0"  
+                                   Command="{Binding CancelCommand}"
+                                   Content="Отмена"
+                                   telerik:RadWindow.ResponseButton="Cancel" />
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

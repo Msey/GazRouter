@@ -1,0 +1,126 @@
+﻿<telerik:RadWindow x:Class="GazRouter.ActionsRolesUsers.Dialog.AddAgreedUserDialog.UserSearchDialog"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                    xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                    attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}" 
+                    Style="{StaticResource DialogWindowStyle}"  
+                    Width="400"
+                    Header="Поиск пользователя"
+                    x:Name="LayoutRoot">
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid Margin="11">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto" ></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <telerik:RadComboBox 
+                            Grid.Column="0"
+                    Width="60"
+                    IsEditable="False"
+                    ItemsSource="{Binding SearchAttribs}"
+                    SelectedItem="{Binding SearchAttribItem, Mode=TwoWay}"/>
+                    <TextBox Grid.Column="1"
+                            Margin="1,0,0,0"
+                            Text="{Binding SearchString, Mode=TwoWay}"/>
+                    <telerik:RadButton Grid.Column="2"
+                                    Command="{Binding SearchCommand}"                                    
+                                    Width="20"
+                                    HorizontalAlignment="Left"
+                                    Margin="1,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource StyleConfirmationButton}"
+                                    telerik:RadWindow.ResponseButton="Accept">
+                        <Image Source="/Common;component/Images/16x16/search.png"
+                        Width="16"
+                        Height="16"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center" />
+                    </telerik:RadButton>
+                </Grid>
+                <StackPanel Orientation="Horizontal">
+                </StackPanel>
+                <telerik:RadGridView ItemsSource="{Binding Users}" 
+                                 SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
+                                 Height="325"
+                                 AutoGenerateColumns="False"
+                                 IsReadOnly="True"
+                                 ShowGroupPanel="False"
+                                 RowIndicatorVisibility="Collapsed" Margin="0,11,0,0">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Width="*"
+                                                    DataMemberBinding="{Binding Path=Login}"
+                                                    Header="Логин"
+                                                    IsVisible="{Binding DataContext.IsUser, ElementName=LayoutRoot, Mode=TwoWay}"
+                                                    TextWrapping="Wrap"
+                                                    IsSortable="True"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Width="*"
+                                                    DataMemberBinding="{Binding Path=UserName}"
+                                                    Header="Ф.И.О."
+                                                    TextWrapping="Wrap"
+                                                    IsVisible="{Binding DataContext.IsUser, ElementName=LayoutRoot, Mode=TwoWay}"
+                                                    IsSortable="True"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        
+                        <telerik:GridViewDataColumn Width="*"
+                                                    DataMemberBinding="{Binding Path=Description}"
+                                                    Header="Должность"
+                                                    TextWrapping="Wrap"
+                                                    IsVisible="{Binding DataContext.IsUser, ElementName=LayoutRoot, Mode=TwoWay}"
+                                                    IsSortable="True"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        
+                        <telerik:GridViewDataColumn Width="*"
+                                                    DataMemberBinding="{Binding Path=FIO}"
+                                                    Header="Ф.И.О."
+                                                    IsVisible="{Binding DataContext.IsAgreedUser, ElementName=LayoutRoot, Mode=TwoWay}"
+                                                    IsSortable="True"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        
+                        <telerik:GridViewDataColumn Width="*"
+                                                    DataMemberBinding="{Binding Path=StartDate}"
+                                                    Header="Дата начала полномочий"
+                                                    IsVisible="{Binding DataContext.IsAgreedUser, ElementName=LayoutRoot, Mode=TwoWay}"
+                                                    IsSortable="True"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        
+                        <telerik:GridViewDataColumn Width="*"
+                                                    DataMemberBinding="{Binding Path=EndDate}"
+                                                    Header="Дата конца полномочий"
+                                                    IsVisible="{Binding DataContext.IsAgreedUser, ElementName=LayoutRoot, Mode=TwoWay}"
+                                                    IsSortable="True"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}" >
+                <telerik:RadButton 
+                        Content="Выбрать" 
+                        Command="{Binding OkCommand}" 
+                        Style="{StaticResource StyleConfirmationButton}"
+                        telerik:RadWindow.ResponseButton="Accept"/>
+                <telerik:RadButton 
+                        Content="Закрыть" 
+                        Command="{Binding CancelCommand}" 
+                        Style="{StaticResource StyleConfirmationButton}"
+                        telerik:RadWindow.ResponseButton="Cancel"/>
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

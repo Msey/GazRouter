@@ -1,0 +1,1 @@
+﻿xsd.exe /namespace:GazRouter.DataServices.ExchangeServices /c AsduMessage.xsd

@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="DataExchange.ASDU.AsduImportData"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:customSource="clr-namespace:GazRouter.DataExchange.CustomSource"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:converters="clr-namespace:GazRouter.DataExchange.CustomSource.Converters"
+             xmlns:converters1="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:asdu="clr-namespace:DataExchange.ASDU"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+             xmlns:views="clr-namespace:DataExchange.ASDU"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance asdu:AsduDataImportViewModel}">
+
+    <telerik:EventToCommandBehavior.EventBindings>
+        <telerik:EventBinding Command="{Binding LoadFilesCommand}" EventName="Loaded" />
+    </telerik:EventToCommandBehavior.EventBindings>
+
+    <UserControl.Resources>
+        <asdu:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
+
+    <telerik:RadBusyIndicator BusyContent="{Binding BusyMessage}" IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+            <telerik:RadToolBar>
+                <telerik:RadButton telerik:RadToolTipService.ToolTipContent="Обновить..." Command="{Binding LoadFilesCommand}" Margin="8,4,4,4">
+                    <Image Source="img/refresh_26px.png"></Image>
+                </telerik:RadButton>
+                <telerik:RadButton telerik:RadToolTipService.ToolTipContent="Загрузить..." Command="{Binding ExecuteImportCommand}" IsEnabled="{Binding UploadFileButtonEnabled}" Margin="8,4,4,4">
+                    <Image Source="img/upload_26px.png"></Image>
+                    </telerik:RadButton>
+                <telerik:RadButton telerik:RadToolTipService.ToolTipContent="Выполнить разбор" Command="{Binding ReadFileCommand}" IsEnabled="{Binding ReadFileButtonEnabled}" Margin="4,4,4,4">
+                    <Image Source="img/read_26px.png"></Image>
+                </telerik:RadButton>
+                <telerik:RadButton telerik:RadToolTipService.ToolTipContent="Применить" Command="{Binding ApplyFileCommand}" IsEnabled="{Binding ApplyFileButtonEnabled}" Margin="4,4,4,4">
+                    <Image Source="img/apply_26px.png"></Image>
+                </telerik:RadButton>
+                <telerik:RadButton telerik:RadToolTipService.ToolTipContent="Просмотреть текст файла" Command="{Binding ShowXmlCommand}" IsEnabled="{Binding ShowXmlButtonEnabled}" Margin="4,4,4,4">
+                    <Image Source="img/view_26px.png"></Image>
+                </telerik:RadButton>
+            </telerik:RadToolBar>
+            <telerik:RadGridView Grid.Row="1"
+                                 Grid.Column="0"
+                                 GridLinesVisibility="Both"
+                                 AutoGenerateColumns="False"
+                                 ItemsSource="{Binding LoadedFiles}"
+                                 CanUserFreezeColumns="False"
+                                 RowIndicatorVisibility="Collapsed"
+                                 ShowGroupPanel="False"
+                                 SelectedItem="{Binding SelectedFile, Mode=TwoWay}"
+                                 Margin="5, 0, 0, 10">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="150"
+                                                Header="Дата загрузки"
+                                                TextWrapping="Wrap"
+                                                IsReadOnly="True"
+                                                DataMemberBinding="{Binding LoadDate}" />
+                    <telerik:GridViewDataColumn Width="400"
+                                                Header="Имя файла"
+                                                TextWrapping="Wrap"
+                                                IsReadOnly="True"
+                                                DataMemberBinding="{Binding FileName}" />
+                    <telerik:GridViewDataColumn Width="200"
+                                                Header="Статус"
+                                                TextWrapping="Wrap"
+                                                IsReadOnly="True"
+                                                DataMemberBinding="{Binding StatusDescription}" />
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+            <sdk:GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Height="10"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+            <asdu:AsduNsiDataView Grid.Row="2" DataContext="{Binding NsiDataModel}" />
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

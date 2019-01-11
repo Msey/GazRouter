@@ -1,0 +1,101 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Flobus.Dialogs.TextEditDialog"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   mc:Ignorable="d"
+                   d:DesignHeight="300" d:DesignWidth="400" Width="Auto" Height="Auto" Header="Редактирование текста"
+                   Style="{StaticResource DialogWindowStyle}"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}">
+
+    <telerik:RadWindow.Resources>
+        <telerik:ColorToBrushConverter x:Name="ColorToBrushConverter" />
+        <telerik:BooleanToFontWeightConverter x:Key="BooleanToFontWeightConverter" />
+        <telerik:BooleanToFontStyleConverter x:Key="BooleanToFontStyleConverter" />
+    </telerik:RadWindow.Resources>
+    <Grid Margin="11">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel HorizontalAlignment="Left">
+
+            <telerik:RadToolBar VerticalContentAlignment="Center" Height="24">
+                <telerik:RadComboBox Text="{Binding FontSize, Mode=TwoWay}"
+                                     Width="100"
+                                     HorizontalAlignment="Left">
+                    <telerik:RadComboBoxItem Content="8" FontSize="8" />
+                    <telerik:RadComboBoxItem Content="9" FontSize="9" />
+                    <telerik:RadComboBoxItem Content="10" FontSize="10" />
+                    <telerik:RadComboBoxItem Content="11" FontSize="11" />
+                    <telerik:RadComboBoxItem Content="12" FontSize="12" />
+                    <telerik:RadComboBoxItem Content="14" FontSize="14" />
+                    <telerik:RadComboBoxItem Content="16" FontSize="16" />
+                    <telerik:RadComboBoxItem Content="18" FontSize="18" />
+                    <telerik:RadComboBoxItem Content="20" FontSize="20" />
+                    <telerik:RadComboBoxItem Content="22" FontSize="22" />
+                    <telerik:RadComboBoxItem Content="24" FontSize="24" />
+                    <telerik:RadComboBoxItem Content="26" FontSize="26" />
+                    <telerik:RadComboBoxItem Content="28" FontSize="28" />
+                    <telerik:RadComboBoxItem Content="36" FontSize="36" />
+                    <telerik:RadComboBoxItem Content="48" FontSize="48" />
+                    <telerik:RadComboBoxItem Content="72" FontSize="72" />
+                </telerik:RadComboBox>
+                <telerik:RadRibbonToggleButton Size="Small" SmallImage="/Common;component/Images/16x16/bold.png"
+                                               IsChecked="{Binding FontBold, Mode=TwoWay}" />
+                <telerik:RadRibbonToggleButton Size="Small" SmallImage="/Common;component/Images/16x16/italic.png"
+                                               IsChecked="{Binding FontItalic, Mode=TwoWay}" />
+                <telerik:RadRibbonDropDownButton DropDownButtonPosition="Right"
+                                                 telerik:StyleManager.Theme="Windows7">
+                    <telerik:RadRibbonDropDownButton.Content>
+                        <Rectangle Width="20" Height="20" StrokeThickness="0"
+                                   Fill="{Binding FontColor, Converter={StaticResource ColorToBrushConverter}}" />
+
+                    </telerik:RadRibbonDropDownButton.Content>
+                    <telerik:RadRibbonDropDownButton.DropDownContent>
+                        <telerik:RadColorSelector HorizontalAlignment="Left"
+                                                  HeaderPaletteVisibility="Collapsed"
+                                                  MainPaletteHeaderText=""
+                                                  MainPalette="Metro"
+                                                  StandardPaletteVisibility="Collapsed"
+                                                  SelectedColor="{Binding Path=FontColor, Mode=TwoWay}"
+                                                  Width="170" />
+                    </telerik:RadRibbonDropDownButton.DropDownContent>
+                </telerik:RadRibbonDropDownButton>
+                <!--
+                <telerik:RadRibbonToggleButton Size="Small" SmallImage="/Common;component/Images/16x16/cellboxborder.png" IsChecked="{Binding IsBoxVisible, Mode=TwoWay}" />
+-->
+
+            </telerik:RadToolBar>
+
+            <TextBox Text="{Binding Text, Mode=TwoWay}"
+                     Height="150"
+                     VerticalContentAlignment="Top"
+                     HorizontalContentAlignment="Left"
+                     VerticalScrollBarVisibility="Auto"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     Width="400"
+                     FontSize="{Binding FontSize}"
+                     Margin="0, 5, 0, 0"
+                     Foreground="{Binding FontColor, Converter={StaticResource ColorToBrushConverter}}"
+                     FontWeight="{Binding FontBold, Converter={StaticResource BooleanToFontWeightConverter}}"
+                     FontStyle="{Binding FontItalic, Converter={StaticResource BooleanToFontStyleConverter}}" />
+
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Margin="0, 11, 0, 0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <telerik:RadButton Command="{Binding SaveCommand}"
+                               HorizontalAlignment="Right"
+                               Width="75" Height="23" Content="Изменить" />
+
+            <telerik:RadButton Command="{Binding CancelCommand}" HorizontalAlignment="Right"
+                               Width="75" Height="23"
+                               Margin="7,0,0,0" Content="Отмена" />
+        </StackPanel>
+    </Grid>
+</telerik:RadWindow>

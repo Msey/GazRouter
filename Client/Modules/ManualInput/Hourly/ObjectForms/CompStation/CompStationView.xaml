@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="GazRouter.ManualInput.Hourly.ObjectForms.CompStation.CompStationView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:controls1="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:viewModel="clr-namespace:GazRouter.ManualInput.Hourly.ObjectForms"
+                   xmlns:converters1="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   mc:Ignorable="d"
+                   d:DesignHeight="0" 
+                   d:DesignWidth="600"
+                   d:DataContext="{d:DesignInstance viewModel:CompStationViewModel}">
+
+    <Grid>
+
+        <Grid.Resources>
+            <converters1:TemperatureConverter x:Key="TemperatureConverter"/>
+            <telerik:InvertedBooleanConverter x:Key="Inverter"/>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <telerik:RadBusyIndicator BusyContent="Загрузка..." 
+                                  IsBusy="{Binding Path=IsBusyLoading}" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Stretch">
+
+            <StackPanel Orientation="Horizontal" Margin="0, 0, 0, 0">
+                <StackPanel Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                    <controls1:SmartTextBlock Width="200"
+                                              HorizontalAlignment="Left"
+                                              Text="P атмосферное, мм рт.ст.:"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                       Value="{Binding PressureAir.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                       HorizontalAlignment="Left" />
+
+                        <viewModel:ManualInputWarningIndicator DataContext="{Binding PressureAir}" Margin="2, 0, 0, 0"/>
+                    </StackPanel>
+                </StackPanel>
+                    
+
+                <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                    <controls1:SmartTextBlock Width="200" 
+                                              HorizontalAlignment="Left"
+                                              Text="Т воздуха, [T]:" />
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       FormatString="n2"
+                                                       IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                       Value="{Binding TemperatureAir.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                       HorizontalAlignment="Left" />
+                        <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureAir}" Margin="2, 0, 0, 0"/>
+                    </StackPanel>
+                        
+                </StackPanel>
+
+
+                <StackPanel Margin="11, 0, 0, 0" VerticalAlignment="Bottom">
+                    <controls1:SmartTextBlock Width="200"
+                                              HorizontalAlignment="Left"
+                                              Text="Т грунта, [T]:" />
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                        <telerik:RadMaskedNumericInput Width="100" 
+                                                       FormatString="n2"
+                                                       IsReadOnly="{Binding IsInputAllowed, Converter={StaticResource Inverter}}"
+                                                       Value="{Binding TemperatureEarth.Value, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}" 
+                                                       HorizontalAlignment="Left" />
+                        <viewModel:ManualInputWarningIndicator DataContext="{Binding TemperatureEarth}" Margin="2, 0, 0, 0"/>
+                    </StackPanel>
+
+                </StackPanel>
+
+            </StackPanel>
+               
+                
+
+        </telerik:RadBusyIndicator>
+    </Grid>
+
+</UserControl>

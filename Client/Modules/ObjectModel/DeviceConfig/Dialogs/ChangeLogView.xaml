@@ -1,0 +1,139 @@
+﻿<telerik:RadWindow x:Class="GazRouter.ObjectModel.DeviceConfig.Dialogs.ChangeLogView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                   Height="800" 
+                   MinWidth="500"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:changeLog="clr-namespace:GazRouter.ObjectModel.DeviceConfig.Dialogs"
+                   xmlns:periodPickerEx="clr-namespace:GazRouter.Controls.Dialogs.PeriodPickerEx;assembly=Controls"
+                   xmlns:log="clr-namespace:GazRouter.DTO.Calculations.Log;assembly=PortableDTO"
+                   xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   mc:Ignorable="d" 
+                   Header="Журнал изменений" 
+                   d:DataContext="{d:DesignInstance changeLog:ChangeLogViewModel}" 
+                   HideMaximizeButton="True" 
+                   HideMinimizeButton="True"
+                   WindowStartupLocation="CenterScreen"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}" 
+                   Style="{StaticResource DialogWindowStyle}">
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.Resources>
+            <converters:ActionConverter x:Key="ActionConverter"/>
+        </Grid.Resources>
+
+        <telerik:RadToolBar Margin="-1, -1, -1, 0">
+            <periodPickerEx:PeriodPickerEx SelectedPeriod="{Binding SelectedPeriod, Mode=TwoWay}"
+                                           Width="200"/>
+            
+            <telerik:RadComboBox SelectedItem="{Binding SelectedDeviceType, Mode=TwoWay}"
+                                     ItemsSource="{Binding DeviceTypes}" 
+                                     EmptyText="Все"
+                                     DisplayMemberPath="Name" />
+
+            <telerik:RadButton Margin="5, 0, 0, 0" 
+                               Style="{StaticResource refreshButtonStyle}"
+                               Command="{Binding RefreshCommand}" />
+            
+        </telerik:RadToolBar>
+
+        <telerik:RadGridView Grid.Row="1" 
+                             ItemsSource="{Binding Log, Mode=TwoWay}" 
+                             ShowGroupPanel="False" 
+                             AutoGenerateColumns="False"
+                             IsReadOnly="True"
+                             RowIndicatorVisibility="Collapsed"
+                             CanUserFreezeColumns="False"
+                             Margin="-1">
+            <telerik:RadGridView.Columns>
+
+                <telerik:GridViewDataColumn
+                    DataMemberBinding="{Binding LogId}"  
+                                            Width="100">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel>
+                            <TextBlock Text="№"/>
+                            <TextBlock Text="изменения"/>
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ActionDate}" 
+                                            DataFormatString="dd.MM.yyyy HH:mm" 
+                                            Width="110"
+                                            TextWrapping="Wrap"
+                                            IsFilterable="False">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel>
+                            <TextBlock Text="Время"/>
+                            <TextBlock Text="изменения"/>
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+                
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Login}" 
+                                            Width="100"
+                                            TextWrapping="Wrap">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel>
+                            <TextBlock Text="Логин"/>
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding UserName}" 
+                                            Width="Auto"
+                                            TextWrapping="Wrap">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel>
+                            <TextBlock Text="Пользователь"/>
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Site}" 
+                                            Width="Auto"
+                                            TextWrapping="Wrap">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel>
+                            <TextBlock Text="Подразделение"/>
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Action, Converter= {StaticResource ActionConverter}}" 
+                                            Width="90"
+                                            TextWrapping="Wrap">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel>
+                            <TextBlock Text="Действие"/>
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding TableName}" 
+                                            Width="Auto"
+                                            TextWrapping="Wrap">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel>
+                            <TextBlock Text="Имя"/>
+                            <TextBlock Text="таблицы"/>
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+
+    </Grid>
+
+</telerik:RadWindow>

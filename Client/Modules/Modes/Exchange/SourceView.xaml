@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="GazRouter.Modes.Exchange.SourceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:exchange="clr-namespace:GazRouter.Modes.Exchange"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance exchange:SourceViewModel}" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar>
+                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" >
+
+                    <telerik:RadButton Command="{Binding AddCommand}" ToolTipService.ToolTip="Добавить"
+                                       Style="{StaticResource addButtonStyle}" />
+                    <telerik:RadButton Command="{Binding EditCommand}" ToolTipService.ToolTip="Ред."
+                                       Style="{StaticResource editButtonStyle}" />
+                    <telerik:RadButton Command="{Binding DeleteCommand}" ToolTipService.ToolTip="Удалить"
+                                       Style="{StaticResource deleteButtonStyle}" />
+                </StackPanel>
+            </telerik:RadToolBar>
+
+        </Grid>
+
+        <telerik:RadGridView Grid.Row="1" Margin="5" IsReadOnly="True"
+                             SelectedItem="{Binding SelectedSource, Mode=TwoWay}"
+                             ItemsSource="{Binding SourceList, Mode=TwoWay}" Grid.Column="0"
+                             AutoGenerateColumns="False" ShowGroupPanel="False">
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn SortingState="Ascending" Header="№" DataMemberBinding="{Binding Path=SourceId}"
+                                            Width="Auto" />
+                <telerik:GridViewDataColumn SortingState="Ascending" Header="Наименование"
+                                            DataMemberBinding="{Binding Path=SourceName}" Width="300" />
+                <telerik:GridViewDataColumn SortingState="Ascending" Header="Системное имя"
+                                            DataMemberBinding="{Binding Path=SystemName}" Width="Auto" />
+                <telerik:GridViewDataColumn SortingState="Ascending" Header="Описание"
+                                            DataMemberBinding="{Binding Path=Description}" Width="Auto" />
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+
+
+    </Grid>
+
+</UserControl>

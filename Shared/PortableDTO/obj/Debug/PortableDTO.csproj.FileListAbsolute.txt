@@ -1,0 +1,7 @@
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\bin\Debug\PortableDTO.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\bin\Debug\PortableDTO.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\bin\Debug\Utils.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\bin\Debug\Utils.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\obj\Debug\PortableDTO.csprojResolveAssemblyReference.cache
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\obj\Debug\PortableDTO.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\obj\Debug\PortableDTO.pdb

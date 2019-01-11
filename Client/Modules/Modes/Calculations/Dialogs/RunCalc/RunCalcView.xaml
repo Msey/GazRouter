@@ -1,0 +1,75 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Modes.Calculations.Dialogs.RunCalc.RunCalcView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:runCalc="clr-namespace:GazRouter.Modes.Calculations.Dialogs.RunCalc"
+                   mc:Ignorable="d"
+                   Header="Запустить расчет"
+                   d:DataContext="{d:DesignInstance runCalc:RunCalcViewModel}" 
+                   HideMaximizeButton="True"
+                   HideMinimizeButton="True"
+                   WindowStartupLocation="CenterScreen"
+                   attachedProperties1:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   Style="{StaticResource RadWindowStyle}">
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar Margin="-1, -1, -1, 0">
+                <controls:DateTimePickerTwoHours SelectedDateTime="{Binding StartTimeStamp, Mode=TwoWay}"
+                                                 DisableSelectFuture="True"
+                                                 Width="150"
+                                                 Margin="2, 0, 0, 0" />
+
+                <controls:DateTimePickerTwoHours SelectedDateTime="{Binding EndTimeStamp, Mode=TwoWay}"
+                                                 DisableSelectFuture="True"
+                                                 Width="150"
+                                                 Margin="2, 0, 0, 0" />
+
+                <telerik:RadButton telerik:RadToolTipService.ToolTipContent="Запуск"
+                                   Command="{Binding RunCommand}">
+                    <Image Source="/Common;component/Images/16x16/run.png"
+                           Stretch="None" />
+                </telerik:RadButton>
+            </telerik:RadToolBar>
+
+            <telerik:RadGridView Margin="-1"
+                                 Grid.Row="1"
+                                 ItemsSource="{Binding CalcStatuses}"
+                                 CanUserFreezeColumns="False"
+                                 RowIndicatorVisibility="Collapsed"
+                                 ShowGroupPanel="False"
+                                 AutoGenerateColumns="False"
+                                 AutoExpandGroups="True"
+                                 Height="350"
+                                 Width="500"
+                                 IsReadOnly="True">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Header="Метка времени"
+                                                DataMemberBinding="{Binding Item1}"
+                                                DataFormatString="dd.MM.yyyy HH:mm"
+                                                Width="150"
+                                                IsFilterable="False"
+                                                IsSortable="True" />
+
+                    <telerik:GridViewDataColumn Header="Сообщение"
+                                                DataMemberBinding="{Binding Item2}"
+                                                IsFilterable="False"
+                                                IsSortable="True"
+                                                Width="300" />
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

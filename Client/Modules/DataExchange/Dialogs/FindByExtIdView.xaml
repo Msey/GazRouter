@@ -1,0 +1,32 @@
+﻿<telerik:RadWindow x:Class="GazRouter.DataExchange.Dialogs.FindByExtIdView" 
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:dialogs="clr-namespace:GazRouter.DataExchange.Dialogs"
+                   mc:Ignorable="d" d:DesignHeight="250" d:DesignWidth="400"
+                   Style="{StaticResource DialogWindowStyle}" Header="{Binding Caption}" Height="Auto" Width="300"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}">
+        
+    <Grid Margin="11">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock Text="Введите идентификатор внешней системы:" />
+            <TextBox Text="{Binding FindId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" Margin="0, 5, 0, 0" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+            <telerik:RadButton Content="Найти" Command="{Binding FindCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" telerik:RadWindow.ResponseButton ="Accept" >
+            </telerik:RadButton>
+            <telerik:RadButton Content="Отмена" Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}"  telerik:RadWindow.ResponseButton ="Cancel" />
+        </StackPanel>
+    </Grid>
+</telerik:RadWindow>

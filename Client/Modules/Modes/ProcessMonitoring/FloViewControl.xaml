@@ -1,0 +1,741 @@
+﻿<UserControl x:Class="GazRouter.Modes.ProcessMonitoring.FloViewControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:controls1="clr-namespace:GazRouter.Controls;assembly=Controls"
+             xmlns:misc="clr-namespace:GazRouter.Flobus.Misc;assembly=Flobus"
+             xmlns:repair="clr-namespace:GazRouter.Repair.Plan;assembly=Repair"
+             xmlns:repair2="clr-namespace:GazRouter.Repair;assembly=Repair"
+             xmlns:repairWorks="clr-namespace:GazRouter.DTO.Repairs.RepairWorks;assembly=PortableDTO"
+             xmlns:processMonitoring="clr-namespace:GazRouter.Modes.ProcessMonitoring"
+             xmlns:converters="clr-namespace:GazRouter.Repair.Converters;assembly=Repair"         
+             xmlns:flobus="clr-namespace:GazRouter.Flobus;assembly=Flobus"
+             xmlns:thumbnail="clr-namespace:GazRouter.Flobus.Thumbnail;assembly=Flobus"
+             xmlns:visuals="clr-namespace:GazRouter.Flobus.Visuals;assembly=Flobus"
+             xmlns:measurings1="clr-namespace:GazRouter.Flobus.UiEntities.FloModel.Measurings;assembly=Flobus"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:measurings2="clr-namespace:GazRouter.Controls.Measurings;assembly=Controls"
+             xmlns:model="clr-namespace:GazRouter.Flobus.Model;assembly=Flobus"
+             xmlns:entityName="clr-namespace:GazRouter.Controls.EntityName;assembly=Controls"
+             xmlns:model1="clr-namespace:GazRouter.Flobus.VM.Model;assembly=Flobus.VM"
+             xmlns:converters2="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             mc:Ignorable="d"
+             x:Name="SchemeForm"
+             d:DesignHeight="300" d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance processMonitoring:FloViewControlViewModel}">
+
+    <UserControl.Resources>
+        <converters:StartDateToColorConverter x:Key="StartDateToColorConverter" />
+        <telerik:BooleanToVisibilityConverter x:Key="BoolToVisibleConverter"/>
+        <system:Double x:Key="MeasuringFontSize">9</system:Double>
+        <FontWeight x:Key="MeasuringFontWeight">Bold</FontWeight>
+        <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters2:ValueSourceTypeToColorConverter x:Key="SourceTypeToColorConverter"/>
+        <converters2:ValueSourceTypeToNameConverter x:Key="SourceTypeToNameConverter"/>
+        
+
+
+        <DataTemplate DataType="measurings1:MeasuringLineMeasuring">
+            <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Center">
+
+                <measurings2:MeasuringBlock DataContext="{Binding Pressure}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            HorizontalAlignment="Center"/>
+
+                <measurings2:MeasuringBlock DataContext="{Binding Temperature}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            HorizontalAlignment="Center"
+                                            Margin="0, -2, 0, 0"/>
+
+                <measurings2:MeasuringBlock DataContext="{Binding Flow}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            HorizontalAlignment="Center"
+                                            Margin="0, -2, 0, 0"/>
+            </StackPanel>
+        </DataTemplate>
+
+
+        <DataTemplate DataType="measurings1:DistributingStationMeasuring">
+            <Grid Background="{Binding Path = RepairDto.StartDate, Mode=OneWay, Converter={StaticResource StartDateToColorConverter}}" MinWidth="40" Width="Auto" Height="Auto">
+                <Border BorderThickness="1" BorderBrush="{Binding FactColor,Mode=OneWay}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource WidgetToolTip}" Content="{Binding}" Visibility="{Binding HasRepair,  Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ToolTip.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding RepairPeriod, Mode=TwoWay}" 
+                                               FontWeight="Bold"
+                                               FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=visuals:WidgetBase}}" 
+                                               Foreground="Black"/>
+                                        <TextBlock Text="{Binding RepairDto.Description}" FontWeight="Bold"
+                                               FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=visuals:WidgetBase}}" 
+                                               Foreground="Black"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ToolTip.ContentTemplate>
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{Binding Path = RepairDto.StartDate, Mode=OneWay, Converter={StaticResource StartDateToColorConverter}}">
+
+                        <Grid HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Background="{Binding Path = PressureInlet.WarningColor}"
+                            BorderThickness="0"
+                            MinWidth="8"
+                            MinHeight="16">
+
+                                <TextBlock Text="{Binding Path = PressureInlet.DisplayValue}"
+                                   FontSize="{StaticResource MeasuringFontSize}"
+                                   FontWeight="{StaticResource MeasuringFontWeight}"
+                                   Foreground="{Binding Path = PressureInlet.WarningForeground}"
+                                   Margin="1">
+
+                            <telerik:RadContextMenu.ContextMenu>
+                                <telerik:RadContextMenu>
+                                    <telerik:RadMenuItem Header="Тренд..." Command="{Binding Path = PressureInlet.TrendCommand}" />
+                                </telerik:RadContextMenu>
+                            </telerik:RadContextMenu.ContextMenu>
+
+                            <ToolTipService.ToolTip>
+                                <StackPanel Margin="11">
+                                    <TextBlock Text="{Binding Path = PressureInlet.PropertyType.Name}"
+                                               HorizontalAlignment="Center"
+                                               FontWeight="Bold" />
+
+                                    <TextBlock Text="{Binding Path = PressureInlet.UnitsName, StringFormat='({0})'}"
+                                               FontStyle="Italic"
+                                               HorizontalAlignment="Center"
+                                               Margin="0, 3, 0, 0" />
+
+                                    <TextBlock
+                                        Text="{Binding Path = PressureInlet.SourceType, Converter={StaticResource SourceTypeToNameConverter}}"
+                                        HorizontalAlignment="Center"
+                                        Margin="0, 5, 0, 0" />
+
+                                    <Border BorderThickness="0"
+                                            Height="5"
+                                            HorizontalAlignment="Stretch"
+                                            Background="WhiteSmoke"
+                                            Margin="-15, 5, -15, 0" />
+
+                                </StackPanel>
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+                            </Border>
+
+
+                            <TextBlock Text="{Binding Path = PressureInlet.DisplayDelta}"
+                               Grid.Row="1"
+                               Margin="0, 1, 0, 0"
+                               FontSize="10"
+                               Foreground="{Binding Path = PressureInlet.DeltaColor}"
+                               Visibility="{Binding Path = PressureInlet.ShowDelta, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </Grid>
+
+
+                        <Grid Margin="1,-2,0,0" HorizontalAlignment="Center" >
+                            <ItemsControl ItemsSource="{Binding Path = List}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" Height="15"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderThickness="0" 
+                                    Background="Transparent"
+                                    
+                                    Width="Auto" HorizontalAlignment="Center"
+                                    Height="20"
+                                    Margin="0, 0, 1, 0">
+                                            <Grid HorizontalAlignment="Center">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+
+                                                <Border Background="{Binding Path = PressureOutlet.WarningColor}"
+                                                BorderThickness="0"
+                                                MinWidth="8"
+                                                MinHeight="16">
+
+                                                    <TextBlock Text="{Binding Path = PressureOutlet.DisplayValue}"
+                                                   FontSize="{StaticResource MeasuringFontSize}"
+                                                   FontWeight="{StaticResource MeasuringFontWeight}"
+                                                   Foreground="{Binding Path = PressureOutlet.WarningForeground}"
+                                                   Margin="1">
+
+                                                    <telerik:RadContextMenu.ContextMenu>
+                                                        <telerik:RadContextMenu>
+                                                            <telerik:RadMenuItem Header="Тренд..." Command="{Binding Path = PressureOutlet.TrendCommand}" />
+                                                        </telerik:RadContextMenu>
+                                                    </telerik:RadContextMenu.ContextMenu>
+
+                                                    <ToolTipService.ToolTip>
+                                                        <StackPanel Margin="11">                                    
+                                                            <TextBlock Text="{Binding Name}"
+                                                                       HorizontalAlignment="Center"
+                                                                       FontWeight="ExtraBold" />
+                                    
+                                                            <TextBlock Text="{Binding Path = PressureOutlet.PropertyType.Name}"
+                                                                       HorizontalAlignment="Center"
+                                                                       FontWeight="Bold" 
+                                                                       Margin="0, 6, 0, 0"/>
+
+                                                            <TextBlock Text="{Binding Path = PressureOutlet.UnitsName, StringFormat='({0})'}"
+                                                                       FontStyle="Italic"
+                                                                       HorizontalAlignment="Center"
+                                                                       Margin="0, 3, 0, 0" />
+
+                                                            <TextBlock
+                                                                Text="{Binding Path = PressureOutlet.SourceType, Converter={StaticResource SourceTypeToNameConverter}}"
+                                                                HorizontalAlignment="Center"
+                                                                Margin="0, 5, 0, 0" />
+
+                                                            <Border BorderThickness="0"
+                                                                    Height="5"
+                                                                    HorizontalAlignment="Stretch"
+                                                                    Background="WhiteSmoke"
+                                                                    Margin="-15, 5, -15, 0" />
+
+                                                        </StackPanel>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+                                                </Border>
+
+
+                                                <TextBlock Text="{Binding Path = PressureOutlet.DisplayDelta}"
+                                               Grid.Row="1"
+                                               Margin="0, 1, 0, 0"
+                                               FontSize="10"
+                                               Foreground="{Binding Path = PressureOutlet.DeltaColor}"
+                                               Visibility="{Binding Path = PressureOutlet.ShowDelta, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+
+                        <Grid HorizontalAlignment="Center"
+                      Margin="0, -2, 0, 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Background="{Binding Path = TemperatureInlet.WarningColor}"
+                            BorderThickness="0"
+                            MinWidth="8"
+                            MinHeight="16">
+
+                                <TextBlock Text="{Binding Path = TemperatureInlet.DisplayValue}"
+                                   FontSize="{StaticResource MeasuringFontSize}"
+                                   FontWeight="{StaticResource MeasuringFontWeight}"
+                                   Foreground="{Binding Path = TemperatureInlet.WarningForeground}"
+                                   Margin="1">
+
+                            <telerik:RadContextMenu.ContextMenu>
+                                <telerik:RadContextMenu>
+                                    <telerik:RadMenuItem Header="Тренд..." Command="{Binding Path = TemperatureInlet.TrendCommand}" />
+                                </telerik:RadContextMenu>
+                            </telerik:RadContextMenu.ContextMenu>
+
+                            <ToolTipService.ToolTip>
+                                <StackPanel Margin="11">
+                                    <TextBlock Text="{Binding Path = TemperatureInlet.PropertyType.Name}"
+                                               HorizontalAlignment="Center"
+                                               FontWeight="Bold" />
+
+                                    <TextBlock Text="{Binding Path = TemperatureInlet.UnitsName, StringFormat='({0})'}"
+                                               FontStyle="Italic"
+                                               HorizontalAlignment="Center"
+                                               Margin="0, 3, 0, 0" />
+
+                                    <TextBlock
+                                        Text="{Binding Path = TemperatureInlet.SourceType, Converter={StaticResource SourceTypeToNameConverter}}"
+                                        HorizontalAlignment="Center"
+                                        Margin="0, 5, 0, 0" />
+
+                                    <Border BorderThickness="0"
+                                            Height="5"
+                                            HorizontalAlignment="Stretch"
+                                            Background="WhiteSmoke"
+                                            Margin="-15, 5, -15, 0" />
+                                </StackPanel>
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+                            </Border>
+
+
+                            <TextBlock Text="{Binding Path = TemperatureInlet.DisplayDelta}"
+                               Grid.Row="1"
+                               Margin="0, 1, 0, 0"
+                               FontSize="10"
+                               Foreground="{Binding Path = TemperatureInlet.DeltaColor}"
+                               Visibility="{Binding Path = TemperatureInlet.ShowDelta, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </Grid>
+
+                        <Grid HorizontalAlignment="Center"
+                      Margin="0, -2, 0, 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Background="{Binding Path = Flow.WarningColor}"
+                            BorderThickness="0"
+                            MinWidth="8"
+                            MinHeight="16">
+
+                                <TextBlock Text="{Binding Path = Flow.DisplayValue}"
+                                   FontSize="{StaticResource MeasuringFontSize}"
+                                   FontWeight="{StaticResource MeasuringFontWeight}"
+                                   Foreground="{Binding Path = Flow.WarningForeground}"
+                                   Margin="1">
+
+                            <telerik:RadContextMenu.ContextMenu>
+                                <telerik:RadContextMenu>
+                                    <telerik:RadMenuItem Header="Тренд..." Command="{Binding Path = Flow.TrendCommand}" />
+                                </telerik:RadContextMenu>
+                            </telerik:RadContextMenu.ContextMenu>
+
+                            <ToolTipService.ToolTip>
+                                <StackPanel Margin="11">
+                                    <TextBlock Text="{Binding Path = Flow.PropertyType.Name}"
+                                               HorizontalAlignment="Center"
+                                               FontWeight="Bold" />
+
+                                    <TextBlock Text="{Binding Path = Flow.UnitsName, StringFormat='({0})'}"
+                                               FontStyle="Italic"
+                                               HorizontalAlignment="Center"
+                                               Margin="0, 3, 0, 0" />
+
+                                    <TextBlock
+                                        Text="{Binding Path = Flow.SourceType, Converter={StaticResource SourceTypeToNameConverter}}"
+                                        HorizontalAlignment="Center"
+                                        Margin="0, 5, 0, 0" />
+
+                                    <Border BorderThickness="0"
+                                            Height="5"
+                                            HorizontalAlignment="Stretch"
+                                            Background="WhiteSmoke"
+                                            Margin="-15, 5, -15, 0" />
+                                </StackPanel>
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+                            </Border>
+
+
+                            <TextBlock Text="{Binding Path = Flow.DisplayDelta}"
+                               Grid.Row="1"
+                               Margin="0, 1, 0, 0"
+                               FontSize="10"
+                               Foreground="{Binding Path = Flow.DeltaColor}"
+                               Visibility="{Binding Path = Flow.ShowDelta, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </Grid>
+                        <!--<measurings2:MeasuringBlock DataContext="{Binding PressureInlet}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            HorizontalAlignment="Center"/>
+
+                    <measurings2:MeasuringBlock DataContext="{Binding TemperatureInlet}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            HorizontalAlignment="Center"
+                                            Margin="0, -2, 0, 0"/>
+
+                    <measurings2:MeasuringBlock DataContext="{Binding Flow}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            HorizontalAlignment="Center"
+                                            Margin="0, -2, 0, 0"/>-->
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </DataTemplate>
+        
+         <DataTemplate DataType="measurings1:ReducingStationMeasuring">
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <measurings2:MeasuringBlock DataContext="{Binding PressureInlet}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            Grid.Row="0"
+                                            Grid.Column="0" 
+                                            HorizontalAlignment="Center"/>
+
+                <measurings2:MeasuringBlock DataContext="{Binding PressureOutlet}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            Grid.Row="0"
+                                            Grid.Column="1" 
+                                            HorizontalAlignment="Center"/>
+
+                <measurings2:MeasuringBlock DataContext="{Binding TemperatureInlet}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            Grid.Row="1"
+                                            Grid.Column="0" 
+                                            HorizontalAlignment="Center"/>
+
+                <measurings2:MeasuringBlock DataContext="{Binding TemperatureOutlet}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            Grid.Row="1"
+                                            Grid.Column="1" 
+                                            HorizontalAlignment="Center"/>
+
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate DataType="model1:CompressorShopMeasuring">
+            <Grid  Margin="1" Background="{Binding RepairDto.StartDate, Mode=OneWay, Converter={StaticResource StartDateToColorConverter}}">
+                <Border BorderThickness="1" BorderBrush="{Binding FactColor,Mode=OneWay}">
+                    <Grid>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Style="{StaticResource WidgetToolTip}" Content="{Binding}">
+                                <ToolTip.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Path=RepairPeriod, Mode=OneWay}" 
+                                               FontWeight="Bold"
+                                               FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=visuals:WidgetBase}}" 
+                                               Foreground="Black"/>
+                                            <TextBlock Text="{Binding Path=RepairDto.Description}" FontWeight="Bold"
+                                               FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=visuals:WidgetBase}}" 
+                                               Foreground="Black"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ToolTip.ContentTemplate>
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="20"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition  />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition  MinHeight="15"/>
+                        </Grid.RowDefinitions>
+
+
+                        <measurings2:MeasuringBlock DataContext="{Binding Pattern}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            Grid.Row="0"
+                                            Grid.Column="0" 
+                                            HorizontalAlignment="Center"/>
+
+                        <measurings2:MeasuringBlock DataContext="{Binding PressureInlet}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            Grid.Row="0"
+                                            Grid.Column="1" 
+                                            HorizontalAlignment="Right"/>
+
+                        <measurings2:MeasuringBlock DataContext="{Binding PressureOutlet}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            Grid.Row="1"
+                                            Grid.Column="1" 
+                                            HorizontalAlignment="Right"/>
+
+                        <measurings2:MeasuringBlock DataContext="{Binding CompressionRatio}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            Grid.Row="2"
+                                            Grid.Column="1" 
+                                            HorizontalAlignment="Right"/>
+
+                        <measurings2:MeasuringBlock DataContext="{Binding TemperatureInlet}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            Grid.Row="0"
+                                            Grid.Column="2" 
+                                            HorizontalAlignment="Right"/>
+
+                        <measurings2:MeasuringBlock DataContext="{Binding TemperatureOutlet}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            Grid.Row="1"
+                                            Grid.Column="2" 
+                                            HorizontalAlignment="Right"/>
+
+                        <measurings2:MeasuringBlock DataContext="{Binding TemperatureCooling}"
+                                            FontSize="{StaticResource MeasuringFontSize}"
+                                            FontWeight="{StaticResource MeasuringFontWeight}"
+                                            Grid.Row="2"
+                                            Grid.Column="2" 
+                                            HorizontalAlignment="Right"/>
+
+
+                        <ItemsControl ItemsSource="{Binding CompressorShop.CompressorUnits}"
+                              Grid.Row="3"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              Margin="5 0 5 0">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Height="15"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="model:CompressorUnit">
+                                    <Border BorderThickness="0" 
+                                    Background="{Binding CompressorUnitMeasuring.CompressorUnitState.StateColor}"
+                                    telerik:RadToolTipService.ToolTipContent="{Binding CompressorUnitMeasuring.CompressorUnitState.DisplayValue}"
+                                    Width="12"
+                                    Height="16"
+                                    Margin="0, 0, 2, 0">
+                                        <entityName:EntityNameBlock Entity="{Binding Dto}"
+                                                            Alias="{Binding Dto.CompUnitNum, StringFormat='0'}"
+                                                            FontSize="11"
+                                                            Foreground="GhostWhite"
+                                                            IsMenuEnable="True"
+                                                            HorizontalContentAlignment="Center"
+                                                            HorizontalAlignment="Center"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+    <Style TargetType="visuals:ReducingStationWidget">
+            <Setter Property="Content" Value="{Binding ReducingStationMeasuring}" />
+        </Style>
+
+        <Style TargetType="visuals:DistributingStationWidget">
+            <Setter Property="Content" Value="{Binding Data}" />
+        </Style>
+
+        <Style TargetType="visuals:MeasuringLineWidget">
+            <Setter Property="Content" Value="{Binding MeasuringLineMeasuring}" />
+            <Setter Property="Position" Value="{Binding Position}" />
+        </Style>
+
+        <Style TargetType="visuals:ValveWidget">
+            <Setter Property="Position" Value="{Binding Position}" />
+            <Setter Property="ValveBrush" Value="{Binding ValveMeasuring.State.StateColor}" />
+        </Style>
+    </UserControl.Resources>
+    
+    
+    
+    <telerik:RadBusyIndicator BusyContent="{Binding BusyMessage}" 
+                              IsBusy="{Binding Path=IsBusyLoading}">
+
+        <Grid Background="WhiteSmoke">
+
+            <Grid.Resources>
+                <misc:Scale2PercentConverter x:Name="Scale2PecentCnv" />
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar Grid.Row="0">
+
+                <telerik:RadComboBox SelectedItem="{Binding SelectedSchemeVersion, Mode=TwoWay}"
+                                     ItemsSource="{Binding SchemeVersionList}" 
+                                     DisplayMemberPath="SchemeName"
+                                     Width="150"/>
+                
+                <controls1:DateTimePickerTwoHours SelectedDateTime="{Binding Timestamp, Mode=TwoWay}"
+                                                  DisableSelectFuture="True"
+                                                  Visibility="{Binding IsTwoHoursMode, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                                  <!--"{Binding IsModelLoaded, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
+                <telerik:RadDatePicker DateSelectionMode="Day" 
+                                       SelectedValue="{Binding Timestamp, Mode=TwoWay}"
+                                       Culture="{Binding Path=CultureWithFormattedPeriod, Mode=TwoWay}"
+                                       Visibility="{Binding IsDayMode, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                       Width="120"/>
+                
+                <telerik:RadToolBarSeparator />
+                
+                <telerik:RadRibbonDropDownButton Text="Окна" 
+                                                 Margin="5, 0, 0, 0" 
+                                                 IsEnabled="{Binding IsWindowButtonEnabled}">
+                    <telerik:RadRibbonDropDownButton.DropDownContent>
+                        <telerik:RadContextMenu BorderThickness="0">
+                            
+                            <telerik:RadMenuItem Header="Объектная модель" 
+                                                 Command="{Binding ModelTreeCommand}"
+                                                 IsChecked="{Binding ModelTreeDialogContent.IsOpen}" />
+                            
+<!--
+                            <telerik:RadMenuItem Header="Переключения кранов" 
+                                                 Command="{Binding ValveStatesCommand}"
+                                                 IsChecked="{Binding ValveStatesDialogContent.IsOpen}"  />
+-->
+                            
+                            <telerik:RadMenuItem IsSeparator="True" />
+                            
+                            <telerik:RadMenuItem Header="Поиск" 
+                                                 Command="{Binding FindObjectCommand}"
+                                                 IsChecked="{Binding FindObjectDialogContent.IsOpen}" />
+                        </telerik:RadContextMenu>
+                    </telerik:RadRibbonDropDownButton.DropDownContent>
+                </telerik:RadRibbonDropDownButton>
+
+                <telerik:RadToolBarSeparator />
+
+                <!--<CheckBox Content="По суткам" 
+                          IsChecked="{Binding ShowDayly, Mode=TwoWay}"
+                          Visibility="{Binding IsModelLoaded, Converter={StaticResource BooleanToVisibilityConverter}}"
+                         />-->
+
+                <telerik:RadComboBox Width="100"
+                                     ItemsSource="{Binding PeriodTypeList}"
+                                     DisplayMemberPath="Name"
+                                     SelectedItem="{Binding SelectedPeriod, Mode=TwoWay}"
+                                     Visibility="{Binding IsModelLoaded, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <telerik:RadToolBarSeparator Visibility="{Binding IsModelLoaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                
+                <telerik:RadToggleButton IsChecked="{Binding ShowInfo, ElementName=Scheme, Mode=TwoWay}"
+                                         Content="О схеме" />
+
+
+                <telerik:RadToolBarSeparator />
+                <telerik:RadDropDownButton Visibility="{Binding IsModelLoaded, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    telerik:RadToolTipService.ToolTipContent="Печать">
+                    <telerik:RadDropDownButton.Content>
+                        <Image Source="/Common;component/Images/16x16/print.png"
+                               Stretch="None" />
+                    </telerik:RadDropDownButton.Content>
+                    <telerik:RadDropDownButton.DropDownContent>
+                        <telerik:RadContextMenu BorderThickness="0">
+                            <telerik:RadMenuItem Header="Печать области" CommandParameter="{Binding ElementName=Scheme}"
+                                                 Command="{Binding Path=PrintSchemeCommand}" />
+                            <telerik:RadMenuItem Header="Печать области в PNG" CommandParameter="{Binding ElementName=Scheme}"
+                                                 Command="{Binding Path=PrintToPngSchemeCommand}" />
+                            <telerik:RadMenuItem Header="Печать схемы в PDF" CommandParameter="{Binding ElementName=SchemeForm}"
+                                                 Command="{Binding Path=PrintToPdfSchemeCommand}" />
+                        </telerik:RadContextMenu>
+                    </telerik:RadDropDownButton.DropDownContent>
+                </telerik:RadDropDownButton>
+                
+                <CheckBox Content="Ремонты" x:Name="RepairCheck"
+                          IsChecked="{Binding ShowRepair, Mode=TwoWay}"
+                          Visibility="{Binding IsModelLoaded, Converter={StaticResource BooleanToVisibilityConverter}}"
+                         />
+                
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadComboBox SelectedIndex="{Binding SelectedTypeIndex, Mode=TwoWay}"
+                                     Width="90"                                     
+                                     EmptyText="Факт/План"
+                                     ClearSelectionButtonContent="Факт/План"
+                                     ClearSelectionButtonVisibility ="Visible"
+                                     Visibility="{Binding ShowRepair, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <telerik:RadComboBoxItem Content="Факт"/>
+                    <telerik:RadComboBoxItem Content="План"/>
+                </telerik:RadComboBox>
+
+                <telerik:RadComboBox SelectedIndex="{Binding SelectedObjectTypeIndex, Mode=TwoWay}"
+                                     Width="130"
+                                     EmptyText="Все типы объектов"
+                                     ClearSelectionButtonContent="Все типы объектов"
+                                     ClearSelectionButtonVisibility ="Visible"
+                                     Visibility="{Binding ShowRepair, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <telerik:RadComboBoxItem Content="Газопроводы"/>
+                    <telerik:RadComboBoxItem Content="КЦ"/>
+                    <telerik:RadComboBoxItem Content="ГРС"/>
+                </telerik:RadComboBox>
+
+                <telerik:RadComboBox SelectedItem="{Binding SelectedRepairType, Mode=TwoWay}"
+                                     ItemsSource="{Binding RepairTypeList, Mode=TwoWay}" 
+                                     EmptyText="Все типы ремонта"
+                                     ClearSelectionButtonContent="Все типы ремонта"
+                                     ClearSelectionButtonVisibility ="Visible"
+                                     DisplayMemberPath="Name"
+                                     Width="150"
+                                     Visibility="{Binding ShowRepair, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                <telerik:RadRibbonDropDownButton SmallImage="/Common;component/Images/16x16/color_select.png"
+                                                 DropDownButtonPosition="Right" 
+                                                 IsEnabled="{Binding IsEditPermission}"
+                                                 Visibility="{Binding ShowRepair, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <telerik:RadRibbonDropDownButton.DropDownContent>
+                        <ItemsControl ItemsSource="{Binding MonthColorList.ColorList}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Margin="11" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="repair2:MonthToColorWrap">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding MonthName}"
+                                                   FontSize="14"
+                                                   FontFamily="Segoe UI Light"
+                                                   Width="70"
+                                                   VerticalAlignment="Center" />
+                                        <telerik:RadRibbonDropDownButton DropDownButtonPosition="Right"
+                                                                         Margin="0, 5, 0, 0">
+                                            <telerik:RadRibbonDropDownButton.Content>
+                                                <Rectangle Width="20" Height="20" StrokeThickness="0"
+                                                           Fill="{Binding Color, Converter={StaticResource ColorToBrushConverter}}" />
+                                            </telerik:RadRibbonDropDownButton.Content>
+                                            <telerik:RadRibbonDropDownButton.DropDownContent>
+                                                <telerik:RadColorSelector HorizontalAlignment="Left"
+                                                                          HeaderPaletteVisibility="Collapsed"
+                                                                          MainPaletteHeaderText=""
+                                                                          MainPalette="Metro"
+                                                                          StandardPaletteVisibility="Collapsed"
+
+                                                                          SelectedColor="{Binding Path=Color, Mode=TwoWay}"
+                                                                          Width="170" />
+                                            </telerik:RadRibbonDropDownButton.DropDownContent>
+                                        </telerik:RadRibbonDropDownButton>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </telerik:RadRibbonDropDownButton.DropDownContent>
+                </telerik:RadRibbonDropDownButton>
+            </telerik:RadToolBar>
+            <flobus:Schema Grid.Row="1" 
+                           SchemaSource="{Binding Model}" 
+                           x:Name="Scheme"
+                           SelectedItem="{Binding SelectedItem}" />
+
+            <thumbnail:SchemaNaviagationPane Grid.Row="1" 
+                                             Schema="{Binding ElementName=Scheme}"
+                                             HorizontalAlignment="Left"
+                                             VerticalAlignment="Bottom" 
+                                             IsExpanded="True" />
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

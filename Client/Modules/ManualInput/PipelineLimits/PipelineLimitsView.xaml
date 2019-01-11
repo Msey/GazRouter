@@ -1,0 +1,177 @@
+﻿<UserControl x:Class="GazRouter.ManualInput.PipelineLimits.PipelineLimitsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"             
+             xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+             xmlns:limits="clr-namespace:GazRouter.ManualInput.PipelineLimits"
+             xmlns:userStamp="clr-namespace:GazRouter.Controls.UserStamp;assembly=Controls"
+             xmlns:attachments="clr-namespace:GazRouter.DTO.Attachments;assembly=PortableDTO"
+             xmlns:attachment="clr-namespace:GazRouter.Controls.Attachment;assembly=Controls"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance limits:PipelineLimitsViewModel}">
+
+    <UserControl.Resources>
+        <telerik:BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
+    </UserControl.Resources>
+    <telerik:RadBusyIndicator BusyContent="Загрузка..." IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar>
+
+                <telerik:RadButton Command="{Binding RefreshCommand}" Style="{StaticResource refreshButtonStyle}" />
+
+                <telerik:RadToolBarSeparator />
+                
+                <telerik:RadComboBox SelectedItem="{Binding SelectedSystem, Mode=TwoWay}"
+                                     ItemsSource="{Binding SystemList}" 
+                                     DisplayMemberPath="Name"/>
+                
+                <telerik:RadToolBarSeparator />
+                
+                <telerik:RadButton Command="{Binding AddLimitCommand}" Style="{StaticResource addButtonStyle}" />
+                <telerik:RadButton Command="{Binding EditLimitCommand}" Style="{StaticResource editButtonStyle}" />
+                <telerik:RadButton Command="{Binding RemoveLimitCommand}" Style="{StaticResource deleteButtonStyle}" />
+
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadButton Command="{Binding AddAttachmentCommand}">
+                    <Image Source="/Common;component/Images/16x16/attachment.png" 
+                           Width="16" 
+                           Height="16"/>
+                </telerik:RadButton>
+
+            </telerik:RadToolBar>
+            <telerik:RadTreeListView x:Name="Tree" Grid.Row="1" 
+                                     GridLinesVisibility="Both"
+                                     AutoGenerateColumns="False"
+                                     IsReadOnly="True"
+                                     ItemsSource="{Binding Items}"
+                                     SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                     CanUserFreezeColumns="False"
+                                     ColumnWidth="100"
+                                     AutoExpandItems="True">
+
+                <telerik:RadTreeListView.Columns>
+
+                    <telerik:GridViewDataColumn Header="Газопровод" 
+                                                TextWrapping="Wrap" 
+                                                IsFilterable="False"
+                                                IsResizable="False"
+                                                Width="Auto">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="limits:ItemBase">
+                                <StackPanel Margin="5"
+                                            Orientation="Horizontal">
+                                    <Image Source="{Binding ImageSource}" 
+                                           Stretch="None"
+                                           Margin="0, 0, 11, 0"
+                                           Visibility="{Binding HasImage, Converter={StaticResource Bool2Visibility}}"/>
+                                    <TextBlock Text="{Binding Name}" 
+                                               MaxWidth="350"
+                                               TextWrapping="Wrap"/>
+                                    <TextBlock Foreground="CadetBlue"
+                                               Margin="5, 0, 0, 0"
+                                               FontSize="10"
+                                               Text="{Binding Length, StringFormat='({0} км.)'}"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn IsFilterable="False"
+                                                IsResizable="False"
+                                                DataMemberBinding="{Binding Pressure, StringFormat=n3}"
+                                                Width="100">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Ограничение давления, [P]"
+                                                     Margin="3" />
+                        </telerik:GridViewDataColumn.Header>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn IsFilterable="False"
+                                                IsResizable="False"
+                                                DataMemberBinding="{Binding Description}"
+                                                Width="200">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel>
+                                <TextBlock Text="Распоряжение"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="limits:ItemBase">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Description}"
+                                               TextWrapping="Wrap"
+                                               MaxWidth="200"
+                                               Margin="5, 0, 0, 0"/>
+                                </StackPanel>
+
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn IsFilterable="False"
+                                                IsResizable="False"
+                                                Width="200">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel>
+                                <TextBlock Text="Изменено"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="limits:LimitItem">
+                                <userStamp:UserStamp Margin="3"
+                                                     Timestamp="{Binding ChangeDate}"
+                                                     UserName="{Binding  UserName}"
+                                                     SiteName="{Binding  UserSite}" />
+
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    
+                    <telerik:GridViewDataColumn Width="200" 
+                                                IsFilterable="True" 
+                                                IsSortable="False">
+                        <telerik:GridViewDataColumn.Header>
+                            <TextBlock Text="Прикрепленные документы" 
+                                       TextWrapping="Wrap"/>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="limits:LimitItem">
+                                <ItemsControl ItemsSource="{Binding AttachmentList}" 
+                                              Margin="5">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="attachments:AttachmentBaseDTO">
+                                            <attachment:AttachmentItemView Dto="{Binding }"
+                                                                           ShowImage="True"
+                                                                           DeleteCommand="{Binding DataContext.DeleteAttachmentCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                                                           Margin="0, 0, 0, 11"
+                                                                           />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                </telerik:RadTreeListView.Columns>
+                
+                <telerik:RadTreeListView.ChildTableDefinitions>
+                    <telerik:TreeListViewTableDefinition x:Name="child" ItemsSource="{Binding Children}" />
+                </telerik:RadTreeListView.ChildTableDefinitions>
+            </telerik:RadTreeListView>
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+
+</UserControl>

@@ -1,0 +1,9 @@
+G:\GPA_GazRouter\MainSolution\Client\Tests\ClientTests.Web\bin\ClientTests.Web.dll.config
+G:\GPA_GazRouter\MainSolution\Client\Tests\ClientTests.Web\bin\ClientTests.Web.dll
+G:\GPA_GazRouter\MainSolution\Client\Tests\ClientTests.Web\bin\ClientTests.Web.pdb
+G:\GPA_GazRouter\MainSolution\Client\Tests\ClientTests.Web\bin\Microsoft.Practices.ServiceLocation.dll
+G:\GPA_GazRouter\MainSolution\Client\Tests\ClientTests.Web\bin\Microsoft.Practices.ServiceLocation.pdb
+G:\GPA_GazRouter\MainSolution\Client\Tests\ClientTests.Web\bin\Microsoft.Practices.ServiceLocation.xml
+G:\GPA_GazRouter\MainSolution\Client\Tests\ClientTests.Web\obj\Release\ClientTests.Web.csprojResolveAssemblyReference.cache
+G:\GPA_GazRouter\MainSolution\Client\Tests\ClientTests.Web\obj\Release\ClientTests.Web.dll
+G:\GPA_GazRouter\MainSolution\Client\Tests\ClientTests.Web\obj\Release\ClientTests.Web.pdb

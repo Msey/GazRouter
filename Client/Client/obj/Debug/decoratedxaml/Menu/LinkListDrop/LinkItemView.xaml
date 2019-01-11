@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?><UserControl x:Class="GazRouter.Client.Menu.LinkListDrop.LinkItemView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" xmlns:menu="clr-namespace:GazRouter.Client.Menu" mc:Ignorable="d" d:DataContext="{d:DesignInstance menu:LinkMenuItem}" xmlns:spy="http://firstfloorsoftware.com/XamlSpy" spy:XamlMetadata.SpyServiceSettings="127.0.0.1|4530|53501|1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\LinkListDrop\LinkItemView.xaml|1|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+
+    <Grid x:Name="LayoutRoot" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\LinkListDrop\LinkItemView.xaml|11|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+        <Border x:Name="Border" Background="{Binding Back, Mode=TwoWay}" HorizontalAlignment="Stretch" BorderThickness="0" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\LinkListDrop\LinkItemView.xaml|12|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+
+            <Grid Margin="8" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\LinkListDrop\LinkItemView.xaml|19|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <Image Source="{Binding ImageSource}" Width="16" Height="16" VerticalAlignment="Center" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\LinkListDrop\LinkItemView.xaml|25|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                
+                <TextBlock Text="{Binding Name}" Margin="11, 0, 0, 0" FontFamily="Segoe UI Light" FontSize="14" Grid.Column="1" VerticalAlignment="Center" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\LinkListDrop\LinkItemView.xaml|30|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                    <telerik:EventToCommandBehavior.EventBindings>
+                            <telerik:EventBinding EventName="MouseLeftButtonUp" Command="{Binding OpenLinkCommand}" />
+                    </telerik:EventToCommandBehavior.EventBindings>
+                    
+                </TextBlock>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

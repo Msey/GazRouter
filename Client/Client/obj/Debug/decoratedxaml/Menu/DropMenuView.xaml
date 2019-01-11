@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?><UserControl x:Class="GazRouter.Client.Menu.DropMenuView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewModel="clr-namespace:GazRouter.Common.ViewModel;assembly=Common" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" xmlns:menu="clr-namespace:GazRouter.Client.Menu" xmlns:linkListDrop="clr-namespace:GazRouter.Client.Menu.LinkListDrop" xmlns:userDrop="clr-namespace:GazRouter.Client.Menu.UserDrop" xmlns:eventsDrop="clr-namespace:GazRouter.Client.Menu.EventsDrop" xmlns:tasksDrop="clr-namespace:GazRouter.Client.Menu.TasksDrop" mc:Ignorable="d" d:DataContext="{d:DesignInstance menu:DropMenuViewModel}" xmlns:spy="http://firstfloorsoftware.com/XamlSpy" spy:XamlMetadata.SpyServiceSettings="127.0.0.1|4530|53501|1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\DropMenuView.xaml|1|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+
+    <Grid x:Name="LayoutRoot" Background="#f0eff1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\DropMenuView.xaml|16|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+
+        <Grid.Resources>
+            <telerik:BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        </Grid.Resources>
+
+            <Border x:Name="Border" HorizontalAlignment="Left" BorderThickness="0" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\DropMenuView.xaml|22|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+
+            <Grid spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\DropMenuView.xaml|28|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                <Image x:Name="Img" Width="32" Height="32" Margin="5" Source="{Binding Image}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\DropMenuView.xaml|29|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                
+                <Ellipse StrokeThickness="0" Fill="Crimson" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding HasNotification, Converter={StaticResource BoolToVisibility}}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\DropMenuView.xaml|35|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                <TextBlock Text="{Binding NotificationCount}" Width="16" Height="16" Foreground="WhiteSmoke" FontWeight="Bold" FontSize="11" TextAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding HasNotification, Converter={StaticResource BoolToVisibility}}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\DropMenuView.xaml|42|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+            </Grid>
+
+        </Border>
+
+        <Popup x:Name="Popup" VerticalOffset="42" IsOpen="{Binding IsOpen, Mode=TwoWay}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\DropMenuView.xaml|56|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+            <Grid MinWidth="300" Background="#f5f5f5" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\DropMenuView.xaml|59|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                <Grid.Effect>
+                    <DropShadowEffect Color="DarkGray" BlurRadius="2" ShadowDepth="2" Opacity="0.7" />
+                </Grid.Effect>
+
+
+                <StackPanel Margin="20" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\DropMenuView.xaml|71|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                    <ContentControl x:Name="CntCtrl" Content="{Binding DropContent}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\DropMenuView.xaml|72|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                        <ContentControl.Resources>
+                            <DataTemplate DataType="linkListDrop:LinkListDropViewModel">
+                                <linkListDrop:LinkListDropView DataContext="{Binding }" />
+                            </DataTemplate>
+
+                            <DataTemplate DataType="userDrop:UserDropViewModel">
+                                <userDrop:UserDropView DataContext="{Binding }" />
+                            </DataTemplate>
+
+                            <DataTemplate DataType="eventsDrop:EventsDropViewModel">
+                                <eventsDrop:EventsDropView DataContext="{Binding }" />
+                            </DataTemplate>
+
+                            <DataTemplate DataType="tasksDrop:TasksDropViewModel">
+                                <tasksDrop:TasksDropView DataContext="{Binding }" />
+                            </DataTemplate>
+
+                            <DataTemplate DataType="viewModel:ViewModelBase" />
+                        </ContentControl.Resources>
+                    </ContentControl>
+                </StackPanel>
+
+            </Grid>
+        </Popup>
+    </Grid>
+
+
+
+</UserControl>

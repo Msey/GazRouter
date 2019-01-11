@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="GazRouter.ObjectModel.Views.ObjectModelEditorMainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:tree="clr-namespace:GazRouter.ObjectModel.Model.Tree"
+             xmlns:pipelines="clr-namespace:GazRouter.ObjectModel.Model.Pipelines"
+             xmlns:schema="clr-namespace:GazRouter.ObjectModel.Model.Schema"
+             xmlns:views="clr-namespace:GazRouter.ObjectModel.Views"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:interactionRequest="http://www.codeplex.com/prism"
+             xmlns:objectModel="clr-namespace:GazRouter.ObjectModel"
+             xmlns:aggregators="clr-namespace:GazRouter.ObjectModel.Model.Aggregators"
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance views:ObjectModelEditorMainViewModel}">
+<i:Interaction.Triggers>
+        <interactionRequest:InteractionRequestTrigger  SourceObject="{Binding NavigationRequest}">
+            <objectModel:MessageBoxNotificationAction></objectModel:MessageBoxNotificationAction>
+        </interactionRequest:InteractionRequestTrigger>
+</i:Interaction.Triggers>
+    <Grid Background="White">
+        <telerik:RadTabControl>
+            
+            <telerik:RadTabItem Header="Точечные объекты" IsSelected="{Binding Path=PointObjectsManagerViewModel.IsSelected,Mode=TwoWay}">
+                <tree:TreeTabControlView DataContext="{Binding PointObjectsManagerViewModel}" />
+            </telerik:RadTabItem>
+            
+            <telerik:RadTabItem Header="Линейная часть" IsSelected="{Binding Path=PipeLineManagerViewModel.IsSelected,Mode=TwoWay}">
+                <pipelines:PipeLineManagerView DataContext="{Binding PipeLineManagerViewModel}" />
+            </telerik:RadTabItem>
+
+            <telerik:RadTabItem Header="Расчетные объекты">
+                <aggregators:AggregatorsView DataContext="{Binding AggregatorsViewModel}"/>
+            </telerik:RadTabItem>
+
+            <telerik:RadTabItem Header="Схемы" IsSelected="{Binding Path=SchemaViewModel.IsSelected,Mode=TwoWay}">
+                <schema:SchemaView DataContext="{Binding SchemaViewModel}" />
+            </telerik:RadTabItem>
+            
+        </telerik:RadTabControl>
+    </Grid>
+</UserControl>

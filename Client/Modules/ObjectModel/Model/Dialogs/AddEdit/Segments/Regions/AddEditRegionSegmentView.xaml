@@ -1,0 +1,62 @@
+﻿<telerik:RadWindow x:Class="GazRouter.ObjectModel.Model.Dialogs.AddEdit.Segments.Regions.AddEditRegionSegmentView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:ui="clr-namespace:GazRouter.Common.Ui;assembly=Common"
+                   xmlns:site="clr-namespace:GazRouter.ObjectModel.Model.Dialogs.AddEdit.Segments.Regions"
+                   mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400"
+                   Height="Auto" Width="315" attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   Header="{Binding Caption}" Style="{StaticResource DialogWindowStyle}"
+                   d:DataContext="{d:DesignInstance site:AddEditRegionSegmentViewModel}">
+
+
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid Margin="11">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel>
+                <Border Background="LightGoldenrodYellow" Margin="0, 0, 0, 11"
+                        Visibility="{Binding IsWarningMessageVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock TextWrapping="Wrap" Margin="5" FontSize="10" Text="{Binding WarningMessage}" />
+                </Border>
+
+                <TextBlock Text="км. начала:" />
+                <telerik:RadMaskedNumericInput FormatString="n3" IsClearButtonVisible="False" Margin="0, 5, 0, 0" Width="100"
+                                          Value="{Binding KilometerOfStartPoint,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"   />
+
+                <TextBlock Text="км. окончания:" Margin="0, 11, 0, 0" />
+                <telerik:RadMaskedNumericInput FormatString="n3" IsClearButtonVisible="False" Margin="0, 5, 0, 0" Width="100"
+                                          Value="{Binding KilometerOfEndPoint,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"   />
+
+                <TextBlock Text="Регион:" Margin="0, 11, 0, 0" />
+                <telerik:RadComboBox ItemsSource="{Binding Path=RegionsList}" Margin="0, 5, 0, 0" Width="250"
+                                     SelectedItem="{Binding Path=SelectedRegion, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                     DisplayMemberPath="Name" IsEditable="False"
+                                     CanAutocompleteSelectItems="True" EmptyText="Выберите регион..."
+                                     HorizontalAlignment="Left">
+                    <ui:Attach.AttachCollection>
+                        <ui:AttachCollection>
+                            <ui:Attach Command="{Binding Path=RefreshAllCommandsCommand}" EventName="SelectionChanged" />
+                        </ui:AttachCollection>
+                    </ui:Attach.AttachCollection>
+                </telerik:RadComboBox>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+
+                <telerik:RadButton Content="{Binding ButtonSaveCaption}" Command="{Binding SaveCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}"></telerik:RadButton>
+                <telerik:RadButton Content="Отмена" Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

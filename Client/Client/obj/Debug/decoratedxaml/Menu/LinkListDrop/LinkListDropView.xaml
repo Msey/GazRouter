@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?><UserControl x:Class="GazRouter.Client.Menu.LinkListDrop.LinkListDropView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:linkListDrop="clr-namespace:GazRouter.Client.Menu.LinkListDrop" xmlns:menu="clr-namespace:GazRouter.Client.Menu" mc:Ignorable="d" d:DataContext="{d:DesignInstance linkListDrop:LinkListDropViewModel}" xmlns:spy="http://firstfloorsoftware.com/XamlSpy" spy:XamlMetadata.SpyServiceSettings="127.0.0.1|4530|53501|1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\LinkListDrop\LinkListDropView.xaml|1|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+
+    <Grid x:Name="LayoutRoot" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\LinkListDrop\LinkListDropView.xaml|11|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+        <ItemsControl ItemsSource="{Binding Items}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\LinkListDrop\LinkListDropView.xaml|12|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\LinkListDrop\LinkListDropView.xaml|15|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                        <ContentControl.Resources>
+                            <DataTemplate DataType="menu:SeparatorMenuItem">
+                                <Line X1="0" X2="400" Y1="0" Y2="0" StrokeThickness="1" Stroke="Gray" StrokeDashArray="1, 2" HorizontalAlignment="Center" Margin="0, 0, 0, 20" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\LinkListDrop\LinkListDropView.xaml|20|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                            </DataTemplate>
+
+                            <DataTemplate DataType="menu:SectionMenuItem">
+                                <TextBlock Text="{Binding Name}" FontFamily="Segoe UI" FontSize="11" FontWeight="Bold" Margin="0, 0, 0, 20" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\LinkListDrop\LinkListDropView.xaml|30|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                            </DataTemplate>
+
+                            <DataTemplate DataType="menu:LinkMenuItem">
+                                <linkListDrop:LinkItemView DataContext="{Binding }" Margin="20, 0, 0, 0" />
+                            </DataTemplate>
+                        </ContentControl.Resources>
+                    </ContentControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

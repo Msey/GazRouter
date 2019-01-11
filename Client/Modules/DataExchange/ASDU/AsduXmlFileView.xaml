@@ -1,0 +1,39 @@
+﻿<telerik:RadWindow x:Class="DataExchange.ASDU.AsduXmlFileView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:asdu="clr-namespace:DataExchange.ASDU"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   mc:Ignorable="d"
+                   d:DesignHeight="300" d:DesignWidth="400" d:DataContext="{d:DesignInstance asdu:AsduXmlFileViewModel}"
+                   Header="{Binding SelectedFile.FileName}" HideMaximizeButton="True" WindowStartupLocation="CenterScreen" HideMinimizeButton="True" Width="1280" Height="800">
+
+    <telerik:RadWindow.Resources>
+        <Style TargetType="asdu:AsduXmlFileView" BasedOn="{StaticResource RadWindowStyle}" />
+    </telerik:RadWindow.Resources>
+
+    <telerik:RadBusyIndicator BusyContent="Загрузка содержимого..." IsBusy="{Binding IsXmlLoading}">
+
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <telerik:RadToolBar>
+                <telerik:RadButton telerik:RadToolTipService.ToolTipContent="Сохранить..." Command="{Binding SaveXmlCommand}" Margin="8,4,4,4">
+                    <Image Source="img/download_26px.png"></Image>
+                </telerik:RadButton>
+            </telerik:RadToolBar>
+            <ListBox Grid.Row="1" Margin="4" ItemsSource="{Binding FileXml}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

@@ -1,0 +1,77 @@
+﻿<telerik:RadWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:updateHistory="clr-namespace:GazRouter.Repair.UpdateHistory"
+                   mc:Ignorable="d" 
+                   x:Class="GazRouter.Repair.UpdateHistory.RepairUpdateHistoryView"
+                   Header="История изменений ремонта"
+                   Height="620" 
+                   Width="550" 
+                   Style="{StaticResource DialogWindowStyle}"
+                   d:DataContext="{d:DesignInstance updateHistory:RepairUpdateHistoryViewModel}">
+    
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <telerik:RadGridView CanUserFreezeColumns="False" 
+                                 RowIndicatorVisibility="Collapsed"
+                                 AutoGenerateColumns="False" 
+                                 IsReadOnly="True"
+                                 ItemsSource="{Binding RepairUpdateList}"
+                                 ShowGroupPanel="False"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                 IsFilteringAllowed="True"
+                                 CanUserSortColumns="False"
+                                 AutoExpandGroups="True">
+
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="100" TextAlignment="Center" Header="Дата">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="updateHistory:RepairUpdate">
+                                <StackPanel HorizontalAlignment="Center" Margin="3">
+                                    <TextBlock Text="{Binding UpdateTime, StringFormat='{}{0:dd.MM.yyyy}'}" 
+                                               HorizontalAlignment="Center" />
+                                    <TextBlock Text="{Binding UpdateTime, StringFormat='{}{0:HH:mm}'}" 
+                                               HorizontalAlignment="Center" />
+                                    
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    
+                    
+                    <telerik:GridViewDataColumn Width="100" 
+                                                TextAlignment="Center" 
+                                                Header="Действие" 
+                                                DataMemberBinding="{Binding ActionName}" />
+
+
+                    <telerik:GridViewDataColumn Width="120" 
+                                                TextWrapping="Wrap" 
+                                                Header="Пользователь"
+                                                DataMemberBinding="{Binding UserName}"/>
+
+                    <telerik:GridViewDataColumn Width="120" 
+                                                TextWrapping="Wrap" 
+                                                Header="Подразделение"
+                                                DataMemberBinding="{Binding SiteName}"/>
+
+
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+
+            
+
+            
+
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

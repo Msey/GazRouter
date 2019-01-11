@@ -1,0 +1,98 @@
+﻿<UserControl x:Class="GazRouter.Balances.DistrNetworks.DistrNetworksView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:distrNetworks="clr-namespace:GazRouter.Balances.DistrNetworks"
+             xmlns:distrNetworks1="clr-namespace:GazRouter.DTO.Balances.DistrNetworks;assembly=PortableDTO"
+             mc:Ignorable="d"
+             d:DesignHeight="900" 
+             d:DesignWidth="900" 
+             d:DataContext="{d:DesignInstance distrNetworks:DistrNetworksViewModel}">
+    
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        
+        <Grid x:Name="LayoutRoot">
+            
+            
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            
+            
+            
+            <telerik:RadToolBar MinHeight="25">
+                <telerik:RadButton Command="{Binding RefreshCommand}"
+                                   Style="{StaticResource refreshButtonStyle}" />
+
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadButton Command="{Binding AddCommand}"
+                                   Style="{StaticResource addButtonStyle}" />
+
+                <telerik:RadButton Command="{Binding EditCommand}"
+                                   Style="{StaticResource editButtonStyle}" />
+
+                <telerik:RadButton Command="{Binding RemoveCommand}"
+                                   Style="{StaticResource deleteButtonStyle}" />
+
+                <telerik:RadToolBarSeparator />
+
+                <!--<telerik:RadButton Command="{Binding UpCommand}"
+                                   ToolTipService.ToolTip="Поднять в списке">
+                    <Image Source="/Common;component/Images/16x16/list_item_up.png" />
+                </telerik:RadButton>
+
+                <telerik:RadButton Command="{Binding DownCommand}"
+                                   ToolTipService.ToolTip="Понизить в списке">
+                    <Image Source="/Common;component/Images/16x16/list_item_down.png" />
+                </telerik:RadButton>-->
+
+            </telerik:RadToolBar>
+
+            <telerik:RadGridView ItemsSource="{Binding ItemList}"
+                                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                 Grid.Row="1"
+                                 CanUserFreezeColumns="False"
+                                 RowIndicatorVisibility="Collapsed"
+                                 ShowGroupPanel="False"
+                                 AutoGenerateColumns="False"
+                                 IsReadOnly="True"
+                                 AlternationCount="2">
+                <telerik:RadGridView.Columns>
+                    
+                    <telerik:GridViewDataColumn Header="Наименование" 
+                                                DataMemberBinding="{Binding Name}" 
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                Width="250">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="distrNetworks1:DistrNetworkDTO">
+                                <TextBlock Text="{Binding Name}"
+                                           Margin="5"
+                                           TextWrapping="Wrap"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn IsFilterable="False" 
+                                                IsSortable="False"
+                                                Width="250"
+                                                TextAlignment="Center">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="distrNetworks1:DistrNetworkDTO">
+                                <TextBlock Text="{Binding RegionName}"
+                                           Margin="5"
+                                           TextWrapping="Wrap"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

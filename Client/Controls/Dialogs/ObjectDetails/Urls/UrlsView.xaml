@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="GazRouter.Controls.Dialogs.ObjectDetails.Urls.UrlsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:urls="clr-namespace:GazRouter.DTO.ObjectModel.Entities.Urls;assembly=PortableDTO"
+             xmlns:attachments="clr-namespace:GazRouter.Controls.Dialogs.ObjectDetails.Attachments"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance attachments:AttachmentsViewModel}">
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            <Grid.Resources>
+                <telerik:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibility"/>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar Visibility="{Binding IsReadOnly, Converter={StaticResource InvertedBooleanToVisibility}}">
+                <telerik:RadButton Command="{Binding RefreshCommand}" 
+                                   Style="{StaticResource refreshButtonStyle}"/>
+                <telerik:RadButton Command="{Binding AddCommand}" 
+                                   Style="{StaticResource addButtonStyle}"/>
+                <telerik:RadButton Command="{Binding EditCommand}" 
+                                   Style="{StaticResource editButtonStyle}"/>
+                <telerik:RadButton Command="{Binding RemoveCommand}" 
+                                   Style="{StaticResource deleteButtonStyle}"/>
+            </telerik:RadToolBar>
+
+            <telerik:RadGridView AutoGenerateColumns="False"
+                                 IsReadOnly="True"
+                                 ItemsSource="{Binding ItemList}"
+                                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                 RowIndicatorVisibility="Collapsed"
+                                 CanUserFreezeColumns="False"
+                                 SelectionMode="Single"
+                                 ShowGroupPanel="False"
+                                 Grid.Row="1">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="250"
+                                                Header="Описание"
+                                                IsSortable="False"
+                                                IsFilterable="False">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="urls:EntityUrlDTO">
+                                <TextBlock Text="{Binding Description}"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Left"
+                                           Margin="5" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="250"
+                                                Header="Ссылка"
+                                                IsSortable="False"
+                                                IsFilterable="False">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="urls:EntityUrlDTO">
+                                <HyperlinkButton Command="{Binding Path=DataContext.GoToUrlCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                                 CommandParameter="{Binding Url}"
+                                                 ToolTipService.ToolTip="Перейти по ссылке"
+                                                 Margin="5">
+                                    <TextBlock Text="{Binding Url}" 
+                                               TextWrapping="Wrap"/>
+                                </HyperlinkButton>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

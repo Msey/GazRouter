@@ -1,0 +1,736 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3118133E-D042-44E7-BC2B-6C585D89BF9B}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GazRouter.ObjectModel</RootNamespace>
+    <AssemblyName>ObjectModel</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;DEVELOP_MODE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JetBrains.Annotations.PCL328">
+      <HintPath>..\..\..\packages\JetBrains.Annotations.8.0.5.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\JetBrains.Annotations.PCL328.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Expression.Interactions, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Silverlight, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Unity.2.1.505.2\lib\SL30\Microsoft.Practices.Unity.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Silverlight, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
+    <Reference Include="System.IO, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Threading.Tasks, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Navigation, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Toolkit">
+      <HintPath>..\..\..\Library\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Prism.4.1.0.0\lib\SL5\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Serialization, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Controls, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Data, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Data.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Docking, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Docking.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Docking.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.GridView, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.GridView.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.GridView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Input.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Input.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Navigation.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Navigation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RibbonView, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.RibbonView.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.RibbonView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Data.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DeviceConfig\AddBoilerTypeView.xaml.cs">
+      <DependentUpon>AddBoilerTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceConfig\AddBoilerTypeViewModel.cs" />
+    <Compile Include="DeviceConfig\AddEmergencyValveTypeView.xaml.cs">
+      <DependentUpon>AddEmergencyValveTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceConfig\AddEmergencyValveTypeViewModel.cs" />
+    <Compile Include="DeviceConfig\AddHeaterTypeView.xaml.cs">
+      <DependentUpon>AddHeaterTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceConfig\AddHeaterTypeViewModel.cs" />
+    <Compile Include="DeviceConfig\AddPowerUnitView.xaml.cs">
+      <DependentUpon>AddPowerUnitView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceConfig\AddPowerUnitViewModel.cs" />
+    <Compile Include="DeviceConfig\AddRegulatorTypeView.xaml.cs">
+      <DependentUpon>AddRegulatorTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceConfig\AddRegulatorTypeViewModel.cs" />
+    <Compile Include="DeviceConfig\DeviceConfigView.xaml.cs">
+      <DependentUpon>DeviceConfigView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceConfig\DeviceConfigViewModel.cs" />
+    <Compile Include="DeviceConfig\Dialogs\ChangeLogView.xaml.cs">
+      <DependentUpon>ChangeLogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceConfig\Dialogs\ChangeLogViewModel.cs" />
+    <Compile Include="GazShapeTemplateSelector.cs" />
+    <Compile Include="MessageBoxNotificationAction.cs" />
+    <Compile Include="Model\Aggregators\AggregatorsView.xaml.cs">
+      <DependentUpon>AggregatorsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Aggregators\AggregatorsViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Comment\AddEditCommentView.xaml.cs">
+      <DependentUpon>AddEditCommentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Comment\AddEditCommentViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\Aggregator\AddEditAggregatorView.xaml.cs">
+      <DependentUpon>AddEditAggregatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\Aggregator\AddEditAggregatorViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\BoilerPlant\AddEditBoilerPlantView.xaml.cs">
+      <DependentUpon>AddEditBoilerPlantView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\BoilerPlant\AddEditBoilerPlantViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\Boiler\AddEditBoilerView.xaml.cs">
+      <DependentUpon>AddEditBoilerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\Boiler\AddEditBoilerViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\CompShop\AddEditCompShopView.xaml.cs">
+      <DependentUpon>AddEditCompShopView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\CompShop\AddEditCompShopViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\CompStation\AddEditCompStationView.xaml.cs">
+      <DependentUpon>AddEditCompStationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\CompStation\AddEditCompStationViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\CompUnit\AddEditCompUnitView.xaml.cs">
+      <DependentUpon>AddEditCompUnitView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\CompUnit\AddEditCompUnitViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\Consumer\AddEditConsumerView.xaml.cs">
+      <DependentUpon>AddEditConsumerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\Consumer\AddEditConsumerViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\CoolingStation\AddEditCoolingStationView.xaml.cs">
+      <DependentUpon>AddEditCoolingStationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\CoolingStation\AddEditCoolingStationViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\CoolingUnit\AddEditCoolingUnitView.xaml.cs">
+      <DependentUpon>AddEditCoolingUnitView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\CoolingUnit\AddEditCoolingUnitViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\DistrStationOutlet\AddEditDistrStationOutletView.xaml.cs">
+      <DependentUpon>AddEditDistrStationOutletView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\DistrStationOutlet\AddEditDistrStationOutletViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\DistrStation\AddEditDistrStationView.xaml.cs">
+      <DependentUpon>AddEditDistrStationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\DistrStation\AddEditDistrStationViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\MeasLine\AddEditMeasLineView.xaml.cs">
+      <DependentUpon>AddEditMeasLineView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\MeasLine\AddEditMeasLineViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\MeasPoint\AddEditMeasPointView.xaml.cs">
+      <DependentUpon>AddEditMeasPointView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\MeasPoint\AddEditMeasPointViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\MeasStation\AddEditMeasStationView.xaml.cs">
+      <DependentUpon>AddEditMeasStationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\MeasStation\AddEditMeasStationViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\OperConsumer\AddEditOperConsumersView.xaml.cs">
+      <DependentUpon>AddEditOperConsumersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\OperConsumer\AddEditOperConsumersViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\PowerPlant\AddEditPowerPlantView.xaml.cs">
+      <DependentUpon>AddEditPowerPlantView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\PowerPlant\AddEditPowerPlantViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\PowerUnit\AddEditPowerUnitView.xaml.cs">
+      <DependentUpon>AddEditPowerUnitView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\PowerUnit\AddEditPowerUnitViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\ReducingStation\AddEditReducingStationView.xaml.cs">
+      <DependentUpon>AddEditReducingStationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\ReducingStation\AddEditReducingStationViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\Site\AddEditSiteView.xaml.cs">
+      <DependentUpon>AddEditSiteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\Site\AddEditSiteViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Objects\Valve\AddEditValveView.xaml.cs">
+      <DependentUpon>AddEditValveView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Objects\Valve\AddEditValveViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Pipelines\AddEditPipelineObjectViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Pipelines\AddEditPipelineView.xaml.cs">
+      <DependentUpon>AddEditPipelineView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Pipelines\AddEditPipelineViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Pipelines\Booster\AddEditPipelineBoosterView.xaml.cs">
+      <DependentUpon>AddEditPipelineBoosterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Pipelines\Booster\AddEditPipelineBoosterViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Pipelines\Branch\AddEditPipelineBranchView.xaml.cs">
+      <DependentUpon>AddEditPipelineBranchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Pipelines\Branch\AddEditPipelineBranchViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Pipelines\Bridge\AddEditPipelineBridgeView.xaml.cs">
+      <DependentUpon>AddEditPipelineBridgeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Pipelines\Bridge\AddEditPipelineBridgeViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Pipelines\Chamber\AddEditPipelineChamberView.xaml.cs">
+      <DependentUpon>AddEditPipelineChamberView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Pipelines\Chamber\AddEditPipelineChamberViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Pipelines\InletOutletCompShop\AddEditPipelineInletOutletCompShopView.xaml.cs">
+      <DependentUpon>AddEditPipelineInletOutletCompShopView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Pipelines\InletOutletCompShop\AddEditPipelineInletOutletCompShopViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Segments\AddEditSegmentViewModelBase.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Segments\Diameter\AddEditDiameterSegmentView.xaml.cs">
+      <DependentUpon>AddEditDiameterSegmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Segments\Diameter\AddEditDiameterSegmentViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Segments\Group\AddEditGroupSegmentView.xaml.cs">
+      <DependentUpon>AddEditGroupSegmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Segments\Group\AddEditGroupSegmentViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Segments\Pressure\AddEditPressureSegmentView.xaml.cs">
+      <DependentUpon>AddEditPressureSegmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Segments\Pressure\AddEditPressureSegmentViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Segments\Regions\AddEditRegionSegmentView.xaml.cs">
+      <DependentUpon>AddEditRegionSegmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Segments\Regions\AddEditRegionSegmentViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEdit\Segments\Site\AddEditSiteSegmentView.xaml.cs">
+      <DependentUpon>AddEditSiteSegmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\AddEdit\Segments\Site\AddEditSiteSegmentViewModel.cs" />
+    <Compile Include="Model\Dialogs\Auxi\CompUnitValveSwitchCalculatorViewModel.cs" />
+    <Compile Include="Model\Dialogs\Auxi\CompUnitValveSwitchCalculatorView.xaml.cs">
+      <DependentUpon>CompUnitValveSwitchCalculatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\Errors\IsCriticalToImageConverter.cs" />
+    <Compile Include="Model\Dialogs\Errors\ErrorsView.xaml.cs">
+      <DependentUpon>ErrorsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\Errors\ErrorsViewModel.cs" />
+    <Compile Include="Model\Dialogs\FindTreeNode\FindTreeNodeByIdView.xaml.cs">
+      <DependentUpon>FindTreeNodeByIdView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\FindTreeNode\FindTreeNodeByIdViewModel.cs" />
+    <Compile Include="Model\Dialogs\Series\SeriesView.xaml.cs">
+      <DependentUpon>SeriesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dialogs\Series\SeriesViewModel.cs" />
+    <Compile Include="Model\Dialogs\AddEditLinearObjectViewModel.cs" />
+    <Compile Include="Model\Pipelines\EditableFullTreeViewModel.cs" />
+    <Compile Include="Model\Pipelines\PipeLineManagerViewModel.cs" />
+    <Compile Include="Model\Pipelines\ValidatedEntityNode.cs" />
+    <Compile Include="Model\Pipelines\ValidatedTreeViewModelPipeline.cs" />
+    <Compile Include="Model\Schema\FloEditControlViewModel.cs" />
+    <Compile Include="Model\Tabs\ChangeLog\ChangeLogView.xaml.cs">
+      <DependentUpon>ChangeLogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tabs\ChangeLog\ChangeLogViewModel.cs" />
+    <Compile Include="Model\Tabs\CoolingRecomended\CompStationCoolingRecomendedView.xaml.cs">
+      <DependentUpon>CompStationCoolingRecomendedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tabs\CoolingRecomended\CompStationCoolingRecomendedViewModel.cs" />
+    <Compile Include="Model\Tabs\PropertyValues\PropertiesValuesView.xaml.cs">
+      <DependentUpon>PropertiesValuesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tabs\PropertyValues\PropertiesValuesViewModel.cs" />
+    <Compile Include="Model\Tabs\Segments\Diameter\DiameterSegmentView.xaml.cs">
+      <DependentUpon>DiameterSegmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tabs\Segments\Diameter\DiameterSegmentViewModel.cs" />
+    <Compile Include="Model\Tabs\Segments\Group\GroupSegmentView.xaml.cs">
+      <DependentUpon>GroupSegmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tabs\Segments\Group\GroupSegmentViewModel.cs" />
+    <Compile Include="Model\Tabs\Segments\Pressure\PressureSegmentView.xaml.cs">
+      <DependentUpon>PressureSegmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tabs\Segments\Pressure\PressureSegmentViewModel.cs" />
+    <Compile Include="Model\Tabs\Segments\Regions\RegionSegmentView.xaml.cs">
+      <DependentUpon>RegionSegmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tabs\Segments\Regions\RegionSegmentViewModel.cs" />
+    <Compile Include="Model\Tabs\Segments\SegmentViewer.xaml.cs">
+      <DependentUpon>SegmentViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tabs\Segments\SegmentWrapper.cs" />
+    <Compile Include="Model\Tabs\Segments\Site\SiteSegmentView.xaml.cs">
+      <DependentUpon>SiteSegmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tabs\Segments\Site\SiteSegmentViewModel.cs" />
+    <Compile Include="SystemVariables\SystemVariable.cs" />
+    <Compile Include="SystemVariables\SystemVariablesViewModel.cs" />
+    <Compile Include="Model\Tabs\DtoListViewModelBase.cs" />
+    <Compile Include="Model\Tabs\EditableDtoListViewModel.cs" />
+    <Compile Include="Model\ITabItem.cs" />
+    <Compile Include="Model\Tree\EditableFullTreeViewModel.cs" />
+    <Compile Include="Model\Tree\PointObjectsManagerViewModel.cs" />
+    <Compile Include="Model\Pipelines\PipeLineManagerView.xaml.cs">
+      <DependentUpon>PipeLineManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Pipelines\PipelineEditableFullTreeView.xaml.cs">
+      <DependentUpon>PipelineEditableFullTreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Schema\SchemaView.xaml.cs">
+      <DependentUpon>SchemaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Schema\SchemaViewModel.cs" />
+    <Compile Include="ObjectModelModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\AddEntityItem.cs" />
+    <Compile Include="Model\Dialogs\AddEditViewModelBase.cs" />
+    <Compile Include="Model\Dialogs\DialogHelper.cs" />
+    <Compile Include="Model\Tree\EditableFullTreeView.xaml.cs">
+      <DependentUpon>EditableFullTreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tree\TreeTabControlView.xaml.cs">
+      <DependentUpon>TreeTabControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ObjectModelEditorMainView.xaml.cs">
+      <DependentUpon>ObjectModelEditorMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ObjectModelEditorMainViewModel.cs" />
+    <Compile Include="Views\SystemVariablesView.xaml.cs">
+      <DependentUpon>SystemVariablesView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Flobus.VM\Flobus.VM.csproj">
+      <Project>{42282f89-f22d-4c58-ba2f-b3569da405c9}</Project>
+      <Name>Flobus.VM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\PortableDTO\PortableDTO.csproj">
+      <Project>{351F17B0-88EC-4255-B351-1D7E86E411A0}</Project>
+      <Name>PortableDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Utils\Utils.csproj">
+      <Project>{01B8B942-8E9B-468B-8873-2514DD40532C}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Application\Application.csproj">
+      <Project>{0C5CFB81-8CE0-4983-87A6-243475D7210E}</Project>
+      <Name>Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{F226804F-0541-43A2-851B-720639A148CF}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Controls\Controls.csproj">
+      <Project>{3D5B8BF8-0D6B-4386-BFCF-D55D81F20408}</Project>
+      <Name>Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataProviders\DataProviders.csproj">
+      <Project>{29E1A896-1450-4381-A720-5FCF7DDFB802}</Project>
+      <Name>DataProviders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Flobus\Flobus.csproj">
+      <Project>{9552AECE-3A17-4FCA-AAE9-A73CE35107B6}</Project>
+      <Name>Flobus</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DeviceConfig\AddBoilerTypeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceConfig\AddEmergencyValveTypeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceConfig\AddHeaterTypeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceConfig\AddPowerUnitView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceConfig\AddRegulatorTypeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceConfig\DeviceConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceConfig\Dialogs\ChangeLogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Model\Aggregators\AggregatorsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Comment\AddEditCommentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\Aggregator\AddEditAggregatorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\BoilerPlant\AddEditBoilerPlantView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\Boiler\AddEditBoilerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\CompShop\AddEditCompShopView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\CompStation\AddEditCompStationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\CompUnit\AddEditCompUnitView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\Consumer\AddEditConsumerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\CoolingStation\AddEditCoolingStationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\CoolingUnit\AddEditCoolingUnitView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\DistrStationOutlet\AddEditDistrStationOutletView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\DistrStation\AddEditDistrStationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\MeasLine\AddEditMeasLineView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\MeasPoint\AddEditMeasPointView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\MeasStation\AddEditMeasStationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <ApplicationDefinition Include="Model\Dialogs\AddEdit\Objects\OperConsumer\AddEditOperConsumersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Model\Dialogs\AddEdit\Objects\PowerPlant\AddEditPowerPlantView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\PowerUnit\AddEditPowerUnitView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\ReducingStation\AddEditReducingStationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\Site\AddEditSiteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Objects\Valve\AddEditValveView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Pipelines\AddEditPipelineView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Pipelines\Booster\AddEditPipelineBoosterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Pipelines\Branch\AddEditPipelineBranchView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Pipelines\Bridge\AddEditPipelineBridgeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Pipelines\Chamber\AddEditPipelineChamberView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Pipelines\InletOutletCompShop\AddEditPipelineInletOutletCompShopView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Segments\Diameter\AddEditDiameterSegmentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Segments\Group\AddEditGroupSegmentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Segments\Pressure\AddEditPressureSegmentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Segments\Regions\AddEditRegionSegmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Model\Dialogs\AddEdit\Segments\Site\AddEditSiteSegmentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\Auxi\CompUnitValveSwitchCalculatorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\Errors\ErrorsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\FindTreeNode\FindTreeNodeByIdView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Dialogs\Series\SeriesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Tabs\ChangeLog\ChangeLogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Tabs\CoolingRecomended\CompStationCoolingRecomendedView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Tabs\PropertyValues\PropertiesValuesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Tabs\Segments\Diameter\DiameterSegmentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Tabs\Segments\Group\GroupSegmentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Tabs\Segments\Pressure\PressureSegmentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Tabs\Segments\Regions\RegionSegmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Model\Tabs\Segments\SegmentViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Tabs\Segments\Site\SiteSegmentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Pipelines\PipeLineManagerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Pipelines\PipelineEditableFullTreeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Schema\SchemaView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Tree\EditableFullTreeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Tree\TreeTabControlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ObjectModelEditorMainView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SystemVariablesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Model\Pipelines\Images\3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Model\Pipelines\Images\2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Model\Pipelines\Images\1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Model\Pipelines\Images\4.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

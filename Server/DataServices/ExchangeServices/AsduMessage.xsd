@@ -1,0 +1,43 @@
+﻿<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="XmlMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DTMessage">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Header">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:date" name="SendDate"/>
+                      <xs:attribute type="xs:string" name="Receiver"/>
+                      <xs:attribute type="xs:string" name="Sender"/>
+                      <xs:attribute type="xs:string" name="GlobalId"/>
+                      <xs:attribute type="xs:byte" name="SenderSeqId"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Attributes">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Attribute" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:short" name="key" use="required"/>
+                            <xs:attribute type="xs:byte" name="instance" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

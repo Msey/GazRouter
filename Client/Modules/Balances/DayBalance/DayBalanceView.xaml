@@ -1,0 +1,206 @@
+﻿<UserControl x:Class="GazRouter.Balances.DayBalance.DayBalanceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:vm="clr-namespace:GazRouter.Balances.DayBalance"
+             xmlns:gasTransportSystems="clr-namespace:GazRouter.DTO.Dictionaries.GasTransportSystems;assembly=PortableDTO"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:inputStory="clr-namespace:GazRouter.Controls.InputStory;assembly=Controls"
+             xmlns:treeGroupType="clr-namespace:GazRouter.Balances.Common.TreeGroupType"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance vm:DayBalanceViewModel}"
+             x:Name="Root">
+
+
+    <telerik:RadBusyIndicator BusyContent="Идёт загрузка..."
+                              IsBusy="{Binding IsBusyLoading}">
+        <Grid Background="WhiteSmoke">
+
+            <Grid.Resources>
+                <converters:ValueDeltaToColorConverter x:Key="DeltaToColorConverter" />
+                <treeGroupType:SelectedTreeGroupTypeConverter x:Key="SelectedGroupTypeConverter" />
+                <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+
+            <telerik:RadToolBar>
+                <telerik:RadDatePicker SelectedDate="{Binding SelectedDate, Mode=TwoWay}" />
+
+                <telerik:RadComboBox ItemsSource="{Binding SystemList}"
+                                     Width="150"
+                                     SelectedItem="{Binding SelectedSystem, Mode=TwoWay}"
+                                     DisplayMemberPath="Name" />
+                
+                <telerik:RadButton Style="{StaticResource refreshButtonStyle}"
+                                   Command="{Binding RefreshCommand}"/>
+
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadComboBox ItemsSource="{Binding GroupList}"
+                                     MinWidth="120"
+                                     Margin="5, 0, 0, 0"
+                                     SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"
+                                     DisplayMemberPath="Name"
+                                     ClearSelectionButtonContent="Общий"
+                                     ClearSelectionButtonVisibility="Visible"
+                                     EmptyText="Общий" />
+
+                <telerik:RadRibbonDropDownButton SmallImage="/Common;component/Images/16x16/tree.png"
+                                                 DropDownButtonPosition="Right"
+                                                 ToolTipService.ToolTip="Тип группировки"
+                                                 Margin="5, 0, 0, 0">
+                    <telerik:RadRibbonDropDownButton.DropDownContent>
+                        <telerik:RadContextMenu BorderThickness="0">
+                            <telerik:RadMenuItem Header="Поступление/транзит">
+                                
+                                <telerik:RadMenuItem Header="Нет"
+                                                     IsChecked="{Binding SelectedMeasStationsTreeGroupType, Mode=TwoWay, Converter={StaticResource SelectedGroupTypeConverter}, ConverterParameter=1}"
+                                                     IsCheckable="True"/>
+                                
+                                <telerik:RadMenuItem Header="ЛПУ"
+                                                     IsChecked="{Binding SelectedMeasStationsTreeGroupType, Mode=TwoWay, Converter={StaticResource SelectedGroupTypeConverter}, ConverterParameter=2}"
+                                                     IsCheckable="True"/>
+                                
+                                <telerik:RadMenuItem Header="Смежное предприятие"
+                                                     IsChecked="{Binding SelectedMeasStationsTreeGroupType, Mode=TwoWay, Converter={StaticResource SelectedGroupTypeConverter}, ConverterParameter=3}"
+                                                     IsCheckable="True"/>
+                            </telerik:RadMenuItem>
+
+                            <telerik:RadMenuItem Header="Потребители">
+                                
+                                <telerik:RadMenuItem Header="Нет"
+                                                     IsChecked="{Binding SelectedDistrStationsTreeGroupType, Mode=TwoWay, Converter={StaticResource SelectedGroupTypeConverter}, ConverterParameter=1}"
+                                                     IsCheckable="True"/>
+                                
+                                <telerik:RadMenuItem Header="ЛПУ"
+                                                     IsChecked="{Binding SelectedDistrStationsTreeGroupType, Mode=TwoWay, Converter={StaticResource SelectedGroupTypeConverter}, ConverterParameter=2}"
+                                                     IsCheckable="True"/>
+                                
+                                <telerik:RadMenuItem Header="Регион"
+                                                     IsChecked="{Binding SelectedDistrStationsTreeGroupType, Mode=TwoWay, Converter={StaticResource SelectedGroupTypeConverter}, ConverterParameter=4}"
+                                                     IsCheckable="True"/>
+
+                                <telerik:RadMenuItem Header="Регион - ЛПУ"
+                                                     IsChecked="{Binding SelectedDistrStationsTreeGroupType, Mode=TwoWay, Converter={StaticResource SelectedGroupTypeConverter}, ConverterParameter=5}"
+                                                     IsCheckable="True"/>
+                            </telerik:RadMenuItem>
+
+                            <telerik:RadMenuItem Header="ПЭН">
+
+                                <telerik:RadMenuItem Header="Нет"
+                                                     IsChecked="{Binding SelectedOperConsumersTreeGroupType, Mode=TwoWay, Converter={StaticResource SelectedGroupTypeConverter}, ConverterParameter=1}"
+                                                     IsCheckable="True"/>
+
+                                <telerik:RadMenuItem Header="ЛПУ"
+                                                     IsChecked="{Binding SelectedOperConsumersTreeGroupType, Mode=TwoWay, Converter={StaticResource SelectedGroupTypeConverter}, ConverterParameter=2}"
+                                                     IsCheckable="True"/>
+
+                                <telerik:RadMenuItem Header="Регион"
+                                                     IsChecked="{Binding SelectedOperConsumersTreeGroupType, Mode=TwoWay, Converter={StaticResource SelectedGroupTypeConverter}, ConverterParameter=4}"
+                                                     IsCheckable="True"/>
+
+                                <telerik:RadMenuItem Header="Регион - ЛПУ"
+                                                     IsChecked="{Binding SelectedOperConsumersTreeGroupType, Mode=TwoWay, Converter={StaticResource SelectedGroupTypeConverter}, ConverterParameter=5}"
+                                                     IsCheckable="True"/>
+                            </telerik:RadMenuItem>
+                        </telerik:RadContextMenu>
+                    </telerik:RadRibbonDropDownButton.DropDownContent>
+                </telerik:RadRibbonDropDownButton>
+                
+
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadButton Command="{Binding ExpandTabCommand}"
+                                   Margin="5, 0, 0, 0">
+                    <Image Source="/Common;component/Images/16x16/tree_expand.png"
+                           Stretch="None"
+                           ToolTipService.ToolTip="Развернуть все"/>
+                </telerik:RadButton>
+                <telerik:RadButton Command="{Binding CollapseTabCommand}">
+                    <Image Source="/Common;component/Images/16x16/tree_collapse.png"
+                           Stretch="None"
+                           ToolTipService.ToolTip="Свернуть все"/>
+                </telerik:RadButton>
+                
+
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadToggleButton IsChecked="{Binding ShowSortOrder, Mode=TwoWay}">
+                    <Image Source="/Common;component/Images/16x16/sort_order.png"
+                           Stretch="None"
+                           ToolTipService.ToolTip="Показать/скрыть порядок сортировки" />
+                </telerik:RadToggleButton>
+                
+
+                <telerik:RadToolBarSeparator />
+                
+                <telerik:RadRibbonDropDownButton SmallImage="/Common;component/Images/16x16/wizard.png"
+                                                 DropDownButtonPosition="Right"
+                                                 Margin="5, 0, 0, 0">
+                    <telerik:RadRibbonDropDownButton.DropDownContent>
+                        <telerik:RadContextMenu BorderThickness="0">
+                            <telerik:RadMenuItem Header="Пересчитать баланс..." Command="{Binding CalcSerieCommand}"/>
+                            <telerik:RadMenuItem Header="Запас газа">
+                                <telerik:RadMenuItem Header="Ручной ввод..." Command="{Binding EditGasSupplyCommand}"/>
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem Header="Балансовые потери">
+                                <telerik:RadMenuItem Header="Ручной ввод..." Command="{Binding EditBalanceLossCommand}" />
+                                <telerik:RadMenuItem Header="Автоматический расчет" Command="{Binding CalcBalanceLossCommand}" />
+                            </telerik:RadMenuItem>
+                            
+                            
+                        </telerik:RadContextMenu>
+                    </telerik:RadRibbonDropDownButton.DropDownContent>
+                </telerik:RadRibbonDropDownButton>
+                
+
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadRibbonDropDownButton SmallImage="/Common;component/Images/16x16/object2.png"
+                                                 DropDownButtonPosition="Right"
+                                                 ToolTipService.ToolTip="Справочно"
+                                                 Margin="5, 0, 0, 0"
+                                                 Visibility="{Binding IsMiscTabSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <telerik:RadRibbonDropDownButton.DropDownContent>
+                        <telerik:RadContextMenu BorderThickness="0">
+                            <telerik:RadMenuItem Header="Добавить объект..." Command="{Binding AddMiscObjectCommand}"/>
+                            <telerik:RadMenuItem Header="Удалить объект" Command="{Binding DeleteMiscObjectCommand}"/>
+                        </telerik:RadContextMenu>
+                    </telerik:RadRibbonDropDownButton.DropDownContent>
+                </telerik:RadRibbonDropDownButton>
+                
+
+
+            </telerik:RadToolBar>
+
+
+            <telerik:RadTabControl Grid.Row="1"
+                                   Grid.Column="0"
+                                   ItemsSource="{Binding Tabs}"
+                                   SelectedItem="{Binding SelectedTab, Mode=TwoWay}"
+                                   SelectedIndex="{Binding Sele}">
+                <telerik:RadTabControl.ItemTemplate>
+                    <DataTemplate DataType="vm:TableViewModel">
+                        <TextBlock Text="{Binding Alias}" />
+                    </DataTemplate>
+                </telerik:RadTabControl.ItemTemplate>
+                <telerik:RadTabControl.ContentTemplate>
+                    <DataTemplate>
+                        <vm:TableView DataContext="{Binding }" />
+                    </DataTemplate>
+                </telerik:RadTabControl.ContentTemplate>
+            </telerik:RadTabControl>
+        </Grid>
+    </telerik:RadBusyIndicator>
+
+</UserControl>

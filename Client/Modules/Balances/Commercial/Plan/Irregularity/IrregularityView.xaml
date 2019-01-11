@@ -1,0 +1,260 @@
+﻿<UserControl x:Class="GazRouter.Balances.Commercial.Plan.Irregularity.IrregularityView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:behaviors="clr-namespace:GazRouter.Common.Ui.Behaviors;assembly=Common"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:irregularity="clr-namespace:GazRouter.Balances.Commercial.Plan.Irregularity"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance irregularity:IrregularityViewModel}">
+
+    <UserControl.Resources>
+        <converters:ValueDeltaToColorConverter x:Key="DeltaConverter" />
+        <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <telerik:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <!--Будет отображаться, когда ввод неравномерности невозможен-->
+        <Border Background="#25a0da"
+                VerticalAlignment="Top"
+                BorderThickness="0"
+                Visibility="{Binding IsIrregularityAllowed, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+
+            <TextBlock Text="Для выбранной строки плана ввод неравномерности недоступен."
+                       TextWrapping="Wrap"
+                       Width="200"
+                       Foreground="WhiteSmoke"
+                       Margin="11"
+                       HorizontalAlignment="Left" />
+        </Border>
+
+
+        <!--Отображается, когда можно вводить неравномерность-->
+        <Grid Visibility="{Binding IsIrregularityAllowed, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <telerik:RadToolBar Grid.Row="0"
+                                Height="30">
+
+                <CheckBox Content="Неравномерно"
+                          Margin="11, 0, 11, 0"
+                          IsChecked="{Binding IsIrregular, Mode=TwoWay}" />
+
+                <telerik:RadToolBarSeparator />
+
+
+                <Grid Visibility="{Binding IsIrregular, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      telerik:RadToolBar.ItemAlignment="Right">
+                    <Image Source="/Common;component/Images/16x16/ok2.png"
+                           Stretch="None"
+                           Visibility="{Binding IsDivided, Converter={StaticResource BooleanToVisibilityConverter}}"
+                           Margin="11, 0, 11, 0"
+                           HorizontalAlignment="Right" />
+
+                    <TextBlock
+                        Text="{Binding RestVolume, StringFormat='+#,0.###;-#,0.###;0'}"
+                        FontFamily="Segoe UI Light"
+                        FontSize="18"
+                        Margin="11, 0, 11, 0"
+                        Foreground="Crimson"
+                        HorizontalAlignment="Right"
+                        Visibility="{Binding IsDivided, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+                </Grid>
+            </telerik:RadToolBar>
+
+
+
+            <telerik:RadTabControl Grid.Row="1"
+                                   Visibility="{Binding IsIrregular, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <telerik:RadTabItem Header="По суткам">
+                    <telerik:RadGridView ItemsSource="{Binding DayVolumeList}"
+                                         SelectionMode="Extended"
+                                         AutoGenerateColumns="False"
+                                         RowIndicatorVisibility="Collapsed"
+                                         ShowGroupPanel="False"
+                                         CanUserFreezeColumns="False"
+                                         SelectionUnit="FullRow">
+
+                        <i:Interaction.Behaviors>
+                            <behaviors:RadGridMultiSelectBehavior SelectedItems="{Binding SelectedItemList, Mode=TwoWay}"/>
+                        </i:Interaction.Behaviors>
+
+                        <telerik:RadContextMenu.ContextMenu>
+                            <telerik:RadContextMenu>
+                                <telerik:RadMenuItem Header="Cуммарный объем..." 
+                                                     Command="{Binding SetTotalVolumeCommand}"/>
+                                <telerik:RadMenuItem Header="Объем за сутки..."
+                                                     Command="{Binding SetVolumeCommand}"/>
+                                <telerik:RadMenuItem Header="Очистить"
+                                                     Command="{Binding ClearVolumeCommand}"/>
+                            </telerik:RadContextMenu>
+                        </telerik:RadContextMenu.ContextMenu>
+
+                        <telerik:RadGridView.Columns>
+
+
+                            <telerik:GridViewDataColumn Header="День"
+                                                        DataMemberBinding="{Binding DayNum}"
+                                                        IsSortable="False"
+                                                        IsFilterable="False"
+                                                        Width="40"
+                                                        TextAlignment="Center"
+                                                        IsReadOnly="True"/>
+
+
+                            <telerik:GridViewDataColumn
+                                DataMemberBinding="{Binding Volume, StringFormat='#,0.###'}"
+                                IsSortable="False"
+                                IsFilterable="False"
+                                Width="70"
+                                TextAlignment="Center">
+                                <telerik:GridViewDataColumn.Header>
+                                    <StackPanel Margin="5">
+                                        <TextBlock Text="Объем."/>
+                                    </StackPanel>
+                                </telerik:GridViewDataColumn.Header>
+
+                                <telerik:GridViewDataColumn.CellEditTemplate>
+                                    <DataTemplate DataType="irregularity:DayVolume">
+                                        <TextBox Text="{Binding Volume, Mode=TwoWay}" />
+                                    </DataTemplate>
+                                </telerik:GridViewDataColumn.CellEditTemplate>
+                            </telerik:GridViewDataColumn>
+
+
+                            <telerik:GridViewDataColumn
+                                DataMemberBinding="{Binding AvgVolume, StringFormat='#,0.###'}"
+                                IsSortable="False"
+                                IsFilterable="False"
+                                Width="70"
+                                TextAlignment="Center"
+                                IsReadOnly="True">
+                                <telerik:GridViewDataColumn.Header>
+                                    <StackPanel Margin="5">
+                                        <TextBlock Text="Сред."/>
+                                    </StackPanel>
+                                </telerik:GridViewDataColumn.Header>
+                            </telerik:GridViewDataColumn>
+
+
+                            <telerik:GridViewDataColumn IsSortable="False"
+                                                        IsFilterable="False"
+                                                        Width="70"
+                                                        TextAlignment="Center"
+                                                        IsReadOnly="True">
+                                <telerik:GridViewDataColumn.Header>
+                                    <StackPanel Margin="5">
+                                        <TextBlock Text="Откл."/>
+                                    </StackPanel>
+                                </telerik:GridViewDataColumn.Header>
+                                <telerik:GridViewDataColumn.CellTemplate>
+                                    <DataTemplate DataType="irregularity:DayVolume">
+                                        <TextBlock
+                                            Text="{Binding Delta, StringFormat='+#,0.###;-#,0.###;0'}"
+                                            Foreground="{Binding Delta, Converter={StaticResource DeltaConverter}}"
+                                            FontSize="10" />
+                                    </DataTemplate>
+                                </telerik:GridViewDataColumn.CellTemplate>
+                            </telerik:GridViewDataColumn>
+
+
+                            <telerik:GridViewDataColumn IsSortable="False"
+                                                        IsFilterable="False"
+                                                        Width="170"
+                                                        TextAlignment="Left"
+                                                        IsReadOnly="True">
+                                <telerik:GridViewDataColumn.CellTemplate>
+                                    <DataTemplate DataType="irregularity:DayVolume">
+                                        <StackPanel>
+                                            <Rectangle Height="10"
+                                                       Width="{Binding VolumePercent}"
+                                                       Fill="#25a0da"
+                                                       StrokeThickness="0"
+                                                       HorizontalAlignment="Left" />
+                                            <Rectangle Height="2"
+                                                       Width="{Binding AvgPercent}"
+                                                       Fill="OrangeRed"
+                                                       StrokeThickness="0"
+                                                       HorizontalAlignment="Left" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </telerik:GridViewDataColumn.CellTemplate>
+                            </telerik:GridViewDataColumn>
+
+
+                        </telerik:RadGridView.Columns>
+                    </telerik:RadGridView>
+                </telerik:RadTabItem>
+                
+                
+                
+                
+
+                <telerik:RadTabItem Header="Периоды">
+                    <telerik:RadGridView ItemsSource="{Binding PeriodVolumeList}"
+                                         AutoGenerateColumns="False"
+                                         RowIndicatorVisibility="Collapsed"
+                                         ShowGroupPanel="False"
+                                         CanUserFreezeColumns="False">
+
+                        <telerik:RadGridView.Columns>
+                            <telerik:GridViewDataColumn Header="Начало"
+                                                        DataMemberBinding="{Binding StartDayNum}"
+                                                        IsSortable="False"
+                                                        IsFilterable="False"
+                                                        Width="60"
+                                                        TextAlignment="Center"
+                                                        IsReadOnly="True" />
+
+                            <telerik:GridViewDataColumn Header="Конец"
+                                                        DataMemberBinding="{Binding EndDayNum}"
+                                                        IsSortable="False"
+                                                        IsFilterable="False"
+                                                        Width="60"
+                                                        TextAlignment="Center"
+                                                        IsReadOnly="True" />
+
+                            <telerik:GridViewDataColumn
+                                DataMemberBinding="{Binding Volume, StringFormat='#,0.###'}"
+                                IsSortable="False"
+                                IsFilterable="False"
+                                Width="80"
+                                TextAlignment="Center"
+                                IsReadOnly="True">
+                                <telerik:GridViewDataColumn.Header>
+                                    <TextBlock Text="Объем за сутки"
+                                               TextWrapping="Wrap"
+                                               Margin="5" />
+                                </telerik:GridViewDataColumn.Header>
+                            </telerik:GridViewDataColumn>
+
+                            <telerik:GridViewDataColumn DataMemberBinding="{Binding Days}"
+                                                        IsSortable="False"
+                                                        IsFilterable="False"
+                                                        Width="80"
+                                                        TextAlignment="Center"
+                                                        IsReadOnly="True">
+                                <telerik:GridViewDataColumn.Header>
+                                    <TextBlock Text="Дней в периоде"
+                                               TextWrapping="Wrap" />
+                                </telerik:GridViewDataColumn.Header>
+                            </telerik:GridViewDataColumn>
+                        </telerik:RadGridView.Columns>
+
+                    </telerik:RadGridView>
+                </telerik:RadTabItem>
+            </telerik:RadTabControl>
+
+        </Grid>
+    </Grid>
+</UserControl>

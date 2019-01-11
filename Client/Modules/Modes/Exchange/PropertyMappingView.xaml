@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="GazRouter.Modes.Exchange.PropertyMappingView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:exchange="clr-namespace:GazRouter.Modes.Exchange"
+             mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400" d:DataContext="{d:DesignInstance exchange:PropertyMappingViewModel}">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+
+
+        
+            <telerik:RadToolBar Height="25">
+            <TextBlock Text="Период:" Style="{StaticResource StyleFieldCaptionTextBlock}" />
+
+            <telerik:RadComboBox ItemsSource="{Binding Path=ListPeriodTypes}" 
+                                         SelectedItem="{Binding Path=SelectedPeriodType, Mode=TwoWay}" 
+                                         DisplayMemberPath="Name" 
+                                         IsEditable="False" 
+                                         CanAutocompleteSelectItems="True" 
+                                         EmptyText="Выберите период..."  
+										  IsEnabled="{Binding Path=IsEnabledPropertyOtherBox}">
+            </telerik:RadComboBox>
+
+            <TextBlock Text="Назначение:"  Style="{StaticResource StyleFieldCaptionTextBlock}" />
+
+            <telerik:RadComboBox ItemsSource="{Binding Path=ListTargets}" 
+                                         SelectedItem="{Binding Path=SelectedTarget, Mode=TwoWay}" 
+                                         DisplayMemberPath="Name" 
+                                         IsEditable="False" 
+                                         CanAutocompleteSelectItems="True" 
+                                         EmptyText="Выберите назначение..."  
+										 IsEnabled="{Binding Path=IsEnabledPropertyOtherBox}">
+            </telerik:RadComboBox>
+        </telerik:RadToolBar>
+        <telerik:RadBusyIndicator Grid.Row="1" BusyContent="Идёт загрузка..." DisplayAfter="0" IsBusy="{Binding IsBusyLoading}">
+            <telerik:RadGridView SelectedItem="{Binding SelectedPropertyMappingBinding, Mode=TwoWay}"
+                                     ItemsSource="{Binding PropertyMappingList}" CanUserFreezeColumns="False" RowIndicatorVisibility="Collapsed"
+                                     ShowGroupPanel="False" AutoGenerateColumns="False" IsReadOnly="False">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Header="Свойство" DataMemberBinding="{Binding Path=Model.PropertyName}"
+                                                    IsFilterable="True" IsSortable="True" Width="Auto" IsReadOnly="True">
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn Header="Идентификатор во внешней системе" DataMemberBinding="{Binding Path=ExtKey, UpdateSourceTrigger=PropertyChanged}"
+                                                    IsFilterable="True" IsSortable="True"  Width="Auto"/>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </telerik:RadBusyIndicator>
+
+        
+    </Grid>
+</UserControl>

@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="GazRouter.Modes.Infopanels.InfopanelsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:behaviors="clr-namespace:GazRouter.Modes.Infopanels.Behaviors"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:tree="clr-namespace:GazRouter.Modes.Infopanels.Tree"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:regions="http://www.codeplex.com/prism"
+>
+    <i:Interaction.Behaviors>
+        <behaviors:InitRegionBehavior />
+    </i:Interaction.Behaviors>
+
+    <UserControl.Resources>
+        <telerik:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding Tree.TreeWidth, Mode=TwoWay}" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <tree:DashboardTreeView Grid.Column="0" 
+                                DataContext="{Binding Tree}"                                                                
+                                Visibility="{Binding TreeVisibility, 
+                                             Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+        <sdk:GridSplitter Grid.Column="1" Style="{StaticResource VerticalSplitterStyle}" 
+                          Visibility="{Binding Tree.TreeVisibility, 
+                          Converter={StaticResource BoolToVisibilityConverter}}" />
+
+        <telerik:RadBusyIndicator Grid.Column="1" Margin="5,0,0,0" 
+                                  IsBusy="{Binding IsBusyLoading}" 
+                                  Style="{StaticResource RadBusyIndicatorSmallStyle}">
+            <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                 regions:RegionManager.RegionName="{Binding DashboardRegionName}">
+            </ContentControl>
+        </telerik:RadBusyIndicator>
+    </Grid>
+</UserControl>
+
+
+

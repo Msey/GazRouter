@@ -1,0 +1,182 @@
+﻿<UserControl x:Class="GazRouter.Controls.Measurings.MeasuringBlock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:valueMessages="clr-namespace:GazRouter.DTO.SeriesData.ValueMessages;assembly=PortableDTO"
+             xmlns:measurings="clr-namespace:GazRouter.Controls.Measurings"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="300" 
+             d:DesignWidth="400">
+    
+    
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.Resources>
+            <telerik:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <telerik:InvertedBooleanToVisibilityConverter x:Key="InvertedBoolToVisibilityConverter"/>
+            <converters:ValueSourceTypeToColorConverter x:Key="SourceTypeToColorConverter"/>
+            <converters:ValueSourceTypeToNameConverter x:Key="SourceTypeToNameConverter"/>
+
+
+            
+            <DataTemplate x:Key="MsgTemplate" DataType="valueMessages:PropertyValueMessageDTO">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="/Common;component/Images/10x10/warning.png" 
+                           Visibility="{Binding IsError, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <Image Source="/Common;component/Images/10x10/warning_orange.png" 
+                           Visibility="{Binding IsError, Converter={StaticResource InvertedBoolToVisibilityConverter}}" />
+
+                    <StackPanel Grid.Column="1" 
+                                Margin="10, 0, 0, 20">
+                        <TextBlock Width="200" 
+                                   TextWrapping="Wrap" 
+                                   FontWeight="Bold"
+                                   Text="{Binding CreateDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"
+                                   FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                        <TextBlock Width="200" 
+                                   TextWrapping="Wrap" 
+                                   Text="{Binding MessageText}"
+                                   FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+
+                        <StackPanel Visibility="{Binding IsAcked, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0, 11, 0, 0">
+                            <TextBlock Text="Квитировал: " 
+                                       Foreground="DarkOrange"
+                                       FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                            <TextBlock Text="{Binding AckDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" 
+                                       Margin="11, 0, 0, 0" 
+                                       Foreground="DarkOrange"
+                                       FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                            <TextBlock Text="{Binding AckUserName}" 
+                                       Margin="11, 0, 0, 0" 
+                                       Foreground="DarkOrange"
+                                       FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                            <TextBlock Text="{Binding AckUserSite}" 
+                                       Margin="11, 0, 0, 0" 
+                                       Foreground="DarkOrange"
+                                       FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate DataType="measurings:DoubleMeasuring">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Background="{Binding WarningColor}"
+                            BorderThickness="0"
+                            MinWidth="8"
+                            MinHeight="16">
+
+                        <TextBlock Text="{Binding DisplayValue}"
+                                   FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                   FontWeight="{Binding FontWeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                   Foreground="{Binding WarningForeground}"
+                                   Margin="1">
+
+                            <telerik:RadContextMenu.ContextMenu>
+                                <telerik:RadContextMenu>
+                                    <telerik:RadMenuItem Header="Тренд..." Command="{Binding TrendCommand}" />
+                                </telerik:RadContextMenu>
+                            </telerik:RadContextMenu.ContextMenu>
+
+                            <ToolTipService.ToolTip>
+                                <StackPanel Margin="11">
+                                    <TextBlock Text="{Binding PropertyType.Name}"
+                                               HorizontalAlignment="Center"
+                                               FontWeight="Bold" />
+
+                                    <TextBlock Text="{Binding UnitsName, StringFormat='({0})'}"
+                                               FontStyle="Italic"
+                                               HorizontalAlignment="Center"
+                                               Margin="0, 3, 0, 0" />
+
+                                    <TextBlock
+                                        Text="{Binding SourceType, Converter={StaticResource SourceTypeToNameConverter}}"
+                                        HorizontalAlignment="Center"
+                                        Margin="0, 5, 0, 0" />
+
+                                    <Border BorderThickness="0"
+                                            Height="5"
+                                            HorizontalAlignment="Stretch"
+                                            Background="WhiteSmoke"
+                                            Margin="-15, 5, -15, 0" />
+
+
+                                    <ItemsControl ItemsSource="{Binding MessageList}"
+                                                  BorderThickness="0"
+                                                  Margin="0, 3, 0, 0"
+                                                  ItemTemplate="{StaticResource MsgTemplate}" />
+                                </StackPanel>
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+                    </Border>
+                    
+                    
+                    <TextBlock Text="{Binding DisplayDelta}"
+                               Grid.Row="1"
+                               Margin="0, 1, 0, 0"
+                               FontSize="10"
+                               Foreground="{Binding DeltaColor}"
+                               Visibility="{Binding ShowDelta, Converter={StaticResource BoolToVisibilityConverter}}" />
+                </Grid>
+
+            </DataTemplate>
+
+            <DataTemplate DataType="measurings:StringMeasuring">
+                <TextBlock Text="{Binding DisplayValue}"
+                               FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                               FontWeight="{Binding FontWeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="{Binding PropertyType.Name}" 
+                                       FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                       FontWeight="{Binding FontWeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                        </ToolTipService.ToolTip>   
+                    </TextBlock>
+            </DataTemplate>
+
+            <DataTemplate DataType="measurings:DateMeasuring">
+                <TextBlock Text="{Binding DisplayValue}"
+                               FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                               FontWeight="{Binding FontWeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="{Binding PropertyType.Name}" 
+                                       FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                       FontWeight="{Binding FontWeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+            </DataTemplate>
+
+            <DataTemplate DataType="measurings:StateMeasuring">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle StrokeThickness="0"
+                                   Fill="{Binding StateColor}"
+                                   Width="10"
+                                   Height="10"
+                                   VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding DisplayValue}"
+                                   Margin="5, 0, 0, 0"
+                                   VerticalAlignment="Center"
+                                   FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                   FontWeight="{Binding FontWeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" />
+                </StackPanel>
+            </DataTemplate>
+
+        </Grid.Resources>
+        
+        
+        <ContentControl Content="{Binding }" />
+
+    </Grid>
+</UserControl>
+

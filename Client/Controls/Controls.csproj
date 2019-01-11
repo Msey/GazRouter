@@ -1,0 +1,667 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3D5B8BF8-0D6B-4386-BFCF-D55D81F20408}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GazRouter.Controls</RootNamespace>
+    <AssemblyName>Controls</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Expression.Interactions, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common.Silverlight, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EnterpriseLibrary.Common.5.0.505.0\lib\SL40\Microsoft.Practices.EnterpriseLibrary.Common.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Silverlight, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\SL40\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Silverlight, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.Interception.2.1.505.0\lib\SL40\Microsoft.Practices.Unity.Interception.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Silverlight, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.2.1.505.2\lib\SL30\Microsoft.Practices.Unity.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Silverlight, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.2.3\lib\sl5\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
+    <Reference Include="System.IO, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Threading.Tasks, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\..\Library\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit">
+      <HintPath>..\..\Library\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL5\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Controls, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Chart, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.Chart.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Chart.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Data, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.Data.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.DataVisualization, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.DataVisualization.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.DataVisualization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Diagrams.Extensions">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.Diagrams.Extensions.for.Silverlight.2016.2.503\lib\sl5\Telerik.Windows.Controls.Diagrams.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.GridView, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.GridView.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.GridView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.Input.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Input.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.Navigation.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Navigation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RibbonView, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.RibbonView.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.RibbonView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Data.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Documents.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Documents.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Core, Version=2017.2.607.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Documents.Core.for.Silverlight.2017.2.607\lib\sl5\Telerik.Windows.Documents.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.FormatProviders.Pdf, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Documents.FormatProviders.Pdf.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Documents.FormatProviders.Pdf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip, Version=2017.2.607.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Zip.for.Silverlight.2017.2.607\lib\sl5\Telerik.Windows.Zip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attachment\AddEditAttachmentViewModel.cs" />
+    <Compile Include="Attachment\AddEditAttachmentView.xaml.cs">
+      <DependentUpon>AddEditAttachmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Attachment\AttachmentItemView.xaml.cs">
+      <DependentUpon>AttachmentItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\ActionConverter.cs" />
+    <Compile Include="Converters\BoolToWarnConverter.cs" />
+    <Compile Include="Converters\BoolToOkBadImageConverter.cs" />
+    <Compile Include="Converters\InputStateToColorConverter.cs" />
+    <Compile Include="Converters\InputStateToNameConverter.cs" />
+    <Compile Include="Converters\IntegerToVisibilityConverter.cs" />
+    <Compile Include="Converters\PhysicalTypeToNameConverter.cs" />
+    <Compile Include="Converters\CombHeatToDoubleConverter.cs" />
+    <Compile Include="Converters\ValueSourceTypeToNameConverter.cs" />
+    <Compile Include="Converters\PropertyTypeToUnitNameConverter.cs" />
+    <Compile Include="Converters\PropertyTypeToNameConverter.cs" />
+    <Compile Include="Converters\TimeSpanHourConverter.cs" />
+    <Compile Include="Converters\ValueDeltaToColorConverter.cs" />
+    <Compile Include="Converters\BoolToFontWeightConverter.cs" />
+    <Compile Include="Converters\BoolToColorConverter.cs" />
+    <Compile Include="Converters\CompUnitStateToNameConverter.cs" />
+    <Compile Include="Converters\CompUnitStateToColorConverter.cs" />
+    <Compile Include="Converters\CompUnitRepairTypeToNameConverter.cs" />
+    <Compile Include="Converters\CompUnitFailureCauseToNameConverter.cs" />
+    <Compile Include="Converters\CompUnitFailureFeatureToNameConverter.cs" />
+    <Compile Include="Converters\CompUnitStopTypeToNameConverter.cs" />
+    <Compile Include="Converters\CompUnitTypeToNameConverter.cs" />
+    <Compile Include="Converters\EntityTypeToImageSourceConverter.cs" />
+    <Compile Include="Converters\DataLengthConverter.cs" />
+    <Compile Include="Converters\PressureToDoubleConverter.cs" />
+    <Compile Include="Converters\TemperatureToDoubleConverter.cs" />
+    <Compile Include="Converters\TimeSpanConverter.cs" />
+    <Compile Include="Converters\ValueMessageTypeToColorConverter.cs" />
+    <Compile Include="Converters\PeriodTypeToNameConverter.cs" />
+    <Compile Include="Converters\TargetToColorConverter.cs" />
+    <Compile Include="Converters\TargetToNameConverter.cs" />
+    <Compile Include="Converters\ErrorCountToVisibilityConverter.cs" />
+    <Compile Include="Converters\ValueSourceTypeToColorConverter.cs" />
+    <Compile Include="Converters\ValveTypeToNameConverter.cs" />
+    <Compile Include="Converters\ValveSwitchTypeToNameConverter.cs" />
+    <Compile Include="Converters\ValveStateToColorConverter.cs" />
+    <Compile Include="Converters\PipelineTypeToNameConverter.cs" />
+    <Compile Include="Converters\PressureConverter.cs" />
+    <Compile Include="Converters\TemperatureConverter.cs" />
+    <Compile Include="Converters\TwoHoursAndDayTimeConverter.cs" />
+    <Compile Include="Converters\EntityTypeToNameConverter.cs" />
+    <Compile Include="Converters\DailyDateTimeConverter.cs" />
+    <Compile Include="Converters\ValveStateToNameConverter.cs" />
+    <Compile Include="Dialogs\CompUnitEfficiency\Charts\ChartHelper.cs" />
+    <Compile Include="Dialogs\CompUnitEfficiency\Charts\ChartLine.cs" />
+    <Compile Include="Dialogs\CompUnitEfficiency\Dialog\CompUnitEfficiencyView.xaml.cs">
+      <DependentUpon>CompUnitEfficiencyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\CompUnitEfficiency\Dialog\CompUnitEfficiencyViewModel.cs" />
+    <Compile Include="Dialogs\CompUnitEfficiency\Model\CompUnitModel.cs" />
+    <Compile Include="Dialogs\ConfirmSave\ConfirmSaveDialogView.xaml.cs">
+      <DependentUpon>ConfirmSaveDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ConfirmSave\ConfirmSaveDialogViewModel.cs" />
+    <Compile Include="Dialogs\DatePicker\DatePickerDialogView.xaml.cs">
+      <DependentUpon>DatePickerDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DatePicker\DatePickerDialogViewModel.cs" />
+    <Compile Include="Dialogs\DictionaryPicker\DictionaryPickerDialogView.xaml.cs">
+      <DependentUpon>DictionaryPickerDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DictionaryPicker\DictionaryPickerDialogViewModel.cs" />
+    <Compile Include="Dialogs\EntityPicker\EntityPickerDialogView.xaml.cs">
+      <DependentUpon>EntityPickerDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\EntityPicker\EntityPickerDialogViewModel.cs" />
+    <Compile Include="Dialogs\EntityPicker\EntityPickerView.xaml.cs">
+      <DependentUpon>EntityPickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ObjectDetails\Attachments\AttachmentsView.xaml.cs">
+      <DependentUpon>AttachmentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ObjectDetails\Attachments\AttachmentsViewModel.cs" />
+    <Compile Include="Dialogs\ObjectDetails\Bindings\BindingsView.xaml.cs">
+      <DependentUpon>BindingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ObjectDetails\Bindings\BindingsViewModel.cs" />
+    <Compile Include="Dialogs\ObjectDetails\Calculations\CalculationsView.xaml.cs">
+      <DependentUpon>CalculationsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ObjectDetails\Calculations\CalculationsViewModel.cs" />
+    <Compile Include="Dialogs\ObjectDetails\ChemicalTests\ChemicalTestsView.xaml.cs">
+      <DependentUpon>ChemicalTestsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ObjectDetails\ChemicalTests\ChemicalTestsViewModel.cs" />
+    <Compile Include="Dialogs\ObjectDetails\Measurings\DistrStation\DistrStationMeasuringsView.xaml.cs">
+      <DependentUpon>DistrStationMeasuringsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ObjectDetails\Measurings\DistrStation\DistrStationMeasuringsViewModel.cs" />
+    <Compile Include="Dialogs\ObjectDetails\Measurings\DistrStation\GridItem.cs" />
+    <Compile Include="Dialogs\ObjectDetails\Measurings\Valve\ValveStatesView.xaml.cs">
+      <DependentUpon>ValveStatesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ObjectDetails\Measurings\Valve\ValveStatesViewModel.cs" />
+    <Compile Include="Dialogs\ObjectDetails\ObjectDetailsView.xaml.cs">
+      <DependentUpon>ObjectDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ObjectDetails\ObjectDetailsViewModel.cs" />
+    <Compile Include="Dialogs\ObjectDetails\Events\EventsViewModel.cs" />
+    <Compile Include="Dialogs\ObjectDetails\Events\EventsView.xaml.cs">
+      <DependentUpon>EventsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ObjectDetails\Measurings\MeasuringsView.xaml.cs">
+      <DependentUpon>MeasuringsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ObjectDetails\Measurings\MeasuringsViewModel.cs" />
+    <Compile Include="Dialogs\ObjectDetails\ReferencedData\ReferencedDataView.xaml.cs">
+      <DependentUpon>ReferencedDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ObjectDetails\Urls\AddEditUrlView.xaml.cs">
+      <DependentUpon>AddEditUrlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ObjectDetails\Urls\AddEditUrlViewModel.cs" />
+    <Compile Include="Dialogs\ObjectDetails\Urls\UrlsView.xaml.cs">
+      <DependentUpon>UrlsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ObjectDetails\Urls\UrlsViewModel.cs" />
+    <Compile Include="Dialogs\PeriodPickerEx\PeriodPickerDropView.xaml.cs">
+      <DependentUpon>PeriodPickerDropView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PeriodPickerEx\PeriodPickerDropViewModel.cs" />
+    <Compile Include="Dialogs\PeriodPickerEx\PeriodPickerEx.xaml.cs">
+      <DependentUpon>PeriodPickerEx.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PipingVolumeCalculator\PipeSection.cs" />
+    <Compile Include="Dialogs\PipingVolumeCalculator\PipingVolumeCalculatorView.xaml.cs">
+      <DependentUpon>PipingVolumeCalculatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PipingVolumeCalculator\PipingVolumeCalculatorViewModel.cs" />
+    <Compile Include="EntityName\EntityNameBlock.xaml.cs">
+      <DependentUpon>EntityNameBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EntityPickerSearchTreeVisibility.cs" />
+    <Compile Include="InputStory\DataStatus.cs" />
+    <Compile Include="InputStory\DataStatusToColorConverter.cs" />
+    <Compile Include="InputStory\InputStoryView.xaml.cs">
+      <DependentUpon>InputStoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InputStory\InputStoryViewModel.cs" />
+    <Compile Include="InputStory\ItemBase.cs" />
+    <Compile Include="InputStory\NeighborItem.cs" />
+    <Compile Include="InputStory\SiteItem.cs" />
+    <Compile Include="InputStory\StoryErrorsPresenter.xaml.cs">
+      <DependentUpon>StoryErrorsPresenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Measurings\Measuring[T].cs" />
+    <Compile Include="Measurings\StateMeasuring.cs" />
+    <Compile Include="Measurings\DateMeasuring.cs" />
+    <Compile Include="Measurings\StringMeasuring.cs" />
+    <Compile Include="Measurings\DoubleMeasuring.cs" />
+    <Compile Include="Measurings\MeasuringBlock.xaml.cs">
+      <DependentUpon>MeasuringBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Measurings\MeasuringBase.cs" />
+    <Compile Include="SmartTextBlock.cs" />
+    <Compile Include="DatePickerQuarter.xaml.cs">
+      <DependentUpon>DatePickerQuarter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DateTimePickerTwoHours.xaml.cs">
+      <DependentUpon>DateTimePickerTwoHours.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DialogHelper.cs" />
+    <Compile Include="Dialogs\EntityPropertySelectorView.xaml.cs">
+      <DependentUpon>EntityPropertySelectorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\EntityPropertySelectorViewModel.cs" />
+    <Compile Include="Dialogs\EntityTypePickerView.xaml.cs">
+      <DependentUpon>EntityTypePickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ErrorWindow.xaml.cs">
+      <DependentUpon>ErrorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PickerDialogViewModelBase.cs" />
+    <Compile Include="Dialogs\SaveType.cs" />
+    <Compile Include="Dialogs\SelectEntityProperty.xaml.cs">
+      <DependentUpon>SelectEntityProperty.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SelectEntityPropertyViewModel.cs" />
+    <Compile Include="EntityPicker.xaml.cs">
+      <DependentUpon>EntityPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FilterControl.xaml.cs">
+      <DependentUpon>FilterControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DictionaryPicker.xaml.cs">
+      <DependentUpon>DictionaryPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HighlightingTextBlock.cs" />
+    <Compile Include="PeriodPicker.xaml.cs">
+      <DependentUpon>PeriodPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DateTimePicker.xaml.cs">
+      <DependentUpon>DateTimePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RangeEnabledObservableCollection.cs" />
+    <Compile Include="TreeEntityPickerView.xaml.cs">
+      <DependentUpon>TreeEntityPickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeEntityPickerViewModel.cs" />
+    <Compile Include="Tree\TreeViewModelCompUnits.cs" />
+    <Compile Include="Tree\TreeViewModelTree.cs" />
+    <Compile Include="Tree\TreeViewModelPipeline.cs" />
+    <Compile Include="Tree\PipelineFolderNode.cs" />
+    <Compile Include="Tree\EntityNode.cs" />
+    <Compile Include="Tree\FolderNode.cs" />
+    <Compile Include="Tree\NodeBase.cs" />
+    <Compile Include="Tree\TreeData.cs" />
+    <Compile Include="Tree\TreeViewModelBase.cs" />
+    <Compile Include="Tree\TreeViewModelPointObjects.cs" />
+    <Compile Include="Trends\PropertyValue.cs" />
+    <Compile Include="Trends\TrendsViewModel.cs" />
+    <Compile Include="Trends\TrendsView.xaml.cs">
+      <DependentUpon>TrendsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Trends\Trend.cs" />
+    <Compile Include="Trends\TrendsHelper.cs" />
+    <Compile Include="Trends\TrendsWindow.xaml.cs">
+      <DependentUpon>TrendsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserStamp\UserStamp.xaml.cs">
+      <DependentUpon>UserStamp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Volume\VolumeBehavior.cs" />
+    <Compile Include="Volume\VolumeValue.xaml.cs">
+      <DependentUpon>VolumeValue.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Utils\Utils.csproj">
+      <Project>{01B8B942-8E9B-468B-8873-2514DD40532C}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application\Application.csproj">
+      <Project>{0C5CFB81-8CE0-4983-87A6-243475D7210E}</Project>
+      <Name>Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{F226804F-0541-43A2-851B-720639A148CF}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shared\PortableDTO\PortableDTO.csproj">
+      <Project>{351F17B0-88EC-4255-B351-1D7E86E411A0}</Project>
+      <Name>PortableDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProviders\DataProviders.csproj">
+      <Project>{29E1A896-1450-4381-A720-5FCF7DDFB802}</Project>
+      <Name>DataProviders</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Attachment\AddEditAttachmentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Attachment\AttachmentItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DatePickerQuarter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DateTimePickerTwoHours.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\CompUnitEfficiency\Dialog\CompUnitEfficiencyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ConfirmSave\ConfirmSaveDialogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DatePicker\DatePickerDialogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DictionaryPicker\DictionaryPickerDialogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\EntityPicker\EntityPickerDialogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\EntityPicker\EntityPickerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\EntityPropertySelectorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\EntityTypePickerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ErrorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ObjectDetails\Attachments\AttachmentsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ObjectDetails\Bindings\BindingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ObjectDetails\Calculations\CalculationsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ObjectDetails\ChemicalTests\ChemicalTestsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ObjectDetails\Measurings\DistrStation\DistrStationMeasuringsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ObjectDetails\Measurings\Valve\ValveStatesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ObjectDetails\ObjectDetailsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ObjectDetails\Events\EventsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ObjectDetails\Measurings\MeasuringsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ObjectDetails\ReferencedData\ReferencedDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ObjectDetails\Urls\AddEditUrlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ObjectDetails\Urls\UrlsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\PeriodPickerEx\PeriodPickerDropView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\PeriodPickerEx\PeriodPickerEx.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\PipingVolumeCalculator\PipingVolumeCalculatorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\SelectEntityProperty.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityName\EntityNameBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EntityPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FilterControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DictionaryPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="InputStory\InputStoryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="InputStory\StoryErrorsPresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Measurings\MeasuringBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PeriodPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DateTimePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeEntityPickerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Trends\TrendsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Trends\TrendsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserStamp\UserStamp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Volume\VolumeValue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="gazRouter.png" />
+    <Resource Include="gazRouterT.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

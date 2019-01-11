@@ -1,0 +1,487 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9552AECE-3A17-4FCA-AAE9-A73CE35107B6}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GazRouter.Flobus</RootNamespace>
+    <AssemblyName>Flobus</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JetBrains.Annotations.PCL328">
+      <HintPath>..\..\packages\JetBrains.Annotations.8.0.5.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\JetBrains.Annotations.PCL328.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Expression.Interactions, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Silverlight, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.2.3\lib\sl5\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
+    <Reference Include="System.IO, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Threading.Tasks, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\..\Library\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Navigation, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Toolkit">
+      <HintPath>..\..\Library\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL5\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Controls, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Data, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.Data.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Diagrams, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.Diagrams.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Diagrams.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Diagrams.Extensions, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.Diagrams.Extensions.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Diagrams.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Docking, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.Docking.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Docking.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.GridView, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.GridView.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.GridView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.ImageEditor, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.ImageEditor.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.ImageEditor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.Input.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Input.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.Navigation.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Navigation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RibbonView, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.RibbonView.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.RibbonView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RichTextBoxUI, Version=2016.3.914.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Controls.RichTextBoxUI.for.Silverlight.2016.3.914\lib\sl5\Telerik.Windows.Controls.RichTextBoxUI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Data.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Diagrams.Core, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Diagrams.Core.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Diagrams.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Documents.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Documents.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Core, Version=2017.2.607.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Documents.Core.for.Silverlight.2017.2.607\lib\sl5\Telerik.Windows.Documents.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Windows8, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Themes.Windows8.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Themes.Windows8.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip, Version=2017.2.607.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Windows.Zip.for.Silverlight.2017.2.607\lib\sl5\Telerik.Windows.Zip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\SchemaCommands.cs" />
+    <Compile Include="Dialogs\AddCommentViewModel.cs" />
+    <Compile Include="Dialogs\AddCommentWindow.xaml.cs">
+      <DependentUpon>AddCommentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\AddSchemaViewModel.cs" />
+    <Compile Include="Dialogs\CheckValveEditDialog.xaml.cs">
+      <DependentUpon>CheckValveEditDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\CheckValveEditDialogViewModel.cs" />
+    <Compile Include="Dialogs\CompShopAddDialogViewModel.cs" />
+    <Compile Include="Dialogs\PipelineAddDialogViewModel.cs" />
+    <Compile Include="Dialogs\PolyLineStyleEditDialog.xaml.cs">
+      <DependentUpon>PolyLineStyleEditDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PolyLineStyleEditDialogViewModel.cs" />
+    <Compile Include="Dialogs\SchemeVersionDeletedEventArgs.cs" />
+    <Compile Include="Dialogs\SwitchingValveStateView.xaml.cs">
+      <DependentUpon>SwitchingValveStateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SwitchingValveStateViewModel.cs" />
+    <Compile Include="Dialogs\TextEditDialog.xaml.cs">
+      <DependentUpon>TextEditDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\TextEditDialogViewModel.cs" />
+    <Compile Include="EventArgs\PositionChangedEventArgs.cs" />
+    <Compile Include="Extensions\CommonExtensions.cs" />
+    <Compile Include="FloScheme\IPipelineWidget.cs" />
+    <Compile Include="FloScheme\ISchemaItem.cs" />
+    <Compile Include="FloScheme\ISupportManipulation.cs" />
+    <Compile Include="FloScheme\ISupportMouseOver.cs" />
+    <Compile Include="FloScheme\Misc\AnnotationWidget.cs" />
+    <Compile Include="FloScheme\WidgetZOrder.cs" />
+    <Compile Include="FloScheme\IWidget.cs" />
+    <Compile Include="FloScheme\SchemeLayers.cs" />
+    <Compile Include="FloScheme\FloColors.cs" />
+    <Compile Include="FloScheme\ISupportContextMenu.cs" />
+    <Compile Include="Dialogs\AddSchemaDialog.xaml.cs">
+      <DependentUpon>AddSchemaDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\CompShopAddDialog.xaml.cs">
+      <DependentUpon>CompShopAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\LoadSchemaDialog.xaml.cs">
+      <DependentUpon>LoadSchemaDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PipelineAddDialog.xaml.cs">
+      <DependentUpon>PipelineAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PipelinePointManageDialog.xaml.cs">
+      <DependentUpon>PipelinePointManageDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PipelineStyleEditDialog.xaml.cs">
+      <DependentUpon>PipelineStyleEditDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GoToTrendCommandParameter.cs" />
+    <Compile Include="Interfaces\ICheckValve.cs" />
+    <Compile Include="Interfaces\ICompressorShop.cs" />
+    <Compile Include="Interfaces\IPipeline.cs" />
+    <Compile Include="Interfaces\IPipelineElement.cs" />
+    <Compile Include="Interfaces\IPolyLine.cs" />
+    <Compile Include="Interfaces\Segment.cs" />
+    <Compile Include="Interfaces\PipelineMarkup.cs" />
+    <Compile Include="Interfaces\ISchemaSource.cs" />
+    <Compile Include="Interfaces\ITextBlock.cs" />
+    <Compile Include="Misc\RadContextMenuHelper.cs" />
+    <Compile Include="Misc\Scale2PercentConverter.cs" />
+    <Compile Include="Model\CompressorUnit.cs" />
+    <Compile Include="Model\EntityBase[TDto,TId].cs" />
+    <Compile Include="Model\EntityBase[TDto].cs" />
+    <Compile Include="Model\IGraph.cs" />
+    <Compile Include="Model\IPipelineEditPoint.cs" />
+    <Compile Include="Model\Pipeline.cs" />
+    <Compile Include="Model\IntermediatePipelinePoint.cs" />
+    <Compile Include="Model\SchemeObject.cs" />
+    <Compile Include="Model\SchemeVersion.cs" />
+    <Compile Include="PanZoom\DiagramTransformationInfo.cs" />
+    <Compile Include="Primitives\AdornerBase.cs" />
+    <Compile Include="Primitives\BackgroundGrid.cs" />
+    <Compile Include="Primitives\DiagramTransformationService.cs" />
+    <Compile Include="Primitives\ItemInformationAdorner.cs" />
+    <Compile Include="Primitives\ManipulationAdorner.cs" />
+    <Compile Include="Primitives\PipelineManipulationAdorner.cs" />
+    <Compile Include="Primitives\SchemaSurface.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Dialogs\LoadSchemeViewModel.cs" />
+    <Compile Include="Schema.cs" />
+    <Compile Include="Schema.Events.cs" />
+    <Compile Include="Schema.IGrapInternalImpl.cs" />
+    <Compile Include="Schema.PublicProperties.cs" />
+    <Compile Include="Schema.Transformations.cs" />
+    <Compile Include="Services\AdornerService.cs" />
+    <Compile Include="Services\DraggingService.cs" />
+    <Compile Include="Services\HitTestService.cs" />
+    <Compile Include="Services\ManipulationPointService.cs" />
+    <Compile Include="Services\ResizingService.cs" />
+    <Compile Include="Services\SchemaServiceBase.cs" />
+    <Compile Include="Services\SelectionService.cs" />
+    <Compile Include="Services\ServiceLocator.cs" />
+    <Compile Include="Services\SnappingService.cs" />
+    <Compile Include="Services\ToolService.cs" />
+    <Compile Include="Services\VirtualizationService.cs" />
+    <Compile Include="Support\ColorConverter.cs" />
+    <Compile Include="Thumbnail\SchemaNaviagationPane.cs" />
+    <Compile Include="Thumbnail\SchemaThumbnail.cs" />
+    <Compile Include="Tools\DraggingTool.cs" />
+    <Compile Include="Tools\IKeyboardListener.cs" />
+    <Compile Include="Tools\IMouseListener.cs" />
+    <Compile Include="Tools\ITool.cs" />
+    <Compile Include="Tools\ManipulationTool.cs" />
+    <Compile Include="Tools\PipelineManipulationTool.cs" />
+    <Compile Include="Tools\PanningTool.cs" />
+    <Compile Include="Tools\PointerTool.cs" />
+    <Compile Include="Tools\PrimaryMouseTool.cs" />
+    <Compile Include="Tools\PrimaryMouseToolBase.cs" />
+    <Compile Include="Tools\RectangleSelectionTool.cs" />
+    <Compile Include="Tools\ToolBase.cs" />
+    <Compile Include="UiEntities\FloModel\ISearchable.cs" />
+    <Compile Include="UiEntities\FloModel\Measurings\CompressorUnitMeasuring.cs" />
+    <Compile Include="UiEntities\FloModel\Measurings\DistributingStationMeasuring.cs" />
+    <Compile Include="UiEntities\FloModel\Measurings\MeasuringLineMeasuring.cs" />
+    <Compile Include="UiEntities\FloModel\Measurings\PipelineSectionMeasuring.cs" />
+    <Compile Include="UiEntities\FloModel\Measurings\ReducingStationMeasuring.cs" />
+    <Compile Include="UiEntities\FloModel\Measurings\ValveMeasuring.cs" />
+    <Compile Include="UiEntities\FloModel\PipelineDiameterSegment.cs" />
+    <Compile Include="UiEntities\FloModel\PipelineSegment.cs" />
+    <Compile Include="UiEntities\FloModel\PipelineSegmentChangedEventArgs.cs" />
+    <Compile Include="UiEntities\FloModel\SegmentChangedReason.cs" />
+    <Compile Include="UiEntities\Support2D.cs" />
+    <Compile Include="Utilites\BitmapUtils.cs" />
+    <Compile Include="Utilites\DistanceToPointComparer.cs" />
+    <Compile Include="Utilites\GeometryConverter.cs" />
+    <Compile Include="Utilites\GeometryExtensions.cs" />
+    <Compile Include="Utilites\GeometryParser.cs" />
+    <Compile Include="Utilites\InternalGeometryParser.cs" />
+    <Compile Include="Utilites\ItemVisibilityToVisibilityConverter.cs" />
+    <Compile Include="Utilites\PipelinePointExtensions.cs" />
+    <Compile Include="Utilites\PointExtensions.cs" />
+    <Compile Include="Utilites\PolylineSpecification.cs" />
+    <Compile Include="VisualStates.cs" />
+    <Compile Include="Visuals\CheckValveWidget.cs" />
+    <Compile Include="Visuals\CompressorShopWidget.cs" />
+    <Compile Include="Visuals\DistributingStationWidget.cs" />
+    <Compile Include="Visuals\GeometrySegment.cs" />
+    <Compile Include="Visuals\IPipelinePointManager.cs" />
+    <Compile Include="Visuals\MeasuringLineWidget.cs" />
+    <Compile Include="Visuals\PipelineConnectionHintWidget.cs" />
+    <Compile Include="Visuals\PipelineEditPointControl.cs" />
+    <Compile Include="Visuals\PipelineElementWidget.cs" />
+    <Compile Include="Visuals\PipelineOmElementWidgetBase.cs" />
+    <Compile Include="Visuals\PipelinePointsManager.cs" />
+    <Compile Include="Visuals\PipelineWidget.cs" />
+    <Compile Include="Visuals\PlugWidget.cs" />
+    <Compile Include="Visuals\PolyLineWidget.cs" />
+    <Compile Include="Visuals\ReducingStationWidget.cs" />
+    <Compile Include="Visuals\ShapeWidgetBase.cs" />
+    <Compile Include="Visuals\TextWidget.cs" />
+    <Compile Include="Visuals\ValveWidget.cs" />
+    <Compile Include="Visuals\ValveWidgetState.cs" />
+    <Compile Include="Visuals\WidgetBase.cs" />
+    <Compile Include="ZoomType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\PortableDTO\PortableDTO.csproj">
+      <Project>{351F17B0-88EC-4255-B351-1D7E86E411A0}</Project>
+      <Name>PortableDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shared\Utils\Utils.csproj">
+      <Project>{01B8B942-8E9B-468B-8873-2514DD40532C}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application\Application.csproj">
+      <Project>{0C5CFB81-8CE0-4983-87A6-243475D7210E}</Project>
+      <Name>Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{F226804F-0541-43A2-851B-720639A148CF}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls\Controls.csproj">
+      <Project>{3D5B8BF8-0D6B-4386-BFCF-D55D81F20408}</Project>
+      <Name>Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProviders\DataProviders.csproj">
+      <Project>{29E1A896-1450-4381-A720-5FCF7DDFB802}</Project>
+      <Name>DataProviders</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Dialogs\AddCommentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\AddSchemaDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\CheckValveEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\PolyLineStyleEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\SwitchingValveStateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\TextEditDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Dialogs\CompShopAddDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Dialogs\LoadSchemaDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Dialogs\PipelineAddDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Dialogs\PipelinePointManageDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Dialogs\PipelineStyleEditDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\hand-share.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Cancel-hand-share.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Schema.Commands.cs" />
+    <None Include="app.config" />
+    <Compile Include="Primitives\BackgroundGrid.Nested.cs" />
+    <None Include="Widgets.cd" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FloModel\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

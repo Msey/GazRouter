@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="9eceb7de-c893-45a8-b853-47ea3b02f331" name="Activity1" linkedPackageId="8b066224-a4d7-4719-87f4-e6431e632547" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="836b2b44-e82d-4cf7-b193-7dda6310331f">
+      <profileInstance Id="f7c36ad3-77d5-40e4-bbfa-e9c1c0f4ff04" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="fe4ebd88-e513-4c48-84fb-cae0dc55ae3f">
+      <profileInstance Id="7432a3db-2ce9-410b-9377-fb0e24ef4f4c" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <activityRootModelHasActivity>
+      <activity Id="e1150340-89a5-42ee-8d58-ca0d250a4d59" name="Activity1" isAbstract="false" isLeaf="false" isActiveClass="false" isReentrant="false" isReadOnly="false" isSingleExecution="false">
+        <elementDefinition Id="a8d98630-5d2a-43c2-9b8c-a7ec0a021b5d" />
+        <nodes>
+          <initialNode Id="57dcfc17-4583-4f6f-9950-db26b856885a" name="Initial1" isLeaf="false">
+            <elementDefinition Id="5a6350a3-ec97-4fa9-ac91-ddd8725c553a" />
+            <flowNodeTargets>
+              <controlFlow Id="06f63ff9-0798-486f-a14b-d4988c405b58" isLeaf="false">
+                <decisionNodeMoniker Id="8f9ee99e-7172-4245-8b82-5ec40a29914d" LastKnownName="Decision1" />
+                <elementDefinition Id="a244fe02-8246-44c6-acaa-c2ee817c5dae" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <decisionNode Id="8f9ee99e-7172-4245-8b82-5ec40a29914d" name="Decision1" isLeaf="false">
+            <description>f</description>
+            <elementDefinition Id="16a94a6f-9903-4084-8c2c-a02d443e28f6" />
+            <flowNodeTargets>
+              <controlFlow Id="153e9d1b-7c96-45cc-a949-50af38482e6a" isLeaf="false">
+                <opaqueActionMoniker Id="c0c915cb-5a39-4cef-94ac-74d09c9eec32" LastKnownName="Action1" />
+                <elementDefinition Id="42c76134-6642-47af-a237-6c317bd23d19" />
+              </controlFlow>
+              <controlFlow Id="93b1aa96-51cc-4f0e-ba92-ef9f8833448a" isLeaf="false">
+                <opaqueActionMoniker Id="864b1a37-2e4e-4c74-bc73-5c54386fec58" LastKnownName="x" />
+                <elementDefinition Id="c8740acb-f9d7-4653-91ed-f36e0b213b05" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction Id="864b1a37-2e4e-4c74-bc73-5c54386fec58" name="x" isLeaf="false">
+            <elementDefinition Id="64f7099a-2064-451c-ac4b-ca9eea49eb04" />
+          </opaqueAction>
+          <opaqueAction Id="c0c915cb-5a39-4cef-94ac-74d09c9eec32" name="Action1" isLeaf="false">
+            <elementDefinition Id="163ae798-3a5f-448f-9d8e-5b611c8cf2cd" />
+          </opaqueAction>
+          <callBehaviorAction Id="0820952c-63d5-45ee-b8ea-3fe233b03dca" name="Behavior1" isLeaf="false">
+            <elementDefinition Id="d3c8c947-f409-4117-900c-61b0b1a9fa08" />
+          </callBehaviorAction>
+        </nodes>
+      </activity>
+    </activityRootModelHasActivity>
+  </packagedElements>
+  <package Id="8b066224-a4d7-4719-87f4-e6431e632547" name="GazRouterModeling">
+    <elementDefinition Id="d047ed5f-aa74-4a59-a2d6-7febded50492" />
+  </package>
+</activityRootModel>

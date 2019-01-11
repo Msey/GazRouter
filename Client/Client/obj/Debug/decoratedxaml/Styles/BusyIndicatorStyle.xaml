@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?><ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls" xmlns:spy="http://firstfloorsoftware.com/XamlSpy">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Telerik.Windows.Themes.Windows8;component/Themes/Telerik.Windows.Controls.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    
+    
+    <SolidColorBrush x:Key="BusyIndicatorBusyOverlayBrush" Color="#88FFFFFF" />
+
+
+
+    <Style x:Key="RadBusyIndicatorBaseStyle" TargetType="telerik:RadBusyIndicator" BasedOn="{StaticResource RadBusyIndicatorStyle}">
+        <Setter Property="DisplayAfter" Value="00:00:00.5" />
+        <Setter Property="BusyContent" Value="Подождите..." />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="telerik:AnimationManager.AnimationSelector">
+            <Setter.Value>
+                <telerik:AnimationSelector>
+                    <telerik:FadeAnimation AnimationName="Hide" Direction="Out" TargetElementName="Indicator" />
+                    <telerik:FadeAnimation AnimationName="Show" Direction="In" TargetElementName="Indicator" />
+                </telerik:AnimationSelector>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="OverlayStyle">
+            <Setter.Value>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Fill" Value="{StaticResource BusyIndicatorBusyOverlayBrush}" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadBusyIndicator">
+                    <Grid spy:XamlMetadata.SpyServiceSettings="127.0.0.1|4530|53501|1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|38|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="VisibilityStates">
+                                <VisualState x:Name="Hidden">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.001" Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Indicator">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.001" Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Overlay">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Visible">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.001" Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Indicator">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.001" Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Overlay">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="BusyStatusStates">
+                                <VisualState x:Name="Idle">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.001" Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="Content">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <system:Boolean>True</system:Boolean>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Busy">
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.001" Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="Content">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <system:Boolean>False</system:Boolean>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="v21">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="h21">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.2" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="v11">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="h11">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.4" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="v12">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="h12">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.6" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="v13">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.7" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="h22">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.8" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="v23">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="v22">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:2" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentControl x:Name="Content" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsEnabled="False" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|145|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                        <Rectangle x:Name="Overlay" Style="{TemplateBinding OverlayStyle}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|146|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                            <Rectangle.Effect>
+                                <BlurEffect />
+                            </Rectangle.Effect>
+                        </Rectangle>
+                        <Border x:Name="Indicator" CornerRadius="2" HorizontalAlignment="Center" MinWidth="180" VerticalAlignment="Center" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|151|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                            <Grid spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|152|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Canvas Width="74" Height="68" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|157|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+
+
+                                    <!--H1-->
+                                    <Line X1="6" Y1="0" X2="30" Y2="0" Stroke="DimGray" StrokeThickness="10" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="h11" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|161|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                                    <Line X1="42" Y1="0" X2="68" Y2="0" Stroke="DimGray" StrokeThickness="10" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="h12" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|165|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+
+                                    <!--V1-->
+                                    <Line X1="0" Y1="6" X2="0" Y2="30" Stroke="DimGray" StrokeThickness="10" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="v11" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|171|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                                    <Line X1="36" Y1="6" X2="36" Y2="30" Stroke="DimGray" StrokeThickness="10" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="v12" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|175|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                                    <Line X1="74" Y1="6" X2="74" Y2="30" Stroke="DimGray" StrokeThickness="10" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="v13" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|179|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+
+                                    <!--H2-->
+                                    <Line X1="6" Y1="36" X2="30" Y2="36" Stroke="DimGray" StrokeThickness="10" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="h21" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|185|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                                    <Line X1="42" Y1="36" X2="68" Y2="36" Stroke="DimGray" StrokeThickness="10" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="h22" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|189|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+
+                                    <!--V2-->
+                                    <Line X1="36" Y1="42" X2="36" Y2="68" Stroke="DimGray" StrokeThickness="10" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="v22" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|195|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+
+                                    <Line X1="26" Y1="46" X2="10" Y2="64" Stroke="DimGray" StrokeThickness="10" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="v21" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|200|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                                    <Line X1="46" Y1="46" X2="64" Y2="64" Stroke="DimGray" StrokeThickness="10" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="v23" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|204|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                                </Canvas>
+
+
+
+                                <TextBlock Text="{TemplateBinding BusyContent}" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="10" FontWeight="Bold" Grid.Row="1" Margin="15 5 15 15" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|212|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="telerik:RadBusyIndicator" BasedOn="{StaticResource RadBusyIndicatorBaseStyle}" />
+    
+   <Style x:Key="RadBusyIndicatorSmallStyle" TargetType="telerik:RadBusyIndicator" BasedOn="{StaticResource RadBusyIndicatorBaseStyle}">
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadBusyIndicator">
+                    <Grid spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|229|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="VisibilityStates">
+                                <VisualState x:Name="Hidden">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.001" Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Indicator">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.001" Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Overlay">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Visible">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.001" Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Indicator">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.001" Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Overlay">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="BusyStatusStates">
+                                <VisualState x:Name="Idle">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.001" Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="Content">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <system:Boolean>True</system:Boolean>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Busy">
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.001" Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="Content">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <system:Boolean>False</system:Boolean>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="v21">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="h21">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.2" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="v11">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="h11">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.4" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="v12">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="h12">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.6" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="v13">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.7" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="h22">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.8" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="v23">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="v22">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:2" Value="0.1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentControl x:Name="Content" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsEnabled="False" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|334|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                        <Rectangle x:Name="Overlay" Style="{TemplateBinding OverlayStyle}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|335|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                            <Rectangle.Effect>
+                                <BlurEffect />
+                            </Rectangle.Effect>
+                        </Rectangle>
+                        <Border x:Name="Indicator" CornerRadius="2" HorizontalAlignment="Center" MinWidth="180" VerticalAlignment="Center" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|340|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                            <Grid spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|341|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                                <Canvas spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|342|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                                    <VisualStateManager.VisualStateGroups>
+
+                                    </VisualStateManager.VisualStateGroups>
+                                    <!--H1-->
+                                    <Line X1="3" Y1="0" X2="10" Y2="0" Stroke="DimGray" StrokeThickness="5" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="h11" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|347|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                                    <Line X1="16" Y1="0" X2="23" Y2="0" Stroke="DimGray" StrokeThickness="5" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="h12" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|351|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+
+                                    <!--V1-->
+                                    <Line X1="0" Y1="3" X2="0" Y2="10" Stroke="DimGray" StrokeThickness="5" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="v11" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|357|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                                    <Line X1="13" Y1="3" X2="13" Y2="10" Stroke="DimGray" StrokeThickness="5" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="v12" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|361|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                                    <Line X1="26" Y1="3" X2="26" Y2="10" Stroke="DimGray" StrokeThickness="5" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="v13" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|365|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+
+                                    <!--H2-->
+                                    <Line X1="3" Y1="13" X2="10" Y2="13" Stroke="DimGray" StrokeThickness="5" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="h21" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|371|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" /> 
+
+                                    <Line X1="16" Y1="13" X2="23" Y2="13" Stroke="DimGray" StrokeThickness="5" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="h22" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|375|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+
+                                    <!--V2-->
+                                    <Line X1="13" Y1="16" X2="13" Y2="23" Stroke="DimGray" StrokeThickness="5" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="v22" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|381|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+
+                                    <Line X1="8" Y1="18" X2="4" Y2="22" Stroke="DimGray" StrokeThickness="5" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="v21" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|386|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                                    <Line X1="18" Y1="18" X2="22" Y2="22" Stroke="DimGray" StrokeThickness="5" StrokeEndLineCap="Triangle" StrokeStartLineCap="Triangle" x:Name="v23" Opacity="0.1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Styles\BusyIndicatorStyle.xaml|390|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+
+                                </Canvas>
+
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

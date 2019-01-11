@@ -1,0 +1,13 @@
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Log\bin\Release\Log.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Log\bin\Release\Log.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Log\bin\Release\NLog.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Log\bin\Release\NLog.xml
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Log\obj\Release\Log.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Log\obj\Release\Log.pdb
+G:\GPA_GazRouter\MainSolution\Server\Log\bin\Release\Log.dll
+G:\GPA_GazRouter\MainSolution\Server\Log\bin\Release\Log.pdb
+G:\GPA_GazRouter\MainSolution\Server\Log\bin\Release\NLog.dll
+G:\GPA_GazRouter\MainSolution\Server\Log\bin\Release\NLog.xml
+G:\GPA_GazRouter\MainSolution\Server\Log\obj\Release\Log.csprojResolveAssemblyReference.cache
+G:\GPA_GazRouter\MainSolution\Server\Log\obj\Release\Log.dll
+G:\GPA_GazRouter\MainSolution\Server\Log\obj\Release\Log.pdb

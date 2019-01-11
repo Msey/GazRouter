@@ -1,0 +1,14 @@
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\bin\Release\PortableDTO.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\bin\Release\PortableDTO.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\bin\Release\Utils.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\bin\Release\Utils.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\obj\Release\PortableDTO.csprojResolveAssemblyReference.cache
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\obj\Release\PortableDTO.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Shared\PortableDTO\obj\Release\PortableDTO.pdb
+G:\GPA_GazRouter\MainSolution\Shared\PortableDTO\bin\Release\PortableDTO.dll
+G:\GPA_GazRouter\MainSolution\Shared\PortableDTO\bin\Release\PortableDTO.pdb
+G:\GPA_GazRouter\MainSolution\Shared\PortableDTO\bin\Release\Utils.dll
+G:\GPA_GazRouter\MainSolution\Shared\PortableDTO\bin\Release\Utils.pdb
+G:\GPA_GazRouter\MainSolution\Shared\PortableDTO\obj\Release\PortableDTO.csprojResolveAssemblyReference.cache
+G:\GPA_GazRouter\MainSolution\Shared\PortableDTO\obj\Release\PortableDTO.dll
+G:\GPA_GazRouter\MainSolution\Shared\PortableDTO\obj\Release\PortableDTO.pdb

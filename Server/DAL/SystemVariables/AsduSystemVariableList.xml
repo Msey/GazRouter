@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Rowsets DateCreated="2012-02-21T10:37:33" EndDate="2012-02-21T10:37:33" StartDate="2012-02-21T09:37:33" Version="12.1.7 Build(44)">
+  <Rowset>
+    <Columns>
+      <Column Description="DESCRIPTION" MaxRange="1" MinRange="0" Name="DESCRIPTION" SQLDataType="12" SourceColumn="DESCRIPTION"/>
+      <Column Description="VALUE" MaxRange="1" MinRange="0" Name="VALUE" SQLDataType="12" SourceColumn="VALUE"/>
+      <Column Description="SYSNAME" MaxRange="1" MinRange="0" Name="SYSNAME" SQLDataType="12" SourceColumn="SYSNAME"/>
+    </Columns>
+    <Row>
+      <DESCRIPTION>Идентификатор шаблона суточного файла сеансовых данных, передаваемого в АСДУ ЕСГ</DESCRIPTION>
+      <VALUE>SamaraTG.V5.Session 24-hour data</VALUE>
+      <SYSNAME>Asdu_Day_Template_Id</SYSNAME>
+    </Row>
+    <Row>
+      <DESCRIPTION>Идентификатор предприятия, участвующее в информационном взаимодействии с АСДУ ЕСГ</DESCRIPTION>
+      <VALUE>SamaraTransgaz</VALUE>
+      <SYSNAME>Asdu_Enterprise_Id</SYSNAME>
+    </Row>
+    <Row>
+      <DESCRIPTION>Идентификатор шаблона 2-часового файла сеансовых данных, передаваемого в АСДУ ЕСГ</DESCRIPTION>
+      <VALUE>SamaraTG.V5.Session 2-hour data</VALUE>
+      <SYSNAME>Asdu_Hour_Template_Id</SYSNAME>
+    </Row>
+    <Row>
+      <DESCRIPTION>Идентификатор шаблона месячного файла сеансовых данных, передаваемого в АСДУ ЕСГ</DESCRIPTION>
+      <VALUE>SamaraTG.V5.Session Month data</VALUE>
+      <SYSNAME>Asdu_Month_Template_Id</SYSNAME>
+    </Row>
+    <Row>
+      <DESCRIPTION>путь для выгрузки файлов для АСДУ ЕСГ</DESCRIPTION>
+      <VALUE>P:\ASDU\Output\</VALUE>
+      <SYSNAME>Asdu_Output</SYSNAME>
+    </Row>
+    <Row>
+      <DESCRIPTION>Идентификатор ЦПДД Газпром (получателя технологической информации)</DESCRIPTION>
+      <VALUE>Gazprom-CPDD</VALUE>
+      <SYSNAME>Asdu_Receiver_Id</SYSNAME>
+    </Row>
+  </Rowset>
+</Rowsets>

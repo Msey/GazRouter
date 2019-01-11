@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B951940C-5D07-4025-866F-923276F610EB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DALTest</RootNamespace>
+    <AssemblyName>DALTest</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+    <OutputPath>bin\x64\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Tomsk|x64'">
+    <OutputPath>bin\x64\Tomsk\</OutputPath>
+    <DefineConstants>TRACE;TOMSK</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Yugorsk|x64'">
+    <OutputPath>bin\x64\Yugorsk\</OutputPath>
+    <DefineConstants>TRACE;YUGORSK</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Volgograd|x64'">
+    <OutputPath>bin\x64\Volgograd\</OutputPath>
+    <DefineConstants>TRACE;VOLGOGRAD</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Chaykovsky|x64'">
+    <OutputPath>bin\x64\Chaykovsky\</OutputPath>
+    <DefineConstants>TRACE;CHAYKOVSKY</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Saratov|x64'">
+    <OutputPath>bin\x64\Saratov\</OutputPath>
+    <DefineConstants>TRACE;SARATOV</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Tomsk|AnyCPU'">
+    <OutputPath>bin\Tomsk\</OutputPath>
+    <DefineConstants>TRACE;TOMSK</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Yugorsk|AnyCPU'">
+    <OutputPath>bin\Yugorsk\</OutputPath>
+    <DefineConstants>TRACE;YUGORSK</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Volgograd|AnyCPU'">
+    <OutputPath>bin\Volgograd\</OutputPath>
+    <DefineConstants>TRACE;VOLGOGRAD</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Chaykovsky|AnyCPU'">
+    <OutputPath>bin\Chaykovsky\</OutputPath>
+    <DefineConstants>TRACE;CHAYKOVSKY</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Saratov|AnyCPU'">
+    <OutputPath>bin\Saratov\</OutputPath>
+    <DefineConstants>TRACE;SARATOV</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mod|x64'">
+    <OutputPath>bin\x64\Mod\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mod|AnyCPU'">
+    <OutputPath>bin\Mod\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Oracle.ManagedDataAccess.12.1.2400\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Alarms\AlarmsTest.cs" />
+    <Compile Include="Astra\AstraTest.cs" />
+    <Compile Include="Balances\ConsumptionsTest.cs" />
+    <Compile Include="Balances\AddAuxConsumptionTest.cs" />
+    <Compile Include="Balances\SystemGasOwnersTest.cs" />
+    <Compile Include="Balances\OperConsumerTest.cs" />
+    <Compile Include="Balances\OperConsumptionsTest.cs" />
+    <Compile Include="Balances\RoutesTest.cs" />
+    <Compile Include="Balances\PlanTest.cs" />
+    <Compile Include="Calculations\CalculationTests.cs" />
+    <Compile Include="AsduEsgTest.cs" />
+    <Compile Include="Authorization\ActionTest.cs" />
+    <Compile Include="Authorization\RoleTest.cs" />
+    <Compile Include="Authorization\UserTest.cs" />
+    <Compile Include="Balances\ContractsTest.cs" />
+    <Compile Include="Balances\IntakeTest.cs" />
+    <Compile Include="Balances\GasOwnersTest.cs" />
+    <Compile Include="BalanceTest.cs" />
+    <Compile Include="DalTestBase.cs" />
+    <Compile Include="Dashboards\DashboardElementTest.cs" />
+    <Compile Include="DataExchange\DataExchangeTest.cs" />
+    <Compile Include="Dictionaries\BoilerTypesListTest.cs" />
+    <Compile Include="Dictionaries\CoolingUnitTypeListTest.cs" />
+    <Compile Include="Dictionaries\CompUnitSealingTypeListTest.cs" />
+    <Compile Include="Dictionaries\CompUnitFailureTypesTest.cs" />
+    <Compile Include="Dictionaries\InconsistencyTypesListTest.cs" />
+    <Compile Include="Dictionaries\SysEventTypesListTest.cs" />
+    <Compile Include="Dictionaries\PowerUnitTypeListTest.cs" />
+    <Compile Include="Dictionaries\DiameterListTest.cs" />
+    <Compile Include="Dictionaries\PipelineGroupsListTest.cs" />
+    <Compile Include="Dictionaries\GasTransportSystemsListTest.cs" />
+    <Compile Include="Dictionaries\PlanTypesListTest.cs" />
+    <Compile Include="Dictionaries\EmergencyValveTypesListTest.cs" />
+    <Compile Include="Dictionaries\HeaterTypesListTest.cs" />
+    <Compile Include="Dictionaries\OperConsumersListTest.cs" />
+    <Compile Include="Dictionaries\RegulatorTypesListTest.cs" />
+    <Compile Include="Event\EventTextTemplateTest.cs" />
+    <Compile Include="Event\SysEventTests.cs" />
+    <Compile Include="Dashboards\DashboardFolderTest.cs" />
+    <Compile Include="Dashboards\DashboardTest.cs" />
+    <Compile Include="Dashboards\FolderTest.cs" />
+    <Compile Include="Dictionaries\CompShopTypesListTest.cs" />
+    <Compile Include="Dictionaries\AnnuledReasonsListTest.cs" />
+    <Compile Include="Dictionaries\ParameterTypesListTest.cs" />
+    <Compile Include="Dictionaries\SourcesTest.cs" />
+    <Compile Include="Dictionaries\ValveTypesListTest.cs" />
+    <Compile Include="Dictionaries\StatuseTypesListTest.cs" />
+    <Compile Include="DispatcherTask\TaskStatusesTest.cs" />
+    <Compile Include="DispatcherTask\TaskRecordNotesTest.cs" />
+    <Compile Include="DispatcherTask\TaskAttachmentTest.cs" />
+    <Compile Include="DispatcherTask\TaskRecordsTest.cs" />
+    <Compile Include="DispatcherTask\TaskTest.cs" />
+    <Compile Include="Appearance\SchemeTests.cs" />
+    <Compile Include="Event\EventsTestBase.cs" />
+    <Compile Include="GasCosts\GasCostsTests.cs" />
+    <Compile Include="ManualInput\ManualInputTest.cs" />
+    <Compile Include="ObjectModel\CoolingStationsTest.cs" />
+    <Compile Include="ObjectModel\BoilerTest.cs" />
+    <Compile Include="ObjectModel\BoilerPlantsTest.cs" />
+    <Compile Include="ObjectModel\CoolingUnitTest.cs" />
+    <Compile Include="ObjectModel\InconsistencyTest.cs" />
+    <Compile Include="ObjectModel\PowerPlantsTest.cs" />
+    <Compile Include="ObjectModel\PowerUnitTest.cs" />
+    <Compile Include="ObjectModel\EntityTests.cs" />
+    <Compile Include="ObjectModel\SortOrdersTests.cs" />
+    <Compile Include="ObjectModel\PipeDiameterSegmentTest.cs" />
+    <Compile Include="SeriesData\CompUnitsOperatingTimeTest.cs" />
+    <Compile Include="SeriesData\SeriesTest.cs" />
+    <Compile Include="Dictionaries\ValvePurposeListTest.cs" />
+    <Compile Include="Dictionaries\PipelineTypesListTest.cs" />
+    <Compile Include="Dictionaries\PipelineEndTypeListTest.cs" />
+    <Compile Include="Dictionaries\PeriodTypesListTest.cs" />
+    <Compile Include="Dictionaries\EntityTypeListTests.cs" />
+    <Compile Include="EntitySelectorTests.cs" />
+    <Compile Include="Event\EventAnalyticalTest.cs" />
+    <Compile Include="Event\EventAttachmentTest.cs" />
+    <Compile Include="Event\EventsTest.cs" />
+    <Compile Include="Event\EventTypesTests.cs" />
+    <Compile Include="ObjectModel\ConsumerTests.cs" />
+    <Compile Include="ObjectModel\SiteTests.cs" />
+    <Compile Include="ObjectModel\PipeSegmentTest.cs" />
+    <Compile Include="ObjectModel\SegmentTest.cs" />
+    <Compile Include="ObjectModel\IntegrityConstraintsTest.cs" />
+    <Compile Include="ObjectModel\PipelineConnsTests.cs" />
+    <Compile Include="ObjectModel\PipelinesTests.cs" />
+    <Compile Include="ObjectModel\ReducingStationTest.cs" />
+    <Compile Include="SeriesData\PropertyValueTests.cs" />
+    <Compile Include="ObjectModel\ValveTests.cs" />
+    <Compile Include="ObjectModel\MeasLineTests.cs" />
+    <Compile Include="Repairs\KilometerListGetTest.cs" />
+    <Compile Include="Repairs\RepairTest.cs" />
+    <Compile Include="SystemVariablesTest.cs" />
+    <Compile Include="ObjectModel\FreezedObjectModelTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GasLeakTest.cs" />
+    <Compile Include="Repairs\ComplexTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\PortableDTO\PortableDTO.csproj">
+      <Project>{351F17B0-88EC-4255-B351-1D7E86E411A0}</Project>
+      <Name>PortableDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Utils\Utils.csproj">
+      <Project>{01B8B942-8E9B-468B-8873-2514DD40532C}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DAL.Core\DAL.Core.csproj">
+      <Project>{9EEFCB2C-DE66-42CB-9BBD-D2DB95D0FEBA}</Project>
+      <Name>DAL.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DAL\DAL.csproj">
+      <Project>{0F9FD4C7-37F4-4A20-9CF1-C0D04126432D}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Service.Exchange.Lib\Service.Exchange.Lib.csproj">
+      <Project>{562B2811-C03B-49F3-B685-1AFB1492EA48}</Project>
+      <Name>Service.Exchange.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestBase\TestBase.csproj">
+      <Project>{2a242bf2-e1c3-406d-b886-d7ee53028088}</Project>
+      <Name>TestBase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.config" />
+    <Content Include="App.Saratov.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+    <Content Include="App.Debug.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+    <Content Include="App.Release.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+    <Content Include="App.Yugorsk.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+    <Content Include="App.Tomsk.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+    <Content Include="App.Chaykovsky.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+    <Content Include="App.Volgograd.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+    <Content Include="App.Mod.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
+  <Target Name="AfterCompile" Condition="exists('app.$(Configuration).config')">
+    <!-- Generate transformed app config in the intermediate directory -->
+    <TransformXml Source="app.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="app.$(Configuration).config" />
+    <!-- Force build process to use the transformed configuration file from now on. -->
+    <ItemGroup>
+      <AppConfigWithTargetPath Remove="app.config" />
+      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
+        <TargetPath>$(TargetFileName).config</TargetPath>
+      </AppConfigWithTargetPath>
+    </ItemGroup>
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

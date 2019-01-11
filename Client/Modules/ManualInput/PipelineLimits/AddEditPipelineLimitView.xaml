@@ -1,0 +1,98 @@
+﻿<telerik:RadWindow x:Class="GazRouter.ManualInput.PipelineLimits.AddEditPipelineLimitView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   Width="Auto" 
+                   Height="Auto" 
+                   Header="{Binding Caption}"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:viewModel="clr-namespace:GazRouter.ManualInput.PipelineLimits"
+                   xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   mc:Ignorable="d"
+                   d:DataContext="{d:DesignInstance viewModel:AddEditPipelineLimitViewModel}"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}" 
+                   Style="{StaticResource StyleMainRadWindow}">
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" 
+                              Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid Margin="11">
+            <Grid.Resources>
+                <converters:PressureConverter x:Key="PressureConverter"/>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <!--TemperatureToDoubleConverter-->
+
+
+            <!--Ввод даты, описания, параметров испытания-->
+            <StackPanel>
+                <TextBlock Margin="0, 11, 0, 0" Text="Газопровод:" />
+                <controls:EntityPicker x:Name="SelectedEntityControl"
+                                                x:FieldModifier="public"
+                                                HorizontalAlignment="Stretch"
+                                                IsEnabled="{Binding IsAdd}"
+                                                SelectedItem="{Binding SelectedPipeline, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                AllowedTypes="{Binding AllowedType, Mode=TwoWay}"
+                                                Margin="0, 5, 0, 0" />
+
+                <TextBlock Text="Начало, км:"
+                           Margin="0, 11, 0, 0"/>
+                <telerik:RadMaskedNumericInput FormatString="n3"
+                                               Margin="0, 5, 0, 0"
+                                               Width="100"
+                                               HorizontalAlignment="Left"
+                                               Value="{Binding Begin, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
+                <TextBlock Text="Конец, км:"
+                           Margin="0, 11, 0, 0"/>
+                <telerik:RadMaskedNumericInput FormatString="n3"
+                                               Margin="0, 5, 0, 0"
+                                               Width="100"
+                                               HorizontalAlignment="Left"
+                                               Value="{Binding End, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
+
+                <TextBlock Text="{Binding PressureMessage}"
+                           Margin="0, 11, 0, 0"/>
+                <telerik:RadMaskedNumericInput FormatString="n3"
+                                               Margin="0, 5, 0, 0"
+                                               Width="100"
+                                               HorizontalAlignment="Left"
+                                               Value="{Binding MaxPressure, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
+
+
+
+                <TextBlock Text="Распоряжение:"
+                           Margin="0, 11, 0, 0"
+                           TextWrapping="Wrap"/>
+
+                <TextBox Style="{StaticResource MultiLineStyle}"
+                         Text="{Binding Description, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                         Margin="0, 5, 0, 0" 
+                         Height="100" 
+                         Width="450" 
+                         HorizontalAlignment="Left"/>
+
+            </StackPanel>
+
+
+            <StackPanel Grid.Row="1"
+                        Style="{StaticResource StyleStackPanelForConfirmationButton}">
+                <telerik:RadButton x:Name="OKButton" 
+                                   Content="Сохранить" 
+                                   Command="{Binding SaveCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+
+                <telerik:RadButton x:Name="CancelButton" 
+                                   Content="Отмена" 
+                                   Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

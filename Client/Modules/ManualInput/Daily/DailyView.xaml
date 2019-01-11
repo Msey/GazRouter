@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="GazRouter.ManualInput.Daily.DailyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:viewModels="clr-namespace:GazRouter.ManualInput.Daily"
+             xmlns:inputStates="clr-namespace:GazRouter.DTO.ManualInput.InputStates;assembly=PortableDTO"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:DailyViewModel}">
+
+    <UserControl.Resources>
+        <converters:InputStateToNameConverter x:Key="InputStateToNameConverter"/>
+        <converters:InputStateToColorConverter x:Key="InputStateToColorConverter"/>
+    </UserControl.Resources>
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <telerik:RadToolBar>
+
+                <telerik:RadDatePicker Width="120" 
+                                       SelectedDate="{Binding SelectedDate, Mode=TwoWay}"
+                                       SelectableDateEnd="{Binding MaxDate}"
+                                       Margin="5, 0, 0, 0"/>
+
+                <telerik:RadComboBox ItemsSource="{Binding SiteList}"
+                                     Width="200"
+                                     SelectedItem="{Binding SelectedSite, Mode=TwoWay}"
+                                     DisplayMemberPath="Name"/>
+                
+
+                <telerik:RadButton Command="{Binding RefreshCommand}" 
+                                   Style="{StaticResource refreshButtonStyle}" />
+
+                <telerik:RadToolBarSeparator />
+                
+
+                <telerik:RadComboBox Margin="5, 0, 0, 0" 
+                                 ItemsSource="{Binding InputStateList}" 
+                                 SelectedValue="{Binding InputState, Mode=TwoWay}"
+                                 IsEnabled="{Binding IsInputStateChangeAllowed}">
+                    <telerik:RadComboBox.ItemTemplate>
+                        <DataTemplate DataType="inputStates:ManualInputState">
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="10" 
+                                    Height="10" 
+                                    StrokeThickness="0" 
+                                    Fill="{Binding Converter={StaticResource InputStateToColorConverter}}" />
+                                <TextBlock Margin="5, 0, 0, 0"
+                                    Text="{Binding Converter={StaticResource InputStateToNameConverter}}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:RadComboBox.ItemTemplate>
+                </telerik:RadComboBox>
+
+                <TextBlock Text="{Binding InputStateInfo}" Margin="5, 0, 0, 0" />
+
+                <telerik:RadToolBarSeparator />
+                
+                <telerik:RadComboBox SelectedIndex="{Binding SelectedUnitType, Mode=TwoWay}"
+                                     Width="70"
+                                     Margin="5, 0, 0, 0">
+                    <telerik:RadComboBoxItem>тыс.м3</telerik:RadComboBoxItem>
+                    <telerik:RadComboBoxItem>м3</telerik:RadComboBoxItem>
+                </telerik:RadComboBox>
+
+            </telerik:RadToolBar>
+
+            
+            
+            <telerik:RadTabControl Grid.Row="1"
+                                   ItemsSource="{Binding Tabs}">
+                <telerik:RadTabControl.ItemTemplate>
+                    <DataTemplate DataType="viewModels:TabBaseViewModel">
+                        <TextBlock Text="{Binding Header}"
+                                   Margin="3"/>
+                    </DataTemplate>
+                </telerik:RadTabControl.ItemTemplate>
+                
+                <telerik:RadTabControl.ContentTemplate>
+                    <DataTemplate>
+                        <viewModels:DailyTabView DataContext="{Binding }"/>
+                    </DataTemplate>
+                </telerik:RadTabControl.ContentTemplate>
+                
+            </telerik:RadTabControl>
+            
+            
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

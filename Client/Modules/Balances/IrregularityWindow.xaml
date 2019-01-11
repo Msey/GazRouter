@@ -1,0 +1,63 @@
+﻿<telerik:RadWindow x:Class="Balances.Irregularity.IrregularityWindow"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                    xmlns:tel2="clr-namespace:Telerik.Windows.Controls.ChartView;assembly=Telerik.Windows.Controls.Chart"
+                   mc:Ignorable="d" Header="Тренды" d:DesignHeight="300"
+                   d:DesignWidth="400" Width="700" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                   WindowStartupLocation="CenterOwner" WindowState="Maximized"
+                   >
+    <telerik:RadWindow.Resources>
+        <Style x:Key="trackBallLineStyle" TargetType="Polyline">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+        <Style x:Key="TickStyle" TargetType="Rectangle">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+    </telerik:RadWindow.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <telerik:Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">Неравномерность подачи газа</telerik:Label>
+        <telerik:RadScheduleView AppointmentsSource="{Binding List}" 
+                                 NavigationHeaderVisibility="Collapsed" BorderThickness="0 1 1 1"
+								 FirstVisibleTime="06:00"
+                                 
+                                 Grid.Row="1" Grid.Column="0" FirstDayOfWeek="Monday">
+            <telerik:RadScheduleView.ViewDefinitions>
+                <telerik:MonthViewDefinition />
+            </telerik:RadScheduleView.ViewDefinitions>
+        </telerik:RadScheduleView>
+        <StackPanel Grid.Row="1" Grid.Column="1"></StackPanel>
+        <telerik:RadCartesianChart Margin="5,5,20,5" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" EmptyContent="Нет данных" TrackBallLineStyle="{StaticResource trackBallLineStyle}">
+
+            <telerik:RadCartesianChart.Behaviors>
+                <telerik:ChartTooltipBehavior Placement="Top" VerticalOffset="-20"/>
+                <telerik:ChartTrackBallBehavior ShowTrackInfo="False" ShowIntersectionPoints="False" />
+            </telerik:RadCartesianChart.Behaviors>
+           
+            <tel2:LineSeries CategoryBinding="DateTime" ValueBinding="ConsumptionValue" ItemsSource="{Binding List,Mode=TwoWay}" Stroke="Black">
+                <tel2:LineSeries.PointTemplate>
+                    <DataTemplate>
+                        <Ellipse Height="5" Width="5" Stroke="Black" Fill="Black" />
+                    </DataTemplate>
+                </tel2:LineSeries.PointTemplate>
+            </tel2:LineSeries>
+            <telerik:RadCartesianChart.VerticalAxis>
+                <telerik:LinearAxis Minimum="{Binding MinValue,Mode=TwoWay}" Maximum="{Binding MaxValue,Mode=TwoWay}"  ShowLabels="False" MajorTickStyle="{StaticResource TickStyle}" Visibility="Collapsed"/>
+            </telerik:RadCartesianChart.VerticalAxis>
+            <telerik:RadCartesianChart.Grid>
+                <telerik:CartesianChartGrid MajorLinesVisibility="Y" />
+            </telerik:RadCartesianChart.Grid>
+        </telerik:RadCartesianChart>
+    </Grid>
+</telerik:RadWindow>

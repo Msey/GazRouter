@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="GazRouter.Controls.Dialogs.ObjectDetails.Measurings.DistrStation.DistrStationMeasuringsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:controls="clr-namespace:GazRouter.Controls"
+             xmlns:measurings="clr-namespace:GazRouter.Controls.Measurings"
+             xmlns:distrStation="clr-namespace:GazRouter.Controls.Dialogs.ObjectDetails.Measurings.DistrStation"
+             d:DataContext="{d:DesignInstance distrStation:DistrStationMeasuringsViewModel}">
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar>
+                <controls:DateTimePickerTwoHours SelectedDateTime="{Binding Timestamp, Mode=TwoWay}" 
+                                                 DisableSelectFuture="True"/>
+            </telerik:RadToolBar>
+
+            <telerik:RadTreeListView GridLinesVisibility="Both"
+                                     AutoExpandItems="True"
+                                     AutoGenerateColumns="False"
+                                     IsReadOnly="True"
+                                     ItemsSource="{Binding Items}"
+                                     CanUserFreezeColumns="False"
+                                     RowIndicatorVisibility="Collapsed"
+                                     Grid.Row="1">
+
+                <telerik:RadTreeListView.Columns>
+                    <telerik:GridViewDataColumn Width="200"
+                                                Header="Наименование"
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="distrStation:GridItem">
+                                <StackPanel Margin="5">
+                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding TypeName}"
+                                               FontSize="10"
+                                               Foreground="CadetBlue" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60"
+                                                IsFilterable="False"
+                                                IsSortable="False">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="P, [P]" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="distrStation:GridItem">
+                                <measurings:MeasuringBlock DataContext="{Binding P}"
+                                                                 HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60"
+                                                IsFilterable="False"
+                                                IsSortable="False">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="T, [T]" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="distrStation:GridItem">
+                                <measurings:MeasuringBlock DataContext="{Binding T}"
+                                                                 HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="60"
+                                                IsFilterable="False"
+                                                IsSortable="False"
+                                                Header="Q, тыс.м3">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="distrStation:GridItem">
+                                <measurings:MeasuringBlock DataContext="{Binding Q}"
+                                                                 HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                </telerik:RadTreeListView.Columns>
+
+                <telerik:RadTreeListView.ChildTableDefinitions>
+                    <telerik:TreeListViewTableDefinition ItemsSource="{Binding Childs}" />
+                </telerik:RadTreeListView.ChildTableDefinitions>
+
+            </telerik:RadTreeListView>
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+
+</UserControl>

@@ -1,0 +1,156 @@
+﻿<telerik:RadWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   mc:Ignorable="d"
+                   x:Class="GazRouter.Repair.PrintForms.PdsToLpuFaxView"
+                   xmlns:controls1="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:dialogs="clr-namespace:GazRouter.Repair.RepWorks.Dialogs"
+                   xmlns:repair="clr-namespace:GazRouter.Repair"
+                   xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   Header="{Binding Caption}"
+                   attachedProperties1:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   Height="{Binding height}" Width="840"
+                   ResizeMode="NoResize"
+                   Name="EditRepairWindows"
+                   Style="{StaticResource DialogWindowStyle}"
+                   d:DataContext="{d:DesignInstance dialogs:PdsToLpuFaxViewModel}">
+
+
+    <telerik:RadWindow.Resources>
+        <telerik:InvertedBooleanConverter x:Key="InvertBoolConverter" />
+        <telerik:BooleanToVisibilityConverter x:Key="boolToVisibility" />
+        <telerik:InvertedBooleanToVisibilityConverter x:Key="invertedBoolToVisibility" />
+        <telerik:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+        <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
+
+        
+        <Style x:Key="verticalText" TargetType="telerik:GridViewHeaderCell">
+            <Setter Property="Projection" Value="TextAngle: 270"/>
+        </Style>
+
+      
+    </telerik:RadWindow.Resources>
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+
+        <Grid x:Name="MainGrid" >
+
+            <Grid Name="PrintGrid" Background="Transparent" HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+
+                <StackPanel Grid.Row="0" Margin="11" HorizontalAlignment="Right">
+                    <telerik:RadButton Content="Сохранение в PDF файл" Command="{Binding ExportPDFCommand}" 
+                               CommandParameter="{Binding ElementName=MainGrid}" Visibility="{Binding IsPrint, Converter={StaticResource invertedBoolToVisibility}}"
+                               Margin="5, 5, 5, 5" HorizontalAlignment="Left" />
+                    
+                </StackPanel>
+                
+                <!--ООО Газпром трансгаз-->
+                <Grid Grid.Row="1" HorizontalAlignment="Center" Width="800" Height="300">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="400"/>
+                        <ColumnDefinition Width="400"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Center">
+                        
+                        <!--<TextBlock HorizontalAlignment="Center" FontFamily="Times New Roman" Text="Начальнику" FontWeight="Bold" FontSize="{Binding FontOOO}"
+                                           Margin="0, 11, 0, 0" />
+                        <TextBlock HorizontalAlignment="Center" FontFamily="Times New Roman" FontSize="{Binding FontOOO}"  FontWeight="Bold"  Text="{Binding LpuName, Mode=TwoWay}" Visibility="{Binding IsPrint, Converter={StaticResource boolToVisibility}}" Margin="0, 11, 0, 0"/>
+                        <TextBox Text="{Binding LpuName, Mode=TwoWay}" Visibility="{Binding IsPrint, Converter={StaticResource invertedBoolToVisibility}}" />-->
+                        <TextBlock FontFamily="Times New Roman" FontSize="{Binding FontOOO}" FontWeight="Bold" HorizontalAlignment="Center" 
+                                   Text="{Binding DepHead, Mode=TwoWay}" 
+                                   Visibility="{Binding IsPrint, Converter={StaticResource boolToVisibility}}" 
+                                   Margin="0, 11, 0, 0" 
+                                   TextWrapping="Wrap" 
+                                   TextAlignment="Center"/>
+                        <TextBox FontFamily="Times New Roman" FontSize="{Binding FontOOO}" FontWeight="Bold" HorizontalAlignment="Center"
+                                 Text="{Binding DepHead, Mode=TwoWay}" 
+                                 Width="350" 
+                                 Height="150" 
+                                 AcceptsReturn="True" 
+                                 TextWrapping="Wrap"  
+                                 Visibility="{Binding IsPrint, Converter={StaticResource invertedBoolToVisibility}}" 
+                                 TextAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+                
+                <!--Тема-->
+                <StackPanel Grid.Row="2">
+                    <TextBlock HorizontalAlignment="Left" FontFamily="Times New Roman" FontStyle="Italic"  FontSize="{Binding FontMain}" Text="{Binding Subject, Mode=TwoWay}" Visibility="{Binding IsPrint, Converter={StaticResource boolToVisibility}}" Margin="0, 11, 0, 0"/>
+                    <TextBox  HorizontalAlignment="Left" Text="{Binding Subject, Mode=TwoWay}" Visibility="{Binding IsPrint, Converter={StaticResource invertedBoolToVisibility}}" />
+                </StackPanel>
+                <!-- текст -->
+                <StackPanel Grid.Row="3">
+                    <TextBlock HorizontalAlignment="Left" FontFamily="Times New Roman" FontSize="{Binding FontMain}" Text="{Binding TextBody, Mode=TwoWay}" Visibility="{Binding IsPrint, Converter={StaticResource boolToVisibility}}" Margin="0, 11, 0, 0" TextWrapping="Wrap" Width="800"/>
+                    <TextBox Text="{Binding TextBody, Mode=TwoWay}" Visibility="{Binding IsPrint, Converter={StaticResource invertedBoolToVisibility}}" Width="800" Height="200" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" VerticalContentAlignment="Top"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="4">
+                    <TextBlock FontFamily="Times New Roman" FontSize="{Binding FontOOO}"  FontWeight="Bold" Text="{Binding Signers, Mode=TwoWay}" Visibility="{Binding IsPrint, Converter={StaticResource boolToVisibility}}" Margin="0, 11, 0, 0" TextWrapping="Wrap" Width="790" HorizontalAlignment="Stretch"/>
+                    <TextBox Text="{Binding Signers, Mode=TwoWay}" Visibility="{Binding IsPrint, Converter={StaticResource invertedBoolToVisibility}}" Width="790" Height="150" AcceptsReturn="True" TextWrapping="Wrap" FontSize="{Binding FontOOO}"  FontWeight="Bold" VerticalScrollBarVisibility="Visible" VerticalContentAlignment="Top" HorizontalAlignment="Stretch"/>
+                </StackPanel>
+
+                
+                <!-- подпись -->
+                <!--
+                <telerik:RadGridView Grid.Row="4" AutoGenerateColumns="False" Margin="0,10,0,0"
+                                 IsReadOnly="False" 
+                                 ItemsSource="{Binding MTo, Mode=TwoWay}"
+                                 RowIndicatorVisibility="Collapsed" 
+                                 ShowGroupPanel="False"
+                                 GridLinesVisibility="None"
+                                 CanUserFreezeColumns="False"
+                                 ShowColumnHeaders="False"
+                                         FontSize="{Binding FontOOO}"
+                                        Width="790"
+                                     BorderThickness="0"
+                                         Background="Transparent"
+                                         BorderBrush="White"
+                                         FontFamily="Times New Roman" 
+                                         ColumnBackground="Transparent"
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 >
+                        <telerik:RadGridView.Columns>
+                            <telerik:GridViewDataColumn Width="400"
+                                                DataMemberBinding="{Binding Position, Mode=TwoWay}"
+                                                IsSortable="False"  Background="Transparent"
+                                                IsFilterable="False" 
+                                                TextWrapping="Wrap"/>
+
+                            <telerik:GridViewDataColumn Width="180"
+                                                
+                                                IsSortable="False" Background="Transparent"
+                                                IsFilterable="False" 
+                                                TextWrapping="Wrap" />
+
+                            <telerik:GridViewDataColumn Width="180" 
+                                                DataMemberBinding="{Binding FIO, Mode=TwoWay}"
+                                                IsSortable="False" Background="Transparent"
+                                                IsFilterable="False"
+                                                        TextWrapping="Wrap"/>
+                        </telerik:RadGridView.Columns>
+                    </telerik:RadGridView>
+
+                    -->
+
+                <StackPanel Grid.Row="5" VerticalAlignment="Bottom">
+                    <TextBox Text="{Binding Perfomer, Mode=TwoWay}" Visibility="{Binding IsPrint, Converter={StaticResource invertedBoolToVisibility}}" Width="200"  Height="40" AcceptsReturn="True" TextWrapping="Wrap" HorizontalAlignment="Left" />
+                    <TextBlock FontFamily="Times New Roman" Text="{Binding Perfomer, Mode=TwoWay}" Margin="5"  HorizontalAlignment="Left" Visibility="{Binding IsPrint, Converter={StaticResource boolToVisibility}}" />
+                </StackPanel>
+
+
+            </Grid>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

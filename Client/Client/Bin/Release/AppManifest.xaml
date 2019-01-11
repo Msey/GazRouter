@@ -1,0 +1,97 @@
+﻿<Deployment xmlns="http://schemas.microsoft.com/client/2007/deployment" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" EntryPointAssembly="Client" EntryPointType="GazRouter.Client.App" RuntimeVersion="5.0.61118.0">
+  <Deployment.Parts>
+    <AssemblyPart x:Name="Client" Source="Client.dll" />
+    <AssemblyPart x:Name="ActionsRolesUsers" Source="ActionsRolesUsers.dll" />
+    <AssemblyPart x:Name="Application" Source="Application.dll" />
+    <AssemblyPart x:Name="Balances" Source="Balances.dll" />
+    <AssemblyPart x:Name="Common" Source="Common.dll" />
+    <AssemblyPart x:Name="Controls" Source="Controls.dll" />
+    <AssemblyPart x:Name="DataExchange" Source="DataExchange.dll" />
+    <AssemblyPart x:Name="DataProviders" Source="DataProviders.dll" />
+    <AssemblyPart x:Name="Flobus" Source="Flobus.dll" />
+    <AssemblyPart x:Name="Flobus.VM" Source="Flobus.VM.dll" />
+    <AssemblyPart x:Name="GasLeaks" Source="GasLeaks.dll" />
+    <AssemblyPart x:Name="ManualInput" Source="ManualInput.dll" />
+    <AssemblyPart x:Name="Microsoft.CSharp" Source="Microsoft.CSharp.dll" />
+    <AssemblyPart x:Name="Microsoft.Expression.Interactions" Source="Microsoft.Expression.Interactions.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.Prism" Source="Microsoft.Practices.Prism.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.Prism.Interactivity" Source="Microsoft.Practices.Prism.Interactivity.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.Prism.UnityExtensions" Source="Microsoft.Practices.Prism.UnityExtensions.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.ServiceLocation" Source="Microsoft.Practices.ServiceLocation.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.Unity.Silverlight" Source="Microsoft.Practices.Unity.Silverlight.dll" />
+    <AssemblyPart x:Name="Microsoft.Threading.Tasks" Source="Microsoft.Threading.Tasks.dll" />
+    <AssemblyPart x:Name="Microsoft.Threading.Tasks.Extensions" Source="Microsoft.Threading.Tasks.Extensions.dll" />
+    <AssemblyPart x:Name="Microsoft.Threading.Tasks.Extensions.Silverlight" Source="Microsoft.Threading.Tasks.Extensions.Silverlight.dll" />
+    <AssemblyPart x:Name="Modes" Source="Modes.dll" />
+    <AssemblyPart x:Name="NLog" Source="NLog.dll" />
+    <AssemblyPart x:Name="ObjectModel" Source="ObjectModel.dll" />
+    <AssemblyPart x:Name="PortableDTO" Source="PortableDTO.dll" />
+    <AssemblyPart x:Name="Repair" Source="Repair.dll" />
+    <AssemblyPart x:Name="System.ComponentModel.Composition" Source="System.ComponentModel.Composition.dll" />
+    <AssemblyPart x:Name="System.ComponentModel.Composition.Initialization" Source="System.ComponentModel.Composition.Initialization.dll" />
+    <AssemblyPart x:Name="System.ComponentModel.DataAnnotations" Source="System.ComponentModel.DataAnnotations.dll" />
+    <AssemblyPart x:Name="System.IO" Source="System.IO.dll" />
+    <AssemblyPart x:Name="System.Numerics" Source="System.Numerics.dll" />
+    <AssemblyPart x:Name="System.Runtime" Source="System.Runtime.dll" />
+    <AssemblyPart x:Name="System.Threading.Tasks" Source="System.Threading.Tasks.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Data" Source="System.Windows.Controls.Data.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Data.Input" Source="System.Windows.Controls.Data.Input.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls" Source="System.Windows.Controls.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Input" Source="System.Windows.Controls.Input.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Input.Toolkit" Source="System.Windows.Controls.Input.Toolkit.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Layout.Toolkit" Source="System.Windows.Controls.Layout.Toolkit.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Navigation" Source="System.Windows.Controls.Navigation.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Toolkit" Source="System.Windows.Controls.Toolkit.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Toolkit.Internals" Source="System.Windows.Controls.Toolkit.Internals.dll" />
+    <AssemblyPart x:Name="System.Windows.Data" Source="System.Windows.Data.dll" />
+    <AssemblyPart x:Name="System.Windows.Interactivity" Source="System.Windows.Interactivity.dll" />
+    <AssemblyPart x:Name="System.Xml.Linq" Source="System.Xml.Linq.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls.Chart" Source="Telerik.Windows.Controls.Chart.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls.DataVisualization" Source="Telerik.Windows.Controls.DataVisualization.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls.Diagrams" Source="Telerik.Windows.Controls.Diagrams.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls.Diagrams.Extensions" Source="Telerik.Windows.Controls.Diagrams.Extensions.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls" Source="Telerik.Windows.Controls.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls.Docking" Source="Telerik.Windows.Controls.Docking.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls.GanttView" Source="Telerik.Windows.Controls.GanttView.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls.GridView" Source="Telerik.Windows.Controls.GridView.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls.Input" Source="Telerik.Windows.Controls.Input.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls.Navigation" Source="Telerik.Windows.Controls.Navigation.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls.RibbonView" Source="Telerik.Windows.Controls.RibbonView.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls.ScheduleView" Source="Telerik.Windows.Controls.ScheduleView.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls.Spreadsheet" Source="Telerik.Windows.Controls.Spreadsheet.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Data" Source="Telerik.Windows.Data.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Diagrams.Core" Source="Telerik.Windows.Diagrams.Core.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Documents.Core" Source="Telerik.Windows.Documents.Core.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Documents" Source="Telerik.Windows.Documents.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Documents.FormatProviders.OpenXml" Source="Telerik.Windows.Documents.FormatProviders.OpenXml.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Documents.Spreadsheet" Source="Telerik.Windows.Documents.Spreadsheet.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml" Source="Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Maths" Source="Telerik.Windows.Maths.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Scheduling.Core" Source="Telerik.Windows.Scheduling.Core.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Themes.Windows7" Source="Telerik.Windows.Themes.Windows7.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Themes.Windows8" Source="Telerik.Windows.Themes.Windows8.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Zip" Source="Telerik.Windows.Zip.dll" />
+    <AssemblyPart x:Name="Utils" Source="Utils.dll" />
+    <AssemblyPart x:Name="Newtonsoft.Json" Source="Newtonsoft.Json.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Documents.FormatProviders.Pdf" Source="Telerik.Windows.Documents.FormatProviders.Pdf.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Silverlight" Source="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Silverlight.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Controls.Data" Source="Telerik.Windows.Controls.Data.dll" />
+    <AssemblyPart x:Name="Telerik.Windows.Documents.Fixed" Source="Telerik.Windows.Documents.Fixed.dll" />
+    <AssemblyPart x:Name="System.Xml.Serialization" Source="System.Xml.Serialization.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.EnterpriseLibrary.Common.Silverlight" Source="Microsoft.Practices.EnterpriseLibrary.Common.Silverlight.dll" />
+    <AssemblyPart x:Name="Microsoft.Practices.Unity.Interception.Silverlight" Source="Microsoft.Practices.Unity.Interception.Silverlight.dll" />
+    <AssemblyPart Source="ru/Microsoft.CSharp.resources.dll" />
+    <AssemblyPart Source="ru/System.ComponentModel.Composition.resources.dll" />
+    <AssemblyPart Source="ru/System.ComponentModel.Composition.Initialization.resources.dll" />
+    <AssemblyPart Source="ru/System.ComponentModel.DataAnnotations.resources.dll" />
+    <AssemblyPart Source="ru/System.Numerics.resources.dll" />
+    <AssemblyPart Source="ru/System.Windows.Controls.resources.dll" />
+    <AssemblyPart Source="ru/System.Windows.Controls.Data.resources.dll" />
+    <AssemblyPart Source="ru/System.Windows.Controls.Data.Input.resources.dll" />
+    <AssemblyPart Source="ru/System.Windows.Controls.Input.resources.dll" />
+    <AssemblyPart Source="ru/System.Windows.Controls.Navigation.resources.dll" />
+    <AssemblyPart Source="ru/System.Windows.Data.resources.dll" />
+    <AssemblyPart Source="ru/System.Xml.Linq.resources.dll" />
+    <AssemblyPart Source="ru/System.Xml.Serialization.resources.dll" />
+  </Deployment.Parts>
+</Deployment>

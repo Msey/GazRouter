@@ -1,0 +1,135 @@
+﻿<UserControl x:Class="GazRouter.Modes.GasCosts2.GasCostsMainView2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:inputStates="clr-namespace:GazRouter.DTO.ManualInput.InputStates;assembly=PortableDTO"
+    xmlns:converters="clr-namespace:GazRouter.Modes.Converters"    
+    xmlns:gasCosts2="clr-namespace:GazRouter.Modes.GasCosts2"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    >
+    <UserControl.Resources>
+        <converters:InputStateToNameConverter  x:Key="InputStateToNameConverter"/>
+        <converters:InputStateToColorConverter x:Key="InputStateToColorConverter"/>
+        <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <telerik:RadBusyIndicator DisplayAfter="0" IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="300" />
+            </Grid.RowDefinitions >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <telerik:RadToolBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <telerik:RadDatePicker DateSelectionMode="{Binding Parameters.DateMode, Mode=TwoWay}" 
+                                       SelectedValue="{Binding Parameters.SelectedMonth, Mode=TwoWay}"
+                                       SelectableDateEnd="{Binding Parameters.DateEnd, Mode=OneWay}"
+                                       DisplayDateEnd="{Binding Parameters.DateEnd, Mode=OneWay}"
+                                       Culture="{Binding Parameters.CultureWithFormattedPeriod, Mode=TwoWay}"
+                                       Width="120"
+                                        />
+                <telerik:RadComboBox ItemsSource="{Binding Parameters.Sites, Mode=OneWay}" 
+                                         SelectedValuePath="Id" 
+                                         DisplayMemberPath="Name"
+                                         SelectedValue="{Binding Parameters.SelectedSiteId, Mode=TwoWay}"
+                                         MinWidth="120"/>
+                <telerik:RadButton Command="{Binding MainCommands.RefreshCommand}" 
+                                   Style="{StaticResource refreshButtonStyle}" />
+                <telerik:RadToolBarSeparator />
+                <telerik:RadComboBox Margin="5, 0, 0, 0"
+                                     ItemsSource="{Binding   Parameters.InputStateList}"  
+                                     SelectedValue="{Binding Parameters.InputState, Mode=TwoWay}"
+                                     IsEnabled="{Binding     Parameters.IsInputStateChangeAllowed}">
+                    <telerik:RadComboBox.ItemTemplate>
+                        <DataTemplate DataType="inputStates:ManualInputState">
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="10" 
+                                    Height="10" 
+                                    StrokeThickness="0" 
+                                    Fill="{Binding Converter={StaticResource InputStateToColorConverter}}" />
+                                <TextBlock Margin="5, 0, 0, 0"
+                                    Text="{Binding Converter={StaticResource InputStateToNameConverter}}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:RadComboBox.ItemTemplate>
+                </telerik:RadComboBox>
+                <TextBlock Text="{Binding Parameters.InputStateInfo}" Margin="5, 0, 5, 0" VerticalAlignment="Center" />
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadComboBox ItemsSource="{Binding Parameters.Units}"
+                                     SelectedItem="{Binding Parameters.SelectedUnit, Mode=TwoWay}" 
+                                     DisplayMemberPath="Description"                                     
+                                     Width="70"/>
+                <telerik:RadToolBarSeparator />
+                <telerik:RadButton Command="{Binding MainCommands.SetDefaultValuesCommand}"
+                                   ToolTipService.ToolTip="Значения параметров по умолчанию">
+                    <Image Source="/Common;component/Images/16x16/ptq.png" Stretch="None"/>
+                </telerik:RadButton>
+            </telerik:RadToolBar>
+
+            <telerik:RadToolBar Grid.Row="1" Grid.Column="1">
+                <telerik:RadButton Command="{Binding MainCommands.QuickInputCommand}"
+                                   ToolTipService.ToolTip="Быстрый ввод">
+                    <Image Source="/Common;component/Images/16x16/wizard.png" Stretch="None"/>
+                </telerik:RadButton>
+
+                <telerik:RadButton Command="{Binding MainCommands.PreviewStateCopyCommand}"
+                                   ToolTipService.ToolTip="Копировать значения статьи за предыдущие сутки">
+                    <Image Source="/Common;component/Images/16x16/clone.png" Stretch="None"/>
+                </telerik:RadButton>
+
+                <StackPanel x:Name="DropDownButton1" Visibility="{Binding PipelineFilterVisibility, 
+                                                                  Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                    <telerik:RadRibbonDropDownButton SmallImage="/Common;component/Images/16x16/filter.png"
+                                                 DropDownButtonPosition="Right" 
+                                                 telerik:StyleManager.Theme="Windows7"
+                                                 >
+                        <telerik:RadRibbonDropDownButton.DropDownContent>
+                            <telerik:RadContextMenu ItemsSource="{Binding Parameters.PipeLinesTreeFilters, Mode=TwoWay}"                                               
+                                                ToolTipService.ToolTip="{Binding Parameters.PipeLinesTreeFilterTooltipText,
+                                                    Mode=TwoWay}">
+                                <telerik:RadContextMenu.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Command="{Binding ElementName=DropDownButton1, Path=DataContext.TestCommand}"
+                                              CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                              Content="{Binding DisplayName}" 
+                                              IsChecked="{Binding IsSelected, Mode=TwoWay}" 
+                                                  >
+                                        </CheckBox>
+                                    </DataTemplate>
+                                </telerik:RadContextMenu.ItemTemplate>
+                            </telerik:RadContextMenu>
+                        </telerik:RadRibbonDropDownButton.DropDownContent>
+                    </telerik:RadRibbonDropDownButton>
+                </StackPanel>
+            </telerik:RadToolBar>
+
+            <gasCosts2:StatesView Grid.Row="1" Grid.Column="0" Grid.RowSpan="3"
+                       DataContext="{Binding StatesViewModel}" />
+
+            <sdk:GridSplitter Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Width="5"
+                              Style="{StaticResource VerticalSplitterStyle}" />
+
+            <gasCosts2:ConsumptionsView2 DataContext="{Binding ConsumptionsViewModel}"
+                Grid.Row="2" Grid.Column="1" Margin="5,0,0,0" />
+
+            <sdk:GridSplitter Grid.Row="3" Grid.Column="1" Height="5"
+                 Style="{StaticResource HorizontalSplitterStyle}" />
+
+            <gasCosts2:CostsView Grid.Row="3" Grid.Column="1"
+                       DataContext="{Binding CostsViewModel}" Margin="5,5,0,0" />
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>
+    
+    
+
+ 
+    
+    
+

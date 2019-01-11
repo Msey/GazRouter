@@ -1,0 +1,50 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Modes.ProcessMonitoring.Views.ModelTreeDialogWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+             xmlns:tree="clr-namespace:GazRouter.Controls.Tree;assembly=Controls"
+             d:DesignHeight="300" d:DesignWidth="400" Header="Объектная модель"
+                   Height="{Binding Height}" Width="{Binding Width}"
+                   Left="{Binding Left}" Top="{Binding Top}" WindowStartupLocation="Manual"
+                   HideMinimizeButton="True" HideMaximizeButton="True" Visibility="{Binding DialogVisibility}"
+    Style="{StaticResource DialogWindowStyle}" ResizeMode="CanResize" attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}" >
+    
+    <telerik:RadWindow.Resources>
+        <telerik:ContainerBindingCollection x:Name="BindingsCollection">
+            <telerik:ContainerBinding PropertyName="IsSelected" Binding="{Binding IsSelected, Mode=TwoWay}" />
+            <telerik:ContainerBinding PropertyName="IsExpanded" Binding="{Binding IsExpanded, Mode=TwoWay}" />
+        </telerik:ContainerBindingCollection>
+        <telerik:HierarchicalDataTemplate ItemsSource="{Binding Children}"
+                                                          telerik:ContainerBinding.ContainerBindings="{StaticResource BindingsCollection}" x:Key="treetemplate">
+            <StackPanel Orientation="Horizontal"
+                                        ToolTipService.ToolTip="{Binding ToolTipType}">
+                <Image Source="{Binding ImageSource, Mode=TwoWay}" Margin="0, 0, 5, 0"
+                                       Stretch="None" HorizontalAlignment="Center" />
+                <TextBlock Text="{Binding Name}" />
+            </StackPanel>
+        </telerik:HierarchicalDataTemplate>
+        <DataTemplate DataType="tree:TreeViewModelPointObjects">
+            <telerik:RadTreeView x:Name="tree" Background="WhiteSmoke" BorderThickness="1"
+                                     ItemsSource="{Binding Path=Nodes, Mode=TwoWay}"
+                                     SelectedItem="{Binding Path=SelectedNode, Mode=TwoWay}" ItemTemplate="{StaticResource treetemplate}">
+            </telerik:RadTreeView>
+        </DataTemplate>
+        <DataTemplate DataType="tree:TreeViewModelPipeline">
+            <telerik:RadTreeView x:Name="tree" Background="WhiteSmoke" BorderThickness="1"
+                                     ItemsSource="{Binding Path=Nodes, Mode=TwoWay}"
+                                     SelectedItem="{Binding Path=SelectedNode, Mode=TwoWay}" ItemTemplate="{StaticResource treetemplate}">
+            </telerik:RadTreeView>
+        </DataTemplate>
+    </telerik:RadWindow.Resources>
+
+    <telerik:RadBusyIndicator BusyContent="Идёт загрузка..." IsBusy="{Binding Path=IsBusyLoading}">
+        <telerik:RadTabControl TabStripPlacement="Bottom">
+            <telerik:RadTabItem Header="Точечные объекты" Content="{Binding ModelTree}"/>
+            <telerik:RadTabItem Header="Линейная часть" Content="{Binding PipeLineTree}"/>
+        </telerik:RadTabControl>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

@@ -1,0 +1,108 @@
+﻿<UserControl x:Class="DataExchange.ASDU.AsduNsiDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:asdu="clr-namespace:DataExchange.ASDU"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400" IsEnabled="{Binding IsDetailsViewEnabled}"
+             d:DataContext="{d:DesignInstance asdu:AsduNsiDataViewModel}">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="ContentTemplate">
+            <!--            Intentionally left blank-->
+        </DataTemplate>
+        <asdu:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
+    <telerik:RadBusyIndicator BusyContent="{Binding BusyMessage}" IsBusy="{Binding IsBusyLoading}">
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <telerik:RadToolBar Grid.ColumnSpan="2">
+                <telerik:RadButton telerik:RadToolTipService.ToolTipContent="Обновить..."
+                                   Command="{Binding LoadDataCommand}" Margin="8,4,4,4">
+                    <Image Source="img/refresh_26px.png" />
+                </telerik:RadButton>
+                <telerik:RadButton telerik:RadToolTipService.ToolTipContent="Удалить" Command="{Binding LinkCommand}"
+                                   Visibility="Collapsed" IsEnabled="{Binding CanLink}" Margin="8,4,4,4">
+                    <Image Source="img/delete_26px.png" />
+                </telerik:RadButton>
+            </telerik:RadToolBar>
+            <Grid Grid.Row="1"
+                  Visibility="{Binding IsDataLoaded, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <telerik:RadTabControl ItemsSource="{Binding ChangeTypes}" DisplayMemberPath="ChangeTypeName"
+                                       SelectedItem="{Binding SelectedChangeType, Mode=TwoWay}"
+                                       ContentTemplate="{StaticResource ContentTemplate}" />
+                <telerik:RadGridView Grid.Row="1"
+                                     Grid.Column="0"
+                                     GridLinesVisibility="Both"
+                                     AutoGenerateColumns="False"
+                                     ItemsSource="{Binding LogEntries}"
+                                     CanUserFreezeColumns="False"
+                                     RowIndicatorVisibility="Collapsed"
+                                     ShowGroupPanel="False"
+                                     Margin="5, 0, 0, 0">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Width="25"
+                                                    Header="№"
+                                                    IsFilterable="False"
+                                                    IsSortable="False"
+                                                    TextWrapping="Wrap"
+                                                    IsReadOnly="True"
+                                                    DataMemberBinding="{Binding Nrownum}" />
+
+                        <telerik:GridViewDataColumn Width="75"
+                                                    Header="Тип изменения"
+                                                    IsFilterable="False"
+                                                    IsSortable="False"
+                                                    TextWrapping="Wrap"
+                                                    IsReadOnly="True"
+                                                    DataMemberBinding="{Binding Cchangetype}" />
+                        <telerik:GridViewDataColumn Width="250"
+                                                    Header="Название"
+                                                    IsFilterable="False"
+                                                    IsSortable="False"
+                                                    TextWrapping="Wrap"
+                                                    IsReadOnly="True"
+                                                    DataMemberBinding="{Binding Cparamname}" />
+                        <telerik:GridViewDataColumn Width="200"
+                                                    Header="Класс объекта"
+                                                    IsFilterable="False"
+                                                    IsSortable="False"
+                                                    TextWrapping="Wrap"
+                                                    IsReadOnly="True"
+                                                    DataMemberBinding="{Binding Cclass}" />
+                        <telerik:GridViewDataColumn Width="200"
+                                                    Header="Название объекта"
+                                                    IsFilterable="False"
+                                                    IsSortable="False"
+                                                    TextWrapping="Wrap"
+                                                    IsReadOnly="True"
+                                                    DataMemberBinding="{Binding Cobjname}" />
+                        <telerik:GridViewDataColumn Width="230"
+                                                    Header="ID объекта"
+                                                    IsFilterable="False"
+                                                    IsSortable="False"
+                                                    TextWrapping="Wrap"
+                                                    IsReadOnly="True"
+                                                    DataMemberBinding="{Binding Cobjid}" />
+                        <telerik:GridViewDataColumn Width="*"
+                                                    Header="Описание изменения"
+                                                    IsFilterable="False"
+                                                    IsSortable="False"
+                                                    TextWrapping="Wrap"
+                                                    IsReadOnly="True"
+                                                    DataMemberBinding="{Binding Cdesc}" />
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </Grid>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

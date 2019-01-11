@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XmlMessage>
+  <DTMessage>
+    <Header SendDate="2010-10-12" Receiver="Tomsk1" Sender="CPDD" GlobalId="test #16" SenderSeqId="58" />
+    <Attributes>
+      <Attribute key="1" instance="0" >Consultative</Attribute>
+      <Attribute key="2" instance="0" >test</Attribute>
+      <Attribute key="3" instance="0" >TestUserNameCpdd1</Attribute>
+      <Attribute key="7000" instance="0" >Описание ДЗ</Attribute>
+      <Attribute key="7016" instance="0" >1</Attribute>
+      <Attribute key="7017" instance="0" >7AD2A51CD0F34387A5004EE7EBF56419</Attribute>
+      <Attribute key="7018" instance="0" >1</Attribute>
+      <Attribute key="7019" instance="0" >млн.м³</Attribute>
+      <Attribute key="7020" instance="0" >0</Attribute>
+      <Attribute key="7021" instance="0" >2</Attribute>
+      <Attribute key="7022" instance="0" ></Attribute>
+      <Attribute key="7023" instance="0" >test vermerk</Attribute>
+      <Attribute key="7024" instance="0" >4</Attribute>
+      <Attribute key="7025" instance="0" >2014-11-19T10:00:00</Attribute>
+      <Attribute key="7026" instance="0" >FALSE</Attribute>
+      <Attribute key="7029" instance="0" >TRUE</Attribute>
+      <Attribute key="7031" instance="0" >ПЭНы</Attribute>
+      <Attribute key="7016" instance="1" >1</Attribute>
+      <Attribute key="7017" instance="1" >7AD2A51CD0F34387A5004EE7EBF56419</Attribute>
+      <Attribute key="7018" instance="1" >1</Attribute>
+      <Attribute key="7019" instance="1" >млн.м³</Attribute>
+      <Attribute key="7020" instance="1" >0</Attribute>
+      <Attribute key="7021" instance="1" >2</Attribute>
+      <Attribute key="7022" instance="1" ></Attribute>
+      <Attribute key="7023" instance="1" >test vermerk</Attribute>
+      <Attribute key="7024" instance="1" >4</Attribute>
+      <Attribute key="7025" instance="1" >2014-11-19T10:00:00</Attribute>
+      <Attribute key="7026" instance="1" >FALSE</Attribute>
+      <Attribute key="7029" instance="1" >TRUE</Attribute>
+      <Attribute key="7031" instance="1" >ПЭНы</Attribute>
+    </Attributes>
+  </DTMessage>
+</XmlMessage>

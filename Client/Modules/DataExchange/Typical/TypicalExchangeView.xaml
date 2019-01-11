@@ -1,0 +1,162 @@
+﻿<UserControl x:Class="DataExchange.Typical.TypicalExchangeView"                        
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"   
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"                                
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:entityTypes="clr-namespace:GazRouter.DTO.Dictionaries.EntityTypes;assembly=PortableDTO"
+             xmlns:typical="clr-namespace:DataExchange.Typical"
+             xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400" d:DataContext="{d:DesignInstance typical:TypicalExchangeViewModel}">
+
+    <telerik:RadBusyIndicator BusyContent="Загрузка..." IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+
+            <Grid.Resources>
+
+                <converters:EntityTypeToImageSourceConverter x:Key="EntityTypeToImage"/>
+                <converters:EntityTypeToNameConverter x:Key="EntityTypeToNameConverter" />
+                <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                <telerik:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" />
+
+
+                <!--Шаблон для отображения статуса объекта-->
+                <DataTemplate x:Key="IsActiveTemplate"
+                              DataType="typical:BindableItem">
+                    <CheckBox IsChecked="{Binding IsActive, Mode=TwoWay}"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center" 
+                              IsEnabled="{Binding IsEnabled}"
+                              />
+                </DataTemplate>
+
+
+                <!--Шаблон для отображения наименования-->
+                <DataTemplate x:Key="NameTemplate"
+                              DataType="typical:BindableItem">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="5">
+                        <Image Source="{Binding EntityType, Converter={StaticResource EntityTypeToImage}}"
+                               Stretch="None"
+                               VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding Name}"
+                                   Width="200"
+                                   TextWrapping="Wrap"
+                                   HorizontalAlignment="Left"
+                                   Margin="11, 0, 0, 0" />
+                    </StackPanel>
+                </DataTemplate>
+            </Grid.Resources>
+            
+            
+            
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar>
+
+                <telerik:RadComboBox ItemsSource="{Binding ExchangeEnterprises}" 
+                                     SelectedItem="{Binding SelectedEnterprise, Mode=TwoWay}"
+                                     SelectedValuePath="Id" 
+                                     DisplayMemberPath="Name" 
+                                     IsEditable="False"
+                                     Width="240"/>
+
+                <telerik:RadComboBox SelectedItem="{Binding SelectedSite, Mode=TwoWay}"
+                                     ItemsSource="{Binding SiteList}" 
+                                     DisplayMemberPath="Name"
+                                     Width="200"/>
+
+                <telerik:RadComboBox Width="100"
+                                     ItemsSource="{Binding TypeList}" 
+                                     SelectedItem="{Binding SelectedType, Mode=TwoWay}">
+                    <telerik:RadComboBox.ItemTemplate>
+                        <DataTemplate DataType="entityTypes:EntityType">
+                            <TextBlock Text="{Binding Converter={StaticResource EntityTypeToNameConverter}}"/>
+                        </DataTemplate>
+                    </telerik:RadComboBox.ItemTemplate>
+                </telerik:RadComboBox>
+
+                <telerik:RadButton Command="{Binding RefreshCommand}" 
+                                   Style="{StaticResource refreshButtonStyle}" />
+
+                <telerik:RadButton Command="{Binding EditCommand}" 
+                                   Style="{StaticResource editButtonStyle}" />
+
+                <telerik:RadToolBarSeparator />
+
+
+                <CheckBox IsChecked="{Binding IsTwoHoursSelected, Mode=TwoWay}" 
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          telerik:RadToolTipService.ToolTipContent="Двухчасовой период"
+                          >
+                    </CheckBox>
+
+                <controls:DateTimePickerTwoHours SelectedDateTime="{Binding SelectedTimeStamp, Mode=TwoWay}"
+                                                 DisableSelectFuture="True"
+                                                 Width="150"
+                                                 Visibility="{Binding IsTwoHoursSelected, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                <telerik:RadDatePicker SelectedDate="{Binding SelectedTimeStamp, Mode=TwoWay}"
+                                       Width="150"
+                                       Visibility="{Binding IsTwoHoursSelected, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+
+
+                <CheckBox IsChecked="{Binding IsCryptable, Mode=TwoWay}" 
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Content="Зашифровать содержимое"/>
+
+                <telerik:RadButton Command="{Binding DownloadCommand}" 
+                                   ToolTipService.ToolTip="Выгрузить файл" 
+                                   Style="{StaticResource saveButtonStyle}" />
+
+                <telerik:RadButton Command="{Binding RunCommand}" 
+                                   ToolTipService.ToolTip="Выполнить"   
+                                   Style="{StaticResource runButtonStyle}"/>
+                
+                
+                
+            </telerik:RadToolBar>
+
+            <telerik:RadGridView Grid.Row="1" 
+                                 GridLinesVisibility="Both"
+                                 ShowGroupPanel="False"
+                                 AutoGenerateColumns="False"
+                                 ItemsSource="{Binding Items}"
+                                 CanUserFreezeColumns="False"
+                                 RowIndicatorVisibility="Collapsed">
+                <telerik:RadGridView.Columns>
+
+                    <telerik:GridViewDataColumn Width="300"
+                                                Header="Объект"
+                                                IsFilterable="False" 
+                                                IsSortable="False" 
+                                                TextWrapping="Wrap"
+                                                IsReadOnly="True"
+                                                CellTemplate="{StaticResource NameTemplate}"/>
+
+                    <telerik:GridViewDataColumn Width="150"
+                                                IsFilterable="False" 
+                                                IsSortable="False" 
+                                                TextWrapping="Wrap"
+                                                IsReadOnly="False"
+                                                CellTemplate="{StaticResource IsActiveTemplate}">
+                        <telerik:GridViewDataColumn.Header>
+                            <TextBlock Text="Объект участвует в обмене"
+                                       TextWrapping="Wrap"
+                                       Width="100"/>
+                        </telerik:GridViewDataColumn.Header>
+                    </telerik:GridViewDataColumn>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

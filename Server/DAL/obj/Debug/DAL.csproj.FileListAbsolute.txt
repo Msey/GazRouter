@@ -1,0 +1,17 @@
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\DAL.dll.config
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\DAL.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\DAL.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\DAL.Core.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\PortableDTO.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\Utils.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\Log.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\NLog.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\PortableDTO.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\Utils.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\DAL.Core.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\Log.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\bin\Debug\NLog.xml
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\obj\Debug\DAL.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\DAL\obj\Debug\DAL.pdb

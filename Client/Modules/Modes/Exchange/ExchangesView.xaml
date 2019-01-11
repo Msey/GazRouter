@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="GazRouter.Modes.Exchange.ExchangesView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:exchange="clr-namespace:GazRouter.Modes.Exchange"
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="600"
+             d:DataContext="{d:DesignInstance exchange:ExchangesViewModel}">
+
+    <Grid Background="White">
+        <Grid.Resources>
+            <Style TargetType="telerik:RadTabItem" BasedOn="{StaticResource RadTabItemStyle}">
+                <Setter Property="Width" Value="250"></Setter>
+            </Style>
+        </Grid.Resources>
+        <telerik:RadTabControl>
+            <telerik:RadTabItem Header="Перекодировочные таблицы" IsSelected="{Binding Path=MappingViewModel.IsSelected,Mode=TwoWay}">
+                <exchange:MappingView DataContext="{Binding MappingViewModel}" />
+            </telerik:RadTabItem>
+            <telerik:RadTabItem Header="Задания" IsSelected="{Binding Path=ExchangeSettingsViewModel.IsSelected,Mode=TwoWay}">
+                <exchange:ExchangeSettingsView DataContext="{Binding ExchangeSettingsViewModel}" />
+            </telerik:RadTabItem>
+            <telerik:RadTabItem Header="Внешние системы" IsSelected="{Binding Path=SourceViewModel.IsSelected,Mode=TwoWay}">
+                <exchange:SourceView DataContext="{Binding SourceViewModel}" />
+            </telerik:RadTabItem>
+            <telerik:RadTabItem Header="GRExchange" IsSelected="{Binding Path=TypicalExchangeViewModel.IsSelected,Mode=TwoWay}">
+                <exchange:TypicalExchangeView DataContext="{Binding TypicalExchangeViewModel}" />
+            </telerik:RadTabItem>
+
+            <telerik:RadTabItem Header="Службы эскпорта/импорта" IsSelected="{Binding Path=TimerSettingsViewModel.IsSelected,Mode=TwoWay}">
+                <exchange:TimerSettingsView DataContext="{Binding TimerSettingsViewModel}" />
+            </telerik:RadTabItem>
+        </telerik:RadTabControl>
+    </Grid>
+</UserControl>

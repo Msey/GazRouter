@@ -1,0 +1,202 @@
+﻿<UserControl x:Class="GazRouter.Modes.ProcessMonitoring.Views.BalanceView" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="600"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:tel2="clr-namespace:Telerik.Windows.Controls.ChartView;assembly=Telerik.Windows.Controls.Chart"
+             xmlns:viewModels="clr-namespace:GazRouter.Modes.ProcessMonitoring.ViewModels"
+             d:DataContext="{d:DesignInstance viewModels:BalancesViewModel}">
+
+   <UserControl.Resources>
+        <Style x:Key="TickStyle" TargetType="Rectangle">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+        <DataTemplate x:Key="ToolTipTemplateIntake">
+            <Border BorderBrush="Black" BorderThickness="1">
+                <StackPanel Orientation="Horizontal"  Margin="5,5,5,5">
+                <TextBlock Text="Фактическое поступление : " TextAlignment="Center"/>
+                    <TextBlock Text="{Binding Path=DataItem.IntakeValue}" TextAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="ToolTipTemplateConsumption">
+            <Border BorderBrush="Black" BorderThickness="1">
+                <StackPanel Orientation="Horizontal"  Margin="5,5,5,5">
+                    <TextBlock Text="Фактическое потребление : " TextAlignment="Center"/>
+                    <TextBlock Text="{Binding Path=DataItem.ConsumptionValue}" TextAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="ToolTipTemplateTransit">
+            <Grid>
+                <Border BorderBrush="Black" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal"  Margin="5,5,5,5">
+                        <TextBlock Text="Фактический транзит : " TextAlignment="Center"/>
+                        <TextBlock Text="{Binding Path=DataItem.TransitValue}" TextAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="trackBallLineStyle" TargetType="Polyline">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <telerik:RadToolBar MinHeight="25" Grid.Row="0" Grid.ColumnSpan="2">
+            <telerik:RadDatePicker SelectedValue="{Binding SelectedDate,Mode=TwoWay}" />
+            <telerik:RadToolBarSeparator />
+            <telerik:RadButton Command="{Binding RefreshCommand}" Style="{StaticResource refreshButtonStyle}"
+                                   ToolTipService.ToolTip="Обновить" />
+        </telerik:RadToolBar>
+        <telerik:RadGridView  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0"
+                              ItemsSource="{Binding List,Mode=TwoWay}"  CanUserFreezeColumns="False" 
+                        RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" AutoGenerateColumns="False"
+                        IsReadOnly="False">
+            <telerik:RadGridView.ColumnGroups>
+                <telerik:GridViewColumnGroup Name="Intake" Header="Поступления"></telerik:GridViewColumnGroup>
+                <telerik:GridViewColumnGroup Name="Consumer" Header="Потребители"></telerik:GridViewColumnGroup>
+                <telerik:GridViewColumnGroup Name="Transit" Header="Транзит"></telerik:GridViewColumnGroup>
+                <telerik:GridViewColumnGroup Name="STN" Header="СТН"></telerik:GridViewColumnGroup>
+                <telerik:GridViewColumnGroup Name="IZAP" Header="Изм. Запаса газа"></telerik:GridViewColumnGroup>
+                <telerik:GridViewColumnGroup Name="ZAP" Header="Запас газа"></telerik:GridViewColumnGroup>
+                    
+            </telerik:RadGridView.ColumnGroups>
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn IsFilterable="False" IsSortable="True" IsReadOnly="True" IsResizable="False" Width="100" Header="" DataMemberBinding="{Binding DateTime,StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"></telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn IsFilterable="False" IsSortable="True" IsReadOnly="True" IsResizable="False" Width="50" ColumnGroupName="Intake" Header="План"  DataMemberBinding="{Binding IntakePlanValue,StringFormat='{}{0:0.00}'}" ></telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn IsFilterable="False" IsSortable="True" IsReadOnly="True" IsResizable="False" Width="50"  ColumnGroupName="Intake" Header="Факт"  DataMemberBinding="{Binding IntakeValue,StringFormat='{}{0:0.00}'}" ></telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn IsFilterable="False" IsSortable="True" IsReadOnly="True" IsResizable="False" Width="50" ColumnGroupName="Consumer" Header="План"  DataMemberBinding="{Binding ConsumptionPlanValue,StringFormat='{}{0:0.00}'}" ></telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn IsFilterable="False" IsSortable="True" IsReadOnly="True" IsResizable="False" Width="50"  ColumnGroupName="Consumer" Header="Факт"  DataMemberBinding="{Binding ConsumptionValue,StringFormat='{}{0:0.00}'}" ></telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn IsFilterable="False" IsSortable="True" IsReadOnly="True" IsResizable="False" Width="50"  ColumnGroupName="Transit" Header="План"  DataMemberBinding="{Binding TransitPlanValue,StringFormat='{}{0:0.00}'}" ></telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn IsFilterable="False" IsSortable="True" IsReadOnly="True" IsResizable="False" Width="50" ColumnGroupName="Transit" Header="Факт"  DataMemberBinding="{Binding TransitValue,StringFormat='{}{0:0.00}'}" ></telerik:GridViewDataColumn>
+
+                <!--<telerik:GridViewDataColumn IsFilterable="False" IsSortable="True" IsReadOnly="True" >
+                    <telerik:GridViewDataColumn.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border>
+                                <TextBlock Grid.ColumnSpan="2" Text="СТН" TextWrapping="Wrap" />
+                            </Border>
+                            <Border>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="План" TextWrapping="Wrap" />
+                            </Border>
+                            <Border>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="Факт" TextWrapping="Wrap" />
+                            </Border>
+                        </Grid>
+                    </telerik:GridViewDataColumn.Header>
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Border>
+                                    <TextBlock Grid.Column="0" Text="{Binding}" TextWrapping="Wrap" />
+                                </Border>
+                                <Border>
+                                    <TextBlock Grid.Column="1" Text="{Binding}" TextWrapping="Wrap" />
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn Header="Запас Газа" DataMemberBinding="{Binding Date}"></telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn Header="Изм. запаса газа" DataMemberBinding="{Binding Date}"></telerik:GridViewDataColumn>-->
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <Rectangle Height="15" Width="15" Fill="Red"></Rectangle>
+                <TextBlock Text=" Фактическое поступление"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Rectangle Height="15" Width="15" Fill="Plum"></Rectangle>
+                <TextBlock Text=" Плановое поступление"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Rectangle Height="15" Width="15" Fill="Black"></Rectangle>
+                <TextBlock Text=" Фактическое распределение"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Rectangle Height="15" Width="15" Fill="DarkGray"></Rectangle>
+                <TextBlock Text=" Плановое распределение"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Rectangle Height="15" Width="15" Fill="Blue"></Rectangle>
+                <TextBlock Text=" Фактический транзит"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Rectangle Height="15" Width="15" Fill="SkyBlue"></Rectangle>
+                <TextBlock Text=" Плановый транзит"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+        <telerik:RadCartesianChart Margin="5,5,20,5" Grid.Row="2" Grid.Column="0" EmptyContent="Нет данных" TrackBallLineStyle="{StaticResource trackBallLineStyle}">
+            
+            <telerik:RadCartesianChart.Behaviors>
+                <telerik:ChartTooltipBehavior Placement="Top" VerticalOffset="-20"/>
+                <telerik:ChartTrackBallBehavior ShowTrackInfo="False" ShowIntersectionPoints="False" />
+            </telerik:RadCartesianChart.Behaviors>
+            <tel2:LineSeries CategoryBinding="DateTime" ValueBinding="IntakeDisplayCurrentValue" ItemsSource="{Binding List,Mode=TwoWay}" Stroke="Red" >
+                <tel2:LineSeries.PointTemplate>
+                    <DataTemplate>
+                        <Ellipse Height="5" Width="5" Stroke="Red" Fill="Red" />
+                    </DataTemplate>
+                </tel2:LineSeries.PointTemplate>
+            </tel2:LineSeries>
+            <tel2:LineSeries CategoryBinding="DateTime" ValueBinding="IntakePlanDisplayCurrentValue" ItemsSource="{Binding List,Mode=TwoWay}" Stroke="Plum">
+            </tel2:LineSeries>
+            <tel2:LineSeries CategoryBinding="DateTime" ValueBinding="ConsumptionDisplayCurrentValue" ItemsSource="{Binding List,Mode=TwoWay}" Stroke="Black">
+                <tel2:LineSeries.PointTemplate>
+                    <DataTemplate>
+                        <Ellipse Height="5" Width="5" Stroke="Black" Fill="Black" />
+                    </DataTemplate>
+                </tel2:LineSeries.PointTemplate>
+            </tel2:LineSeries>
+            <tel2:LineSeries CategoryBinding="DateTime" ValueBinding="ConsumptionPlanDisplayCurrentValue" ItemsSource="{Binding List,Mode=TwoWay}" Stroke="DarkGray">
+            </tel2:LineSeries>
+            <tel2:LineSeries CategoryBinding="DateTime" ValueBinding="TransitDisplayCurrentValue" ItemsSource="{Binding List,Mode=TwoWay}" Stroke="Blue">
+                <tel2:LineSeries.PointTemplate>
+                    <DataTemplate>
+                        <Ellipse Height="5" Width="5" Stroke="Blue" Fill="Blue" />
+                    </DataTemplate>
+                </tel2:LineSeries.PointTemplate>
+            </tel2:LineSeries>
+            <tel2:LineSeries CategoryBinding="DateTime" ValueBinding="TransitPlanDisplayCurrentValue" ItemsSource="{Binding List,Mode=TwoWay}" Stroke="SkyBlue">
+            </tel2:LineSeries>
+            <telerik:RadCartesianChart.HorizontalAxis>
+                <telerik:DateTimeCategoricalAxis LabelFitMode="MultiLine"
+                                     LabelFormat="HH:mm"
+                                     DateTimeComponent="Hour"></telerik:DateTimeCategoricalAxis>
+            </telerik:RadCartesianChart.HorizontalAxis>
+            <telerik:RadCartesianChart.VerticalAxis>
+                <telerik:LinearAxis Minimum="{Binding MinValue,Mode=TwoWay}" Maximum="{Binding MaxValue,Mode=TwoWay}"  ShowLabels="False" MajorTickStyle="{StaticResource TickStyle}" Visibility="Collapsed"/>
+            </telerik:RadCartesianChart.VerticalAxis>
+            <telerik:RadCartesianChart.Grid>
+                <telerik:CartesianChartGrid MajorLinesVisibility="Y" />
+            </telerik:RadCartesianChart.Grid>
+        </telerik:RadCartesianChart>
+        
+    </Grid>
+</UserControl>

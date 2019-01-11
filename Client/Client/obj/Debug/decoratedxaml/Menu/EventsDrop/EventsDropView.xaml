@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?><UserControl x:Class="GazRouter.Client.Menu.EventsDrop.EventsDropView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:entityName="clr-namespace:GazRouter.Controls.EntityName;assembly=Controls" xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls" xmlns:linkListDrop1="clr-namespace:GazRouter.Client.Menu.LinkListDrop" xmlns:eventsDrop="clr-namespace:GazRouter.Client.Menu.EventsDrop" mc:Ignorable="d" d:DataContext="{d:DesignInstance eventsDrop:EventsDropViewModel}" xmlns:spy="http://firstfloorsoftware.com/XamlSpy" spy:XamlMetadata.SpyServiceSettings="127.0.0.1|4530|53501|1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\EventsDrop\EventsDropView.xaml|1|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+
+    <Grid spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\EventsDrop\EventsDropView.xaml|13|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+        <Grid.Resources>
+            <converters:DailyDateTimeConverter x:Key="DailyDateTimeConverter" />
+        </Grid.Resources>
+
+        <StackPanel spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\EventsDrop\EventsDropView.xaml|18|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+
+            <linkListDrop1:LinkItemView DataContext="{Binding LogLink}" />
+
+            <Line X1="0" X2="500" Y1="0" Y2="0" StrokeThickness="1" Stroke="Gray" StrokeDashArray="1, 2" HorizontalAlignment="Center" Margin="0, 20, 0, 0" Visibility="{Binding HasEvents, Converter={StaticResource BooleanToVisibilityConverter}}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\EventsDrop\EventsDropView.xaml|22|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+            <TextBlock Text="{Binding SectionName}" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold" Margin="0, 11, 0, 0" Visibility="{Binding HasEvents, Converter={StaticResource BooleanToVisibilityConverter}}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\EventsDrop\EventsDropView.xaml|31|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+            <ItemsControl ItemsSource="{Binding EventList}" Margin="20, 11, 0, 0" HorizontalContentAlignment="Left" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\EventsDrop\EventsDropView.xaml|38|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="eventsDrop:EventWrap">
+
+                        <Grid spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\EventsDrop\EventsDropView.xaml|44|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox VerticalAlignment="Center" Margin="0, 0, 20, 0" Command="{Binding AckCommand}" Visibility="{Binding NonAck, Converter={StaticResource BooleanToVisibilityConverter}}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\EventsDrop\EventsDropView.xaml|49|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                            <StackPanel Margin="0, 0, 0, 20" Grid.Column="1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\EventsDrop\EventsDropView.xaml|53|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                                <TextBlock Text="{Binding Dto.EventDate, Converter={StaticResource DailyDateTimeConverter}}" FontWeight="Bold" FontSize="11" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\EventsDrop\EventsDropView.xaml|55|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                                <TextBlock Text="{Binding Dto.UserEntityName}" Foreground="CadetBlue" FontSize="11" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\EventsDrop\EventsDropView.xaml|60|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                                <entityName:EntityNameBlock Entity="{Binding Dto.Entity}" Kilometer="{Binding Dto.Kilometer}" UseShortPathAsName="True" DisplayIcon="True" DisplayType="True" FontSize="13" HorizontalAlignment="Left" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\EventsDrop\EventsDropView.xaml|64|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+
+                                <TextBlock Text="{Binding Dto.Description}" FontSize="13" FontFamily="Segoe UI Light" Width="400" TextWrapping="Wrap" TextAlignment="Left" HorizontalAlignment="Left" Foreground="{Binding EventTextColor}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\EventsDrop\EventsDropView.xaml|72|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                            </StackPanel>
+                        </Grid>
+                        
+                        
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+
+        </StackPanel>
+
+
+        
+    </Grid>
+</UserControl>

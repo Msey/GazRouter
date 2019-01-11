@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="GazRouter.DataServices.Balances.BalancesService" CodeBehind="BalancesService.svc.cs" %>

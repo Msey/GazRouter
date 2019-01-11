@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="GazRouter.ManualInput.Settings.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:settings="clr-namespace:GazRouter.ManualInput.Settings"
+             xmlns:serieChecks="clr-namespace:GazRouter.ManualInput.Settings.SerieChecks"
+             xmlns:entityProperties="clr-namespace:GazRouter.ManualInput.Settings.EntityProperties"
+             xmlns:dependantSites="clr-namespace:GazRouter.ManualInput.Settings.DependantSites"
+             xmlns:inputOffEntities="clr-namespace:GazRouter.ManualInput.Settings.InputOffEntities"
+             xmlns:gasCosts2="clr-namespace:GazRouter.Modes.GasCosts2;assembly=Modes"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400" d:DataContext="{d:DesignInstance settings:SettingsViewModel}">
+    
+    <UserControl.Resources>
+        <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    
+    <Grid>
+
+        <telerik:RadTabControl>
+
+            <telerik:RadTabItem Header="Проверки">
+                <serieChecks:SerieChecksView DataContext="{Binding SerieChecks}"/>
+            </telerik:RadTabItem>
+
+            <telerik:RadTabItem Header="Обязательные параметры">
+                <entityProperties:EntityPropertiesView DataContext="{Binding EntityProperties}" />
+            </telerik:RadTabItem>
+
+            <telerik:RadTabItem Header="Подчиненные ЛПУ">
+                <dependantSites:DependantSitesView DataContext="{Binding DependantSites}"/>
+            </telerik:RadTabItem>
+
+            <telerik:RadTabItem Header="Отключить в ручн. вводе">
+                <inputOffEntities:InputOffEntitiesView DataContext="{Binding InputOffEntities}"/>
+            </telerik:RadTabItem>
+
+            <telerik:RadTabItem Header="СТН" >
+                <gasCosts2:StateVisibilityView DataContext="{Binding StateVisibility}"/>
+            </telerik:RadTabItem>
+
+        </telerik:RadTabControl>
+
+
+    </Grid>
+
+</UserControl>

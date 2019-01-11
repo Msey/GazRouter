@@ -1,0 +1,37 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Modes.GasCosts.Dialogs.ReducingStationOwnNeedsCosts.ReducingStationOwnNeedsCostsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+    xmlns:repairCosts="clr-namespace:GazRouter.Modes.GasCosts.Dialogs.RepairCosts"
+    xmlns:dialogs="clr-namespace:GazRouter.Modes.GasCosts.Dialogs"
+    xmlns:reducingStationOwnNeedsCosts="clr-namespace:GazRouter.Modes.GasCosts.Dialogs.ReducingStationOwnNeedsCosts"
+    WindowStartupLocation="CenterScreen"
+    Header="На собственные нужды автоматических редуцирующих пунктов"
+    attachedProperties1:ModelDialogResult.DialogResult="{Binding DialogResult}"
+    Style="{StaticResource DialogWindowStyle}"
+>
+    <telerik:RadWindow.Resources>
+        <telerik:BooleanToVisibilityConverter x:Key="boolToVisibility" />
+    </telerik:RadWindow.Resources>
+    
+    <StackPanel Margin="11">
+
+        <dialogs:EventDateAndObjectControl />
+
+        <StackPanel Orientation="Vertical"  Margin="0,11,0,0">
+            <RadioButton Content="Расчет 1. На ремонт (реконструкцию) комуникаций" 
+                         GroupName="1" IsChecked="{Binding Radio1, Mode=TwoWay}"/>
+            <RadioButton Content="Расчет 2. На работу подогревателя газа для подогрева редуцируемого газа перед регулятором давления" 
+                         GroupName="1" IsChecked="{Binding Radio2, Mode=TwoWay}"/>
+        </StackPanel>
+
+        <repairCosts:RepairCostsViewControl
+                Visibility="{Binding Radio1, Converter={StaticResource boolToVisibility}}"/>
+
+        <reducingStationOwnNeedsCosts:ReducingStationOwnNeedsCostsViewControl 
+                Visibility="{Binding Radio2, Converter={StaticResource boolToVisibility}}"/>
+
+        <dialogs:OkCancelControl />
+    </StackPanel>
+</telerik:RadWindow>

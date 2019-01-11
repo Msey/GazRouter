@@ -1,0 +1,844 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0F9FD4C7-37F4-4A20-9CF1-C0D04126432D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GazRouter.DAL</RootNamespace>
+    <AssemblyName>DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACT_FULL</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACT_FULL</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Oracle.ManagedDataAccess.12.1.2400\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Appearance\Versions\EditSchemeVersionCommentCommand.cs" />
+    <Compile Include="ASDU\AddAsduRequestCommand.cs" />
+    <Compile Include="ASDU\ApplyChangeToIusCommand.cs" />
+    <Compile Include="ASDU\CreateAsduOutboundCommand.cs" />
+    <Compile Include="ASDU\GetAsduOutboundContentsCommand.cs" />
+    <Compile Include="ASDU\GetDataTreeNodesCommand.cs" />
+    <Compile Include="ASDU\GetFilterParamsCommand.cs" />
+    <Compile Include="ASDU\GetImportLogEntriesCommand.cs" />
+    <Compile Include="ASDU\GetLoadedFilesCommand.cs" />
+    <Compile Include="ASDU\GetLoadedFileXmlCommand.cs" />
+    <Compile Include="ASDU\GetMetadataTreeNodesCommand.cs" />
+    <Compile Include="ASDU\GetPossibleDataTreeRootsCommand.cs" />
+    <Compile Include="ASDU\GetPossibleLinkRolesCommand.cs" />
+    <Compile Include="ASDU\GetTreeNodesCommand.cs" />
+    <Compile Include="ASDU\ImportXmlFromASDUCommand.cs" />
+    <Compile Include="ASDU\ManageAsduOutboundContentsCommand.cs" />
+    <Compile Include="ASDU\ManageAsduRequestCommand.cs" />
+    <Compile Include="ASDU\ManageLinkCommand.cs" />
+    <Compile Include="Authorization\Permission\AddPermissionsCommand.cs" />
+    <Compile Include="Authorization\Permission\EditPermissionCommand.cs" />
+    <Compile Include="Authorization\Permission\GetPermissionsQuery.cs" />
+    <Compile Include="Authorization\Permission\GetPermissionsByRoleIdQuery.cs" />
+    <Compile Include="Authorization\Permission\RemovePermissionCommand.cs" />
+    <Compile Include="Authorization\Permission\RemovePermissionsCommand.cs" />
+    <Compile Include="Authorization\User\AddAgreedUserCommand.cs" />
+    <Compile Include="Authorization\User\DeleteTargetListUserCommand.cs" />
+    <Compile Include="Authorization\User\EditTargetListUserCommand.cs" />
+    <Compile Include="Authorization\User\AddTargetListUserCommand.cs" />
+    <Compile Include="Authorization\User\CheckUserQuery.cs" />
+    <Compile Include="Authorization\User\DeleteAgreedUserCommand.cs" />
+    <Compile Include="Authorization\User\EditAgreedUserCommand.cs" />
+    <Compile Include="Authorization\User\GetAgreedUsersAllQuery.cs" />
+    <Compile Include="Authorization\User\GetTargetListUsersQuery.cs" />
+    <Compile Include="Balances\BalanceGroups\AddBalanceGroupCommand.cs" />
+    <Compile Include="Balances\BalanceGroups\DeleteBalanceGroupCommand.cs" />
+    <Compile Include="Balances\BalanceGroups\EditBalanceGroupCommand.cs" />
+    <Compile Include="Balances\BalanceGroups\GetBalanceGroupListQuery.cs" />
+    <Compile Include="Balances\ConsumerContracts\AddConsumerContractCommand.cs" />
+    <Compile Include="Balances\ConsumerContracts\DeleteConsumerContractCommand.cs" />
+    <Compile Include="Balances\ConsumerContracts\EditConsumerContractCommand.cs" />
+    <Compile Include="Balances\ConsumerContracts\GetConsumerContractListQuery.cs" />
+    <Compile Include="Balances\Corrections\GetCorrectionListQuery.cs" />
+    <Compile Include="Balances\Corrections\SetCorrectionCommand.cs" />
+    <Compile Include="Balances\DistrNetworks\AddDistrNetworkCommand.cs" />
+    <Compile Include="Balances\DistrNetworks\DeleteDistrNetworkCommand.cs" />
+    <Compile Include="Balances\DistrNetworks\EditDistrNetworkCommand.cs" />
+    <Compile Include="Balances\DistrNetworks\GetDistrNetworkListQuery.cs" />
+    <Compile Include="Balances\Docs\EditDocCommand.cs" />
+    <Compile Include="Balances\GasOwners\GetGasOwnerDisableListQuery.cs" />
+    <Compile Include="Balances\GasOwners\SetGasOwnerSystemCommand.cs" />
+    <Compile Include="Balances\GasOwners\SetGasOwnerDisableCommand.cs" />
+    <Compile Include="Balances\InputStates\GetInputStateListQuery.cs" />
+    <Compile Include="Balances\InputStates\SetlInputStateCommand.cs" />
+    <Compile Include="Balances\Irregularity\GetIrregularityListQuery.cs" />
+    <Compile Include="Balances\Irregularity\SetIrregularityCommand.cs" />
+    <Compile Include="Balances\MiscTab\RemoveMiscTabEntityCommand.cs" />
+    <Compile Include="Balances\MiscTab\AddMiscTabEntityCommand.cs" />
+    <Compile Include="Balances\MiscTab\GetMiscTabEntityListQuery.cs" />
+    <Compile Include="Balances\Routes\AddRouteSectionCommand.cs" />
+    <Compile Include="Balances\Routes\Exceptions\DeleteRouteExceptionCommand.cs" />
+    <Compile Include="Balances\Routes\Exceptions\EditRouteExceptionCommand.cs" />
+    <Compile Include="Balances\Routes\Exceptions\AddRouteExceptionCommand.cs" />
+    <Compile Include="Balances\Routes\GetSectionListQuery.cs" />
+    <Compile Include="Balances\SortOrder\GetSortOrderListQuery.cs" />
+    <Compile Include="Balances\SortOrder\SetSortOrderCommand.cs" />
+    <Compile Include="Balances\Swaps\GetSwapListQuery.cs" />
+    <Compile Include="Balances\Swaps\AddSwapCommand.cs" />
+    <Compile Include="Balances\Transport\ClearTransportListCommand.cs" />
+    <Compile Include="Balances\Transport\AddTransportCommand.cs" />
+    <Compile Include="Balances\Transport\GetTransportListQuery.cs" />
+    <Compile Include="Balances\Values\GetBalanceSessionValueListQuery.cs" />
+    <Compile Include="Balances\Values\GetBalanceValueListQuery.cs" />
+    <Compile Include="Balances\Values\AddBalanceValueCommand.cs" />
+    <Compile Include="Balances\Values\SetBalanceValueCommand.cs" />
+    <Compile Include="Bindings\EntityBindings\GetEntityBindingListQuery.cs" />
+    <Compile Include="Bindings\EntityPropertyBindings\GetEntityPropertyBindingListQuery.cs" />
+    <Compile Include="Bindings\PropertyBindings\AddPropertyBindingCommand.cs" />
+    <Compile Include="Bindings\PropertyBindings\DeletePropertyBindingCommand.cs" />
+    <Compile Include="Bindings\PropertyBindings\EditPropertyBindingCommand.cs" />
+    <Compile Include="Bindings\PropertyBindings\GetPropertyBindingsListCommand.cs" />
+    <Compile Include="Calculations\Calculation\AddCalculationCommand.cs" />
+    <Compile Include="Calculations\Calculation\DeleteCalculationCommand.cs" />
+    <Compile Include="Calculations\Calculation\EditCalculationCommand.cs" />
+    <Compile Include="Calculations\Calculation\TestCalculationQuery.cs" />
+    <Compile Include="Calculations\Calculation\GetCalculationListQuery.cs" />
+    <Compile Include="Dashboards\DashboardGrants\AddDashboardGrantCommand.cs" />
+    <Compile Include="Dashboards\DashboardGrants\AddDashboardPermissionCommand.cs" />
+    <Compile Include="Dashboards\DashboardGrants\AddFolderPermissionCommand.cs" />
+    <Compile Include="Dashboards\DashboardGrants\DeleteDashboardPermissionCommand.cs" />
+    <Compile Include="Dashboards\DashboardGrants\DeleteFolderPermissionCommand.cs" />
+    <Compile Include="Dashboards\DashboardGrants\EditDashboardPermissionCommand.cs" />
+    <Compile Include="Dashboards\DashboardGrants\EditFolderPermissionCommand.cs" />
+    <Compile Include="Dashboards\DashboardGrants\GetDashboardPermissionListQuery.cs" />
+    <Compile Include="Dashboards\DashboardGrants\GetDashboardSharedListQuery.cs" />
+    <Compile Include="Dashboards\DashboardGrants\GetFolderPermissionListQuery.cs" />
+    <Compile Include="Dashboards\Dashboards\GetAllDashboardListQuery.cs" />
+    <Compile Include="Dashboards\Dashboards\GetDashboardFoldersQuery.cs" />
+    <Compile Include="Dashboards\Dashboards\GetDashboardUserSharedListQuery.cs" />
+    <Compile Include="Dashboards\Dashboards\GetDashboardUsersSharedListQuery.cs" />
+    <Compile Include="Dashboards\Folders\GetAllFolderListQuery.cs" />
+    <Compile Include="DataExchange\Asdu\GetAsduPropertyListQuery.cs" />
+    <Compile Include="DataExchange\Asdu\SetAsduEntityCommand.cs" />
+    <Compile Include="DataExchange\Asdu\SetAsduPropertyCommand.cs" />
+    <Compile Include="DataExchange\ASUTPImport\ASUTPImportCommand.cs" />
+    <Compile Include="DataExchange\ExchangeProperty\SetExchangePropertyValueCommand.cs" />
+    <Compile Include="DataExchange\ExchangeTask\RunProcCommand.cs" />
+    <Compile Include="DataExchange\Integro\AddEditSummaryCommand.cs" />
+    <Compile Include="DataExchange\Integro\AddEditSummaryParamCommand.cs" />
+    <Compile Include="DataExchange\Integro\AddEditSummaryParamContentCommand.cs" />
+    <Compile Include="DataExchange\Integro\GetSummaryByIdCommand.cs" />
+    <Compile Include="DataExchange\Integro\DeleteSummaryCommand.cs" />
+    <Compile Include="DataExchange\Integro\DeleteSummaryParamCommand.cs" />
+    <Compile Include="DataExchange\Integro\GetSummariesListBySystemIdQuery.cs" />
+    <Compile Include="DataExchange\Integro\GetSummariesListQuery.cs" />
+    <Compile Include="DataExchange\Integro\GetSummariesParamContentListQuery.cs" />
+    <Compile Include="DataExchange\Integro\GetSummariesParamListQuery.cs" />
+    <Compile Include="DataExchange\Integro\SessionData\SessionDataQuery.cs" />
+    <Compile Include="DataExchange\Integro\SummaryExchangeTasks\SummaryExchangeTasksManager.cs" />
+    <Compile Include="Dictionaries\BalanceItems\GetBalanceItemsCommand.cs" />
+    <Compile Include="Dictionaries\Diameters\GetExternalDiameterListQuery.cs" />
+    <Compile Include="Dictionaries\GasCostItemGroups\GetGasCostItemGroupListQuery.cs" />
+    <Compile Include="DispatcherTasks\Attachments\DeleteTaskAttachmentCommand.cs" />
+    <Compile Include="DispatcherTasks\Attachments\EditTaskAttachmentCommand.cs" />
+    <Compile Include="DispatcherTasks\RecordNotes\EditRecordNoteCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\AddTaskRecordCPDD\AddTaskRecordCPDDCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\AddTaskRecordCPDD\EditTaskRecordCPDDCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\TaskRecordsExecutedCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\TaskRecordsResetExecutedCommand.cs" />
+    <Compile Include="DispatcherTasks\TasksExchangeLog\AddTaskExchangeLogCommand.cs" />
+    <Compile Include="DispatcherTasks\TasksExchangeLog\EditTaskExchangeLogCommand.cs" />
+    <Compile Include="DispatcherTasks\TasksExchangeLog\GetTaskExchangeLogQuery.cs" />
+    <Compile Include="DispatcherTasks\TasksExchangeLog\RemoveTaskExchangeLogCommand.cs" />
+    <Compile Include="DispatcherTasks\Tasks\AddTaskCommand.cs" />
+    <Compile Include="DispatcherTasks\Tasks\EditTaskCommand.cs" />
+    <Compile Include="DispatcherTasks\Tasks\DeleteTaskCommand.cs" />
+    <Compile Include="DispatcherTasks\Tasks\GetTaskListQuery.cs" />
+    <Compile Include="EventLog\QueueExchangeEvents\AddQueueExchangeEventCommand.cs" />
+    <Compile Include="EventLog\QueueExchangeEvents\GetQueueExchangeEventListQuery.cs" />
+    <Compile Include="ExcelReport\Folders\GetAllExcelReportFolderListQuery.cs.cs" />
+    <Compile Include="ExcelReport\GetAllExcelReportListQuery.cs" />
+    <Compile Include="ExcelReport\GetExcelReportUsersSharedListQuery.cs" />
+    <Compile Include="ExcelReport\GetExcelReportUserSharedListQuery.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\GetNonAckRecordsQuery.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\ResetTaskRecordAckCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\SetTaskRecordAckCommand.cs" />
+    <Compile Include="ExcelReport\DeleteDashboardCommand1.cs" />
+    <Compile Include="ExcelReport\EditDashboardCommand1.cs" />
+    <Compile Include="ExcelReport\EditDashboardGrantCommand1.cs" />
+    <Compile Include="ExcelReport\Folders\AddDashboardToFolderCommand1.cs" />
+    <Compile Include="ExcelReport\Folders\AddExcelReportFolderCommand.cs" />
+    <Compile Include="ExcelReport\Folders\DeleteDashboardFromFolderCommand.cs" />
+    <Compile Include="ExcelReport\Folders\DeleteFolderCommand1.cs" />
+    <Compile Include="ExcelReport\Folders\EditFolderCommand1.cs" />
+    <Compile Include="ExcelReport\Folders\GetExcelReportFolderListQuery.cs" />
+    <Compile Include="ExcelReport\AddExcelReportCommand.cs" />
+    <Compile Include="DataExchange\ExchangeEntity\SetExchangeEntityCommand.cs" />
+    <Compile Include="DataExchange\ExchangeLog\AddExchangeLogCommand.cs" />
+    <Compile Include="DataExchange\TypicalExchange\GetExchangeEntityBindingsListQuery.cs" />
+    <Compile Include="DataExchange\TypicalExchange\GetExchangeEntityPropertyBindingListQuery.cs" />
+    <Compile Include="DataExchange\DataSource\AddDataSourceCommand.cs" />
+    <Compile Include="DataExchange\DataSource\DeleteDataSourceCommand.cs" />
+    <Compile Include="DataExchange\DataSource\EditDataSourceCommand.cs" />
+    <Compile Include="DataExchange\DataSource\GetDataSourceListQuery.cs" />
+    <Compile Include="DataExchange\ExchangeEntity\AddExchangeEntityCommand.cs" />
+    <Compile Include="DataExchange\ExchangeEntity\DeleteExchangeEntityCommand.cs" />
+    <Compile Include="DataExchange\ExchangeEntity\EditExchangeEntityCommand.cs" />
+    <Compile Include="DataExchange\ExchangeEntity\GetExchangeEntityListQuery.cs" />
+    <Compile Include="DataExchange\ExchangeLog\GetExchangeLogQuery.cs" />
+    <Compile Include="DataExchange\ExchangeProperty\GetExchangePropertyListQuery.cs" />
+    <Compile Include="DataExchange\ExchangeProperty\SetExchangePropertyCommand.cs" />
+    <Compile Include="DataExchange\ExchangeTask\AddExchangeTaskCommand.cs" />
+    <Compile Include="DataExchange\ExchangeTask\DeleteExchangeTaskCommand.cs" />
+    <Compile Include="DataExchange\ExchangeTask\EditExchangeTaskCommand.cs" />
+    <Compile Include="DataExchange\ExchangeTask\GetExchangeTaskListQuery.cs" />
+    <Compile Include="DataExchange\TypicalExchange\GetTypicalExchangeTaskList.cs" />
+    <Compile Include="Dictionaries\CompUnitSealingTypes\GetCompUnitSealingTypeListQuery.cs" />
+    <Compile Include="Dictionaries\CompUnitFailureCauses\GetCompUnitFailureCauseListQuery.cs" />
+    <Compile Include="Dictionaries\CompUnitRepairTypes\GetCompUnitRepairTypeListQuery.cs" />
+    <Compile Include="Dictionaries\CompUnitStopTypes\GetCompUnitStopTypeListQuery.cs" />
+    <Compile Include="Dictionaries\CompUnitFailureFeatures\GetCompUnitFailureFeatureListQuery.cs" />
+    <Compile Include="Dictionaries\Enterprises\GetEnterpriseQuery.cs" />
+    <Compile Include="Dictionaries\EntityTypes\GetEntityTypePropertyListQuery.cs" />
+    <Compile Include="Dictionaries\ExchangeTypes\GetExchangeTypeListQuery.cs" />
+    <Compile Include="Dictionaries\PhysicalTypes\GetPhysicalTypeListQuery.cs" />
+    <Compile Include="Dictionaries\PropertyTypes\GetPropertyTypeListQuery.cs" />
+    <Compile Include="Dictionaries\RepairTypes\GetRepairTypetListQuery.cs" />
+    <Compile Include="Dictionaries\SuperchargerTypes\GetSuperchargerTypePointsQuery.cs" />
+    <Compile Include="Dictionaries\Targets\GetTargetListQuery.cs" />
+    <Compile Include="Dictionaries\TransportTypes\GetTransportTypeListQuery.cs" />
+    <Compile Include="ExcelReport\Folders\SetDashboardForderSortOrderCommand1.cs" />
+    <Compile Include="ExcelReport\Folders\SetForderSortOrderCommand1.cs" />
+    <Compile Include="ExcelReport\GetDashboardGrantListQuery.cs" />
+    <Compile Include="ExcelReport\GetExcelReportListQuery.cs" />
+    <Compile Include="ExcelReport\GetExcelReportContentQuery.cs" />
+    <Compile Include="ExcelReport\GetExcelReportSharedListQuery.cs" />
+    <Compile Include="ExcelReport\RunSqlProcCommand.cs" />
+    <Compile Include="ExcelReport\SetDashboardForderSortOrderCommand1.cs" />
+    <Compile Include="ExcelReport\ShareDashboardCommand1.cs" />
+    <Compile Include="ExcelReport\UpdateExcelReportContentCommand.cs" />
+    <Compile Include="GasCosts\AddGasCostVisibilityCommand.cs" />
+    <Compile Include="GasCosts\GetGasCostSumVolumeQuery.cs" />
+    <Compile Include="GasCosts\GetGasCostVisibilityListQuery.cs" />
+    <Compile Include="GasCosts\Import\AddGasCostImportInfoCommand.cs" />
+    <Compile Include="GasCosts\Import\DeleteGasCostImportInfoCommand.cs" />
+    <Compile Include="GasCosts\SetGasCostAccessCommand.cs" />
+    <Compile Include="GasCosts\GetGasCostAccessListQuery.cs" />
+    <Compile Include="ManualInput\ChemicalTests\AddChemicalTestCommand.cs" />
+    <Compile Include="ManualInput\ChemicalTests\DeleteChemicalTestCommand.cs" />
+    <Compile Include="ManualInput\ChemicalTests\EditChemicalTestCommand.cs" />
+    <Compile Include="ManualInput\ChemicalTests\GetChemicalTestListQuery.cs" />
+    <Compile Include="ManualInput\CompUnitStates\AddCompUnitStateCommand.cs" />
+    <Compile Include="ManualInput\CompUnitStates\Failures\Attachment\AddFailureAttachmentCommand.cs" />
+    <Compile Include="ManualInput\CompUnitStates\Failures\Attachment\DeleteFailureAttachmentCommand.cs" />
+    <Compile Include="ManualInput\CompUnitStates\Failures\Attachment\GetFailureAttachmentListQuery.cs" />
+    <Compile Include="ManualInput\CompUnitStates\Failures\RelatedUnitStart\AddFailureRelatedUnitStartCommand.cs" />
+    <Compile Include="ManualInput\CompUnitStates\Failures\RelatedUnitStart\GetFailureRelatedUnitStartListQuery.cs" />
+    <Compile Include="ManualInput\CompUnitStates\Failures\RelatedUnitStart\RemoveFailureRelatedUnitStartCommand.cs" />
+    <Compile Include="ManualInput\CompUnitStates\Failures\GetFailureListQuery.cs" />
+    <Compile Include="ManualInput\CompUnitStates\EditCompUnitStateCommand.cs" />
+    <Compile Include="ManualInput\CompUnitStates\DeleteCompUnitStateCommand.cs" />
+    <Compile Include="ManualInput\CompUnitStates\GetCompUnitStateListQuery.cs" />
+    <Compile Include="ManualInput\CompUnitTests\AddCompUnitTestCommand.cs" />
+    <Compile Include="ManualInput\CompUnitTests\AddCompUnitTestPointCommand.cs" />
+    <Compile Include="ManualInput\CompUnitTests\Attachment\AddCompUnitTestAttachmentCommand.cs" />
+    <Compile Include="ManualInput\CompUnitTests\Attachment\DeleteCompUnitTestAttachmentCommand.cs" />
+    <Compile Include="ManualInput\CompUnitTests\Attachment\EditCompUnitTestAttachmentCommand.cs" />
+    <Compile Include="ManualInput\CompUnitTests\Attachment\GetCompUnitTestAttachmentListQuery.cs" />
+    <Compile Include="ManualInput\CompUnitTests\Attachment\GetCompUnitTestAttachmentsByTestIdQuery.cs" />
+    <Compile Include="ManualInput\CompUnitTests\DeleteCompUnitTestCommand.cs" />
+    <Compile Include="ManualInput\CompUnitTests\DeleteCompUnitTestPointCommand.cs" />
+    <Compile Include="ManualInput\CompUnitTests\EditCompUnitTestCommand.cs" />
+    <Compile Include="ManualInput\CompUnitTests\GetCompUnitTestListQuery.cs" />
+    <Compile Include="ManualInput\CompUnitTests\GetCompUnitTestPointsQuery.cs" />
+    <Compile Include="ManualInput\ContractPressures\AddEditContractPressureCommand.cs" />
+    <Compile Include="ManualInput\ContractPressures\GetContractPressureHistoryListQuery.cs" />
+    <Compile Include="ManualInput\ContractPressures\GetContractPressureListQuery.cs" />
+    <Compile Include="ManualInput\DependantSites\RemoveDependantSiteCommand.cs" />
+    <Compile Include="ManualInput\DependantSites\AddDependantSiteCommand.cs" />
+    <Compile Include="ManualInput\InputStates\GetManualInputStateListQuery.cs" />
+    <Compile Include="ManualInput\InputStates\SetManualInputStateCommand.cs" />
+    <Compile Include="Alarms\GetAlarmEventListQuery.cs" />
+    <Compile Include="Alarms\DeleteAlarmCommand.cs" />
+    <Compile Include="Alarms\EditAlarmCommand.cs" />
+    <Compile Include="Alarms\GetAlarmListQuery.cs" />
+    <Compile Include="Alarms\AddAlarmCommand.cs" />
+    <Compile Include="Appearance\Versions\GetLastPublishedSchemeVersion.cs" />
+    <Compile Include="Authorization\Action\AddActionParameterSet.cs" />
+    <Compile Include="Authorization\Action\EditActionParameterSet.cs" />
+    <Compile Include="Authorization\User\AddUserCommand.cs" />
+    <Compile Include="Authorization\User\DeleteUserCommand.cs" />
+    <Compile Include="Authorization\User\EditUserCommand.cs" />
+    <Compile Include="Authorization\User\EditUserSettingsCommand.cs" />
+    <Compile Include="Authorization\User\GetUserByIdQuery.cs" />
+    <Compile Include="Authorization\User\GetUserByLoginQuery.cs" />
+    <Compile Include="Authorization\User\GetUsersAllCommand.cs" />
+    <Compile Include="Balances\Contracts\CleanContractCommand.cs" />
+    <Compile Include="Balances\Docs\AddDocCommand.cs" />
+    <Compile Include="Balances\Docs\DeleteDocCommand.cs" />
+    <Compile Include="Balances\Docs\GetDocListQuery.cs" />
+    <Compile Include="Balances\GasOwners\SetGasOwnerSortOrderCommand.cs" />
+    <Compile Include="Balances\Routes\DeleteRouteCommand.cs" />
+    <Compile Include="Balances\Contracts\AddContractCommand.cs" />
+    <Compile Include="Balances\Contracts\DeleteContractCommand.cs" />
+    <Compile Include="Balances\Contracts\GetContractListQuery.cs" />
+    <Compile Include="Balances\GasOwners\AddGasOwnerCommand.cs" />
+    <Compile Include="Balances\GasOwners\DeleteGasOwnerCommand.cs" />
+    <Compile Include="Balances\GasOwners\EditGasOwnerCommand.cs" />
+    <Compile Include="Balances\GasOwners\GetGasOwnerListQuery.cs" />
+    <Compile Include="Balances\Plan\GetPlanCommands.cs" />
+    <Compile Include="Balances\Routes\SetRouteCommand.cs" />
+    <Compile Include="Balances\Routes\GetRouteListQuery.cs" />
+    <Compile Include="Bindings\EntityBindings\GetAllEntityBindingsListQuery.cs" />
+    <Compile Include="Bindings\EntityBindings\GetEntityBindingsListQuery.cs" />
+    <Compile Include="Bindings\EntityPropertyBindings\GetEntityPropertyBindingSourceQuery.cs" />
+    <Compile Include="Bindings\EntityPropertyBindings\GetEntityPropertyBindingQuery.cs" />
+    <Compile Include="Bindings\EntityPropertyBindings\SimpleEntityPropertyBindingDTO.cs" />
+    <Compile Include="Bindings\EntityPropertyBindings\GetEntityPropertyBindingParameterSet.cs" />
+    <Compile Include="Calculations\RunAstraCalcSqlCommand.cs" />
+    <Compile Include="DataLoadMonitoring\GetChangedValuesCompShop.cs" />
+    <Compile Include="DataLoadMonitoring\GetChangedValuesConsumer.cs" />
+    <Compile Include="DataLoadMonitoring\GetChangedValuesMeasureLine.cs" />
+    <Compile Include="DataLoadMonitoring\GetGasSupplyValues.cs" />
+    <Compile Include="DataLoadMonitoring\GetLastSeries.cs" />
+    <Compile Include="DataLoadMonitoring\GetSerieValueByKeyDate.cs" />
+    <Compile Include="DataLoadMonitoring\GetSumGasVolumeByEnterprise.cs" />
+    <Compile Include="Dictionaries\AlarmTypes\GetAlarmTypeListCommand.cs" />
+    <Compile Include="Dictionaries\InconsistencyTypes\GetInconsistencyTypesCommand.cs" />
+    <Compile Include="Dictionaries\RepairExecutionMeans\GetRepairExecutionMeansCommand.cs" />
+    <Compile Include="Dictionaries\States\GetStateListQuery.cs" />
+    <Compile Include="EventLog\EventRecipient\GetNotAckEventCountQuery.cs" />
+    <Compile Include="EventLog\TextTemplates\AddEventTextTemplateCommand.cs" />
+    <Compile Include="EventLog\TextTemplates\DeleteEventTextTemplateCommand.cs" />
+    <Compile Include="EventLog\TextTemplates\EditEventTextTemplateCommand.cs" />
+    <Compile Include="EventLog\TextTemplates\GetEventTextTemplateListQuery.cs" />
+    <Compile Include="GasCosts\SetDefaultParamValuesCommand.cs" />
+    <Compile Include="GasCosts\GetDefaultParamValuesQuery.cs" />
+    <Compile Include="ManualInput\InputStory\GetManualInputStoryQuery.cs" />
+    <Compile Include="ManualInput\PipelineLimits\AddPipelineLimitCommand.cs" />
+    <Compile Include="ManualInput\PipelineLimits\AddPipelineLimitStoryCommand.cs" />
+    <Compile Include="ManualInput\PipelineLimits\Attachment\AddPipelineLimitAttachmentCommand.cs" />
+    <Compile Include="ManualInput\PipelineLimits\Attachment\DeletePipelineLimitAttachmentCommand.cs" />
+    <Compile Include="ManualInput\PipelineLimits\Attachment\EditPipelineLimitAttachmentCommand.cs" />
+    <Compile Include="ManualInput\PipelineLimits\Attachment\GetPipelineLimitAttachmentListQuery.cs" />
+    <Compile Include="ManualInput\PipelineLimits\DeletePipelineLimitCommand.cs" />
+    <Compile Include="ManualInput\PipelineLimits\EditPipelineLimitCommand.cs" />
+    <Compile Include="ManualInput\PipelineLimits\EditPipelineLimitStoryCommand.cs" />
+    <Compile Include="ManualInput\PipelineLimits\GetPipelineLimitsListQuery.cs" />
+    <Compile Include="ManualInput\PipelineLimits\GetPipelineLimitStoryQuery.cs" />
+    <Compile Include="ManualInput\ValveSwitches\AddValveSwitchCommand.cs" />
+    <Compile Include="ManualInput\ValveSwitches\DeleteValveSwitchCommand.cs" />
+    <Compile Include="ManualInput\ValveSwitches\GetValveSwitchListQuery.cs" />
+    <Compile Include="ObjectModel\AfterValidateCommand.cs" />
+    <Compile Include="ObjectModel\Aggregators\AddAggregatorCommand.cs" />
+    <Compile Include="ObjectModel\Aggregators\DeleteAggregatorCommand.cs" />
+    <Compile Include="ObjectModel\Aggregators\EditAggregatorCommand.cs" />
+    <Compile Include="ObjectModel\Aggregators\GetAggregatorByIdQuery.cs" />
+    <Compile Include="ObjectModel\Aggregators\GetAggregatorListQuery.cs" />
+    <Compile Include="ObjectModel\Boilers\AddBoilersCommand.cs" />
+    <Compile Include="ObjectModel\Boilers\AddBoilerTypeCommand.cs" />
+    <Compile Include="ObjectModel\Boilers\EditBoilerTypeCommand.cs" />
+    <Compile Include="ObjectModel\Boilers\GetBoilerByIdQuery.cs" />
+    <Compile Include="ObjectModel\Boilers\DeleteBoilerCommand.cs" />
+    <Compile Include="ObjectModel\Boilers\EditBoilerCommand.cs" />
+    <Compile Include="ObjectModel\Boilers\GetBoilerListQuery.cs" />
+    <Compile Include="ObjectModel\Boilers\RemoveBoilerTypeCommand.cs" />
+    <Compile Include="ObjectModel\CompUnits\GetCompUnitByIdQuery.cs" />
+    <Compile Include="ObjectModel\BoilerPlants\AddBoilerPlantCommand.cs" />
+    <Compile Include="ObjectModel\BoilerPlants\DeleteBoilerPlantCommand.cs" />
+    <Compile Include="ObjectModel\BoilerPlants\EditBoilerPlantCommand.cs" />
+    <Compile Include="ObjectModel\BoilerPlants\GetBoilerPlantByIdQuery.cs" />
+    <Compile Include="ObjectModel\BoilerPlants\GetBoilerPlantListQuery.cs" />
+    <Compile Include="ObjectModel\Consumers\AddConsumerCommand.cs" />
+    <Compile Include="ObjectModel\Consumers\DeleteConsumerCommand.cs" />
+    <Compile Include="ObjectModel\Consumers\EditConsumerCommand.cs" />
+    <Compile Include="ObjectModel\Consumers\GetConsumerByIdQuery.cs" />
+    <Compile Include="ObjectModel\Consumers\GetConsumerListQuery.cs" />
+    <Compile Include="ObjectModel\CoolingUnit\AddCoolingUnitCommand.cs" />
+    <Compile Include="ObjectModel\CoolingStations\GetCoolingStationByIdQuery.cs" />
+    <Compile Include="ObjectModel\CoolingUnit\GetCoolingUnitByIdQuery.cs" />
+    <Compile Include="ObjectModel\CoolingUnit\DeleteCoolingUnitCommand.cs" />
+    <Compile Include="ObjectModel\CoolingUnit\EditCoolingUnitCommand.cs" />
+    <Compile Include="ObjectModel\CoolingUnit\GetCoolingUnitListQuery.cs" />
+    <Compile Include="ObjectModel\DeviceConfig\GetChangesListQuery.cs" />
+    <Compile Include="ObjectModel\EmergencyValves\AddEmergencyValveTypeCommand.cs" />
+    <Compile Include="ObjectModel\EmergencyValves\EditEmergencyValveTypeCommand.cs" />
+    <Compile Include="ObjectModel\EmergencyValves\RemoveEmergencyValveTypeCommand.cs" />
+    <Compile Include="ObjectModel\Entities\AddDescriptionCommand.cs" />
+    <Compile Include="ObjectModel\Entities\Attachments\AddEntityAttachmentCommand.cs" />
+    <Compile Include="ObjectModel\Entities\Attachments\GetEntityAttachmentListQuery.cs" />
+    <Compile Include="ObjectModel\Entities\Attachments\RemoveEntityAttachmentCommand.cs" />
+    <Compile Include="ObjectModel\Entities\GetEntityChangeListQuery.cs" />
+    <Compile Include="ObjectModel\Entities\GetEntityListQuery.cs" />
+    <Compile Include="ObjectModel\Entities\GetEntitySegmentSiteIdQuery.cs" />
+    <Compile Include="ObjectModel\Entities\GetEntitySiteIdQuery.cs" />
+    <Compile Include="ObjectModel\Entities\IsInputOff\SetIsInputOffCommand.cs" />
+    <Compile Include="ObjectModel\Entities\Urls\GetEntityUrlListQuery.cs" />
+    <Compile Include="ObjectModel\Entities\Urls\RemoveEntityUrlCommand.cs" />
+    <Compile Include="ObjectModel\Entities\Urls\EditEntityUrlCommand.cs" />
+    <Compile Include="ObjectModel\Entities\Urls\AddEntityUrlCommand.cs" />
+    <Compile Include="ObjectModel\Heaters\AddHeaterTypeCommand.cs" />
+    <Compile Include="ObjectModel\Heaters\EditHeaterTypeCommand.cs" />
+    <Compile Include="ObjectModel\Heaters\RemoveHeaterTypeCommand.cs" />
+    <Compile Include="ObjectModel\Inconsistency\AddInconsistencyCommand.cs" />
+    <Compile Include="ObjectModel\Inconsistency\DeleteAllInconsistencyCommand.cs" />
+    <Compile Include="ObjectModel\Inconsistency\GetInconsistencyListQuery.cs" />
+    <Compile Include="ObjectModel\MeasPoint\EditMeasPointCommand.cs" />
+    <Compile Include="ObjectModel\OperConsumers\AddOperConsumerCommand.cs" />
+    <Compile Include="ObjectModel\OperConsumers\DeleteOperConsumerCommand.cs" />
+    <Compile Include="ObjectModel\OperConsumers\EditOperConsumerCommand.cs" />
+    <Compile Include="ObjectModel\OperConsumers\GetOperConsumeByIdQuery.cs" />
+    <Compile Include="ObjectModel\OperConsumers\GetOperConsumerListQuery.cs" />
+    <Compile Include="ObjectModel\PowerPlants\AddPowerPlantCommand.cs" />
+    <Compile Include="ObjectModel\PowerPlants\DeletePowerPlantCommand.cs" />
+    <Compile Include="ObjectModel\PowerPlants\EditPowerPlantCommand.cs" />
+    <Compile Include="ObjectModel\PowerPlants\GetPowerPlantByIdQuery.cs" />
+    <Compile Include="ObjectModel\PowerPlants\GetPowerPlantListQuery.cs" />
+    <Compile Include="ObjectModel\DistrStationOutlets\GetDistrStationOutletByIdQuery.cs" />
+    <Compile Include="ObjectModel\Entities\CheckEntityQuery.cs" />
+    <Compile Include="ObjectModel\PowerUnits\AddPowerUnitCommand.cs" />
+    <Compile Include="ObjectModel\PowerUnits\AddPowerUnitTypeCommand.cs" />
+    <Compile Include="ObjectModel\PowerUnits\EditPowerUnitTypeCommand.cs" />
+    <Compile Include="ObjectModel\PowerUnits\GetPowerUnitByIdQuery.cs" />
+    <Compile Include="ObjectModel\PowerUnits\DeletePowerUnitCommand.cs" />
+    <Compile Include="ObjectModel\PowerUnits\EditPowerUnitCommand.cs" />
+    <Compile Include="ObjectModel\PowerUnits\GetPowerUnitListQuery.cs" />
+    <Compile Include="ObjectModel\PowerUnits\RemovePowerUnitTypeCommand.cs" />
+    <Compile Include="ObjectModel\ReducingStations\GetReducingStationByIdQuery.cs" />
+    <Compile Include="ObjectModel\Regulators\AddRegulatorTypeCommand.cs" />
+    <Compile Include="ObjectModel\Regulators\EditRegulatorTypeCommand.cs" />
+    <Compile Include="ObjectModel\Regulators\RemoveRegulatorTypeCommand.cs" />
+    <Compile Include="ObjectModel\Segment\Regions\AddRegionSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\Regions\DeleteRegionSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\Regions\EditRegionSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\Regions\GetRegionSegmentListQuery.cs" />
+    <Compile Include="ObjectModel\Sites\GetSiteByIdQuery.cs" />
+    <Compile Include="ObjectModel\Valves\GetValveListQuery.cs" />
+    <Compile Include="Repairs\Agreement\AddAgreementCommand.cs" />
+    <Compile Include="Repairs\Agreement\DeleteAgreementCommand.cs" />
+    <Compile Include="Repairs\Agreement\EditAgreementCommand.cs" />
+    <Compile Include="Repairs\Agreement\GetAgreementListQuery.cs" />
+    <Compile Include="Repairs\Agreement\GetUserAgreementCount.cs" />
+    <Compile Include="Repairs\Complexes\AddRepairToComplexCommand.cs" />
+    <Compile Include="Repairs\Complexes\GetComplexListQuery.cs" />
+    <Compile Include="Repairs\Plan\GetPlanningStageQuery.cs" />
+    <Compile Include="Repairs\Plan\GetPlanTypesQuery.cs" />
+    <Compile Include="Repairs\Plan\SetPlanningStageCommand.cs" />
+    <Compile Include="Repairs\Plan\GetRepairUpdateHistoryQuery.cs" />
+    <Compile Include="Repairs\PrintForms\GetCpddToQuery.cs" />
+    <Compile Include="Repairs\PrintForms\GetSiteFromQuery.cs" />
+    <Compile Include="Repairs\PrintForms\GetSiteToQuery.cs" />
+    <Compile Include="Repairs\RepairWorks\GetRepairWorkAttachmentListQuery.cs" />
+    <Compile Include="Repairs\RepairWorks\RemoveAllRepairWorkAttachmentsCommand.cs" />
+    <Compile Include="Repairs\RepairWorks\RemoveRepairWorkAttachmentCommand.cs" />
+    <Compile Include="Repairs\RepairWorks\EditRepairWorkAttachmentCommand.cs" />
+    <Compile Include="Repairs\RepairWorks\AddRepairWorkAttachmentCommand.cs" />
+    <Compile Include="Repairs\Repair\EditRepairDatesCommand.cs" />
+    <Compile Include="EventLog\Attachments\EditEventAttachmentCommand.cs" />
+    <Compile Include="Repairs\Reports\AddReportAttachmentCommand.cs" />
+    <Compile Include="Repairs\Reports\AddReportCommand.cs" />
+    <Compile Include="Repairs\Reports\ClearReportsCommand.cs" />
+    <Compile Include="Repairs\Reports\DeleteReportAttachmentCommand.cs" />
+    <Compile Include="Repairs\Reports\DeleteReportCommand.cs" />
+    <Compile Include="Repairs\Reports\EditReportCommand.cs" />
+    <Compile Include="Repairs\Reports\GetReportAttachementQuery.cs" />
+    <Compile Include="Repairs\Reports\GetReportByWorkQuery.cs" />
+    <Compile Include="Repairs\Workflow\ChangeStateCommand.cs" />
+    <Compile Include="Repairs\Workflow\GetRepairWorksListCommand.cs" />
+    <Compile Include="Repairs\Workflow\GetWorkflowHistoryQuery.cs" />
+    <Compile Include="Repairs\Workflow\GetWorkflowRepairListForCompShopsQuery.cs" />
+    <Compile Include="Repairs\Workflow\GetWorkflowRepairListForDistrStationQuery.cs" />
+    <Compile Include="Repairs\Workflow\GetWorkflowRepairListForPipelinesQuery.cs" />
+    <Compile Include="SeriesData\GasInPipes\AddGasInPipeCommand.cs" />
+    <Compile Include="SeriesData\GasInPipes\DeleteGasInPipeCommand.cs" />
+    <Compile Include="SeriesData\GasInPipes\GetGasInPipeListQuery.cs" />
+    <Compile Include="DataExchange\Asdu\GetEntityPropertyValueListForAsduQuery.cs" />
+    <Compile Include="SeriesData\PropertyValues\GetEntityPropertyValueListQuery.cs" />
+    <Compile Include="SeriesData\SerieChecks\GetSerieCheckListQuery.cs" />
+    <Compile Include="SeriesData\SerieChecks\UpdateEntityPropertyTypeCommand.cs" />
+    <Compile Include="SeriesData\SerieChecks\UpdateSerieCheckCommand.cs" />
+    <Compile Include="SeriesData\Series\GetSeriesQuery.cs" />
+    <Compile Include="SeriesData\ValueMessages\AcceptMessageCommand.cs" />
+    <Compile Include="SeriesData\ValueMessages\GetEntityMessageSummaryQuery.cs" />
+    <Compile Include="SeriesData\ValueMessages\PerformCheckingCommand.cs" />
+    <Compile Include="SeriesData\ValueMessages\GetPropertyValueMessageListQuery.cs" />
+    <Compile Include="SysEvents\AddSysEventCommand.cs" />
+    <Compile Include="SysEvents\SetStatusSysEventCommand.cs" />
+    <Compile Include="Calculations\Log\GetCalculationLogsQuery.cs" />
+    <Compile Include="Calculations\Parameter\GetCalculationParameterListQuery.cs" />
+    <Compile Include="Calculations\Parameter\GetCalculationParameterCommand.cs" />
+    <Compile Include="Calculations\Parameter\DeleteCalculationParameterCommand.cs" />
+    <Compile Include="Calculations\Parameter\EditCalculationParameterCommand.cs" />
+    <Compile Include="Calculations\RunCalcSqlCommand.cs" />
+    <Compile Include="Dashboards\DashboardContent\UpdateDashboardContentCommand.cs" />
+    <Compile Include="Dashboards\DashboardContent\GetDashboardContentQuery.cs" />
+    <Compile Include="Dashboards\DashboardFolder\AddDashboardToFolderCommand.cs" />
+    <Compile Include="Dashboards\DashboardFolder\DeleteDashboardFolderCommand.cs" />
+    <Compile Include="Dashboards\DashboardGrants\DeleteDashboardGrantCommand.cs" />
+    <Compile Include="Dashboards\DashboardGrants\EditDashboardGrantCommand.cs" />
+    <Compile Include="Dashboards\DashboardGrants\GetDashboardGrantListQuery.cs" />
+    <Compile Include="Dashboards\Dashboards\AddDashboardCommand.cs" />
+    <Compile Include="Dashboards\Dashboards\DeleteDashboardCommand.cs" />
+    <Compile Include="Dashboards\Dashboards\EditDashboardCommand.cs" />
+    <Compile Include="Dashboards\Dashboards\GetDashboardListQuery.cs" />
+    <Compile Include="Dashboards\Folders\AddFolderCommand.cs" />
+    <Compile Include="Dashboards\Folders\DeleteFolderCommand.cs" />
+    <Compile Include="Dashboards\Folders\EditFolderCommand.cs" />
+    <Compile Include="Dashboards\Folders\GetFolderListQuery.cs" />
+    <Compile Include="Calculations\Parameter\AddCalculationParameterCommand.cs" />
+    <Compile Include="DataLoadMonitoring\GetDataLoadSiteStatistics.cs" />
+    <Compile Include="DataLoadMonitoring\GetEntityPropertyValues.cs" />
+    <Compile Include="Dictionaries\AnnuledReasons\GetAnnuledReasonsCommand.cs" />
+    <Compile Include="Dictionaries\BoilerTypes\GetBoilerTypeListCommand.cs" />
+    <Compile Include="Dictionaries\CoolingUnitTypes\GetCoolingUnitTypeListCommand.cs" />
+    <Compile Include="Dictionaries\Diameters\GetDiameterListCommand.cs" />
+    <Compile Include="Dictionaries\Enterprises\GetEnterpriseExchangeNeighbourList.cs" />
+    <Compile Include="Dictionaries\PipelineGroups\GetPipelineGroupsListCommand.cs" />
+    <Compile Include="Dictionaries\GasTransportSystem\GetGasTransportSystemListCommand.cs" />
+    <Compile Include="Dictionaries\EmergencyValveTypes\GetEmergencyValveTypeListCommand.cs" />
+    <Compile Include="Dictionaries\PlanTypes\GetPlanTypesListCommand.cs" />
+    <Compile Include="Dictionaries\PowerUnitTypes\GetPowerUnitTypeListCommand.cs" />
+    <Compile Include="Dictionaries\RegulatorTypes\GetRegulatorTypeListCommand.cs" />
+    <Compile Include="Dictionaries\HeaterTypes\GetHeaterTypesListCommand.cs" />
+    <Compile Include="Dictionaries\OperConsumerType\OperConsumerTypesCommand.cs" />
+    <Compile Include="Dictionaries\ParameterTypes\GetParameterTypesCommand.cs" />
+    <Compile Include="Dictionaries\Regions\GetRegionListCommand.cs" />
+    <Compile Include="Dictionaries\Sources\GetSourcesListCommand.cs" />
+    <Compile Include="Dictionaries\StatusTypes\GetStatusTypeListQuery.cs" />
+    <Compile Include="Dictionaries\EventTypes\GetEventTypesListCommand.cs" />
+    <Compile Include="SysEvents\GetSysEventListQuery.cs" />
+    <Compile Include="Dictionaries\SysEventTypes\GetSysEventTypesListCommand.cs" />
+    <Compile Include="Dictionaries\ValveTypes\GetValveTypesListCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\AddTaskRecordPDSCommand.cs" />
+    <Compile Include="DispatcherTasks\Attachments\AddTaskAttachmentCommand.cs" />
+    <Compile Include="DispatcherTasks\Attachments\GetTaskAttachmentListQuery.cs" />
+    <Compile Include="DispatcherTasks\GetTaskByGlobalTaskId.cs" />
+    <Compile Include="DispatcherTasks\GetTaskByVersionIdQuery.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\GetTaskRecordsVersionListQuery.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\EditTaskRecordPDSCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\GetTaskRecordsLpuListQuery.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\GetTaskRecordsListQuery.cs" />
+    <Compile Include="DispatcherTasks\AddTaskCpddCommand.cs" />
+    <Compile Include="DispatcherTasks\RecordNotes\AddRecordNoteCommand.cs" />
+    <Compile Include="GasCosts\AddGasCostCommand.cs" />
+    <Compile Include="GasCosts\GetCostTypeListCommand.cs" />
+    <Compile Include="GasCosts\DeleteGasCostCommand.cs" />
+    <Compile Include="GasCosts\EditGasCostCommand.cs" />
+    <Compile Include="GasCosts\GetGasCostListQuery.cs" />
+    <Compile Include="Infra\SetRunModeCommand.cs" />
+    <Compile Include="ObjectModel\CoolingStations\AddCoolingStationCommand.cs" />
+    <Compile Include="ObjectModel\CoolingStations\DeleteCoolingStationCommand.cs" />
+    <Compile Include="ObjectModel\CoolingStations\EditCoolingStationCommand.cs" />
+    <Compile Include="ObjectModel\CoolingStations\GetCoolingStationsListQuery.cs" />
+    <Compile Include="ObjectModel\CompStationCoolingRecomended\SetCompStationCoolingRecomendedCommand.cs" />
+    <Compile Include="ObjectModel\CompStationCoolingRecomended\GetCompStationCoolingRecomendedListQuery.cs" />
+    <Compile Include="ObjectModel\Entities\SetSortOrderCommand.cs" />
+    <Compile Include="ObjectModel\Pipelines\GetPipelineByIdQuery.cs" />
+    <Compile Include="ObjectModel\Segment\Diameter\AddDiameterSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\PipelineGroup\AddGroupSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\PipelineGroup\EditGroupSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\PipelineGroup\DeleteGroupSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\PipelineGroup\GetGroupSegmentListQuery.cs" />
+    <Compile Include="ObjectModel\Segment\Diameter\DeleteDiameterSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\Diameter\EditDiameterSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\Diameter\GetDiameterSegmentListQuery.cs" />
+    <Compile Include="Repairs\Plan\GetPlanRepairListForDistrStationQuery.cs" />
+    <Compile Include="Repairs\Plan\GetPlanRepairListForCompShopsQuery.cs" />
+    <Compile Include="Repairs\Plan\GetPlanRepairListForPipelinesQuery.cs" />
+    <Compile Include="Repairs\Plan\GetPlanRepairListByComplexIdQuery.cs" />
+    <Compile Include="Repairs\RepairWorks\GetRepairWorksListCommand.cs" />
+    <Compile Include="Repairs\RepairWorks\DeleteRepairWorksCommand.cs" />
+    <Compile Include="SeriesData\CompUnits\GetOperatingTimeQuery.cs" />
+    <Compile Include="SeriesData\PropertyValueHelper.cs" />
+    <Compile Include="SeriesData\PropertyValues\GetPropertyValueQuery.cs" />
+    <Compile Include="DispatcherTasks\RecordNotes\GetRecordNoteListQuery.cs" />
+    <Compile Include="DispatcherTasks\RecordNotes\RemoveRecordNoteCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\SetToControlTaskRecordCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\ResetToControlTaskRecordCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskRecords\RemoveTaskRecordCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskStatuses\TaskCorrectingCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskStatuses\TaskSubmitedCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskStatuses\TaskCorrectedCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskStatuses\TaskApprovedCPDDCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskStatuses\TaskApprovedPdsCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskStatuses\TaskPerformedCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskStatuses\TaskAnnuledCommand.cs" />
+    <Compile Include="DispatcherTasks\TaskStatuses\GetTaskStatusListQuery.cs" />
+    <Compile Include="EventLog\Attachments\AddEventAttachmentCommand.cs" />
+    <Compile Include="EventLog\Attachments\DeleteEventAttachmentCommand.cs" />
+    <Compile Include="EventLog\DeleteEventCommand.cs" />
+    <Compile Include="EventLog\EditEventCommand.cs" />
+    <Compile Include="EventLog\EventAnalytical\GetEventAnalyticalAckListQuery.cs" />
+    <Compile Include="EventLog\EventAnalytical\GetEventAnalyticalListQuery.cs" />
+    <Compile Include="EventLog\EventRecipient\AckEventCommand.cs" />
+    <Compile Include="EventLog\EventRecipient\BackToNormalEventCommand.cs" />
+    <Compile Include="EventLog\EventRecipient\ResetAckEventCoommand.cs" />
+    <Compile Include="EventLog\EventRecipient\AddEventRecipientCommand.cs" />
+    <Compile Include="EventLog\EventRecipient\DeleteEventRecipientCommand.cs" />
+    <Compile Include="EventLog\EventRecipient\MoveToTrashEventCommand.cs" />
+    <Compile Include="EventLog\EventRecipient\RestoreFromTrashEventCommand.cs" />
+    <Compile Include="EventLog\EventRecipient\TakeToControlEventCommand.cs" />
+    <Compile Include="EventLog\Attachments\GetEventAttachmentListQuery.cs" />
+    <Compile Include="EventLog\GetEventListQuery.cs" />
+    <Compile Include="EventLog\EventRecipient\GetEventRecepientListQuery.cs" />
+    <Compile Include="EventLog\RegisterEventCommand.cs" />
+    <Compile Include="Appearance\Positions\GetVersionedPositionListQuery.cs" />
+    <Compile Include="Appearance\Versions\AddSchemeVersionCommand.cs" />
+    <Compile Include="Appearance\AddSchemeCommand.cs" />
+    <Compile Include="Appearance\Versions\GetPublishedSchemeVersionListCommand.cs" />
+    <Compile Include="Appearance\Versions\UnPublishSchemeVersionCommand.cs" />
+    <Compile Include="Appearance\Versions\DeleteSchemeVersionCommand.cs" />
+    <Compile Include="Authorization\Action\GetActionsByUserIdQuery.cs" />
+    <Compile Include="Authorization\Action\AddActionCommand.cs" />
+    <Compile Include="Authorization\Action\DeleteActionCommand.cs" />
+    <Compile Include="Authorization\Action\EditActionCommand.cs" />
+    <Compile Include="Authorization\Action\GetActionsByRoleIdQuery.cs" />
+    <Compile Include="Authorization\Action\GetActionByIdQuery.cs" />
+    <Compile Include="Authorization\Action\GetActionsAllCommand.cs" />
+    <Compile Include="Authorization\Role\AddRoleActionCommand.cs" />
+    <Compile Include="Authorization\Role\RemoveRoleActionCommand.cs" />
+    <Compile Include="Authorization\Role\AddRoleCommand.cs" />
+    <Compile Include="Authorization\Role\DeleteRoleCommand.cs" />
+    <Compile Include="Authorization\Role\EditRoleCommand.cs" />
+    <Compile Include="Authorization\Role\GetRolesByUserIdQuery.cs" />
+    <Compile Include="Authorization\Role\GetRolesAllCommand.cs" />
+    <Compile Include="Authorization\Role\GetRoleByIdQuery.cs" />
+    <Compile Include="Authorization\User\RemoveUserRoleCommand.cs" />
+    <Compile Include="Authorization\User\AddUserRoleCommand.cs" />
+    <Compile Include="Bindings\EntityPropertyBindings\AddEntityPropertyBindingCommand.cs" />
+    <Compile Include="Bindings\EntityPropertyBindings\DeleteEntityPropertyBindingCommand.cs" />
+    <Compile Include="Bindings\EntityPropertyBindings\EditEntityPropertyBindingCommand.cs" />
+    <Compile Include="Bindings\EntityPropertyBindings\GetEntityPropertyBindingPageQuery.cs" />
+    <Compile Include="Bindings\EntityBindings\AddEntityBindingCommand.cs" />
+    <Compile Include="Bindings\EntityBindings\DeleteEntityBindingCommand.cs" />
+    <Compile Include="Bindings\EntityBindings\EditEntityBindingCommand.cs" />
+    <Compile Include="Bindings\EntityBindings\GetEntityBindingsPagedListQuery.cs" />
+    <Compile Include="Appearance\Versions\GetSchemeVersionByIdQuery.cs" />
+    <Compile Include="Appearance\Versions\GetSchemeVersionListQuery.cs" />
+    <Compile Include="Appearance\Styles\GetStyleListQuery.cs" />
+    <Compile Include="Appearance\Versions\PublishSchemeVersionCommand.cs" />
+    <Compile Include="ObjectModel\CompShops\GetCompShopByIdQuery.cs" />
+    <Compile Include="ObjectModel\CompStations\GetCompStationByIdQuery.cs" />
+    <Compile Include="ObjectModel\DistrStations\GetDistrStationByIdQuery.cs" />
+    <Compile Include="Dictionaries\Enterprises\GetEnterpriseAndSitesQuery.cs" />
+    <Compile Include="ObjectModel\MeasLine\GetMeasLineByIdQuery.cs" />
+    <Compile Include="ObjectModel\MeasPoint\AddMeasPointCommand.cs" />
+    <Compile Include="ObjectModel\MeasPoint\GetMeasPointByIdQuery.cs" />
+    <Compile Include="ObjectModel\MeasPoint\DeleteMeasPointCommand.cs" />
+    <Compile Include="ObjectModel\MeasPoint\GetMeasPointListQuery.cs" />
+    <Compile Include="ObjectModel\MeasStations\GetMeasStationByIdQuery.cs" />
+    <Compile Include="ObjectModel\Segment\Pressure\AddPressureSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\Pressure\DeletePressureSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\Pressure\EditPressureSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\Pressure\GetPressureSegmentListQuery.cs" />
+    <Compile Include="ObjectModel\Valves\GetValveByIdQuery.cs" />
+    <Compile Include="Repairs\Repair\KilommetrListGetQuery.cs" />
+    <Compile Include="SeriesData\PropertyValues\SetPropertyValueCommand.cs" />
+    <Compile Include="SeriesData\Series\AddSeriesCommand.cs" />
+    <Compile Include="SeriesData\Series\DeleteSeriesCommand.cs" />
+    <Compile Include="DataStorage\GetBlobByIdQuery.cs" />
+    <Compile Include="Dictionaries\BalanceSigns\GetBalanceSignsCommand.cs" />
+    <Compile Include="Dictionaries\EngineClasses\GetEngineClassesListCommand.cs" />
+    <Compile Include="Dictionaries\ConsumerTypes\GetConsumerTypesListCommand.cs" />
+    <Compile Include="Dictionaries\PeriodTypes\GetPeriodTypesCommand.cs" />
+    <Compile Include="Dictionaries\PipelineEndType\GetPipelineEndTypeListCommand.cs" />
+    <Compile Include="Dictionaries\PipelineTypes\GetPipelineTypeListCommand.cs" />
+    <Compile Include="Dictionaries\ValvePurposes\GetValvePurposeListCommand.cs" />
+    <Compile Include="EntitySelector\GetEntitiesPageQuery.cs" />
+    <Compile Include="GasLeaks\AddLeakCommand.cs" />
+    <Compile Include="GasLeaks\DeleteLeakCommand.cs" />
+    <Compile Include="GasLeaks\EditLeakCommand.cs" />
+    <Compile Include="GasLeaks\GetLeakByIdQuery.cs" />
+    <Compile Include="GasLeaks\GetLeaksQuery.cs" />
+    <Compile Include="ObjectModel\CompShops\AddCompShopCommand.cs" />
+    <Compile Include="ObjectModel\CompShops\DeleteCompShopCommand.cs" />
+    <Compile Include="ObjectModel\CompShops\EditCompShopCommand.cs" />
+    <Compile Include="ObjectModel\CompShops\GetCompShopListQuery.cs" />
+    <Compile Include="ObjectModel\CompStations\AddCompStationCommand.cs" />
+    <Compile Include="ObjectModel\CompStations\DeleteCompStationCommand.cs" />
+    <Compile Include="ObjectModel\CompStations\EditCompStationCommand.cs" />
+    <Compile Include="ObjectModel\CompStations\GetCompStationListQuery.cs" />
+    <Compile Include="Dictionaries\CompUnitTypes\GetCompUnitTypeListCommand.cs" />
+    <Compile Include="ObjectModel\CompUnits\AddCompUnitCommand.cs" />
+    <Compile Include="ObjectModel\CompUnits\DeleteCompUnitCommand.cs" />
+    <Compile Include="ObjectModel\CompUnits\EditCompUnitCommand.cs" />
+    <Compile Include="ObjectModel\CompUnits\GetCompUnitListQuery.cs" />
+    <Compile Include="ObjectModel\Entities\GetEntityQuery.cs" />
+    <Compile Include="Dictionaries\EntityTypes\GetEntityTypeListQuery.cs" />
+    <Compile Include="SeriesData\PropertyValues\GetPropertyValueListQuery.cs" />
+    <Compile Include="ObjectModel\ReducingStations\AddReducingStationCommand.cs" />
+    <Compile Include="ObjectModel\ReducingStations\DeleteReducingStationCommand.cs" />
+    <Compile Include="ObjectModel\ReducingStations\EditReducingStationCommand.cs" />
+    <Compile Include="ObjectModel\ReducingStations\GetReducingStationListQuery.cs" />
+    <Compile Include="ObjectModel\Segment\Site\AddSiteSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\Site\DeleteSiteSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\Site\EditSiteSegmentCommand.cs" />
+    <Compile Include="ObjectModel\Segment\Site\GetSiteSegmentListQuery.cs" />
+    <Compile Include="ObjectModel\PipelineConns\AddPipelineConnCommand.cs" />
+    <Compile Include="ObjectModel\PipelineConns\DeletePipelineConnCommand.cs" />
+    <Compile Include="ObjectModel\PipelineConns\GetPipelineConnListQuery.cs" />
+    <Compile Include="ObjectModel\Pipelines\AddPipelineCommand.cs" />
+    <Compile Include="ObjectModel\Pipelines\DeletePipelineCommand.cs" />
+    <Compile Include="ObjectModel\Pipelines\EditPipelinesCommand.cs" />
+    <Compile Include="ObjectModel\Pipelines\GetPipelineListQuery.cs" />
+    <Compile Include="SeriesData\Series\GetSeriesListQuery.cs" />
+    <Compile Include="ObjectModel\Valves\AddValveCommand.cs" />
+    <Compile Include="ObjectModel\Valves\DeleteValveCommand.cs" />
+    <Compile Include="ObjectModel\Valves\EditValveCommand.cs" />
+    <Compile Include="ObjectModel\DistrStationOutlets\AddDistrStationOutletCommand.cs" />
+    <Compile Include="ObjectModel\DistrStationOutlets\DeleteDistrStationOutletCommand.cs" />
+    <Compile Include="ObjectModel\DistrStationOutlets\EditDistrStationOutletCommand.cs" />
+    <Compile Include="ObjectModel\DistrStationOutlets\GetDistrStationOutletListQuery.cs" />
+    <Compile Include="ObjectModel\MeasLine\AddMeasLineCommand.cs" />
+    <Compile Include="ObjectModel\MeasLine\DeleteMeasLineCommand.cs" />
+    <Compile Include="ObjectModel\MeasLine\EditMeasLineCommand.cs" />
+    <Compile Include="ObjectModel\MeasLine\GetMeasLineListQuery.cs" />
+    <Compile Include="ObjectModel\DistrStations\AddDistrStationCommand.cs" />
+    <Compile Include="ObjectModel\DistrStations\DeleteDistrStationCommand.cs" />
+    <Compile Include="ObjectModel\DistrStations\EditDistrStationCommand.cs" />
+    <Compile Include="ObjectModel\DistrStations\GetDistrStationListQuery.cs" />
+    <Compile Include="Dictionaries\Enterprises\GetEnterpriseListQuery.cs" />
+    <Compile Include="ObjectModel\DeleteEntityCommand.cs" />
+    <Compile Include="ObjectModel\MeasStations\AddMeasStationCommand.cs" />
+    <Compile Include="ObjectModel\MeasStations\DeleteMeasStationCommand.cs" />
+    <Compile Include="ObjectModel\MeasStations\EditMeasStationCommand.cs" />
+    <Compile Include="ObjectModel\MeasStations\GetMeasStationListQuery.cs" />
+    <Compile Include="Dictionaries\SuperchargerTypes\GetSuperchargerTypesCommand.cs" />
+    <Compile Include="ObjectModel\Sites\AddSiteCommand.cs" />
+    <Compile Include="ObjectModel\Sites\DeleteSiteCommand.cs" />
+    <Compile Include="ObjectModel\Sites\EditSiteCommand.cs" />
+    <Compile Include="ObjectModel\Sites\GetSiteListQuery.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repairs\Complexes\AddComplexCommand.cs" />
+    <Compile Include="Repairs\Complexes\DeleteComplexCommand.cs" />
+    <Compile Include="Repairs\Complexes\EditComplexCommand.cs" />
+    <Compile Include="Repairs\Complexes\GetComplexByIdQuery.cs" />
+    <Compile Include="Repairs\Repair\AddRepairCommand.cs" />
+    <Compile Include="Repairs\Repair\DeleteRepairCommand.cs" />
+    <Compile Include="Repairs\Repair\EditRepairCommand.cs" />
+    <Compile Include="Repairs\RepairWorks\AddRepairWorkCommand.cs" />
+    <Compile Include="SystemVariables\EditIusVariableCommand.cs" />
+    <Compile Include="SystemVariables\SysVarGetCommands.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\PortableDTO\PortableDTO.csproj">
+      <Project>{351F17B0-88EC-4255-B351-1D7E86E411A0}</Project>
+      <Name>PortableDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shared\Utils\Utils.csproj">
+      <Project>{01B8B942-8E9B-468B-8873-2514DD40532C}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL.Core\DAL.Core.csproj">
+      <Project>{9EEFCB2C-DE66-42CB-9BBD-D2DB95D0FEBA}</Project>
+      <Name>DAL.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bindings\ExchangeEntities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

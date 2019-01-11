@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="GazRouter.ObjectModel.DeviceConfig.DeviceConfigView" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+           mc:Ignorable="d"
+           xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+           xmlns:deviceConfig="clr-namespace:GazRouter.ObjectModel.DeviceConfig"
+           d:DesignWidth="640" d:DesignHeight="480"
+           d:DataContext="{d:DesignInstance deviceConfig:DeviceConfigViewModel}"
+           >
+    <telerik:RadBusyIndicator BusyContent="Идёт загрузка..." 
+                              DisplayAfter="0" 
+                              IsBusy="{Binding IsBusyLoading}">
+        <Grid x:Name="LayoutRoot">
+            <Grid.Resources>
+                <telerik:BooleanToVisibilityConverter x:Key="Bool2VisibilityConverter" />
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar Grid.Row="0">
+
+                <telerik:RadComboBox SelectedItem="{Binding SelectedDeviceType, Mode=TwoWay}"
+                                     ItemsSource="{Binding DeviceTypes}" 
+                                     DisplayMemberPath="Name" />
+
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadButton Command="{Binding RefreshCommand}" 
+                                   Style="{StaticResource refreshButtonStyle}" />
+
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadButton Command="{Binding AddCommand}" Style="{StaticResource addButtonStyle}"  ToolTipService.ToolTip="Добавить"/>
+                <telerik:RadButton Command="{Binding EditCommand}" Style="{StaticResource editButtonStyle}"  ToolTipService.ToolTip="Редактировать"/>
+                <telerik:RadButton Command="{Binding DeleteCommand}" Style="{StaticResource deleteButtonStyle}"  ToolTipService.ToolTip="Удалить"/>
+
+                <telerik:RadToolBarSeparator />
+                <telerik:RadButton Command="{Binding PublishCommand}"  ToolTipService.ToolTip="Опубликовать изменения">
+                    <Image Source="/Common;component/Images/hand-share.png" />
+                </telerik:RadButton>
+                <telerik:RadButton Command="{Binding ShowChangesCommand}"  ToolTipService.ToolTip="Журнал изменений">
+                    <Image Source="/Common;component/Images/16x16/changelog.png" />
+                </telerik:RadButton>
+
+            </telerik:RadToolBar>
+
+            <telerik:RadGridView Grid.Row="1"
+                                 GridLinesVisibility="Both"
+                                 AutoGenerateColumns="True"
+                                 IsReadOnly="True"
+                                 ItemsSource="{Binding Items}"
+                                 SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"
+                                 CanUserFreezeColumns="False"
+                                 RowIndicatorVisibility="Collapsed"
+                                 ShowGroupPanel="False">
+                
+            </telerik:RadGridView>
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

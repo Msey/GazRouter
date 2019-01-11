@@ -1,0 +1,441 @@
+﻿<UserControl x:Class="GazRouter.DataLoadMonitoring.Views.LoadMonitorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"   
+    xmlns:telerik1="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.ScheduleView"
+    xmlns:module="clr-namespace:GazRouter.DataLoadMonitoring.Module">
+    <UserControl.Resources>
+        <Style x:Key="MouseOverHighlightStyle" TargetType="telerik1:HighlightItem">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <DataTemplate x:Key="AppointmentTemplate" DataType="module:SiteAppointment">
+
+            <!--<TextBlock Text="{Binding Subject}" TextWrapping="Wrap" TextTrimming="WordEllipsis" />-->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+
+                    <TextBlock Text="{Binding Body}" FontStyle="Italic" TextWrapping="Wrap" TextTrimming="WordEllipsis"/>
+
+                </Grid>
+                <Grid Grid.Row="1">
+                    <!--<TextBlock Grid.Column="0" Text="{Binding Path=Appointment.CountParams}" FontStyle="Normal"   TextWrapping="Wrap" TextTrimming="WordEllipsis"
+                            ToolTipService.ToolTip="Количество загруженных параметров по ЛПУ"/>-->
+
+                    <telerik:RadButton Cursor="Hand"
+                                     Command="{Binding DataContext.ClickCommand,RelativeSource={RelativeSource FindAncestor, AncestorType=telerik:RadScheduleView}}"
+                                     CommandParameter="{Binding  Path=Appointment}">
+
+
+                        <TextBlock Text="{Binding Path=Appointment.CountParams}" FontStyle="Normal"   TextWrapping="Wrap" TextTrimming="WordEllipsis"
+                                    ToolTipService.ToolTip="Количество загруженных параметров по ЛПУ"/>
+
+                    </telerik:RadButton>
+                </Grid>
+
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AppointmentTemplate2" DataType="module:SiteAppointment">
+
+            <!--<TextBlock Text="{Binding Subject}" TextWrapping="Wrap" TextTrimming="WordEllipsis" />-->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+
+                    <TextBlock Text="{Binding Body}" FontStyle="Italic" TextWrapping="Wrap" TextTrimming="WordEllipsis"/>
+
+                </Grid>
+                <Grid Grid.Row="1">
+                    <!--<TextBlock Grid.Column="0" Text="{Binding Path=Appointment.CountParams}" FontStyle="Normal"   TextWrapping="Wrap" TextTrimming="WordEllipsis"
+                            ToolTipService.ToolTip="Количество загруженных параметров по ЛПУ"/>-->
+
+                    
+                </Grid>
+
+            </Grid>
+        </DataTemplate>
+        <telerik:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <ImageSource x:Key="AppointmentItem_Recurrence">/Telerik.Windows.Controls.ScheduleView;component/Themes/Images/AppointmentException_Metro.png</ImageSource>
+        <ImageSource x:Key="AppointmentItem_Exception">/Telerik.Windows.Controls.ScheduleView;component/Themes/Images/AppointmentRecurrence_Metro.png</ImageSource>
+        <ControlTemplate x:Key="AppointmentItemHorizontalControlTemplate" TargetType="telerik:AppointmentItem">
+            <Grid x:Name="Root">
+                <!--<VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Disabled"/>
+                        <VisualState x:Name="Normal">
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames Duration="0:0:0.200" Storyboard.TargetName="MouseOverGrid" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.200">
+                                        <DiscreteObjectKeyFrame.Value>
+                                            <Visibility>Collapsed</Visibility>
+                                        </DiscreteObjectKeyFrame.Value>
+                                    </DiscreteObjectKeyFrame>
+                                </ObjectAnimationUsingKeyFrames>
+                                <DoubleAnimation BeginTime="0:0:0.0" Duration="0:0:0.200" To="0" Storyboard.TargetName="MouseOverGrid" Storyboard.TargetProperty="Opacity"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames Duration="0:0:0.400" Storyboard.TargetName="MouseOverGrid" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.0">
+                                        <DiscreteObjectKeyFrame.Value>
+                                            <Visibility>Visible</Visibility>
+                                        </DiscreteObjectKeyFrame.Value>
+                                    </DiscreteObjectKeyFrame>
+                                </ObjectAnimationUsingKeyFrames>
+                                <DoubleAnimation BeginTime="0:0:0.200" Duration="0:0:0.200" To="1" Storyboard.TargetName="MouseOverGrid" Storyboard.TargetProperty="Opacity"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="ReadOnly">
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames Duration="0:0:0.0" Storyboard.TargetName="ReadOnlyVisual" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.0">
+                                        <DiscreteObjectKeyFrame.Value>
+                                            <Visibility>Visible</Visibility>
+                                        </DiscreteObjectKeyFrame.Value>
+                                    </DiscreteObjectKeyFrame>
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="InlineEditing"/>
+                    </VisualStateGroup>
+                    <VisualStateGroup x:Name="SelectionStates">
+                        <VisualState x:Name="Unselected"/>
+                        <VisualState x:Name="Selected">
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames Duration="0:0:0.200" Storyboard.TargetName="SelectionVisual" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.200">
+                                        <DiscreteObjectKeyFrame.Value>
+                                            <Visibility>Visible</Visibility>
+                                        </DiscreteObjectKeyFrame.Value>
+                                    </DiscreteObjectKeyFrame>
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>-->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="1" Margin="1 0 1 0">
+                    <Border x:Name="LineVisual" Margin="{TemplateBinding DurationMarkerMargin}" Background="{telerik:Windows8Resource ResourceKey=StrongBrush}" Height="3"/>
+                    <Border x:Name="PART_TimeMarker"
+                        Margin="{TemplateBinding DurationMarkerMargin}"
+                        Background="{Binding Path=TimeMarker.TimeMarkerBrush}"
+                        Visibility="{Binding Path=TimeMarker, Converter={StaticResource NullToVisibilityConverter}}"
+                        Height="3"/>
+                </Grid>
+                <Grid Grid.Row="0">
+                    <telerik:CommandManager.InputBindings>
+                        <telerik:InputBindingCollection>
+                            <telerik:MouseBinding Gesture="LeftDoubleClick" Command="telerik1:RadScheduleViewCommands.EditAppointment"/>
+                        </telerik:InputBindingCollection>
+                    </telerik:CommandManager.InputBindings>
+                    <Border x:Name="BackgroundBorder" Background="{TemplateBinding Background}"/>
+                    <Border x:Name="SelectionVisual" Visibility="Collapsed" Background="{telerik:Windows8Resource ResourceKey=StrongBrush}" Opacity="0.3"/>
+                    <Border x:Name="PART_Category" Background="{Binding Path=Category.CategoryBrush}" Margin="1"/>
+                    <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1"/>
+                    <Rectangle x:Name="ReadOnlyVisual" Visibility="Collapsed" Fill="{telerik:Windows8Resource ResourceKey=MarkerBrush}" Opacity="0.3"/>
+                    <Grid Margin="-1 1 0 1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Path
+                            Grid.Column="0"
+                            Data="M-919.69031,2003.9496 L-919.69031,2010.7375 L-923.7619,2007.4564 z"
+                            Fill="{telerik:Windows8Resource ResourceKey=MainBrush}"
+                            Margin="3 0"
+                            Opacity="0.7"
+                            HorizontalAlignment="Left"
+                            Height="7"
+                            Stretch="Fill"
+                            VerticalAlignment="Center"
+                            Width="4"
+                            Visibility="{TemplateBinding StartIndicatorVisibility}"/>
+                        <!--<StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="2 2 0 0" Orientation="Horizontal">
+                            <Image x:Name="RecurrenceMark"
+                                Grid.Column="0"
+                                Margin="2 2 1 1"
+                                Width="10"
+                                Height="10"
+                                Visibility="{Binding Path=RecurrenceState, Converter={StaticResource RecurrenceStateIsExeptionToVisibilityConverter}}"
+                                HorizontalAlignment="Left"
+                                Source="{StaticResource AppointmentItem_Recurrence}"/>
+                            <Image x:Name="ExceptionMark"
+                                Grid.Column="0"
+                                Margin="2 2 1 1"
+                                Width="10"
+                                Height="10"
+                                Visibility="{Binding Path=RecurrenceState, Converter={StaticResource RecurrenceStateIsOccurenceToVisibilityConverter}}"
+                                HorizontalAlignment="Left"
+                                Source="{StaticResource AppointmentItem_Exception}"/>
+                            <ContentControl x:Name="HighImportanceMark"
+                                Template="{StaticResource HighImportanceMarkTemplate}"
+                                Margin="2 1 1 0"
+                                Style="{StaticResource ImportanceMarkContentControlStyle}"
+                                Visibility="{Binding Importance, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=High}"/>
+                            <ContentControl x:Name="LowImportanceMark"
+                                Template="{StaticResource LowImportanceMarkTemplate}"
+                                Margin="2 1 1 0"
+                                Style="{StaticResource ImportanceMarkContentControlStyle}"
+                                Visibility="{Binding Importance, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Low}"/>
+                        </StackPanel>-->
+                        <ContentPresenter
+                            Grid.Column="2"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Path
+                            Grid.Column="3"
+                            Data="M1109.0469,332.70313 L1113.0469,336.29663 L1109.0469,339.68823 z"
+                            Margin="3 0"
+                            Fill="{telerik:Windows8Resource ResourceKey=MainBrush}"
+                            Opacity="0.7"
+                            HorizontalAlignment="Right"
+                            Height="6.984"
+                            Stretch="Fill"
+                            VerticalAlignment="Center"
+                            Width="4"
+                            Visibility="{TemplateBinding EndIndicatorVisibility}"/>
+                    </Grid>
+                    <Grid x:Name="MouseOverGrid" Visibility="Collapsed" Opacity="0">
+                        <!--<Border x:Name="MouseOverVisual" IsHitTestVisible="False" Background="{telerik:Windows8Resource ResourceKey=StrongBrush}" Opacity="0.1"/>-->
+                        <Border x:Name="PART_StartResizeGrip"
+                            Background="Transparent"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Stretch"
+                            Cursor="SizeWE"
+                            telerik:DragDropManager.AllowDrag="True"
+                            Width="6"
+                            Visibility="{Binding IsAllDay, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
+                            telerik:DragDropManager.TouchDragTrigger="TapAndHold"/>
+                        <Border x:Name="PART_EndResizeGrip"
+                            Background="Transparent"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Stretch"
+                            Cursor="SizeWE"
+                            telerik:DragDropManager.AllowDrag="True"
+                            Width="6"
+                            Visibility="{Binding IsAllDay, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
+                            telerik:DragDropManager.TouchDragTrigger="TapAndHold"/>
+                        <telerik:RadButton x:Name="DeleteButton"
+                            Style="{StaticResource DeleteButtonStyle}"
+                            ClickMode="Press"
+                            CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                            Visibility="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            IsTabStop="False"
+                            Command="telerik1:RadScheduleViewCommands.DeleteAppointment"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </ControlTemplate>
+
+
+
+        <telerik:OrientedAppointmentItemStyleSelector x:Key="AppointmentItemStyleSelector">
+            <telerik:OrientedAppointmentItemStyleSelector.HorizontalStyle>
+                <Style TargetType="telerik:AppointmentItem" BasedOn="{StaticResource AppointmentItemBaseStyle}">
+
+                    <!--<Setter Property="MinWidth" Value="100" />-->
+                    <Setter Property="Margin" Value="1" />
+                    <Setter Property="Background" Value="White" />
+
+                    <Setter Property="FontStyle" Value="Italic" />
+                    <Setter Property="Foreground"  Value="Black" />
+                    <Setter Property="Template" Value="{StaticResource AppointmentItemHorizontalControlTemplate}"></Setter>
+                </Style>
+            </telerik:OrientedAppointmentItemStyleSelector.HorizontalStyle>
+
+            <telerik:OrientedAppointmentItemStyleSelector.VerticalStyle>
+
+                <Style TargetType="telerik:AppointmentItem" BasedOn="{StaticResource AppointmentItemBaseStyle}">
+                    <!--<Setter Property="Template" Value="{StaticResource AppointmentItemVerticalControlTemplate}" />-->
+                    <!--<Setter Property="MinWidth" Value="1300" />-->
+
+                    <Setter Property="Margin" Value="1 1 1 1" />
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="FontStyle" Value="Italic" />
+                    <Setter Property="Foreground"  Value="Black" />
+
+
+
+                </Style>
+            </telerik:OrientedAppointmentItemStyleSelector.VerticalStyle>
+        </telerik:OrientedAppointmentItemStyleSelector>
+
+
+        <Style x:Key="HorizontalBottomLevelGroupHeaderStyle" TargetType="telerik:GroupHeader" BasedOn="{StaticResource GroupHeaderBaseStyle}">
+            <Setter Property="MinWidth" Value="60"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style x:Key="VerticalBottomLevelGroupHeaderStyle" TargetType="telerik:GroupHeader" BasedOn="{StaticResource GroupHeaderBaseStyle}">
+            <!--<Setter Property="Width" Value="500"></Setter>-->
+            <Setter Property="FontStyle" Value="Normal"/>
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+
+        <!-- GroupHeaderStyleSelector -->
+        <telerik:OrientedGroupHeaderStyleSelector x:Key="GroupHeaderStyleSelector"
+            VerticalBottomLevelStyle="{StaticResource VerticalBottomLevelGroupHeaderStyle}"
+            HorizontalBottomLevelStyle="{StaticResource HorizontalBottomLevelGroupHeaderStyle}"
+                                                  
+          >
+        </telerik:OrientedGroupHeaderStyleSelector>
+
+
+
+
+        <module:GroupHeaderTemplateSelector x:Key="GroupHeaderTempalteSelector">
+            <module:GroupHeaderTemplateSelector.HorizontalTemplate>
+                <DataTemplate>
+                    <telerik:LayoutTransformControl>
+                        <telerik:LayoutTransformControl.LayoutTransform>
+                            <RotateTransform Angle="0" />
+                        </telerik:LayoutTransformControl.LayoutTransform>
+                        <TextBlock Text="{Binding FormattedName}" HorizontalAlignment="Center" />
+                    </telerik:LayoutTransformControl>
+                </DataTemplate>
+            </module:GroupHeaderTemplateSelector.HorizontalTemplate>
+
+            <module:GroupHeaderTemplateSelector.VerticalTemplate>
+                <DataTemplate>
+                    <telerik:LayoutTransformControl>
+                        <telerik:LayoutTransformControl.LayoutTransform>
+                            <RotateTransform Angle="0" />
+                        </telerik:LayoutTransformControl.LayoutTransform>
+                        <TextBlock Text="{Binding FormattedName}" HorizontalAlignment="Center" />
+                    </telerik:LayoutTransformControl>
+                </DataTemplate>
+            </module:GroupHeaderTemplateSelector.VerticalTemplate>
+           
+            <module:GroupHeaderTemplateSelector.VerticalBottomLevelTemplate>
+                <DataTemplate>
+                    <telerik:LayoutTransformControl>
+                        <telerik:LayoutTransformControl.LayoutTransform>
+                            <RotateTransform Angle="0" />
+                        </telerik:LayoutTransformControl.LayoutTransform>
+                        <TextBlock Text="{Binding FormattedName}" HorizontalAlignment="Center" />
+                    </telerik:LayoutTransformControl>
+                </DataTemplate>
+            </module:GroupHeaderTemplateSelector.VerticalBottomLevelTemplate>
+
+            <!--стиль для правки заголовка слева (где ЛПУ) -->
+            <module:GroupHeaderTemplateSelector.HorizontalBottomLevelTemplate>
+                <DataTemplate>
+                    <Border Width="130" Margin="2">
+                        <TextBlock Foreground="Black"
+                                   FontSize="12"
+                                   Text="{Binding FormattedName}"
+                                   TextWrapping="Wrap"  />
+
+                    </Border>
+                </DataTemplate>
+            </module:GroupHeaderTemplateSelector.HorizontalBottomLevelTemplate>
+        </module:GroupHeaderTemplateSelector>
+
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot"    >
+        <!--<Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>-->
+
+
+
+        <!--<TextBlock Grid.Row="0" Text="{Binding headerString}"></TextBlock>-->
+        <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Grid.Row="0">
+            <telerik:RadScheduleView x:Name="DataMonitor"   
+                         SpecialSlotsSource="{Binding SpecialSlots}" 
+                         AppointmentsSource="{Binding Appointments,Mode=TwoWay}" 
+                         ResourceTypesSource="{Binding ResourcesTypes,Mode=TwoWay}"
+                         GroupHeaderContentTemplateSelector="{StaticResource GroupHeaderTempalteSelector}"
+                         NavigationHeaderVisibility="Visible"
+                         
+                         VerticalScrollBarVisibility="Visible" 
+                         HorizontalScrollBarVisibility="Visible"
+                        
+                         AppointmentItemContentTemplate="{StaticResource AppointmentTemplate}"
+                         AppointmentStyleSelector="{StaticResource AppointmentItemStyleSelector}"
+                         GroupHeaderStyleSelector="{StaticResource GroupHeaderStyleSelector}"
+                                 
+                         VisibleRangeChangedCommand="{Binding VisibleRangeChanged}"
+                         VisibleRangeChangedCommandParameter="{Binding VisibleRange, RelativeSource={RelativeSource Self}}"
+                         ShowDialog="DataMonitor_OnShowDialog"
+                         
+                         >
+
+                <telerik:RadScheduleView.GroupDescriptionsSource>
+                    <telerik:GroupDescriptionCollection>
+                        <telerik1:DateGroupDescription  />
+                        <telerik1:ResourceGroupDescription ResourceType="LPU"/>
+                        <telerik1:ResourceGroupDescription ResourceType="Stat"  />
+                    </telerik:GroupDescriptionCollection>
+                </telerik:RadScheduleView.GroupDescriptionsSource>
+
+                <telerik:RadScheduleView.ViewDefinitions>
+
+                    <!--<telerik:DayViewDefinition  Orientation="Vertical"
+                MouseOverHighlightStyle="{Binding MouseOverHighlightStyle}"    
+					TimerulerMajorTickStringFormat="{}{0:%H}:{0:%mm} "
+					GroupHeaderDateStringFormat="{}{0:dd MMMM yyyy г., dddd }"
+					MajorTickLength="2hour"
+					MinorTickLength="2hour"
+					MinTimeRulerExtent="800" 
+					MaxTimeRulerExtent="800"
+                                  StretchGroupHeaders="True"        
+					
+                    ShowAllDayArea="False"
+                                        />-->
+
+
+                    <telerik:TimelineViewDefinition  
+                        Title="Сеансовые данные"
+                        ShowTimeRuler="True"
+                    Orientation="Horizontal"
+					TimerulerGroupStringFormat="{}{0:dd MMMM yyyy г., dddd }" 
+					TimerulerMajorTickStringFormat="{}{0:%H}:{0:%mm} "
+					TimerulerMinorTickStringFormat=":{0:%m}"
+					MajorTickLength="2hour"
+					MinorTickLength="2hour"
+					MinTimeRulerExtent="800" 
+					MaxTimeRulerExtent="800"
+                    StretchAppointments="True"
+                    VisibleDays="2"
+                    GroupTickLength="2day"
+                   
+                      LargeChangeInterval="1d"
+                     DayStartTime="{Binding StartTime}" 
+                     DayEndTime="{Binding EndTime}" 
+                            StretchGroupHeaders="True"  
+                     />
+
+
+
+
+                </telerik:RadScheduleView.ViewDefinitions>
+
+
+            </telerik:RadScheduleView>
+        </telerik:RadBusyIndicator>
+    </Grid>
+</UserControl>

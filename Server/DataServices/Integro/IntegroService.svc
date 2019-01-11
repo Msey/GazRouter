@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="GazRouter.DataServices.Integro.IntegroService" CodeBehind="IntegroService.svc.cs" %>

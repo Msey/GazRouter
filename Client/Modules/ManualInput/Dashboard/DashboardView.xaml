@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="GazRouter.ManualInput.Dashboard.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:dashboard="clr-namespace:GazRouter.ManualInput.Dashboard"
+             xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:inputStory="clr-namespace:GazRouter.Controls.InputStory;assembly=Controls"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance dashboard:DashboardViewModel}">
+    <UserControl.Resources>
+        <!--CONVERTERS-->
+        <converters:PeriodTypeToNameConverter x:Key="PeriodTypeToNameConverter" />
+        <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <telerik:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <telerik:RadBusyIndicator BusyContent="Загрузка..." IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <telerik:RadToolBar Grid.Row="0">
+                <telerik:RadComboBox Width="120"
+                                     ItemsSource="{Binding PeriodList}"
+                                     SelectedItem="{Binding SelectedPeriod, Mode=TwoWay}">
+                    <telerik:RadComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource PeriodTypeToNameConverter}}"/>
+                        </DataTemplate>
+                    </telerik:RadComboBox.ItemTemplate>
+                </telerik:RadComboBox>
+
+                <controls:DateTimePickerTwoHours SelectedDateTime="{Binding SelectedDate, Mode=TwoWay}" 
+                                                 DisableSelectFuture="True"
+                                                 Width="150"
+                                                 Visibility="{Binding IsDaySelected, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"/>
+
+                <telerik:RadDatePicker SelectedDate="{Binding SelectedDate, Mode=TwoWay}"
+                                       Width="150"
+                                       Visibility="{Binding IsDaySelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                <telerik:RadButton Command="{Binding RefreshCommand}" Style="{StaticResource refreshButtonStyle}" />
+
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadButton Visibility="{Binding ShowImportTaskActions, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                   Command="{Binding ResetInputStateCommand}" 
+                                   telerik:RadToolTipService.ToolTipContent="Сбросить подтверждение">
+                    <Image Source="/Common;component/Images/16x16/flag_orange.png"
+                           Stretch="None"/>
+                </telerik:RadButton>
+
+                <telerik:RadButton Visibility="{Binding ShowImportTaskActions, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                   Command="{Binding ReloadSerieCommand}" 
+                                   telerik:RadToolTipService.ToolTipContent="Импортировать параметры из АСУ ТП">
+                    <Image Source="/Common;component/Images/16x16/import.png"
+                           Stretch="None"/>
+                </telerik:RadButton>
+
+                <telerik:RadToolBarSeparator Visibility="{Binding ShowImportTaskActions, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                <telerik:RadButton Visibility="{Binding ShowImportTaskActions, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                   Command="{Binding AutorefreshActivityCommand}"
+                                   telerik:RadToolTipService.ToolTipContent="Активация / Деактивация автообновления">
+                    <Image Source="/Common;component/Images/16x16/history.png"
+                           Stretch="None"/>
+                </telerik:RadButton>
+
+                <Grid Visibility="{Binding ShowImportTaskActions, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding AutorefreshEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <telerik:Label Content="Автообновление каждые:"/>
+                        <TextBox Text="{Binding TimerInterval, Mode=TwoWay}" Width="25" MaxLength="2"/>
+                        <telerik:Label Content="сек"/>
+                    </StackPanel>
+                </Grid>
+                <telerik:RadToolBarSeparator  Visibility="{Binding ShowImportTaskActions, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                <telerik:RadDropDownButton Visibility="{Binding ShowImportTaskActions, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
+                                           IsEnabled="{Binding ExportTasksViewModel.ShowExportMenu}">
+                    <telerik:RadDropDownButton.Content>
+                        <Image Source="/Common;component/Images/16x16/export.png"
+                               Stretch="None" />
+                    </telerik:RadDropDownButton.Content>
+                    <telerik:RadDropDownButton.DropDownContent>
+                        <telerik:RadContextMenu BorderThickness="0">
+                            <telerik:RadMenuItem Header="Сформировать..."
+                                                 Command="{Binding SaveExportTaskCommand}">
+                                <telerik:RadMenuItem.Icon>
+                                    <Image Source="/Common;component/Images/16x16/save.png"
+                                           Stretch="None" />
+                                </telerik:RadMenuItem.Icon>
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem Header="Сформировать и отправить" Command="{Binding RunExportTaskCommand}" />
+                        </telerik:RadContextMenu>
+                    </telerik:RadDropDownButton.DropDownContent>
+                </telerik:RadDropDownButton>
+
+            </telerik:RadToolBar>
+            <telerik:RadTabControl Grid.Row="1" SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
+                <telerik:RadTabItem Header="Загрузка данных">
+                    <inputStory:InputStoryView DataContext="{Binding InpStoryViewModel}"/>
+                </telerik:RadTabItem>
+                <telerik:RadTabItem Header="Экспорт данных">
+                    <dashboard:ExportView DataContext="{Binding ExportTasksViewModel}" />
+                </telerik:RadTabItem>
+            </telerik:RadTabControl>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

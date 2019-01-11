@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?><telerik:RadWindow x:Class="GazRouter.Client.UserSettings.UserSettingsView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common" xmlns:userSettings="clr-namespace:GazRouter.Client.UserSettings" xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls" mc:Ignorable="d" Style="{StaticResource StyleMainRadWindow}" Header="Настройки пользователя" attachedProperties1:ModelDialogResult.DialogResult="{Binding DialogResult}" Width="Auto" d:DataContext="{d:DesignInstance userSettings:UserSettingsViewModel}" xmlns:spy="http://firstfloorsoftware.com/XamlSpy" spy:XamlMetadata.SpyServiceSettings="127.0.0.1|4530|53501|1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|1|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+    <Grid spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|13|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" MinHeight="250" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <telerik:RadTabControl Margin="-2, 0, -2, 0" BorderThickness="0" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|19|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+            <telerik:RadTabItem Header="Ед.измерения" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|21|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                <Grid Margin="11" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|22|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                    <StackPanel spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|23|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                        <TextBlock Text="Единицы измерения для отображения физических величин:" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|24|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                        <TextBlock Text="Давление:" Margin="0, 11, 0, 0" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|26|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                        <telerik:RadComboBox ItemsSource="{Binding PressureUnitList, Mode=TwoWay}" EmptyText="Выберите значение..." SelectedItem="{Binding SelectedPressureUnit, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" DisplayMemberPath="Item2" Margin="0, 5, 0, 0" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|28|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+
+                        <TextBlock Text="Температура:" Margin="0, 11, 0, 0" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|37|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                        <telerik:RadComboBox ItemsSource="{Binding TemperatureUnitList, Mode=TwoWay}" EmptyText="Выберите значение..." SelectedItem="{Binding SelectedTemperatureUnit, Mode=TwoWay}" DisplayMemberPath="Item2" Width="100" HorizontalAlignment="Left" Margin="0, 5, 0, 0" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|39|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+                        <TextBlock Text="Теплота сгорания:" Margin="0, 11, 0, 0" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|47|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                        <telerik:RadComboBox ItemsSource="{Binding CombHeatUnitList, Mode=TwoWay}" EmptyText="Выберите значение..." SelectedItem="{Binding SelectedCombHeatUnit, Mode=TwoWay}" DisplayMemberPath="Item2" Width="100" HorizontalAlignment="Left" Margin="0, 5, 0, 0" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|49|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+
+                        <TextBlock Text="Период отображения событий в журнале:" Margin="0,22,0,0" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|58|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                        <telerik:RadMaskedNumericInput Width="100" HorizontalAlignment="Left" Margin="0, 5, 0, 0" Value="{Binding EventLogArchivingDelay, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|59|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+
+                    </StackPanel>
+                </Grid>
+            </telerik:RadTabItem>
+
+            <telerik:RadTabItem Header="Уставки" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|69|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                <telerik:RadGridView AutoGenerateColumns="False" IsReadOnly="False" ItemsSource="{Binding Thresholds}" RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" GridLinesVisibility="Both" CanUserFreezeColumns="False" AlternationCount="2" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|70|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Width="120" DataMemberBinding="{Binding TypeName}" IsSortable="False" IsReadOnly="True" IsFilterable="False">
+                            <telerik:GridViewDataColumn.Header>
+                                <StackPanel Margin="5" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|85|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                                    <TextBlock Text="Тип" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|86|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                    <TextBlock Text="физической" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|87|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                    <TextBlock Text="величины" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|88|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                </StackPanel>
+                            </telerik:GridViewDataColumn.Header>
+                        </telerik:GridViewDataColumn>
+                        
+
+                        <telerik:GridViewDataColumn Width="80" DataMemberBinding="{Binding UnitName}" Header="Ед.изм." IsSortable="False" IsReadOnly="True" IsFilterable="False" />
+                        
+
+                        <telerik:GridViewDataColumn Width="100" DataMemberBinding="{Binding ShowThreshold, Mode=TwoWay}" IsSortable="False" IsFilterable="False">
+                            <telerik:GridViewDataColumn.Header>
+                                <StackPanel Margin="5" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|107|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                                    <TextBlock Text="Порог" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|108|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                    <TextBlock Text="отображения" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|109|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                    <TextBlock Text="отклонения" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|110|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                </StackPanel>
+                            </telerik:GridViewDataColumn.Header>
+
+                            <!--<telerik:GridViewDataColumn.CellEditTemplate>
+                                <DataTemplate DataType="userSettings:DeltaThresholdWrap">
+                                    <TextBox Text="{Binding ShowThreshold, Mode=TwoWay}"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </telerik:GridViewDataColumn.CellEditTemplate>-->
+                            
+                        </telerik:GridViewDataColumn>
+
+
+                        <telerik:GridViewDataColumn Width="100" DataMemberBinding="{Binding WarnThreshold, Mode=TwoWay}" IsSortable="False" IsFilterable="False">
+                            <telerik:GridViewDataColumn.Header>
+                                <StackPanel spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|130|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+                                    <TextBlock Text="Порог" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|131|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                    <TextBlock Text="выделения" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|132|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                    <TextBlock Text="отклонения" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|133|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+                                </StackPanel>
+                            </telerik:GridViewDataColumn.Header>
+                        </telerik:GridViewDataColumn>
+
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </telerik:RadTabItem>
+        </telerik:RadTabControl>
+        
+        <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|143|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+            <telerik:RadButton Content="Сохранить" Command="{Binding SaveCommand}" Style="{StaticResource StyleConfirmationButton}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|145|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+            <telerik:RadButton Content="Отмена" Command="{Binding CancelCommand}" Style="{StaticResource StyleConfirmationButton}" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\UserSettings\UserSettingsView.xaml|148|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+        </StackPanel>
+    </Grid>
+</telerik:RadWindow>

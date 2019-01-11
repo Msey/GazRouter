@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="GazRouter.DataServices.DataExchange.DataExchangeService" CodeBehind="DataExchangeService.svc.cs" %>

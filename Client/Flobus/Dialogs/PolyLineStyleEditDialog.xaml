@@ -1,0 +1,129 @@
+﻿ <telerik:RadWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   mc:Ignorable="d"
+                   x:Class="GazRouter.Flobus.Dialogs.PolyLineStyleEditDialog" 
+                   Header="Параметры отображения линейного объекта"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DesignHeight="600" d:DesignWidth="500"
+                   Style="{StaticResource DialogWindowStyle}">
+
+    <Grid Margin="11">
+
+        <Grid.Resources>
+            <telerik:ColorToBrushConverter x:Name="ColorToBrushConverter" />
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="*"/>
+            <RowDefinition  Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel HorizontalAlignment="Left" Margin="0,11,0,23" Grid.RowSpan="2">
+            <TextBlock Width="250" TextWrapping="Wrap" HorizontalAlignment="Left" 
+                       Text="Название:" />
+            
+            <TextBox Text="{Binding Name, Mode=TwoWay}"
+                     Height="20"
+                     VerticalContentAlignment="Top"
+                     HorizontalContentAlignment="Left"
+                     VerticalScrollBarVisibility="Auto"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     Width="400"
+                     Margin="0, 5, 0, 0" />
+            
+            <TextBlock Width="250" TextWrapping="Wrap" HorizontalAlignment="Left" 
+                       Text="Описание:" Margin="0, 5, 0, 0"/>
+            
+            <TextBox Text="{Binding Description, Mode=TwoWay}"
+                     Height="150"
+                     VerticalContentAlignment="Top"
+                     HorizontalContentAlignment="Left"
+                     VerticalScrollBarVisibility="Auto"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     Width="400"
+                     Margin="0, 5, 0, 0" />
+
+            <TextBlock Width="250" TextWrapping="Wrap" HorizontalAlignment="Left" 
+                       Text="Стиль линии :" Margin="0, 5, 0, 0"/>
+
+            <telerik:RadComboBox HorizontalAlignment="Left" VerticalAlignment="Center" Height="22" Width="100" Margin="3" SelectedIndex="{Binding Type,Mode=TwoWay}" >
+                <ComboBoxItem Height="16" Width="85" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Viewbox Height="10" Width="80" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                        <Line Stroke="Blue" X1="0" Y1="5" X2="80" Y2="5" StrokeThickness="1"/>
+                    </Viewbox>
+                </ComboBoxItem>
+                <telerik:RadComboBoxItem  Height="16" Width="85" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Viewbox Height="10" Width="80" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                        <Line Stroke="Blue" X1="0" Y1="5" X2="80" Y2="5" StrokeThickness="1" StrokeDashArray="2,2"/>
+                    </Viewbox>
+                </telerik:RadComboBoxItem>
+                <telerik:RadComboBoxItem  Height="16" Width="85" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Viewbox Height="10" Width="80" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                        <Line Stroke="Blue" X1="0" Y1="5" X2="80" Y2="5" StrokeThickness="1" StrokeDashArray="2,2,0,2"/>
+                    </Viewbox>
+                </telerik:RadComboBoxItem>
+                <telerik:RadComboBoxItem  Height="16" Width="85" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Viewbox Height="10" Width="80" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                        <Line Stroke="Blue" X1="0" Y1="5" X2="80" Y2="5" StrokeThickness="1" StrokeDashArray="2,2,0,2,0,2"/>
+                    </Viewbox>
+                </telerik:RadComboBoxItem>
+                <telerik:RadComboBoxItem  Height="16" Width="85" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Viewbox Height="10" Width="80" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                        <Line Stroke="Blue" X1="0" Y1="5" X2="80" Y2="5" StrokeThickness="1" StrokeDashArray="0,2"/>
+                    </Viewbox>
+                </telerik:RadComboBoxItem>
+            </telerik:RadComboBox>
+
+            <TextBlock Width="250" TextWrapping="Wrap" HorizontalAlignment="Left" 
+                       Text="Толщина линии:" Margin="0, 5, 0, 0"/>
+            
+            <telerik:RadNumericUpDown Width="100" 
+                                      Value="{Binding StrokeThickness, Mode=TwoWay}"
+                                      Minimum="1"
+                                      Maximum="20"
+                                      HorizontalAlignment="Left"
+                                      Margin="0, 5, 0, 0" />
+            <TextBlock Width="250" 
+                       TextWrapping="Wrap" 
+                       HorizontalAlignment="Left" 
+                       Margin="0, 11, 0, 0"
+                       Text="Цвет линии:" />
+            <telerik:RadRibbonDropDownButton DropDownButtonPosition="Right"
+                                             Margin="0, 5, 0, 0">
+                <telerik:RadRibbonDropDownButton.Content>
+                    <Rectangle Width="20" Height="20" StrokeThickness="0" 
+                               Fill="{Binding Stroke, Converter={StaticResource ColorToBrushConverter}}"/>
+
+                </telerik:RadRibbonDropDownButton.Content>
+                <telerik:RadRibbonDropDownButton.DropDownContent>
+                    <telerik:RadColorSelector HorizontalAlignment="Left"
+                                              HeaderPaletteVisibility="Collapsed" 
+                                              MainPaletteHeaderText=""
+                                              MainPalette="Metro" 
+                                              StandardPaletteVisibility="Collapsed"
+                                              SelectedColor="{Binding Path=Stroke, Mode=TwoWay}" 
+                                              Width="170" />
+                </telerik:RadRibbonDropDownButton.DropDownContent>
+            </telerik:RadRibbonDropDownButton>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Margin="0, 11, 0, 0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <telerik:RadButton Command="{Binding SaveCommand}" 
+                               HorizontalAlignment="Right" 
+                               Width="75" Height="23" Content="Изменить" />
+
+            <telerik:RadButton Command="{Binding CancelCommand}" HorizontalAlignment="Right" 
+                               Width="75" Height="23" 
+                               Margin="7,0,0,0" Content="Отмена" />
+        </StackPanel>
+    </Grid>
+
+
+</telerik:RadWindow>

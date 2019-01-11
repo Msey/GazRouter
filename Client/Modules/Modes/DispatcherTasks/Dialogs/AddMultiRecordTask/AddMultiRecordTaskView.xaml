@@ -1,0 +1,99 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Modes.DispatcherTasks.Dialogs.AddMultiRecordTask.AddMultiRecordTaskView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:dialogs="clr-namespace:GazRouter.Modes.DispatcherTasks.Dialogs"
+                   attachedProperties1:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   Width="Auto"
+                   Height="Auto"
+                   mc:Ignorable="d"
+                   Style="{StaticResource StyleMainRadWindow}"
+                   Header="Создание задания для нескольких ЛПУ"
+                   d:DataContext="{d:DesignInstance dialogs:AddMultiRecordTaskViewModel}">
+    
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" 
+                              BusyContent="Загрузка...">
+
+        <Grid Margin="11">
+            
+            <Grid.Resources>
+                <telerik:BooleanToVisibilityConverter x:Name="BoolVisibility" />
+                <telerik:InvertedBooleanToVisibilityConverter x:Name="InvertedBoolVisibility" />
+            </Grid.Resources>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="400"/>
+            </Grid.ColumnDefinitions>
+
+            
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Тема:" />
+                <TextBox Text="{Binding Subject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         Margin="0,5,0,0" />
+
+                <TextBlock Margin="0,11,0,0"
+                           Text="Срок выполнения:"
+                           HorizontalAlignment="Left" />
+                <telerik:RadDateTimePicker SelectedValue="{Binding CompletionDate, Mode=TwoWay}"
+                                           Width="140" 
+                                           HorizontalAlignment="Left" 
+                                           Margin="0,5,0,0" />
+
+                <TextBlock Margin="0,11,0,0" 
+                           Text="Текст задания:" />
+                <TextBox Margin="0,5,0,0"
+                         Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         MaxLength="1020"
+                         Height="250"
+                         Style="{StaticResource MultiLineStyle}" />
+            </StackPanel>
+            
+            
+            
+            <StackPanel Margin="20, 0, 0, 0"
+                        Grid.Row="0"
+                        Grid.Column="1">
+                
+                <CheckBox Content="Выбрать все" 
+                          IsThreeState="True"
+                          IsChecked="{Binding IsAllSitesChecked, Mode=TwoWay}" 
+                          Margin="0, 11, 0, 0"
+                          HorizontalAlignment="Left"/>
+
+                <ListBox ItemsSource="{Binding SiteList}"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                         Margin="0,5,0,0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding Dto.Name}"
+                                      IsChecked="{Binding IsChecked, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+            
+            
+            <StackPanel Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2" 
+                        Style="{StaticResource StyleStackPanelForConfirmationButton}">
+                <telerik:RadButton Command="{Binding SaveCommand}" 
+                                   Content="Сохранить"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+                <telerik:RadButton Command="{Binding CancelCommand}" 
+                                   Content="Отмена"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

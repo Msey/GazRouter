@@ -1,0 +1,287 @@
+﻿<telerik:RadWindow x:Class="GazRouter.DataExchange.CustomSource.Dialogs.AddEditExchangeTaskView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:dialogs="clr-namespace:GazRouter.DataExchange.CustomSource.Dialogs"   
+                   xmlns:behaviors="clr-namespace:GazRouter.Common.Ui.Behaviors;assembly=Common"
+                   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                   xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   mc:Ignorable="d" 
+                   d:DesignHeight="405" 
+                   d:DesignWidth="300"
+                   Style="{StaticResource DialogWindowStyle}" 
+                   Header="{Binding Caption}" 
+                   Height="Auto" 
+                   MinHeight="450"
+                   Width="600"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DataContext="{d:DesignInstance dialogs:AddEditExchangeTaskViewModel}">
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" 
+                              Style="{StaticResource RadBusyIndicatorSmallStyle}">
+
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="telerik:RadTabItem" BasedOn="{StaticResource RadTabItemStyle}">
+                    <Setter Property="Width" Value="250" />
+                </Style>
+                
+                <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+                <telerik:InvertedBooleanConverter x:Key="InvertedBooleanConverter"/>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <telerik:RadTabControl AllTabsEqualHeight="True" BorderThickness="0" Margin="-2, 0, -2, 0" >
+                <telerik:RadTabItem  Header="Основные" Width="150" Visibility="{Binding FirstTabVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                    <StackPanel Margin="11">
+                        <TextBlock Text="Наименование:" />
+                        <TextBox Margin="0, 5, 0, 0" 
+                                 Width="300"
+                                 HorizontalAlignment="Left"
+                                 Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
+                        <TextBlock Text="Источник/получатель данных:" 
+                                   Margin="0, 11, 0, 0" />
+                        <telerik:RadComboBox ItemsSource="{Binding Path=DataSourceList}" 
+                                             Margin="0, 5, 0, 0"
+                                             Width="300"
+                                             HorizontalAlignment="Left"
+                                             IsEnabled="False"
+                                             SelectedItem="{Binding SelectedDataSource, Mode=TwoWay}"
+                                             DisplayMemberPath="Name"
+                                             IsEditable="False"/>
+
+                        <TextBlock Text="Тип:" Margin="0, 11, 0, 0" />
+                        <telerik:RadComboBox ItemsSource="{Binding Path=ExchangeTypeList}"
+                                             Width="150"
+                                             HorizontalAlignment="Left"
+                                             Margin="0, 5, 0, 0"
+                                             SelectedItem="{Binding Path=SelectedExchangeType, Mode=TwoWay}"
+                                             DisplayMemberPath="Name"
+                                             IsEditable="False"
+                                             IsEnabled="{Binding ChangableExchangeType}"
+                                             CanAutocompleteSelectItems="True" />
+
+                        <StackPanel Orientation="Vertical" Margin="0, 11, 0, 0"
+                                    Visibility="{Binding IsExport, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <CheckBox IsChecked="{Binding IsSql, Mode=TwoWay}" Content="Вызов внешней процедуры"
+                                    Margin="0, 5, 0, 0"
+                                    HorizontalAlignment="Left" />
+                            <TextBox Margin="0, 5, 0, 0"
+                                     Width="250"
+                                     HorizontalAlignment="Left"
+                                     Visibility="{Binding IsSql, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}"                                    
+                                     Text="{Binding SqlProcedureName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+
+
+                        <CheckBox Content="Влияет на формирование серии данных"
+                                  Margin="0, 11, 0, 0"
+                                  IsChecked="{Binding IsCritical, Mode=TwoWay}"
+                                  IsEnabled="{Binding IsImport}"/>
+
+
+                        <TextBlock Text="Период:" Margin="0, 11, 0, 0" />
+                        <telerik:RadComboBox ItemsSource="{Binding Path=PeriodTypeList}"
+                                             Width="150"
+                                             HorizontalAlignment="Left"
+                                             Margin="0, 5, 0, 0"
+                                             SelectedItem="{Binding Path=SelectedPeriodType, Mode=TwoWay}"
+                                             DisplayMemberPath="Name"
+                                             IsEditable="False"
+                                             IsEnabled="{Binding ChangableExchangeType}"
+                                             CanAutocompleteSelectItems="True" />
+
+
+
+                        <TextBlock Text="Маска имени файла:" Margin="0, 11, 0, 0" />
+                        <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                            <TextBox Width="150"
+                                     HorizontalAlignment="Left"
+                                     Text="{Binding FileNameMask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Border Background="Lavender" 
+                                    Margin="2, 0, 0, 0"
+                                    Width="12"
+                                    VerticalAlignment="Stretch">
+                                <TextBlock Text="?"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" >
+                                    <ToolTipService.ToolTip>
+                                        <StackPanel Margin="11">
+                                            <TextBlock>Заменяемые символы маски должны быть заключены в угловые скобки: &lt;&gt;</TextBlock>
+                                            <TextBlock Text="">Смещение относительно метки времени задается по шаблону:<LineBreak/>
+                                             #(+-)(день от 0 до 10675199)(. разделитель дня и часов)(час от 0 до 23)(: разделитель часов и минут)(минуты от 0 до 59)</TextBlock>
+                                            <TextBlock>Пример: SM&lt;ddmmyyyyHH#-1.5:23&gt;.UG</TextBlock>
+                                            
+                                            <TextBlock Margin="0, 11, 0, 0">Заменяемые символы маски:</TextBlock>
+                                            <TextBlock>d - День месяца, в диапазоне от 1 до 31</TextBlock>
+                                            <TextBlock>dd - День месяца, в диапазоне от 01 до 31</TextBlock>
+                                            <TextBlock>ddd - Сокращенное название дня недели</TextBlock>
+                                            <TextBlock>dddd - Полное название дня недели</TextBlock>
+                                            <TextBlock>h - Час в 12-часовом формате от 1 до 12</TextBlock>
+                                            <TextBlock>hh - Час в 12-часовом формате от 01 до 12</TextBlock>
+                                            <TextBlock>H - Час в 24-часовом формате от 0 до 23</TextBlock>
+                                            <TextBlock>HH - Час в 24-часовом формате от 00 до 23</TextBlock>
+                                            <TextBlock>m - Минуты, в диапазоне от 0 до 59</TextBlock>
+                                            <TextBlock>mm - Минуты, в диапазоне от 00 до 59</TextBlock>
+                                            <TextBlock>M - Месяц, в диапазоне от 1 до 12</TextBlock>
+                                            <TextBlock>MM - Месяц, в диапазоне от 01 до 12</TextBlock>
+                                            <TextBlock>MMM - Сокращенное название месяца</TextBlock>
+                                            <TextBlock>MMMM - Полное название месяца</TextBlock>
+                                        </StackPanel>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+                            </Border>
+                        </StackPanel>
+                        
+                    </StackPanel>
+                </telerik:RadTabItem>
+
+
+                <telerik:RadTabItem Header="Преобразование" Width="150" Visibility="{Binding SecondTabVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <StackPanel Margin="11">
+                        <CheckBox IsChecked="{Binding IsTransform, Mode=TwoWay}" 
+                                  Content="Включить преобразование" />
+
+                        <TextBlock Text="Преобразование (XSLT):" Margin="0, 11, 0, 0" />
+                        <TextBox IsEnabled="{Binding IsTransform, Mode=TwoWay}" 
+                                 Text="{Binding Transformation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource MultiLineStyle}"  
+                                 Height="350"
+                                 Margin="0, 5, 0, 0"
+                                 FontSize="11" />
+                    </StackPanel>
+                </telerik:RadTabItem>
+                
+                
+                <telerik:RadTabItem Header="Способ передачи" 
+                                    IsSelected="{Binding FirstTabVisible, Converter={StaticResource InvertedBooleanConverter}}"
+                                    Width="150"
+                                    Visibility="{Binding IsExport, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                    <StackPanel Margin="11">
+                        <TextBlock Text="Способ передачи данных:" />
+                        <telerik:RadComboBox ItemsSource="{Binding TransportTypeList}"
+                                             DisplayMemberPath="Name"
+                                             SelectedValue="{Binding SelectedTransportType, Mode=TwoWay}"
+                                             Width="150"
+                                             Margin="0, 5, 0, 0"
+                                             HorizontalAlignment="Left" />
+
+
+                        <StackPanel Orientation="Vertical"
+                                    Visibility="{Binding IsFtp, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                            <TextBlock Margin="0, 11, 0, 0" Text="Адрес FTP-сервера:" />
+                            <TextBox Margin="0, 5, 0, 0"
+                                     Width="250"
+                                     HorizontalAlignment="Left"
+                                     Text="{Binding FtpAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock Margin="0, 11, 0, 0" Text="Логин:" />
+                            <TextBox Margin="0, 5, 0, 0"
+                                     Width="150"
+                                     HorizontalAlignment="Left"
+                                     Text="{Binding FtpLogin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock Margin="0, 11, 0, 0" Text="Пароль:" />
+                            <PasswordBox Margin="0, 5, 0, 0"
+                                         Width="150"
+                                         HorizontalAlignment="Left">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:PasswordBehavior Password="{Binding FtpPassword, Mode=TwoWay}" />
+                                </i:Interaction.Behaviors>
+                            </PasswordBox>
+                            <TextBlock Margin="0, 11, 0, 0" Text="Ключ:" />
+                            <TextBox Margin="0, 5, 0, 0"
+                                     Width="250"
+                                     HorizontalAlignment="Left"
+                                     Text="{Binding HostKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical"
+                                    Visibility="{Binding IsEmail, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                            <TextBlock Margin="0, 11, 0, 0" Text="Адрес электронной почты:" />
+                            <TextBox Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Width="250"
+                                     HorizontalAlignment="Left"
+                                     Margin="0, 5, 0, 0"/>
+
+                            <TextBlock Text="Если необходимо отправлять данные сразу на несколько адресов, то можно указать эти адреса через точку с запятой (;)."
+                                       FontSize="10"
+                                       Width="250"
+                                       TextWrapping="Wrap"
+                                       Margin="0, 5, 0, 0"
+                                       HorizontalAlignment="Left"/>
+
+                            <CheckBox HorizontalAlignment="Left" 
+                                      Width="250"
+                                      IsChecked="{Binding SendAsAttachment, Mode=TwoWay }"
+                                      Margin="0, 11, 0, 0">
+                                <TextBlock Width="250"
+                                           Text="Отправлять данные в виде вложения (по-умолчанию отправляются в теле письма)"
+                                           TextWrapping="Wrap"/>
+                            </CheckBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical"
+                                    Visibility="{Binding IsFolder, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <TextBlock Margin="0, 11, 0, 0" Text="Полный путь к папке:" />
+                            <TextBox Margin="0, 5, 0, 0"
+                                     Width="250"
+                                     HorizontalAlignment="Left"
+                                     Text="{Binding FolderPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                </telerik:RadTabItem>
+
+                <telerik:RadTabItem Header="Срабатывание" Width="100" Visibility="{Binding IsExport, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <StackPanel Margin="11">
+                        <TextBlock Text="Способ срабатывания:" />
+                        <telerik:RadComboBox ItemsSource="{Binding ExchangeStatuses}"
+                                                DisplayMemberPath="Value"
+                                                SelectedValue="{Binding SelectedExchangeStatus, Mode=TwoWay}"
+                                                Width="150"
+                                                Margin="0, 5, 0, 0"
+                                                HorizontalAlignment="Left" />
+
+                        <StackPanel Orientation="Vertical" 
+                                    Visibility="{Binding IsScheduled, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <TextBlock Margin="0, 11, 0, 0" Text="Смещение( в минутах ):" />
+                            <TextBox Margin="0, 5, 0, 0"
+                                     Width="50"
+                                     HorizontalAlignment="Left"
+                                     Text="{Binding Lag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                        </StackPanel>
+                    </StackPanel>
+
+                </telerik:RadTabItem>
+            </telerik:RadTabControl>
+
+            <StackPanel Grid.Row="1" 
+                        Style="{StaticResource StyleStackPanelForConfirmationButton}"
+                        Margin="0, 0, 11, 11">
+
+                <telerik:RadButton Content="{Binding ButtonSaveCaption}" Command="{Binding SaveCommand}"
+                                   Name="SaveButton" Style="{StaticResource StyleConfirmationButton}" />
+
+                <telerik:RadButton Content="Отмена" Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+
+        </Grid>
+
+
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

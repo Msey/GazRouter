@@ -1,0 +1,134 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Modes.Calculations.Dialogs.ErrorLog.ErrorLogView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                   Height="800" 
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:errorLog="clr-namespace:GazRouter.Modes.Calculations.Dialogs.ErrorLog"
+                   xmlns:periodPickerEx="clr-namespace:GazRouter.Controls.Dialogs.PeriodPickerEx;assembly=Controls"
+                   xmlns:log="clr-namespace:GazRouter.DTO.Calculations.Log;assembly=PortableDTO"
+                   xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   mc:Ignorable="d" 
+                   Header="Журнал ошибок" 
+                   d:DataContext="{d:DesignInstance errorLog:ErrorLogViewModel}" 
+                   HideMaximizeButton="True" 
+                   HideMinimizeButton="True"
+                   WindowStartupLocation="CenterScreen"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}" 
+                   Style="{StaticResource DialogWindowStyle}">
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.Resources>
+            <converters:PeriodTypeToNameConverter x:Key="PeriodTypeToNameConverter"/>
+        </Grid.Resources>
+
+        <telerik:RadToolBar Margin="-1, -1, -1, 0">
+            <periodPickerEx:PeriodPickerEx SelectedPeriod="{Binding SelectedPeriod, Mode=TwoWay}"
+                                           Width="200"/>
+            
+            <telerik:RadButton Margin="5, 0, 0, 0" 
+                               Style="{StaticResource refreshButtonStyle}"
+                               Command="{Binding RefreshCommand}" />
+
+        </telerik:RadToolBar>
+
+        <telerik:RadGridView Grid.Row="1" 
+                             ItemsSource="{Binding Log, Mode=TwoWay}" 
+                             ShowGroupPanel="False" 
+                             AutoGenerateColumns="False"
+                             IsReadOnly="True"
+                             RowIndicatorVisibility="Collapsed"
+                             CanUserFreezeColumns="False"
+                             Margin="-1">
+            <telerik:RadGridView.Columns>
+                
+                <telerik:GridViewDataColumn
+                    DataMemberBinding="{Binding ErrorNumber}"  
+                                            Width="80">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel>
+                            <TextBlock Text="№"/>
+                            <TextBlock Text="ошибки"/>
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ErrorDate}" 
+                                            DataFormatString="dd.MM.yyyy HH:mm" 
+                                            Width="110"
+                                            TextWrapping="Wrap"
+                                            IsFilterable="False">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel>
+                            <TextBlock Text="Время"/>
+                            <TextBlock Text="возникновения"/>
+                            <TextBlock Text="ошибки"/>
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding CalculationSysName}" 
+                                            Width="100"
+                                            TextWrapping="Wrap">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel>
+                            <TextBlock Text="Системное"/>
+                            <TextBlock Text="имя"/>
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding KeyDate}" 
+                                            DataFormatString="dd.MM.yyyy HH:mm" 
+                                            Width="110"
+                                            TextWrapping="Wrap">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel>
+                            <TextBlock Text="Метка"/>
+                            <TextBlock Text="времени"/>
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+
+                <telerik:GridViewDataColumn Header="Период" 
+                                            DataMemberBinding="{Binding PeriodTypeId, Converter={StaticResource PeriodTypeToNameConverter}}" 
+                                            Width="80" />
+
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding CalculationDescription }"  
+                                            Width="150"
+                                            TextWrapping="Wrap">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel>
+                            <TextBlock Text="Описание"/>
+                            <TextBlock Text="расчета"/>
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ErrorMessage}" 
+                                            TextWrapping="Wrap" 
+                                            Width="400"
+                                            IsFilterable="False">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel>
+                            <TextBlock Text="Описание"/>
+                            <TextBlock Text="ошибки"/>
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+
+    </Grid>
+
+</telerik:RadWindow>

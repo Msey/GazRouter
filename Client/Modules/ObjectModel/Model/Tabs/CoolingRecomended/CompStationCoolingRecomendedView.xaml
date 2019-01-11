@@ -1,0 +1,158 @@
+﻿<UserControl x:Class="GazRouter.ObjectModel.Model.Tabs.CoolingRecomended.CompStationCoolingRecomendedView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:coolingRecomended="clr-namespace:GazRouter.ObjectModel.Model.Tabs.CoolingRecomended"
+             mc:Ignorable="d" d:DesignHeight="300"
+             d:DesignWidth="400" d:DataContext="{d:DesignInstance coolingRecomended:CompStationCoolingRecomendedViewModel}">
+    <Grid>
+        
+        <telerik:RadBusyIndicator DisplayAfter="0" IsBusy="{Binding IsBusyLoading}">
+             <telerik:RadGridView AutoGenerateColumns="False" 
+                                  IsReadOnly="False" 
+                                  ItemsSource="{Binding Path=SeriesRows}"
+                                  RowIndicatorVisibility="Collapsed" 
+                                  ShowGroupPanel="False">
+                <telerik:RadGridView.ColumnGroups>
+                    <telerik:GridViewColumnGroup Name="LastValues">
+                        <telerik:GridViewColumnGroup.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Рекомендованная температура" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="газа после АВО по месяцам" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewColumnGroup.HeaderTemplate>
+                    </telerik:GridViewColumnGroup>
+
+
+                </telerik:RadGridView.ColumnGroups>
+                <telerik:RadGridView.Columns>
+
+                    <telerik:GridViewDataColumn Width="150" 
+                                                DataMemberBinding="{Binding Path=Name}"
+                                                Header="" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="True" 
+                                                ColumnGroupName="LastValues"/>
+                    
+                    <telerik:GridViewDataColumn Width="50" 
+                                                DataMemberBinding="{Binding Path=[1], Mode=TwoWay}"
+                                                Header="1" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="False" 
+                                                ColumnGroupName="LastValues" 
+                                                HeaderTextAlignment="Center"/>
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                DataMemberBinding="{Binding Path=[2], Mode=TwoWay}"
+                                                Header="2" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="False" 
+                                                ColumnGroupName="LastValues" 
+                                                HeaderTextAlignment="Center"/>
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                DataMemberBinding="{Binding Path=[3], Mode=TwoWay}"
+                                                Header="3" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="False" 
+                                                ColumnGroupName="LastValues" 
+                                                HeaderTextAlignment="Center"/>
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                DataMemberBinding="{Binding Path=[4], Mode=TwoWay}"
+                                                Header="4" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="False" 
+                                                ColumnGroupName="LastValues" 
+                                                HeaderTextAlignment="Center"/>
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                DataMemberBinding="{Binding Path=[5], Mode=TwoWay}"
+                                                Header="5" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="False" 
+                                                ColumnGroupName="LastValues" 
+                                                HeaderTextAlignment="Center"/>
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                DataMemberBinding="{Binding Path=[6], Mode=TwoWay}"
+                                                Header="6" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="False" 
+                                                ColumnGroupName="LastValues" 
+                                                HeaderTextAlignment="Center"/>
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                DataMemberBinding="{Binding Path=[7], Mode=TwoWay}"
+                                                Header="7" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="False" 
+                                                ColumnGroupName="LastValues" 
+                                                HeaderTextAlignment="Center"/>
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                DataMemberBinding="{Binding Path=[8], Mode=TwoWay}"
+                                                Header="8" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="False" 
+                                                ColumnGroupName="LastValues" 
+                                                HeaderTextAlignment="Center"/>
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                DataMemberBinding="{Binding Path=[9], Mode=TwoWay}"
+                                                Header="9" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="False" 
+                                                ColumnGroupName="LastValues" 
+                                                HeaderTextAlignment="Center"/>
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                DataMemberBinding="{Binding Path=[10], Mode=TwoWay}"
+                                                Header="10" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="False" 
+                                                ColumnGroupName="LastValues" 
+                                                HeaderTextAlignment="Center"/>
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                DataMemberBinding="{Binding Path=[11], Mode=TwoWay}"
+                                                Header="11" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="False" 
+                                                ColumnGroupName="LastValues" 
+                                                HeaderTextAlignment="Center"/>
+
+                    <telerik:GridViewDataColumn Width="50" 
+                                                DataMemberBinding="{Binding Path=[12], Mode=TwoWay}"
+                                                Header="12" 
+                                                IsSortable="False" 
+                                                IsFilterable="False" 
+                                                IsReadOnly="False" 
+                                                ColumnGroupName="LastValues" 
+                                                HeaderTextAlignment="Center"/>
+
+
+                </telerik:RadGridView.Columns>
+
+            </telerik:RadGridView>
+
+
+        </telerik:RadBusyIndicator>
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,43 @@
+﻿<telerik:RadWindow x:Class="Modes.GasCosts.Dialogs.Views.Pipelines.AddEventCommentView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:attachedProperties1="clr-namespace:Common.Ui.AttachedProperties;assembly=Common"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="450"   
+    Height="300" Width="450"
+    Style="{StaticResource StyleMainRadWindow}"
+	Header="{Binding Caption}"
+    Name="MainWindow" attachedProperties1:ModelDialogResult.DialogResult="{Binding DialogResult}">
+    
+    <Grid Margin="11">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" VerticalAlignment="Top" Height="Auto">
+            <TextBlock Margin="0,0,0,5" Text="Диаметр участка:" HorizontalAlignment="Left" Width="Auto" TextAlignment="Left" />
+            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+                    TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="180" MaxLength="1020"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Margin="0, 11, 0, 0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <telerik:RadButton Command="{Binding SaveCommand}" 
+                               HorizontalAlignment="Right" 
+                               Width="75" Height="23">Добавить</telerik:RadButton>
+            
+            <telerik:RadButton Command="{Binding CancelCommand}" HorizontalAlignment="Right" 
+                               Width="75" Height="23" 
+                               Margin="7,0,0,0">Отмена</telerik:RadButton>
+        </StackPanel>
+    </Grid>
+
+
+
+</telerik:RadWindow>
+
+
+    

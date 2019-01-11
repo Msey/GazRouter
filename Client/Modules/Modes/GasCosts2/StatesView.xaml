@@ -1,0 +1,167 @@
+﻿<UserControl x:Class="GazRouter.Modes.GasCosts2.StatesView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:converters="clr-namespace:GazRouter.Modes.GasCosts2.Converters"
+    xmlns:behaviors="clr-namespace:GazRouter.Modes.GasCosts2.Behaviors"
+    xmlns:styles="clr-namespace:GazRouter.Modes.GasCosts2.Styles">
+    <UserControl.Resources>
+
+        <styles:StatesRegularStyle x:Key="StatesRegularStyle">
+            
+            <styles:StatesRegularStyle.DefaultStyle>
+                <Style TargetType="telerik:GridViewCell" BasedOn="{StaticResource GridViewCellStyle}">
+                </Style>
+            </styles:StatesRegularStyle.DefaultStyle>
+            
+            <styles:StatesRegularStyle.RegularStyle>
+                <Style TargetType="telerik:GridViewCell" BasedOn="{StaticResource GridViewCellStyle}">
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="VerticalAlignment" Value="Stretch" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </styles:StatesRegularStyle.RegularStyle>
+
+            <styles:StatesRegularStyle.NonRegularBStyle >
+                <Style TargetType="telerik:GridViewCell"  BasedOn="{StaticResource GridViewCellStyle}">
+                    <Setter Property="FontWeight" Value="Light" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="VerticalAlignment" Value="Stretch" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </styles:StatesRegularStyle.NonRegularBStyle>
+        </styles:StatesRegularStyle>
+
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot" Background="White">
+        <telerik:RadTreeListView IsReadOnly="True" Margin="0,0,10,0"
+                                 ItemsSource="{Binding States, Mode=TwoWay}"
+                                 SelectedItem="{Binding SelectedState, Mode=TwoWay}"
+                                 AutoExpandGroups="True"
+                                 AutoExpandItems="True"
+                                 SelectionMode="Single" 
+                                 SelectionUnit="FullRow"
+                                 GridLinesVisibility="Both"
+                                 IsFilteringAllowed="False"
+                                 CanUserFreezeColumns="False" 
+                                 RowIndicatorVisibility="Collapsed"
+                                 AutoGenerateColumns="False" 
+                                 CanUserSortColumns="False"
+                                 AlternationCount="2"                                 
+                                 >
+            <telerik:RadTreeListView.ItemContainerStyle>
+                <Style TargetType="telerik:RadTreeViewItem">
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                </Style>
+            </telerik:RadTreeListView.ItemContainerStyle>
+
+            <i:Interaction.Behaviors>
+                <behaviors:TreeConverterUnitsBehavior />
+            </i:Interaction.Behaviors>
+            
+            <telerik:RadTreeListView.Resources>
+                
+                <converters:UnitConverter x:Key="UnitConverter" />
+                
+                <DataTemplate x:Key="factMonthCellTemplate">
+                    <TextBlock Text="{Binding FactTotalToDate,  
+                        Converter={StaticResource UnitConverter}}" 
+                               Margin="5" TextAlignment="Right"
+                               />
+                </DataTemplate>
+                
+                <DataTemplate x:Key="factCellTemplate">
+                    <TextBlock Text="{Binding Fact, 
+                        Converter={StaticResource UnitConverter}}" 
+                               Margin="5" TextAlignment="Right"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="planCellTemplate">
+                    <TextBlock Text="{Binding Plan, 
+                        Converter={StaticResource UnitConverter}}" 
+                               Margin="5" TextAlignment="Right" />
+                </DataTemplate>
+                
+                <DataTemplate x:Key="normCellTemplate">
+                    <TextBlock Text="{Binding Norm, 
+                        Converter={StaticResource UnitConverter}}" 
+                               Margin="5" 
+                               TextAlignment="Right" />
+                </DataTemplate>
+            </telerik:RadTreeListView.Resources>
+
+            <telerik:RadTreeListView.ChildTableDefinitions>
+                <telerik:TreeListViewTableDefinition ItemsSource="{Binding Items, Mode=TwoWay}" />
+            </telerik:RadTreeListView.ChildTableDefinitions>
+
+                <telerik:RadTreeListView.Columns>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Name}"
+                                            Header="Статья" 
+                                            Width="450" 
+                                            TextWrapping="Wrap" />
+
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding CostTypeDescription}" 
+                                            Width="50" 
+                                            CellStyleSelector="{StaticResource StatesRegularStyle}">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="#" TextAlignment="Center"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding FactTotalToDate, 
+                    Converter={StaticResource UnitConverter}}"
+                                            CellTemplate="{StaticResource factMonthCellTemplate}"
+                                            Width="100">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="Факт" />
+                                <TextBlock Text="сутки" />
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Fact, 
+                    Converter={StaticResource UnitConverter}}"
+                                            CellTemplate="{StaticResource factCellTemplate}"
+                                            Width="100">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="Факт" />
+                                <TextBlock Text="с начала" />
+                                <TextBlock Text="месяца" />
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Plan, 
+                    Converter={StaticResource UnitConverter}}"
+                                            CellTemplate="{StaticResource planCellTemplate}" 
+                                            Width="100">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="План" />
+                                <TextBlock Text="месяц" />
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Norm, 
+                    Converter={StaticResource UnitConverter}}" 
+                                            CellTemplate="{StaticResource normCellTemplate}" 
+                                            Width="100" >
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="Норма" />
+                                <TextBlock Text="месяц" />
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                    </telerik:GridViewDataColumn>
+                </telerik:RadTreeListView.Columns>
+            </telerik:RadTreeListView>
+    </Grid>
+</UserControl>   
+   

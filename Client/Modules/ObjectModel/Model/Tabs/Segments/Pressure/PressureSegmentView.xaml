@@ -1,0 +1,108 @@
+﻿<UserControl x:Class="GazRouter.ObjectModel.Model.Tabs.Segments.Pressure.PressureSegmentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:tabs="clr-namespace:GazRouter.ObjectModel.Model.Tabs"
+             xmlns:behaviors="clr-namespace:GazRouter.Common.Ui.Behaviors;assembly=Common"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+             xmlns:segment="clr-namespace:GazRouter.DTO.ObjectModel.Segment;assembly=PortableDTO"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:segments="clr-namespace:GazRouter.ObjectModel.Model.Tabs.Segments"
+             xmlns:pressure="clr-namespace:GazRouter.ObjectModel.Model.Tabs.Segments.Pressure"
+             mc:Ignorable="d" d:DesignHeight="489"
+             d:DesignWidth="692" d:DataContext="{d:DesignInstance pressure:PressureSegmentViewModel}">
+
+    <telerik:RadBusyIndicator BusyContent="Идёт загрузка..." DisplayAfter="0" IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            
+            <Grid.Resources>
+                <converters:PressureConverter x:Key="PressureConverter"/>
+            </Grid.Resources>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar>
+                <telerik:RadButton Command="{Binding AddCommand}" Style="{StaticResource addButtonStyle}"
+                                   ToolTipService.ToolTip="Добавить сегмент" />
+                <telerik:RadButton Command="{Binding EditCommand}" Style="{StaticResource editButtonStyle}"
+                                   ToolTipService.ToolTip="Редактировать сегмент" />
+                <telerik:RadButton Command="{Binding RemoveCommand}" Style="{StaticResource deleteButtonStyle}"
+                                   ToolTipService.ToolTip="Удалить сегмент" />
+            </telerik:RadToolBar>
+        
+
+            <telerik:RadGridView Grid.Row="1" 
+                                 x:Name="radGridView" 
+                                 AutoGenerateColumns="False" 
+                                 IsReadOnly="True"
+                                 ItemsSource="{Binding Path=Items}" 
+                                 RowIndicatorVisibility="Collapsed"
+                                 SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}" 
+                                 ShowGroupPanel="False" 
+                                 AutoExpandGroups="True" 
+                                 behaviors:ContextMenuBehavior.ContextMenu="{Binding ElementName=ContextMenu}">
+
+                <telerik:RadContextMenu.ContextMenu>
+                    <telerik:RadContextMenu x:Name="ContextMenu" >
+                        <telerik:RadMenuItem Command="{Binding AddCommand}" Header="Добавить" />
+                        <telerik:RadMenuItem Command="{Binding EditCommand}" Header="Изменить" />
+                        <telerik:RadMenuItem Command="{Binding RemoveCommand}" Header="Удалить" />
+                    </telerik:RadContextMenu>
+                </telerik:RadContextMenu.ContextMenu>
+                
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="100" 
+                                                DataMemberBinding="{Binding Path=KilometerOfStartPoint}"
+                                                Header="Км. начала" 
+                                                IsSortable="True" 
+                                                IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="100" 
+                                                DataMemberBinding="{Binding Path=KilometerOfEndPoint}"
+                                                Header="Км. окончания" 
+                                                IsSortable="True" 
+                                                IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="130" DataMemberBinding="{Binding Path=Lenght}"
+                                                Header="Протяженность (км)" IsSortable="True" IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="110" 
+                                                DataMemberBinding="{Binding Path=Pressure}" 
+                                                IsSortable="True" 
+                                                IsFilterable="False">
+                        <telerik:GridViewDataColumn.Header>
+                            <controls:SmartTextBlock Text="Давление, [P]" />
+                        </telerik:GridViewDataColumn.Header>
+
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="segment:PressureSegmentDTO">
+                                <TextBlock Text="{Binding Pressure, Converter={StaticResource PressureConverter}}" 
+                                           HorizontalAlignment="Center"/>
+                                    
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+
+            <sdk:GridSplitter Style="{StaticResource HorizontalSplitterStyle}"
+                            Grid.Row="2" />
+
+            <segments:SegmentViewer Grid.Row="2"
+                                Margin="0, 5, 0, 0"
+                                VerticalAlignment="Stretch"
+                                Pipeline="{Binding Pipeline}" 
+                                SegmentList="{Binding SegmentList}"
+                                HighlightGaps="True"
+                                HighlightOverlaps="True"
+                                SelectedSegment="{Binding SelectedItem, Mode=TwoWay}"
+                                EditSegment="{Binding EditCommand}"
+                                DeleteSegment="{Binding RemoveCommand}"/>
+
+        
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

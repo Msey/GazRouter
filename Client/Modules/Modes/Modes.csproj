@@ -1,0 +1,1416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8F62E529-F850-48C5-8208-E0A8162997E3}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GazRouter.Modes</RootNamespace>
+    <AssemblyName>Modes</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JetBrains.Annotations.PCL328">
+      <HintPath>..\..\..\packages\JetBrains.Annotations.8.0.5.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\JetBrains.Annotations.PCL328.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Expression.Interactions, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Silverlight, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Unity.2.1.505.2\lib\SL30\Microsoft.Practices.Unity.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Silverlight, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\NLog.4.2.3\lib\sl5\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
+    <Reference Include="System.IO, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Threading.Tasks, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Data.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Navigation, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Prism.4.1.0.0\lib\SL5\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Serialization, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Pivot.Core, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Pivot.Core.for.Silverlight.2017.2.614\lib\sl5\Telerik.Pivot.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Chart, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Chart.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Chart.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Data, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Data.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.DataVisualization, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.DataVisualization.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.DataVisualization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Docking, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Docking.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Docking.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.GridView, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.GridView.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.GridView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Input.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Input.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Navigation.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Navigation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Pivot, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Pivot.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Pivot.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RibbonView, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.RibbonView.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.RibbonView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.ScheduleView, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.ScheduleView.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.ScheduleView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Spreadsheet, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Spreadsheet.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Spreadsheet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Data.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Core, Version=2017.2.607.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Documents.Core.for.Silverlight.2017.2.607\lib\sl5\Telerik.Windows.Documents.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Fixed, Version=2017.2.607.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Documents.Fixed.for.Silverlight.2017.2.607\lib\sl5\Telerik.Windows.Documents.Fixed.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet, Version=2017.2.607.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Documents.Spreadsheet.for.Silverlight.2017.2.607\lib\sl5\Telerik.Windows.Documents.Spreadsheet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml, Version=2017.2.607.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.for.Silverlight.2017.2.607\lib\sl5\Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf, Version=2017.2.607.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.for.Silverlight.2017.2.607\lib\sl5\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Maths, Version=2015.1.401.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Maths.for.Silverlight.2015.1.0401\lib\sl5\Telerik.Windows.Maths.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Scheduling.Core, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Scheduling.Core.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Scheduling.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip, Version=2017.2.607.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Zip.for.Silverlight.2017.2.607\lib\sl5\Telerik.Windows.Zip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Alarms\AlarmsViewModel.cs" />
+    <Compile Include="Calculations\CalculationItem.cs" />
+    <Compile Include="Calculations\Converters\CalculationStageToNameConverter.cs" />
+    <Compile Include="Calculations\Converters\ParameterTypeToNameConverter.cs" />
+    <Compile Include="Calculations\Dialogs\AddEditCalc\AddEditCalcView.xaml.cs">
+      <DependentUpon>AddEditCalcView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Calculations\Dialogs\AddEditCalc\AddEditCalcViewModel.cs" />
+    <Compile Include="Calculations\Dialogs\AddEditVar\AddEditVarView.xaml.cs">
+      <DependentUpon>AddEditVarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Calculations\Dialogs\AddEditVar\AddEditVarViewModel.cs" />
+    <Compile Include="Calculations\Dialogs\ErrorLog\ErrorLogView.xaml.cs">
+      <DependentUpon>ErrorLogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Calculations\Dialogs\ErrorLog\ErrorLogViewModel.cs" />
+    <Compile Include="Calculations\Dialogs\GetCalculationsByVar\GetCalculationsByVarView.xaml.cs">
+      <DependentUpon>GetCalculationsByVarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Calculations\Dialogs\GetCalculationsByVar\GetCalculationsByVarViewModel.cs" />
+    <Compile Include="Calculations\Dialogs\RunCalc\RunCalcView.xaml.cs">
+      <DependentUpon>RunCalcView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Calculations\Dialogs\RunCalc\RunCalcViewModel.cs" />
+    <Compile Include="Calculations\MainCalcViewModel.cs" />
+    <Compile Include="Calculations\MainCalcView.xaml.cs">
+      <DependentUpon>MainCalcView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Calculations\Converters\TimeShiftUnitToNameConverter.cs" />
+    <Compile Include="Calculations\VarItem.cs" />
+    <Compile Include="CompUnitManaging\CompUnitManagenentViewModel.cs" />
+    <Compile Include="CompUnitManaging\OperatingTimeCompUnit\Convertors\TimeLineItemNameConverter.cs" />
+    <Compile Include="CompUnitManaging\OperatingTimeCompUnit\OperatingTimeCompUnitView.xaml.cs">
+      <DependentUpon>OperatingTimeCompUnitView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CompUnitManaging\OperatingTimeCompUnit\OperatingTimeCompUnitViewModel.cs" />
+    <Compile Include="Converters\InputStateToColorConverter.cs" />
+    <Compile Include="Converters\InputStateToNameConverter.cs" />
+    <Compile Include="DispatcherTasks\Common\AttachmentsView\AttachmentsView.xaml.cs">
+      <DependentUpon>AttachmentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DispatcherTasks\Common\AttachmentsView\AttachmentsViewModel.cs" />
+    <Compile Include="DispatcherTasks\Common\RecordUrgency\RecordUrgency.cs" />
+    <Compile Include="DispatcherTasks\Common\RecordUrgency\RecordUrgencyToColorConverter.cs" />
+    <Compile Include="DispatcherTasks\Common\TaskAutoRefresher.cs" />
+    <Compile Include="DispatcherTasks\Common\RecordComments\RecordCommentsView.xaml.cs">
+      <DependentUpon>RecordCommentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DispatcherTasks\Common\RecordComments\RecordCommentsViewModel.cs" />
+    <Compile Include="DispatcherTasks\Common\TaskListType\TaskListType.cs" />
+    <Compile Include="DispatcherTasks\Common\TaskListType\TaskListTypeToNameConverter.cs" />
+    <Compile Include="DispatcherTasks\Common\TaskRecordType.cs" />
+    <Compile Include="DispatcherTasks\Dialogs\AddMultiRecordTask\AddMultiRecordTaskView.xaml.cs">
+      <DependentUpon>AddMultiRecordTaskView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DispatcherTasks\Dialogs\AddMultiRecordTask\AddMultiRecordTaskViewModel.cs" />
+    <Compile Include="DispatcherTasks\Dialogs\AddTaskRecordComment\AddTaskRecordCommentView.xaml.cs">
+      <DependentUpon>AddTaskRecordCommentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DispatcherTasks\Dialogs\AddTaskRecordComment\AddTaskRecordCommentViewModel.cs" />
+    <Compile Include="DispatcherTasks\Dialogs\AddTaskRecord\AddTaskRecordView.xaml.cs">
+      <DependentUpon>AddTaskRecordView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DispatcherTasks\Dialogs\AddTaskRecord\AddTaskRecordViewModel.cs" />
+    <Compile Include="DispatcherTasks\Dialogs\AddTask\AddTaskView.xaml.cs">
+      <DependentUpon>AddTaskView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DispatcherTasks\Dialogs\AddTask\AddTaskViewModel.cs" />
+    <Compile Include="DispatcherTasks\Enterprise\RecordItem.cs" />
+    <Compile Include="DispatcherTasks\Site\TaskRecordRowStyleSelector.cs" />
+    <Compile Include="DispatcherTasks\Site\TaskRecordItem.cs" />
+    <Compile Include="DispatcherTasks\TasksMainView.xaml.cs">
+      <DependentUpon>TasksMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DispatcherTasks\TasksMainViewModel.cs" />
+    <Compile Include="DispatcherTasks\Enterprise\TaskItem.cs" />
+    <Compile Include="DispatcherTasks\Enterprise\EnterpriseView.xaml.cs">
+      <DependentUpon>EnterpriseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DispatcherTasks\Enterprise\EnterpriseViewModel.cs" />
+    <Compile Include="DispatcherTasks\Site\SiteView.xaml.cs">
+      <DependentUpon>SiteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DispatcherTasks\Site\SiteViewModel.cs" />
+    <Compile Include="DispatcherTasks\Enterprise\TaskRecordsView.xaml.cs">
+      <DependentUpon>TaskRecordsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DispatcherTasks\Enterprise\TaskRecordsViewModel.cs" />
+    <Compile Include="DispatcherTasks\Enterprise\TasksView.xaml.cs">
+      <DependentUpon>TasksView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DispatcherTasks\Enterprise\TasksViewModel.cs" />
+    <Compile Include="EventLog\DateTypes.cs" />
+    <Compile Include="EventLog\Dialogs\TextTemplateEditorView.xaml.cs">
+      <DependentUpon>TextTemplateEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EventLog\Dialogs\TextTemplateEditorViewModel.cs" />
+    <Compile Include="EventLog\Dialogs\EventTextTemplate.cs" />
+    <Compile Include="EventLog\EventRowStyleSelector.cs" />
+    <Compile Include="EventLog\Dialogs\AddEditEventViewModel.cs" />
+    <Compile Include="EventLog\AnalyticalViewModel.cs" />
+    <Compile Include="EventLog\EventTabViewModelBase.cs" />
+    <Compile Include="EventLog\Dialogs\AddEventCommentViewModel.cs" />
+    <Compile Include="EventLog\EntityVM.cs" />
+    <Compile Include="EventLog\EventAttachmentViewModel.cs" />
+    <Compile Include="EventLog\EventGridConvertors.cs" />
+    <Compile Include="EventLog\EventLogMainViewModel.cs" />
+    <Compile Include="EventLog\EventLogTabBase.cs" />
+    <Compile Include="EventLog\IEventTab.cs" />
+    <Compile Include="EventLog\MainEventViewModel.cs" />
+    <Compile Include="EventLog\Period.cs" />
+    <Compile Include="EventLog\PeriodType.cs" />
+    <Compile Include="EventLog\RecepientsStyleSelector.cs" />
+    <Compile Include="EventLog\RecepientsViewModel.cs" />
+    <Compile Include="EventLog\Dialogs\AddEditEventView.xaml.cs">
+      <DependentUpon>AddEditEventView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EventLog\AnalyticalView.xaml.cs">
+      <DependentUpon>AnalyticalView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EventLog\Dialogs\AddEventCommentView.xaml.cs">
+      <DependentUpon>AddEventCommentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EventLog\EventAttachmentView.xaml.cs">
+      <DependentUpon>EventAttachmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EventLog\EventLogMainView.xaml.cs">
+      <DependentUpon>EventLogMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EventLog\MainEventView.xaml.cs">
+      <DependentUpon>MainEventView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EventLog\RecepientsView.xaml.cs">
+      <DependentUpon>RecepientsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExcelReports\AddEditExcelReportsView.cs">
+      <DependentUpon>AddEditExcellReportsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExcelReports\AddEditExcelReportsViewModel.cs" />
+    <Compile Include="ExcelReports\ReportSheet.xaml.cs">
+      <DependentUpon>ReportSheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExcelReports\ReportSheetBehavior.cs" />
+    <Compile Include="ExcelReports\ReportViewModel.cs" />
+    <Compile Include="ExcelReports\Resources\CustomResources.cs" />
+    <Compile Include="ExcelReports\Resources\ExcelReportCustomResouces.Designer.cs">
+      <DependentUpon>ExcelReportCustomResouces.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="ExcelReports\DialogHelper.cs" />
+    <Compile Include="GasCosts2\Behaviors\GasCostCellSelectedBehavior.cs" />
+    <Compile Include="GasCosts2\Behaviors\GridConverterUnitsBehavior.cs" />
+    <Compile Include="GasCosts2\Behaviors\TreeConverterUnitsBehavior.cs" />
+    <Compile Include="GasCosts2\BoilerConsumptionsViewModel2.cs" />
+    <Compile Include="GasCosts2\Converters\IUnitsConverter.cs" />
+    <Compile Include="GasCosts2\Converters\UnitConverter.cs" />
+    <Compile Include="GasCosts2\StateBuilder.cs" />
+    <Compile Include="GasCosts2\StatesView.xaml.cs">
+      <DependentUpon>StatesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts2\StatesViewModel.cs" />
+    <Compile Include="GasCosts2\ConsumptionsView2.xaml.cs">
+      <DependentUpon>ConsumptionsView2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts2\ConsumptionsViewModel.cs" />
+    <Compile Include="GasCosts2\CostsView.xaml.cs">
+      <DependentUpon>CostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts2\CostsViewModel.cs" />
+    <Compile Include="GasCosts2\GasCostEntity.cs" />
+    <Compile Include="GasCosts2\GasCostsMainView2.xaml.cs">
+      <DependentUpon>GasCostsMainView2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts2\GasCostsMainViewModel2.cs" />
+    <Compile Include="GasCosts2\GasCostViewModelBase.cs" />
+    <Compile Include="GasCosts2\StateVisibilityView.xaml.cs">
+      <DependentUpon>StateVisibilityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts2\StateVisibilityViewModel.cs" />
+    <Compile Include="GasCosts2\Styles\StatesRegularStyle.cs" />
+    <Compile Include="GasCosts\Access\AccessView.xaml.cs">
+      <DependentUpon>AccessView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Access\AccessViewModel.cs" />
+    <Compile Include="GasCosts\CalcResultView.xaml.cs">
+      <DependentUpon>CalcResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\CalcResultViewModel.cs" />
+    <Compile Include="GasCosts\ColumnDescription.cs" />
+    <Compile Include="GasCosts\Dialogs\BoilerConsumptions\BoilerConsumptionsView.xaml.cs">
+      <DependentUpon>BoilerConsumptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\BoilerConsumptions\BoilerConsumptionsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ChemicalAnalysisCosts\ChemicalAnalysisCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ChemicalAnalysisCosts\ChemicalAnalysisCostsView.xaml.cs">
+      <DependentUpon>ChemicalAnalysisCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\ChemicalAnalysisCosts\ChemicalAnalysisCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\CleaningCosts\CleaningCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\CleaningCosts\CleaningCostsView.xaml.cs">
+      <DependentUpon>CleaningCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\CleaningCosts\CleaningCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\CompStationLoss\CompStationLossModel.cs" />
+    <Compile Include="GasCosts\Dialogs\CompStationLoss\CompStationLossViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\CompStationLoss\CompStationLossView.xaml.cs">
+      <DependentUpon>CompStationLossView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\CompUnitsTestingCosts\CompUnitsTestingCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\CompUnitsTestingCosts\CompUnitsTestingCostsView.xaml.cs">
+      <DependentUpon>CompUnitsTestingCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\CompUnitsTestingCosts\CompUnitsTestingCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ControlEquipmentCosts\ControlEquipmentCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ControlEquipmentCosts\ControlEquipmentCostsView.xaml.cs">
+      <DependentUpon>ControlEquipmentCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\ControlEquipmentCosts\ControlEquipmentCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\CoolingCosts\CoolingCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\CoolingCosts\CoolingCostsView.xaml.cs">
+      <DependentUpon>CoolingCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\CoolingCosts\CoolingCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\DrainageBleedingCosts\DrainageBleedingCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\EventDateAndObjectControl.xaml.cs">
+      <DependentUpon>EventDateAndObjectControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\FluidControllerCosts\FluidControllerCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\FluidControllerCosts\FluidControllerCostsView.xaml.cs">
+      <DependentUpon>FluidControllerCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\FluidControllerCosts\FluidControllerCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\FuelGasInputVolumes\FuelGasInputVolumeView.xaml.cs">
+      <DependentUpon>FuelGasInputVolumeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\FuelGasInputVolumes\FuelGasInputVolumeViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\HeaterWorkCosts\HeaterWorkCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\HeaterWorkCosts\HeaterWorkCostsView.xaml.cs">
+      <DependentUpon>HeaterWorkCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\HeaterWorkCosts\HeaterWorkCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\IncidentLoss\IncidentLossModel.cs" />
+    <Compile Include="GasCosts\Dialogs\IncidentLoss\IncidentLossView.xaml.cs">
+      <DependentUpon>IncidentLossView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\IncidentLoss\IncidentLossViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\KptgOwnNeedsCosts\KptgOwnNeedsCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\KptgOwnNeedsCosts\KptgOwnNeedsCostsView.xaml.cs">
+      <DependentUpon>KptgOwnNeedsCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\KptgOwnNeedsCosts\KptgOwnNeedsCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\Model\Listing.cs" />
+    <Compile Include="GasCosts\Dialogs\OkCancelControl.xaml.cs">
+      <DependentUpon>OkCancelControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\PneumaticExploitationCosts\PneumaticExploitationCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\PneumaticExploitationCosts\PneumaticExploitationCostsView.xaml.cs">
+      <DependentUpon>PneumaticExploitationCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\PneumaticExploitationCosts\PneumaticExploitationCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ReducingStationOwnNeedsCosts\ReducingStationOwnNeedsCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ReducingStationOwnNeedsCosts\ReducingStationOwnNeedsCostsView.xaml.cs">
+      <DependentUpon>ReducingStationOwnNeedsCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\ReducingStationOwnNeedsCosts\ReducingStationOwnNeedsCostsViewControl.xaml.cs">
+      <DependentUpon>ReducingStationOwnNeedsCostsViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\ReducingStationOwnNeedsCosts\ReducingStationOwnNeedsCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\RepairCosts\RepairCostsViewControl.xaml.cs">
+      <DependentUpon>RepairCostsViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\ReservePowerStationMaintenanceCosts\ReservePowerStationMaintenanceCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ReservePowerStationMaintenanceCosts\ReservePowerStationMaintenanceCostsView.xaml.cs">
+      <DependentUpon>ReservePowerStationMaintenanceCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\ReservePowerStationMaintenanceCosts\ReservePowerStationMaintenanceCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ResultControl.xaml.cs">
+      <DependentUpon>ResultControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\ThermalDisposalUnitCosts\ThermalDisposalUnitCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ThermalDisposalUnitCosts\ThermalDisposalUnitCostsView.xaml.cs">
+      <DependentUpon>ThermalDisposalUnitCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\ThermalDisposalUnitCosts\ThermalDisposalUnitCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\DiaphragmReplacementCosts\DiaphragmReplacementCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\DiaphragmReplacementCosts\DiaphragmReplacementCostsView.xaml.cs">
+      <DependentUpon>DiaphragmReplacementCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\DiaphragmReplacementCosts\DiaphragmReplacementCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\EnergyGenerationCosts\EnergyGenerationCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\EnergyGenerationCosts\EnergyGenerationCostsView.xaml.cs">
+      <DependentUpon>EnergyGenerationCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\EnergyGenerationCosts\EnergyGenerationCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\FuelGasHeatingCosts\FuelGasHeatingCostModel.cs" />
+    <Compile Include="GasCosts\Dialogs\FuelGasHeatingCosts\FuelGasHeatingCostsView.xaml.cs">
+      <DependentUpon>FuelGasHeatingCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\FuelGasHeatingCosts\FuelGasHeatingCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\HeatingCosts\HeatingCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\HeatingCosts\HeatingCostsView.xaml.cs">
+      <DependentUpon>HeatingCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\HeatingCosts\HeatingCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\HydrateRemoveCosts\HydrateRemoveCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\HydrateRemoveCosts\HydrateRemoveCostsView.xaml.cs">
+      <DependentUpon>HydrateRemoveCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\HydrateRemoveCosts\HydrateRemoveCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\MethanolFillingCosts\MethanolFillingCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\MethanolFillingCosts\MethanolFillingCostsView.xaml.cs">
+      <DependentUpon>MethanolFillingCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\MethanolFillingCosts\MethanolFillingCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\CompUnitsHeatingCosts\CompUnitsHeatingCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\CompUnitsHeatingCosts\CompUnitsHeatingCostsView.xaml.cs">
+      <DependentUpon>CompUnitsHeatingCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\CompUnitsHeatingCosts\CompUnitsHeatingCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\PipelineLoss\PipelineLossModel.cs" />
+    <Compile Include="GasCosts\Dialogs\PipelineLoss\PipelineLossView.xaml.cs">
+      <DependentUpon>PipelineLossView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\PipelineLoss\PipelineLossViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\PopValveTuningCosts\PopValveTuningCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\PopValveTuningCosts\PopValveTuningCostsView.xaml.cs">
+      <DependentUpon>PopValveTuningCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\PopValveTuningCosts\PopValveTuningCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\PurgeCosts\PurgeCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\PurgeCosts\PurgeCostsView.xaml.cs">
+      <DependentUpon>PurgeCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\PurgeCosts\PurgeCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\RepairCosts\RepairCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\RepairCosts\RepairCostsView.xaml.cs">
+      <DependentUpon>RepairCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\RepairCosts\RepairCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ShutdownCosts\ShutdownCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ShutdownCosts\ShutdownCostsView.xaml.cs">
+      <DependentUpon>ShutdownCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\ShutdownCosts\ShutdownCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\TreatingShopHeatingCosts\TreatingShopHeatingCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\TreatingShopHeatingCosts\TreatingShopHeatingCostsView.xaml.cs">
+      <DependentUpon>TreatingShopHeatingCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\TreatingShopHeatingCosts\TreatingShopHeatingCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\UnitBleedingCosts\UnitBleedingCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\UnitBleedingCosts\UnitBleedingCostsView.xaml.cs">
+      <DependentUpon>UnitBleedingCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\UnitBleedingCosts\UnitBleedingCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\UnitFuelCosts\UnitFuelCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\UnitFuelCosts\UnitFuelCostsView.xaml.cs">
+      <DependentUpon>UnitFuelCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\UnitFuelCosts\UnitFuelCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\UnitStartCosts\UnitStartCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\UnitStartCosts\UnitStartCostsView.xaml.cs">
+      <DependentUpon>UnitStartCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\UnitStartCosts\UnitStartCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\UnitStopCosts\UnitStopCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\UnitStopCosts\UnitStopCostsView.xaml.cs">
+      <DependentUpon>UnitStopCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\UnitStopCosts\UnitStopCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ValveControlCosts\ValveControlCostsControl.xaml.cs">
+      <DependentUpon>ValveControlCostsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\ValveControlCosts\ValveControlCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ValveControlCosts\ValveControlCostsView.xaml.cs">
+      <DependentUpon>ValveControlCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\ValveControlCosts\ValveControlCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ValveControlCosts\ValveDriveCostsControl.xaml.cs">
+      <DependentUpon>ValveDriveCostsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\ValveExploitationCosts\ValveExploitationCostsModel.cs" />
+    <Compile Include="GasCosts\Dialogs\ValveExploitationCosts\ValveExploitationCostsView.xaml.cs">
+      <DependentUpon>ValveExploitationCostsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Dialogs\ValveExploitationCosts\ValveExploitationCostsViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\VesselsExaminationCosts\VesselsExaminationCostsViewModel.cs" />
+    <Compile Include="GasCosts\GasCompessibility\ComponentContent.cs" />
+    <Compile Include="GasCosts\GasCompessibility\ComponentsBinaryInteraction.cs" />
+    <Compile Include="GasCosts\GasCompessibility\DimensionlessCoefficients.cs" />
+    <Compile Include="GasCosts\GasCompessibility\GasCompressibilityCalculator.cs" />
+    <Compile Include="GasCosts\GasCompessibility\PureComponentsParameters.cs" />
+    <Compile Include="GasCosts\GasCompessibility\Tables.cs" />
+    <Compile Include="GasCosts\Imports\GasCostImportHelper.cs" />
+    <Compile Include="GasCosts\Imports\ImportValveSwitchesView.xaml.cs">
+      <DependentUpon>ImportValveSwitchesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\Imports\ImportValveSwitchesViewModel.cs" />
+    <Compile Include="GasCosts\MeasuringLoader\MeasuringLoaderViewModel.cs" />
+    <Compile Include="GasCosts\MeasuringLoader\MeasuringLoaderView.xaml.cs">
+      <DependentUpon>MeasuringLoaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infopanels\Behaviors\InitRegionBehavior.cs" />
+    <Compile Include="Infopanels\Behaviors\NavigationState.cs" />
+    <Compile Include="Infopanels\BusyView.xaml.cs">
+      <DependentUpon>BusyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infopanels\EmptyView.xaml.cs">
+      <DependentUpon>EmptyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infopanels\InfopanelsView.xaml.cs">
+      <DependentUpon>InfopanelsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infopanels\InfopanelsViewModel.cs" />
+    <Compile Include="Infopanels\ShareDashboard\ShareDashboardView2.xaml.cs">
+      <DependentUpon>ShareDashboardView2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infopanels\ShareDashboard\ShareDashboardViewModel2.cs" />
+    <Compile Include="Infopanels\Tree\DashboardTreeBuilder2.cs" />
+    <Compile Include="Infopanels\Tree\DashboardTreeBuilderBase.cs" />
+    <Compile Include="Infopanels\Tree\DashboardTreeView.xaml.cs">
+      <DependentUpon>DashboardTreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infopanels\Tree\DashboradTreeViewModel.cs" />
+    <Compile Include="Infopanels\Tree\IPermission.cs" />
+    <Compile Include="Infopanels\Tree\ItemTypes.cs" />
+    <Compile Include="Infopanels\Tree\Permission2.cs" />
+    <Compile Include="Infopanels\Tree\PermissionBase.cs" />
+    <Compile Include="Infopanels\VisualStateChangedEvent.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\AddEditDashboard\AddEditDashboardView.xaml.cs">
+      <DependentUpon>AddEditDashboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Dashboards\AddEditDashboard\AddEditDashboardViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\AddEditFolder\AddEditFolderView.xaml.cs">
+      <DependentUpon>AddEditFolderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Dashboards\AddEditFolder\AddEditFolderViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Container\DashboardElementView.xaml.cs">
+      <DependentUpon>DashboardElementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Dashboards\DashboardViewModel.cs" />
+    <Compile Include="ProcessMonitoring\ObjectStory\CompShop\CompShopStoryView.xaml.cs">
+      <DependentUpon>CompShopStoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\ObjectStory\CompShop\CompShopStoryViewModel.cs" />
+    <Compile Include="ProcessMonitoring\ObjectStory\RowHighlighter.cs" />
+    <Compile Include="ProcessMonitoring\ObjectStory\StoryItemBase.cs" />
+    <Compile Include="ProcessMonitoring\PipelineTrend\PipelineTrendView.xaml.cs">
+      <DependentUpon>PipelineTrendView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\PipelineTrend\PipelineTrendViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Reports\Forms\ChemicalTests\ChemicalTestsView.xaml.cs">
+      <DependentUpon>ChemicalTestsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Reports\Forms\ChemicalTests\ChemicalTestsViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Reports\Forms\CompShops\CompShopsView.xaml.cs">
+      <DependentUpon>CompShopsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Reports\Forms\CompShops\CompShopsViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Reports\Forms\CompUnitFailures\CompUnitFailuresView.xaml.cs">
+      <DependentUpon>CompUnitFailuresView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Reports\Forms\CompUnitFailures\CompUnitFailuresViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Reports\Forms\CompUnits\CompUnitsView.xaml.cs">
+      <DependentUpon>CompUnitsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Reports\Forms\CompUnits\CompUnitsViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Reports\Forms\DistrStations\DistrStationsView.xaml.cs">
+      <DependentUpon>DistrStationsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Reports\Forms\DistrStations\DistrStationsViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Reports\Forms\FormViewModelBase.cs" />
+    <Compile Include="ProcessMonitoring\Reports\Forms\GasInPipes\GasInPipesView.xaml.cs">
+      <DependentUpon>GasInPipesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Reports\Forms\GasInPipes\GasInPipesViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Reports\Forms\MeasStations\MeasStationsView.xaml.cs">
+      <DependentUpon>MeasStationsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Reports\Forms\MeasStations\MeasStationsViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Reports\Forms\ReducingStations\ReducingStationsViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Reports\Forms\ReducingStations\ReducingStationsView.xaml.cs">
+      <DependentUpon>ReducingStationsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Reports\Forms\Valves\ValvesView.xaml.cs">
+      <DependentUpon>ValvesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Reports\Forms\Valves\ValvesViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Reports\ReportSettings.cs" />
+    <Compile Include="ProcessMonitoring\Reports\ReportsViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Reports\ReportsView.xaml.cs">
+      <DependentUpon>ReportsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Schema\BaseDialogContent.cs" />
+    <Compile Include="ProcessMonitoring\Schema\FindObjectDialogContent.cs" />
+    <Compile Include="ProcessMonitoring\Schema\ModelTreeDialogContent.cs" />
+    <Compile Include="ProcessMonitoring\Schema\ValveStatesDialogContent.cs" />
+    <Compile Include="SapBo\SapBoViewModel.cs" />
+    <Compile Include="GasCosts\ConsumptionsView.xaml.cs">
+      <DependentUpon>ConsumptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\CompStationConsumptionViewModel.cs" />
+    <Compile Include="GasCosts\ConsumptionSummaryView.xaml.cs">
+      <DependentUpon>ConsumptionSummaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\ConsumptionSummaryViewModel.cs" />
+    <Compile Include="GasCosts\ConsumptionViewModelBase.cs" />
+    <Compile Include="GasCosts\CostsCellStyleSelector.cs" />
+    <Compile Include="GasCosts\CostSummaryCell.cs" />
+    <Compile Include="GasCosts\CostSummaryCellToValueConverter.cs" />
+    <Compile Include="GasCosts\DefaultDataDialog\DefaultParamValues.cs" />
+    <Compile Include="GasCosts\DefaultDataDialog\DefaultParamValuesView.xaml.cs">
+      <DependentUpon>DefaultParamValuesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\DefaultDataDialog\DefaultParamValuesViewModel.cs" />
+    <Compile Include="GasCosts\Dialogs\Model\Bleeder.cs" />
+    <Compile Include="GasCosts\Dialogs\Model\CompUnit.cs" />
+    <Compile Include="GasCosts\Dialogs\Model\BoilerType.cs" />
+    <Compile Include="GasCosts\Dialogs\Model\BoilerPlantType.cs" />
+    <Compile Include="GasCosts\Dialogs\Model\CoolingUnitType.cs" />
+    <Compile Include="GasCosts\Dialogs\Model\RegulatorRuntime.cs" />
+    <Compile Include="GasCosts\Dialogs\Model\PowerUnitType.cs" />
+    <Compile Include="GasCosts\Dialogs\Model\SealingType.cs" />
+    <Compile Include="GasCosts\Dialogs\Model\PopValve.cs" />
+    <Compile Include="GasCosts\Dialogs\Model\HeaterType.cs" />
+    <Compile Include="GasCosts\Dialogs\Model\ICostCalcModel.cs" />
+    <Compile Include="GasCosts\Dialogs\Model\ValveShifting.cs" />
+    <Compile Include="GasCosts\Dialogs\ViewModel\CalcDialogHelper.cs" />
+    <Compile Include="GasCosts\Dialogs\ViewModel\CalcViewModelBase.cs" />
+    <Compile Include="GasCosts\EntitySummaryRow.cs" />
+    <Compile Include="GasCosts\GasCostColumnDefinition.cs" />
+    <Compile Include="GasCosts\GasCostsMainView.xaml.cs">
+      <DependentUpon>GasCostsMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasCosts\GasCostsMainViewModel.cs" />
+    <Compile Include="GasCosts\IConsumptionTab.cs" />
+    <Compile Include="GasCosts\MeasStationConsumptionViewModel.cs" />
+    <Compile Include="GasCosts\DistrStationConsumptionViewModel.cs" />
+    <Compile Include="GasCosts\PipelineConsumptionViewModel.cs" />
+    <Compile Include="GasCosts\RadGridViewColumnBinding.cs" />
+    <Compile Include="GasCosts\Summary\CompStationCostsSummaryGroup.cs" />
+    <Compile Include="GasCosts\Summary\DistrStationCostsSummaryGroup.cs" />
+    <Compile Include="GasCosts\Summary\GasCostsSummaryGroup.cs" />
+    <Compile Include="GasCosts\Summary\GasCostsSummaryItem.cs" />
+    <Compile Include="GasCosts\Summary\GasCostsSummaryItemBase.cs" />
+    <Compile Include="GasCosts\Summary\MeasStationCostsSummaryGroup.cs" />
+    <Compile Include="GasCosts\Summary\PipelineCostsSummaryGroup.cs" />
+    <Compile Include="GasCosts\TotalCostSummarySell.cs" />
+    <Compile Include="GroupStyleSelector.cs" />
+    <Compile Include="Module\ModesModule.cs" />
+    <Compile Include="Alarms\AddEditAlarmView.xaml.cs">
+      <DependentUpon>AddEditAlarmView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Alarms\AddEditAlarmViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\BadDataHound.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Columns\ColumnViewBase.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Columns\DataElementBase.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Columns\TimestampColumnView.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Columns\ValueColumnView.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Container\DashboardElementContainer.xaml.cs">
+      <DependentUpon>DashboardElementContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\ShapeElementSettingsView.xaml.cs">
+      <DependentUpon>ShapeElementSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\ShapeElementSettingsViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\PropertyElementSettingsView.xaml.cs">
+      <DependentUpon>PropertyElementSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\PropertyElementSettingsViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\LineElementSettingsView.xaml.cs">
+      <DependentUpon>LineElementSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\LineElementSettingsViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\TextElementSettingsViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\TextElementSettingsView.xaml.cs">
+      <DependentUpon>TextElementSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Elements\AnyViewBase.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Elements\ShapeElementView.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Elements\LineElementPointView.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Elements\PropertyElementView.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Elements\LineElementView.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Elements\TextElementView.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Model\ShapeElementModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Model\PropertyElementModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Model\LineElementModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Model\TextElementModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Model\DashboardData.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Model\DashboardLayout.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Container\DashboardPropertyValue.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Container\IContextMenuGenerator.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\EntityElementSettingsView.xaml.cs">
+      <DependentUpon>EntityElementSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\EntityElementSettingsViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Elements\ElementViewBase.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Elements\BoxedElementView.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Elements\EntityElementView.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Columns\ColumnFieldBase.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Columns\ColumnValueField.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Misc\TinyTrend.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Misc\TooltipWidget.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Model\BoxedElementModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Model\EntityElementModel.cs" />
+    <Compile Include="ProcessMonitoring\Dashboards\ContentManagement\Model\ElementModelBase.cs" />
+    <Compile Include="ProcessMonitoring\FloViewControl.xaml.cs">
+      <DependentUpon>FloViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\FloViewControlViewModel.cs" />
+    <Compile Include="ProcessMonitoring\Module\GasModeChangeConditions.cs" />
+    <Compile Include="ProcessMonitoring\Module\CompressorShopChangeMode.cs" />
+    <Compile Include="Alarms\AlarmItem.cs" />
+    <Compile Include="ProcessMonitoring\Views\BalanceView.xaml.cs">
+      <DependentUpon>BalanceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Alarms\AlarmsView.xaml.cs">
+      <DependentUpon>AlarmsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Views\FindObjectDialogWindow.xaml.cs">
+      <DependentUpon>FindObjectDialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMonitoring\Views\ModelTreeDialogWindow.xaml.cs">
+      <DependentUpon>ModelTreeDialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SapBo\SapBoMainView.xaml.cs">
+      <DependentUpon>SapBoMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ValveStatesChangeLog\ValveStatesChangeLogMainViewModel.cs" />
+    <Compile Include="ValveStatesChangeLog\ValveStatesChangeLogMainView.xaml.cs">
+      <DependentUpon>ValveStatesChangeLogMainView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Calculations\Dialogs\AddEditCalc\AddEditCalcView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Calculations\Dialogs\AddEditVar\AddEditVarView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Calculations\Dialogs\ErrorLog\ErrorLogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Calculations\Dialogs\GetCalculationsByVar\GetCalculationsByVarView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Calculations\Dialogs\RunCalc\RunCalcView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Calculations\MainCalcView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CompUnitManaging\OperatingTimeCompUnit\OperatingTimeCompUnitView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DispatcherTasks\Common\AttachmentsView\AttachmentsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DispatcherTasks\Common\RecordComments\RecordCommentsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DispatcherTasks\Dialogs\AddMultiRecordTask\AddMultiRecordTaskView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DispatcherTasks\Dialogs\AddTaskRecordComment\AddTaskRecordCommentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DispatcherTasks\Dialogs\AddTaskRecord\AddTaskRecordView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DispatcherTasks\Dialogs\AddTask\AddTaskView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DispatcherTasks\TasksMainView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DispatcherTasks\Enterprise\EnterpriseView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DispatcherTasks\Site\SiteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DispatcherTasks\Enterprise\TaskRecordsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DispatcherTasks\Enterprise\TasksView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EventLog\Dialogs\AddEditEventView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EventLog\AnalyticalView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EventLog\Dialogs\AddEventCommentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EventLog\Dialogs\TextTemplateEditorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EventLog\EventAttachmentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EventLog\EventLogMainView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EventLog\MainEventView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EventLog\RecepientsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExcelReports\AddEditExcellReportsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExcelReports\ReportSheet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts2\StatesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts2\ConsumptionsView2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts2\CostsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts2\GasCostsMainView2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts2\StateVisibilityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Access\AccessView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\CalcResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\ConsumptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\ConsumptionSummaryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\DefaultDataDialog\DefaultParamValuesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\BoilerConsumptions\BoilerConsumptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\ChemicalAnalysisCosts\ChemicalAnalysisCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\CleaningCosts\CleaningCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\CompStationLoss\CompStationLossView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\CompUnitsTestingCosts\CompUnitsTestingCostsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\ControlEquipmentCosts\ControlEquipmentCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\CoolingCosts\CoolingCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\EventDateAndObjectControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\FluidControllerCosts\FluidControllerCostsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\FuelGasInputVolumes\FuelGasInputVolumeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\HeaterWorkCosts\HeaterWorkCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\IncidentLoss\IncidentLossView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\KptgOwnNeedsCosts\KptgOwnNeedsCostsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\OkCancelControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\PneumaticExploitationCosts\PneumaticExploitationCostsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\ReducingStationOwnNeedsCosts\ReducingStationOwnNeedsCostsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\ReducingStationOwnNeedsCosts\ReducingStationOwnNeedsCostsViewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\RepairCosts\RepairCostsViewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\ReservePowerStationMaintenanceCosts\ReservePowerStationMaintenanceCostsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\ResultControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\ThermalDisposalUnitCosts\ThermalDisposalUnitCostsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\DiaphragmReplacementCosts\DiaphragmReplacementCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\EnergyGenerationCosts\EnergyGenerationCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\FuelGasHeatingCosts\FuelGasHeatingCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\HeatingCosts\HeatingCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\HydrateRemoveCosts\HydrateRemoveCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\MethanolFillingCosts\MethanolFillingCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\CompUnitsHeatingCosts\CompUnitsHeatingCostsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\PipelineLoss\PipelineLossView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\PopValveTuningCosts\PopValveTuningCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\PurgeCosts\PurgeCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\RepairCosts\RepairCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\ShutdownCosts\ShutdownCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\TreatingShopHeatingCosts\TreatingShopHeatingCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\UnitBleedingCosts\UnitBleedingCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\UnitFuelCosts\UnitFuelCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\UnitStartCosts\UnitStartCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\UnitStopCosts\UnitStopCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\ValveControlCosts\ValveControlCostsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\ValveControlCosts\ValveControlCostsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Dialogs\ValveControlCosts\ValveDriveCostsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\Dialogs\ValveExploitationCosts\ValveExploitationCostsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GasCosts\GasCostsMainView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Alarms\AddEditAlarmView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\Imports\ImportValveSwitchesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasCosts\MeasuringLoader\MeasuringLoaderView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Infopanels\BusyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Infopanels\EmptyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Infopanels\InfopanelsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Infopanels\ShareDashboard\ShareDashboardView2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Infopanels\Tree\DashboardTreeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Dashboards\AddEditDashboard\AddEditDashboardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Dashboards\AddEditFolder\AddEditFolderView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Dashboards\ContentManagement\Container\DashboardElementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProcessMonitoring\ObjectStory\CompShop\CompShopStoryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Dashboards\ContentManagement\Container\DashboardElementContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\ShapeElementSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\PropertyElementSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\LineElementSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\TextElementSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Dashboards\ContentManagement\Dialogs\EntityElementSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Dashboards\ContentManagement\ShapeDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProcessMonitoring\PipelineTrend\PipelineTrendView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Reports\Forms\ChemicalTests\ChemicalTestsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Reports\Forms\CompShops\CompShopsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Reports\Forms\CompUnitFailures\CompUnitFailuresView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Reports\Forms\CompUnits\CompUnitsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Reports\Forms\DistrStations\DistrStationsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Reports\Forms\GasInPipes\GasInPipesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Reports\Forms\MeasStations\MeasStationsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Reports\Forms\ReducingStations\ReducingStationsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProcessMonitoring\Reports\Forms\Valves\ValvesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Reports\ReportsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Views\BalanceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Alarms\AlarmsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Views\FindObjectDialogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\Views\ModelTreeDialogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SapBo\SapBoMainView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessMonitoring\FloViewControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ValveStatesChangeLog\ValveStatesChangeLogMainView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Flobus.VM\Flobus.VM.csproj">
+      <Project>{42282f89-f22d-4c58-ba2f-b3569da405c9}</Project>
+      <Name>Flobus.VM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\PortableDTO\PortableDTO.csproj">
+      <Project>{351F17B0-88EC-4255-B351-1D7E86E411A0}</Project>
+      <Name>PortableDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Utils\Utils.csproj">
+      <Project>{01B8B942-8E9B-468B-8873-2514DD40532C}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Application\Application.csproj">
+      <Project>{0C5CFB81-8CE0-4983-87A6-243475D7210E}</Project>
+      <Name>Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{F226804F-0541-43A2-851B-720639A148CF}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Controls\Controls.csproj">
+      <Project>{3D5B8BF8-0D6B-4386-BFCF-D55D81F20408}</Project>
+      <Name>Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataProviders\DataProviders.csproj">
+      <Project>{29E1A896-1450-4381-A720-5FCF7DDFB802}</Project>
+      <Name>DataProviders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Flobus\Flobus.csproj">
+      <Project>{9552AECE-3A17-4FCA-AAE9-A73CE35107B6}</Project>
+      <Name>Flobus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObjectModel\ObjectModel.csproj">
+      <Project>{3118133E-D042-44E7-BC2B-6C585D89BF9B}</Project>
+      <Name>ObjectModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repair\Repair.csproj">
+      <Project>{12593581-8208-46c1-84da-00a66ed04b9a}</Project>
+      <Name>Repair</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <EmbeddedResource Include="ExcelReports\Resources\ExcelReportCustomResouces.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExcelReportCustomResouces.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExcelReports\template_pressureInput.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="GasCostsDiagram.cd" />
+    <None Include="packages.config" />
+    <None Include="ProcessMonitoring\Dashboards\ContentManagement\Elements\ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dialogs\" />
+    <Folder Include="GasCosts\Imports\UnitsFuel\" />
+    <Folder Include="GazRouter\Modes\GasCosts\Dialogs\CompStationLoss\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="GazRouter.Client.Menu.EventsDrop.EventsDropView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:entityName="clr-namespace:GazRouter.Controls.EntityName;assembly=Controls"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:linkListDrop1="clr-namespace:GazRouter.Client.Menu.LinkListDrop"
+             xmlns:eventsDrop="clr-namespace:GazRouter.Client.Menu.EventsDrop"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance eventsDrop:EventsDropViewModel}">
+
+    <Grid>
+        <Grid.Resources>
+            <converters:DailyDateTimeConverter x:Key="DailyDateTimeConverter" />
+        </Grid.Resources>
+
+        <StackPanel>
+
+            <linkListDrop1:LinkItemView DataContext="{Binding LogLink}" />
+
+            <Line X1="0" X2="500" 
+                  Y1="0" Y2="0"
+                  StrokeThickness="1"
+                  Stroke="Gray"
+                  StrokeDashArray="1, 2"
+                  HorizontalAlignment="Center"
+                  Margin="0, 20, 0, 0"
+                  Visibility="{Binding HasEvents, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+            <TextBlock Text="{Binding SectionName}"
+                       FontSize="11"
+                       FontFamily="Segoe UI"
+                       FontWeight="Bold"
+                       Margin="0, 11, 0, 0"
+                       Visibility="{Binding HasEvents, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+            <ItemsControl ItemsSource="{Binding EventList}"
+                          Margin="20, 11, 0, 0"
+                          HorizontalContentAlignment="Left">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="eventsDrop:EventWrap">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox VerticalAlignment="Center"
+                                      Margin="0, 0, 20, 0"
+                                      Command="{Binding AckCommand}"
+                                      Visibility="{Binding NonAck, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <StackPanel Margin="0, 0, 0, 20" 
+                                        Grid.Column="1">
+                                <TextBlock
+                                    Text="{Binding Dto.EventDate, Converter={StaticResource DailyDateTimeConverter}}"
+                                    FontWeight="Bold"
+                                    FontSize="11" />
+
+                                <TextBlock Text="{Binding Dto.UserEntityName}"
+                                           Foreground="CadetBlue"
+                                           FontSize="11" />
+
+                                <entityName:EntityNameBlock Entity="{Binding Dto.Entity}" Kilometer="{Binding Dto.Kilometer}"
+                                                            UseShortPathAsName="True"
+                                                            DisplayIcon="True"
+                                                            DisplayType="True"
+                                                            FontSize="13"
+                                                            HorizontalAlignment="Left" />
+
+
+                                <TextBlock Text="{Binding Dto.Description}"
+                                           FontSize="13"
+                                           FontFamily="Segoe UI Light"
+                                           Width="400"
+                                           TextWrapping="Wrap"
+                                           TextAlignment="Left"
+                                           HorizontalAlignment="Left"
+                                           Foreground="{Binding EventTextColor}" />
+
+                            </StackPanel>
+                        </Grid>
+                        
+                        
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+
+        </StackPanel>
+
+
+        
+    </Grid>
+</UserControl>

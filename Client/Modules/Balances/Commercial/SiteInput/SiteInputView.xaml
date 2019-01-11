@@ -1,0 +1,147 @@
+﻿<UserControl x:Class="GazRouter.Balances.Commercial.SiteInput.SiteInputView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:viewModels="clr-namespace:GazRouter.Balances.Commercial.SiteInput"
+             xmlns:inputStates="clr-namespace:GazRouter.DTO.ManualInput.InputStates;assembly=PortableDTO"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:SiteInputViewModel}">
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            
+            <Grid.Resources>
+                <viewModels:InputModeToNameConverter x:Key="InputModeToNameConverter"/>
+                <converters:InputStateToNameConverter x:Key="InputStateToNameConverter"/>
+                <converters:InputStateToColorConverter x:Key="InputStateToColorConverter"/>
+            </Grid.Resources>
+            
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <telerik:RadToolBar>
+
+                <telerik:RadComboBox ItemsSource="{Binding SiteList}"
+                                     Width="220"
+                                     SelectedItem="{Binding SelectedSite, Mode=TwoWay}"
+                                     DisplayMemberPath="Name"/>
+                
+                <telerik:RadDatePicker DateSelectionMode="Month" 
+                                       SelectedDate="{Binding SelectedMonth, Mode=TwoWay}"
+                                       Width="90" />
+                
+                <!--Режим ввода-->
+                <telerik:RadComboBox ItemsSource="{Binding InputModeList}"
+                                     Width="80"
+                                     SelectedItem="{Binding SelectedInputMode, Mode=TwoWay}">
+                    <telerik:RadComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource InputModeToNameConverter}}"
+                                       Margin="5, 0, 0, 0"/>
+                        </DataTemplate>
+                    </telerik:RadComboBox.ItemTemplate>
+                </telerik:RadComboBox>
+
+                <!--Список с номерами дней-->
+                <telerik:RadComboBox ItemsSource="{Binding DayList}"
+                                     Width="80"
+                                     SelectedItem="{Binding SelectedDay, Mode=TwoWay}"
+                                     IsEnabled="{Binding IsDayInputMode}">
+                    <telerik:RadComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Common;component/Images/10x10/done.png"
+                                       Stretch="None"/>
+                                <TextBlock Text="{Binding StringFormat='00'}"
+                                           Margin="5, 0, 0, 0"/>    
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:RadComboBox.ItemTemplate>
+                </telerik:RadComboBox>
+                
+                <telerik:RadButton Command="{Binding RefreshCommand}"
+                                   Style="{StaticResource refreshButtonStyle}"/>
+                    
+
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadComboBox SelectedIndex="{Binding SelectedUnitType, Mode=TwoWay}"
+                                     Width="70"
+                                     Margin="5, 0, 0, 0">
+                    <telerik:RadComboBoxItem>тыс.м3</telerik:RadComboBoxItem>
+                    <telerik:RadComboBoxItem>м3</telerik:RadComboBoxItem>
+                </telerik:RadComboBox>
+
+                <telerik:RadToolBarSeparator />
+                
+                
+
+                <telerik:RadComboBox Margin="5, 0, 0, 0" 
+                                 ItemsSource="{Binding InputStateList}" 
+                                 SelectedValue="{Binding InputState, Mode=TwoWay}"
+                                 IsEnabled="{Binding IsInputStateChangeAllowed}">
+                    <telerik:RadComboBox.ItemTemplate>
+                        <DataTemplate DataType="inputStates:ManualInputState">
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="10" 
+                                    Height="10" 
+                                    StrokeThickness="0" 
+                                    Fill="{Binding Converter={StaticResource InputStateToColorConverter}}" />
+                                <TextBlock Margin="5, 0, 0, 0"
+                                    Text="{Binding Converter={StaticResource InputStateToNameConverter}}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:RadComboBox.ItemTemplate>
+                </telerik:RadComboBox>
+
+                <TextBlock Text="{Binding InputStateInfo}" Margin="5, 0, 0, 0" />
+
+
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadRibbonDropDownButton SmallImage="/Common;component/Images/16x16/wizard.png"
+                                                 DropDownButtonPosition="Right"
+                                                 Margin="5, 0, 0, 0">
+                    <telerik:RadRibbonDropDownButton.DropDownContent>
+                        <telerik:RadContextMenu BorderThickness="0">
+                            <telerik:RadMenuItem Header="Распределить объем автоматически..." 
+                                                 Command="{Binding AutoDivideCommand}"/>
+                            <telerik:RadMenuItem Header="Удалить значения..." 
+                                                 Command="{Binding ClearValuesCommand}"/>
+                        </telerik:RadContextMenu>
+                    </telerik:RadRibbonDropDownButton.DropDownContent>
+                </telerik:RadRibbonDropDownButton>
+
+            </telerik:RadToolBar>
+
+            
+            
+            <telerik:RadTabControl Grid.Row="1">
+                
+                <telerik:RadTabItem Header="Поступление">
+                    <viewModels:TableView DataContext="{Binding Intake}" />
+                </telerik:RadTabItem>
+
+                <telerik:RadTabItem Header="Транзит">
+                    <viewModels:TableView DataContext="{Binding Transit}" />
+                </telerik:RadTabItem>
+
+                <telerik:RadTabItem Header="Потребители">
+                    <viewModels:TableView DataContext="{Binding Consumers}" />
+                </telerik:RadTabItem>
+                
+                <telerik:RadTabItem Header="ПЭН">
+                    <viewModels:TableView DataContext="{Binding OperConsumers}" />
+                </telerik:RadTabItem>
+            </telerik:RadTabControl>
+            
+            
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

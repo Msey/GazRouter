@@ -1,0 +1,47 @@
+﻿<telerik:RadWindow x:Class="GazRouter.ObjectModel.Model.Dialogs.AddEdit.Objects.CoolingUnit.AddEditCoolingUnitView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:dialogs="clr-namespace:GazRouter.ObjectModel.Model.Dialogs"
+                   xmlns:coolingUnit="clr-namespace:GazRouter.ObjectModel.Model.Dialogs.AddEdit.Objects.CoolingUnit"
+                   d:DesignHeight="459" x:Name="MainWindow"
+                   Header="{Binding Caption}" Style="{StaticResource DialogWindowStyle}" Height="Auto" Width="300"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DataContext="{d:DesignInstance coolingUnit:AddEditCoolingUnitViewModel}">
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid Margin="11">
+            <StackPanel>
+
+            
+                <TextBlock Text="Наименование:" />
+                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0, 5, 0, 0" />
+            
+            
+            
+                <TextBlock Text="Тип:" Margin="0, 11, 0, 0" />
+                <telerik:RadComboBox ItemsSource="{Binding Path=CoolingUnitTypeList}" 
+                                     Margin="0, 5, 0, 0"
+                                     SelectedItem="{Binding Path=SelectedCoolingUnitType, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                     DisplayMemberPath="Name" 
+                                     IsEditable="False" 
+                                     CanAutocompleteSelectItems="True" 
+                                     EmptyText="Выберите тип ..." />
+            
+
+                <StackPanel Style="{StaticResource StyleStackPanelForConfirmationButton}" Orientation="Horizontal">
+
+                    <telerik:RadButton Content="{Binding ButtonSaveCaption}" 
+                                       Command="{Binding SaveCommand}"
+                                       Name="SaveButton" 
+                                       Style="{StaticResource StyleConfirmationButton}" />
+                    <telerik:RadButton Content="Отмена" 
+                                       Command="{Binding CancelCommand}"
+                                       Style="{StaticResource StyleConfirmationButton}" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

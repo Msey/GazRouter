@@ -1,0 +1,154 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Modes.Exchange.AddEditExchangeSettingView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:exchange="clr-namespace:GazRouter.Modes.Exchange"
+                   mc:Ignorable="d" d:DesignHeight="405" d:DesignWidth="300"
+                   Style="{StaticResource DialogWindowStyle}" Header="{Binding Caption}" Height="600" Width="900"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DataContext="{d:DesignInstance exchange:AddEditExchangeSettingViewModel}">
+    <telerik:RadWindow.Resources>
+        <telerik:BooleanToVisibilityConverter x:Key="boolToVisibility" />
+    </telerik:RadWindow.Resources>
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+
+        <Grid Background="White"  Margin="11">
+            <Grid.Resources>
+                <Style TargetType="telerik:RadTabItem" BasedOn="{StaticResource RadTabItemStyle}">
+                    <Setter Property="Width" Value="250" />
+                </Style>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <telerik:RadTabControl Grid.Row="0" AllTabsEqualHeight="True">
+                <telerik:RadTabItem Header="Общее" Width="150">
+
+                    <StackPanel Margin="11">
+                            <TextBlock Text="Получатель:" Margin="0, 0, 0, 0" />
+                            <telerik:RadComboBox ItemsSource="{Binding Path=Sources}" Margin="0, 5, 0, 0"
+                                                 SelectedValue="{Binding SourceId, Mode=TwoWay}"
+                                                 SelectedValuePath="SourceId" DisplayMemberPath="SourceName"
+                                                 IsEditable="False"
+                                                 CanAutocompleteSelectItems="True" EmptyText="..." />
+                            <TextBlock Text="Название:"  Margin="0, 11, 0, 0" />
+                            <TextBox Margin="0, 5, 0, 0"
+                                     Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock Margin="0, 11, 0, 0" Text="Маска имени:" />
+                            <TextBox Margin="0, 5, 0, 0"
+                                     Text="{Binding FileMask,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                     ToolTipService.ToolTip="{Binding FileMaskTooltip}"/>
+
+
+
+                            <TextBlock Text="Период:" Margin="0, 11, 0, 0" />
+                            <telerik:RadComboBox ItemsSource="{Binding Path=PeriodTypes}" Margin="0, 5, 0, 0"
+                                                    SelectedValue="{Binding Path=PeriodTypeId, Mode=TwoWay}"
+                                                    SelectedValuePath="PeriodType" DisplayMemberPath="Name"
+                                                    IsEditable="False"
+                                                    CanAutocompleteSelectItems="True" EmptyText="..." />
+
+                        </StackPanel>
+
+
+                </telerik:RadTabItem>
+                <telerik:RadTabItem Header="Преобразование файла" Width="150">
+                    <Grid Margin="11">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <CheckBox IsChecked="{Binding IsTransform, Mode=TwoWay}"
+                                          Content="Включить преобразование" />
+                                <Grid Grid.Row="1" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+
+                                <TextBox IsEnabled="{Binding IsTransform, Mode=TwoWay}" 
+                                             Text="{Binding SettingData,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                             VerticalScrollBarVisibility="Auto" AcceptsReturn="True"  TextWrapping="Wrap"  Height="400"
+                                             Grid.Column="0" />
+                                    <telerik:RadButton  Grid.Column="1" Content="..." Command="{Binding UploadCommand}"
+                                                       Style="{StaticResource StyleConfirmationButton}" Width="Auto"
+                                                       ToolTipService.ToolTip="Выбрать xsl-файл" />
+                                    <telerik:RadButton Grid.Column="2"  Command="{Binding CheckCommand}" Width="Auto"
+                                                       ToolTipService.ToolTip="Выполнить проверку"
+                                                       Style="{StaticResource runButtonStyle}" />
+                                </Grid>
+                            </Grid>
+                    </Grid>
+                </telerik:RadTabItem>
+                <telerik:RadTabItem Header="Транспорт" Width="150">
+
+                    <StackPanel Margin="11">
+                            <telerik:RadComboBox ItemsSource="{Binding Path=TransportTypeList, Mode=OneTime}"
+                                                 SelectedValuePath="Key" DisplayMemberPath="Value"
+                                                 SelectedValue="{Binding SelectedTransportType,Mode=TwoWay}" />
+
+
+                            <StackPanel Orientation="Vertical"
+                                        Visibility="{Binding IsFtpVisible, Mode=TwoWay, Converter={StaticResource boolToVisibility}}">
+                                <TextBlock Margin="0, 11, 0, 0" Text="Ftp:" />
+                                <TextBox Margin="0, 5, 0, 0"
+                                         Text="{Binding FtpAddress,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Margin="0, 11, 0, 0" Text="Логин:" />
+                                <TextBox Margin="0, 5, 0, 0"
+                                         Text="{Binding FtpLogin,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Margin="0, 11, 0, 0" Text="Пароль:" />
+                                <TextBox Margin="0, 5, 0, 0"
+                                         Text="{Binding FtpPassword,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical"
+                                        Visibility="{Binding IsEmailVisible, Mode=TwoWay, Converter={StaticResource boolToVisibility}}">
+
+                                <TextBlock Margin="0, 11, 0, 0" Text="Email:" />
+                                <TextBox Margin="0, 5, 0, 0"
+                                         Text="{Binding Email,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  ToolTipService.ToolTip="Адреса указываются через запятую"/>
+
+                                <RadioButton Margin="0, 5, 0, 0" Content="xml-файл отправлять в виде вложения к письму"
+                                             IsChecked="{Binding XmlAsAttachement, Mode=TwoWay}" />
+                                <RadioButton Margin="0, 5, 0, 0" Content="xml-файл отправлять в теле письма" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical"
+                                        Visibility="{Binding IsSmbVisible, Mode=TwoWay, Converter={StaticResource boolToVisibility}}">
+                                <TextBlock Margin="0, 11, 0, 0" Text="Путь к папке:" />
+                                <TextBox Margin="0, 5, 0, 0"
+                                         Text="{Binding FolderPath,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                </telerik:RadTabItem>
+            </telerik:RadTabControl>
+
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+
+                <telerik:RadButton Content="{Binding ButtonSaveCaption}" Command="{Binding SaveCommand}"
+                                   Name="SaveButton" Style="{StaticResource StyleConfirmationButton}" />
+
+                <telerik:RadButton Content="Отмена" Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+
+        </Grid>
+
+
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

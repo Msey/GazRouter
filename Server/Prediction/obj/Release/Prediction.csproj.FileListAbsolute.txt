@@ -1,0 +1,15 @@
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\bin\Release\Prediction.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\bin\Release\Prediction.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\bin\Release\Microsoft.Practices.ServiceLocation.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\bin\Release\Microsoft.Practices.ServiceLocation.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\bin\Release\Microsoft.Practices.ServiceLocation.xml
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\obj\Release\Prediction.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\obj\Release\Prediction.pdb
+G:\GPA_GazRouter\MainSolution\Server\Prediction\bin\Release\Prediction.dll
+G:\GPA_GazRouter\MainSolution\Server\Prediction\bin\Release\Prediction.pdb
+G:\GPA_GazRouter\MainSolution\Server\Prediction\bin\Release\Microsoft.Practices.ServiceLocation.dll
+G:\GPA_GazRouter\MainSolution\Server\Prediction\bin\Release\Microsoft.Practices.ServiceLocation.pdb
+G:\GPA_GazRouter\MainSolution\Server\Prediction\bin\Release\Microsoft.Practices.ServiceLocation.xml
+G:\GPA_GazRouter\MainSolution\Server\Prediction\obj\Release\Prediction.csprojResolveAssemblyReference.cache
+G:\GPA_GazRouter\MainSolution\Server\Prediction\obj\Release\Prediction.dll
+G:\GPA_GazRouter\MainSolution\Server\Prediction\obj\Release\Prediction.pdb

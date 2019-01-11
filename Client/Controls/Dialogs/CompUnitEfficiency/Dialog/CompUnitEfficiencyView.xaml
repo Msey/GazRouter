@@ -1,0 +1,554 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Controls.Dialogs.CompUnitEfficiency.Dialog.CompUnitEfficiencyView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   xmlns:dialog="clr-namespace:GazRouter.Controls.Dialogs.CompUnitEfficiency.Dialog"
+                   mc:Ignorable="d"
+                   Height="550"
+                   Width="700"
+                   Style="{StaticResource DialogWindowStyle}"
+                   Header="Расчет показателей работы ГПА"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DataContext="{d:DesignInstance dialog:CompUnitEfficiencyViewModel}">
+    <telerik:RadWindow.Resources>
+        <converters:PressureToDoubleConverter x:Key="PressureToDoubleConverter" />
+        <converters:TemperatureToDoubleConverter x:Key="TemperatureConverter" />
+        <converters:CombHeatToDoubleConverter x:Key="CombHeatToDoubleConverter"/>
+        <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <telerik:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" />
+    </telerik:RadWindow.Resources>
+
+    <telerik:RadBusyIndicator BusyContent="Идёт загрузка..."
+                              DisplayAfter="0"
+                              IsBusy="{Binding IsBusyLoading}" 
+                              BorderThickness="0">
+
+        <telerik:RadTabControl Margin="-2, 0, -2, -4"
+                               BorderThickness="0">
+            <telerik:RadTabItem Header="Исходные данные">
+                <StackPanel Margin="11">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <TextBlock Text="ГПА:" />
+                            <controls:EntityPicker Width="250"
+                                           Margin="0, 5, 0, 0"
+                                           SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
+                                           CanUserDelete="False"
+                                           AllowedTypes="{Binding Path=AllowedType, Mode=TwoWay}"
+                                           HorizontalAlignment="Left"
+                                           IsReadOnly="True" />
+                        </StackPanel>
+
+                        <StackPanel Margin="30, 5, 0, 0" Visibility="{Binding IsCompUnitTest, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <TextBlock Text="При расчете используются"/>
+                            <TextBlock Text="данные газодинамических испытаний от:"/>
+                            <TextBlock Text="{Binding CompUnitTestDate, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <TextBlock Text="Метка времени:"
+                               Margin="0, 11, 0, 0" />
+                    <controls:DateTimePickerTwoHours SelectedDateTime="{Binding Date, Mode=TwoWay}"
+                                                     DisableSelectFuture="True"
+                                                     IsEnabled="{Binding IsUnitSelected}"
+                                                     Width="200"
+                                                     Margin="0, 5, 0, 0"
+                                                     HorizontalAlignment="Left" />
+
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                        <StackPanel>
+                            <controls:SmartTextBlock Width="200"
+                                                     HorizontalAlignment="Left"
+                                                     Text="P газа перед ЦБН, [P]:" />
+                            <telerik:RadMaskedNumericInput Width="100"
+                                                           Margin="0, 5, 0, 0"
+                                                           FormatString="n2"
+                                                           Value="{Binding PressureSuperchargerInlet, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureToDoubleConverter}}"
+                                                           HorizontalAlignment="Left" />
+                        </StackPanel>
+
+                        <StackPanel Margin="11, 0, 0, 0">
+                            <controls:SmartTextBlock Width="200"
+                                                     HorizontalAlignment="Left"
+                                                     Text="P газа за ЦБН, [P]:" />
+                            <telerik:RadMaskedNumericInput Width="100"
+                                                           Margin="0, 5, 0, 0"
+                                                           FormatString="n2"
+                                                           Value="{Binding PressureSuperchargerOutlet, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureToDoubleConverter}}"
+                                                           HorizontalAlignment="Left" />
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Width="200"
+                                       HorizontalAlignment="Left"
+                                       Text="Степень сжатия:" />
+                            <TextBlock Width="100"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Left"
+                                       Text="{Binding CompressionRatio, StringFormat=n1}" />
+                        </StackPanel>
+                    </StackPanel>
+
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                        <StackPanel>
+                            <controls:SmartTextBlock Width="200"
+                                                     HorizontalAlignment="Left"
+                                                     Text="T газа перед ЦБН, [T]:" />
+                            <telerik:RadMaskedNumericInput Width="100"
+                                                           Margin="0, 5, 0, 0"
+                                                           FormatString="n2"
+                                                           Value="{Binding TemperatureSuperchargerInlet, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}"
+                                                           HorizontalAlignment="Left" />
+                        </StackPanel>
+
+                        <StackPanel Margin="11, 0, 0, 0">
+                            <controls:SmartTextBlock Width="200"
+                                                     HorizontalAlignment="Left"
+                                                     Text="T газа за ЦБН, [T]:" />
+                            <telerik:RadMaskedNumericInput Width="100"
+                                                           Margin="0, 5, 0, 0"
+                                                           FormatString="n2"
+                                                           Value="{Binding TemperatureSuperchargerOutlet, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}"
+                                                           HorizontalAlignment="Left" />
+                        </StackPanel>
+                    </StackPanel>
+
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                        <StackPanel>
+                            <TextBlock Width="200"
+                                       HorizontalAlignment="Left"
+                                       Text="Q объемная ЦБН, м³/мин:" />
+                            <telerik:RadMaskedNumericInput Width="100"
+                                                           Margin="0, 5, 0, 0"
+                                                           FormatString="n3"
+                                                           Value="{Binding Pumping, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                           HorizontalAlignment="Left" />
+                        </StackPanel>
+                        <StackPanel Margin="11, 0, 0, 0"
+                                    Visibility="{Binding IsTurbine, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <TextBlock Width="200"
+                                       HorizontalAlignment="Left"
+                                       Text="Q топливного газа, тыс.м³/ч:" />
+                            <telerik:RadMaskedNumericInput Width="100"
+                                                           Margin="0, 5, 0, 0"
+                                                           FormatString="n3"
+                                                           Value="{Binding FuelGasConsumption, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                           HorizontalAlignment="Left" />
+                        </StackPanel>
+                    </StackPanel>
+
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                        <StackPanel>
+                            <TextBlock Width="200"
+                                       HorizontalAlignment="Left"
+                                       Text="Обороты ЦБН, об/мин:" />
+                            <telerik:RadMaskedNumericInput Width="100"
+                                                           Margin="0, 5, 0, 0"
+                                                           FormatString="n0"
+                                                           Value="{Binding RpmSupercharger, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                           HorizontalAlignment="Left" />
+                        </StackPanel>
+                    </StackPanel>
+
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                        <StackPanel>
+                            <TextBlock Width="200"
+                                       HorizontalAlignment="Left"
+                                       Text="Плотность газа, кг/м³:" />
+                            <telerik:RadMaskedNumericInput Width="100"
+                                                           Margin="0, 5, 0, 0"
+                                                           FormatString="n3"
+                                                           Value="{Binding Density, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                           HorizontalAlignment="Left" />
+                        </StackPanel>
+
+                        <StackPanel Margin="11, 0, 0, 0">
+                            <controls:SmartTextBlock Width="200"
+                                       HorizontalAlignment="Left"
+                                       Text="Низш. теплота сгорания, [C]:" />
+                            <telerik:RadMaskedNumericInput Width="100"
+                                                           Margin="0, 5, 0, 0"
+                                                           FormatString="n0"
+                                                           Value="{Binding CombHeatLow, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource CombHeatToDoubleConverter}}"
+                                                           HorizontalAlignment="Left" />
+                        </StackPanel>
+                    </StackPanel>
+
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                        <StackPanel>
+                            <TextBlock Width="200"
+                                       HorizontalAlignment="Left"
+                                       Text="P атмосферное, мм рт.ст.:" />
+                            <telerik:RadMaskedNumericInput Width="100"
+                                                           Margin="0, 5, 0, 0"
+                                                           FormatString="n0"
+                                                           Value="{Binding PressureAir, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                           HorizontalAlignment="Left" />
+                        </StackPanel>
+
+                        <StackPanel Margin="11, 0, 0, 0">
+                            <controls:SmartTextBlock Width="200"
+                                                     HorizontalAlignment="Left"
+                                                     Text="T воздуха, [T]:" />
+                            <telerik:RadMaskedNumericInput Width="100"
+                                                           Margin="0, 5, 0, 0"
+                                                           FormatString="n2"
+                                                           Value="{Binding TemperatureAir, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource TemperatureConverter}}"
+                                                           HorizontalAlignment="Left" />
+                        </StackPanel>
+                    </StackPanel>
+
+                </StackPanel>
+
+            </telerik:RadTabItem>
+
+            <telerik:RadTabItem Header="Результаты"
+                                Visibility="{Binding CanCalculate, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <telerik:RadGridView CanUserFreezeColumns="False"
+                                     RowIndicatorVisibility="Collapsed"
+                                     AutoGenerateColumns="False"
+                                     IsReadOnly="True"
+                                     ItemsSource="{Binding ResultList}"
+                                     ShowGroupPanel="False"
+                                     IsFilteringAllowed="False"
+                                     CanUserSortColumns="False">
+
+
+                    <telerik:RadGridView.Columns>
+
+                        <telerik:GridViewDataColumn Width="250"
+                                                    Header="Параметр"
+                                                    DataMemberBinding="{Binding ParamName}"
+                                                    IsResizable="False" />
+                        <telerik:GridViewDataColumn Width="80"
+                                                    Header="Значение"
+                                                    DataMemberBinding="{Binding Value}"
+                                                    IsResizable="False" />
+                        <telerik:GridViewDataColumn Width="80"
+                                                    Header="Ед.изм."
+                                                    DataMemberBinding="{Binding EU}"
+                                                    IsResizable="False" />
+
+                    </telerik:RadGridView.Columns>
+
+                </telerik:RadGridView>
+            </telerik:RadTabItem>
+
+            <telerik:RadTabItem Header="Рабочая точка"
+                                Visibility="{Binding CanCalculate, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding SuperchargerType.Name}"
+                                   Margin="0, 11, 0, 0"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center" />
+                        <StackPanel Margin="0, 11, 0, 0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="k = " FontWeight="Bold" />
+                                <Border Background="LightGray" BorderThickness="0">
+                                    <TextBlock Text="{Binding SuperchargerType.KaRated, StringFormat=n3}"
+                                               telerik:RadToolTipService.ToolTipContent="Номинальный коэффициент адиабаты" />
+                                </Border>
+                                <TextBlock Text=", " />
+
+                                <TextBlock Text="z = " FontWeight="Bold" />
+                                <Border Background="LightGray" BorderThickness="0">
+                                    <TextBlock Text="{Binding SuperchargerType.ZRated, StringFormat=n3}"
+                                               telerik:RadToolTipService.ToolTipContent="Номинальный коэффициент сжимаемости газа" />
+                                </Border>
+                                <TextBlock Text=", " />
+
+                                <TextBlock Text="R = " FontWeight="Bold" />
+                                <Border Background="LightGray" BorderThickness="0">
+                                    <TextBlock Text="{Binding SuperchargerType.RRated, StringFormat=n3}"
+                                               telerik:RadToolTipService.ToolTipContent="Номинальная газовая постоянная, кДж/(кг*К)" />
+                                </Border>
+                                <TextBlock Text=" кДж/(кг*К), " />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="T" FontWeight="Bold" />
+                                <TextBlock Text="н" FontSize="10" VerticalAlignment="Bottom" />
+                                <TextBlock Text=" = " />
+                                <Border Background="LightGray" BorderThickness="0">
+                                    <TextBlock Text="{Binding SuperchargerType.TRated}"
+                                               telerik:RadToolTipService.ToolTipContent="Номинальная температура газа на входе нагнетателя, К" />
+                                </Border>
+                                <TextBlock Text=" К, " />
+
+                                <TextBlock Text="N" FontWeight="Bold" />
+                                <TextBlock Text="ном" FontSize="10" VerticalAlignment="Bottom" />
+                                <TextBlock Text=" = " />
+                                <Border Background="LightGray" BorderThickness="0">
+                                    <TextBlock Text="{Binding SuperchargerType.RpmRated}"
+                                               telerik:RadToolTipService.ToolTipContent="Номинальные обороты нагнетателя, об/мин" />
+                                </Border>
+                                <TextBlock Text=" об/мин" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+
+
+                    <telerik:RadCartesianChart x:Name="ChartControl" Palette="Windows8" EmptyContent="Нет данных"
+                                               Grid.Row="1"
+                                               Margin="0, 0, 0, 11">
+
+                        <telerik:RadCartesianChart.TooltipTemplate>
+                            <DataTemplate>
+                                <Border BorderThickness="0" Background="LightGray">
+                                    <StackPanel Margin="11" Background="LightGray">
+                                        <TextBlock Text="{Binding Path=DataItem.Pumping, StringFormat='Q: {0:0.###}'}" />
+                                        <TextBlock
+                                            Text="{Binding Path=DataItem.CompressionRatio, StringFormat='Степень сжатия: {0:0.##}'}"
+                                            Margin="0, 4, 0, 0" />
+                                    </StackPanel>
+                                </Border>
+
+                            </DataTemplate>
+                        </telerik:RadCartesianChart.TooltipTemplate>
+
+                        <telerik:RadCartesianChart.Behaviors>
+                            <telerik:ChartTooltipBehavior Placement="Top" HorizontalOffset="-6" />
+                        </telerik:RadCartesianChart.Behaviors>
+
+                        <telerik:RadCartesianChart.HorizontalAxis>
+                            <telerik:LinearAxis Minimum="{Binding MainMinimumX}" Maximum="{Binding MainMaximumX}" />
+                        </telerik:RadCartesianChart.HorizontalAxis>
+
+                        <telerik:RadCartesianChart.VerticalAxis>
+                            <telerik:LinearAxis Minimum="{Binding MainMinimumY}" Maximum="{Binding MainMaximumY}" />
+                        </telerik:RadCartesianChart.VerticalAxis>
+
+                        <telerik:RadCartesianChart.Grid>
+                            <telerik:CartesianChartGrid MajorLinesVisibility="XY" />
+                        </telerik:RadCartesianChart.Grid>
+                    </telerik:RadCartesianChart>
+
+                </Grid>
+            </telerik:RadTabItem>
+
+
+            <telerik:RadTabItem Header="Степень сжатия"
+                                Visibility="{Binding CanCalculate, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <telerik:RadCartesianChart x:Name="CompRatioChartControl"
+                                               Margin="0, 5, 0, 0"
+                                               HorizontalAlignment="Stretch"
+                                               Palette="Windows8"
+                                               EmptyContent="Нет данных">
+                        <telerik:RadCartesianChart.TooltipTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="11" Background="LightGray">
+                                    <TextBlock Text="{Binding Path=DataItem.Pumping, StringFormat='Q: {0:0.###}'}" />
+                                    <TextBlock
+                                        Text="{Binding Path=DataItem.CompressionRatio, StringFormat='Степень сжатия: {0:0.##}'}"
+                                        Margin="0, 5, 0, 0" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:RadCartesianChart.TooltipTemplate>
+
+                        <telerik:RadCartesianChart.Behaviors>
+                            <telerik:ChartTooltipBehavior Placement="Top" HorizontalOffset="-6" />
+                        </telerik:RadCartesianChart.Behaviors>
+
+                        <telerik:RadCartesianChart.HorizontalAxis>
+                            <telerik:LinearAxis Minimum="{Binding CompRatioMinimumX}"
+                                                Maximum="{Binding CompRatioMaximumX}" />
+                        </telerik:RadCartesianChart.HorizontalAxis>
+
+                        <telerik:RadCartesianChart.VerticalAxis>
+                            <telerik:LinearAxis Minimum="{Binding CompRatioMinimumY}"
+                                                Maximum="{Binding CompRatioMaximumY}" />
+                        </telerik:RadCartesianChart.VerticalAxis>
+
+                        <telerik:RadCartesianChart.Grid>
+                            <telerik:CartesianChartGrid MajorLinesVisibility="XY" />
+                        </telerik:RadCartesianChart.Grid>
+                    </telerik:RadCartesianChart>
+
+                    <TextBlock Text="Объемный расход газа, м³/мин"
+                               Margin="0, 5, 0, 11"
+                               FontSize="11"
+                               HorizontalAlignment="Center"
+                               Grid.Row="1"/>
+                </Grid>
+            </telerik:RadTabItem>
+
+            <telerik:RadTabItem Header="Политроп. КПД"
+                                Visibility="{Binding CanCalculate, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <telerik:RadCartesianChart x:Name="KpdChartControl"
+                                               Margin="5, 5, 0, 0"
+                                               HorizontalAlignment="Stretch"
+                                               Palette="Windows8"
+                                               EmptyContent="Нет данных">
+
+                        <telerik:RadCartesianChart.TooltipTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="11" Background="LightGray">
+                                    <TextBlock Text="{Binding Path=DataItem.Pumping, StringFormat='Q: {0:0.###}'}" />
+                                    <TextBlock Text="{Binding Path=DataItem.Efficiency, StringFormat='КПД: {0:0.###}'}"
+                                               Margin="0, 5, 0, 0" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:RadCartesianChart.TooltipTemplate>
+
+                        <telerik:RadCartesianChart.Behaviors>
+                            <telerik:ChartTooltipBehavior Placement="Top" HorizontalOffset="-6" />
+                        </telerik:RadCartesianChart.Behaviors>
+
+                        <telerik:RadCartesianChart.HorizontalAxis>
+                            <telerik:LinearAxis Minimum="{Binding KpdMinimumX}" Maximum="{Binding KpdMaximumX}" />
+                        </telerik:RadCartesianChart.HorizontalAxis>
+
+                        <telerik:RadCartesianChart.VerticalAxis>
+                            <telerik:LinearAxis Minimum="{Binding KpdMinimumY}" Maximum="{Binding KpdMaximumY}" />
+                        </telerik:RadCartesianChart.VerticalAxis>
+
+                        <telerik:RadCartesianChart.Grid>
+                            <telerik:CartesianChartGrid MajorLinesVisibility="XY" />
+                        </telerik:RadCartesianChart.Grid>
+                    </telerik:RadCartesianChart>
+
+                    <TextBlock Text="Объемный расход газа, м³/мин"
+                               Margin="0, 5, 0, 11"
+                               FontSize="11"
+                               HorizontalAlignment="Center"
+                               Grid.Row="1"/>
+                </Grid>
+            </telerik:RadTabItem>
+
+            <telerik:RadTabItem Header="Внутр. мощность, кВт"
+                                Visibility="{Binding CanCalculate, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <telerik:RadCartesianChart x:Name="CompUnitPowerChartControl"
+                                               Margin="5, 5, 0, 0"
+                                               HorizontalAlignment="Stretch"
+                                               Palette="Windows8"
+                                               EmptyContent="Нет данных">
+
+                        <telerik:RadCartesianChart.TooltipTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="11" Background="LightGray">
+                                    <TextBlock Text="{Binding Path=DataItem.Pumping, StringFormat='Q: {0:0.###}'}" />
+                                    <TextBlock Text="{Binding Path=DataItem.Power, StringFormat='Мощность: {0:0}'}"
+                                               Margin="0, 5, 0, 0" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:RadCartesianChart.TooltipTemplate>
+
+                        <telerik:RadCartesianChart.Behaviors>
+                            <telerik:ChartTooltipBehavior Placement="Top" HorizontalOffset="-6" />
+                        </telerik:RadCartesianChart.Behaviors>
+
+                        <telerik:RadCartesianChart.HorizontalAxis>
+                            <telerik:LinearAxis Minimum="{Binding CompUnitPowerMinimumX}"
+                                                Maximum="{Binding CompUnitPowerMaximumX}" />
+                        </telerik:RadCartesianChart.HorizontalAxis>
+
+                        <telerik:RadCartesianChart.VerticalAxis>
+                            <telerik:LinearAxis Minimum="{Binding CompUnitPowerMinimumY}"
+                                                Maximum="{Binding CompUnitPowerMaximumY}" />
+                        </telerik:RadCartesianChart.VerticalAxis>
+
+                        <telerik:RadCartesianChart.Grid>
+                            <telerik:CartesianChartGrid MajorLinesVisibility="XY" />
+                        </telerik:RadCartesianChart.Grid>
+                    </telerik:RadCartesianChart>
+
+                    <TextBlock Text="Объемный расход газа, м³/мин"
+                               Margin="0, 5, 0, 11"
+                               FontSize="11"
+                               HorizontalAlignment="Center"
+                               Grid.Row="1"/>
+                </Grid>
+            </telerik:RadTabItem>
+
+            <telerik:RadTabItem Header="Эффект. мощность, кВт"
+                                Visibility="{Binding CanCalculate, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid Visibility="{Binding IsMotorisierte, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <telerik:RadCartesianChart x:Name="PowerFuelGasConsimptionChartControl"
+                                               Margin="5, 5, 0, 0"
+                                               HorizontalAlignment="Stretch"
+                                               Palette="Windows8"
+                                               EmptyContent="Нет данных">
+
+                        <telerik:RadCartesianChart.TooltipTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="11" Background="DarkGray">
+                                    <TextBlock Text="{Binding Path=DataItem.Pumping, StringFormat='Q тг: {0:0.###}'}" />
+                                    <TextBlock Text="{Binding Path=DataItem.Power, StringFormat='Мощность: {0:0}'}"
+                                               Margin="0, 5, 0, 0" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:RadCartesianChart.TooltipTemplate>
+
+                        <telerik:RadCartesianChart.Behaviors>
+                            <telerik:ChartTooltipBehavior Placement="Top" HorizontalOffset="-6" />
+                        </telerik:RadCartesianChart.Behaviors>
+
+                        <telerik:RadCartesianChart.HorizontalAxis>
+                            <telerik:LinearAxis Minimum="{Binding PowerFuelGasConsimptionMinimumX}"
+                                                Maximum="{Binding PowerFuelGasConsimptionMaximumX}" />
+                        </telerik:RadCartesianChart.HorizontalAxis>
+
+                        <telerik:RadCartesianChart.VerticalAxis>
+                            <telerik:LinearAxis Minimum="{Binding PowerFuelGasConsimptionMinimumY}"
+                                                Maximum="{Binding PowerFuelGasConsimptionMaximumY}" />
+                        </telerik:RadCartesianChart.VerticalAxis>
+
+                        <telerik:RadCartesianChart.Grid>
+                            <telerik:CartesianChartGrid MajorLinesVisibility="XY" />
+                        </telerik:RadCartesianChart.Grid>
+                    </telerik:RadCartesianChart>
+
+                    <TextBlock Text="Расход топливного газа, м³/час"
+                               Margin="0, 5, 0, 11"
+                               FontSize="11"
+                               HorizontalAlignment="Center"
+                               Grid.Row="1"/>
+                </Grid>
+            </telerik:RadTabItem>
+        </telerik:RadTabControl>
+
+
+    </telerik:RadBusyIndicator>
+
+</telerik:RadWindow>

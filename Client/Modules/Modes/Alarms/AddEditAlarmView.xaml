@@ -1,0 +1,107 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Modes.Alarms.AddEditAlarmView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:alarms="clr-namespace:GazRouter.Modes.Alarms"
+                   mc:Ignorable="d" 
+                   d:DesignHeight="405" 
+                   d:DesignWidth="300"
+                   Style="{StaticResource StyleMainRadWindow}" 
+                   Header="{Binding Caption}" 
+                   Height="Auto" 
+                   Width="Auto"
+                   attachedProperties1:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DataContext="{d:DesignInstance alarms:AddEditAlarmViewModel}">
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid Margin="11">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <StackPanel>
+                <TextBlock Text="Параметр:"/>
+                <StackPanel Margin="0, 5, 0, 0" Orientation="Horizontal">
+                    <TextBox Text="{Binding PropertyName, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                             Width="350" 
+                             VerticalAlignment="Center" 
+                             IsReadOnly="True"
+                             ToolTipService.ToolTip="{Binding PropertyName}"/>
+
+                    <telerik:RadButton Command="{Binding SelectPropertyCommand, Mode=TwoWay}" 
+                                       Width="23"
+                                       Margin="1, 0, 0, 0">
+                        <Image Source="/Common;component/Images/16x16/search.png" Width="16" Height="16" />
+                    </telerik:RadButton>
+                </StackPanel>
+                
+                
+                <TextBlock Text="Тип уставки:" Margin="0, 11, 0, 0"/>
+                <telerik:RadComboBox ItemsSource="{Binding AlarmTypeList}"
+                                     DisplayMemberPath="Name"
+                                     Width="150"
+                                     HorizontalAlignment="Left"
+                                     Margin="0, 5, 0, 0"
+                                     EmptyText="Выберите тип уставки..."
+                                     IsEnabled="{Binding IsPropertySelected}"
+                                     SelectedItem="{Binding SelectedAlarmType, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
+
+                <TextBlock Text="{Binding EU, StringFormat='Значение уставки, {0}:'}" Margin="0, 11, 0, 0"/>
+                <telerik:RadMaskedNumericInput Margin="0, 5, 0, 0"
+                                               Width="100"
+                                               FormatString="n3"
+                                               HorizontalAlignment="Left"
+                                               IsEnabled="{Binding IsPropertySelected}"
+                                               Value="{Binding Setting, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
+
+                <TextBlock Text="Дата начала действия уставки:" Margin="0, 11, 0, 0"/>
+                <telerik:RadDatePicker SelectedValue="{Binding ActivationDate, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                       VerticalAlignment="Center" 
+                                       Width="150" 
+                                       HorizontalAlignment="Left"
+                                       IsEnabled="{Binding IsPropertySelected}"
+                                       DisplayDateStart="{Binding ActivationDateRangeStart}" 
+                                       Margin="0, 5, 0, 0"  />
+
+                <TextBlock Text="Дата окончания действия уставки:" Margin="0, 11, 0, 0"/>
+                <telerik:RadDatePicker SelectedValue="{Binding ExpirationDate, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                       VerticalAlignment="Center" 
+                                       Width="150" 
+                                       HorizontalAlignment="Left"
+                                       IsEnabled="{Binding IsPropertySelected}"
+                                       DisplayDateStart="{Binding ActivationDate}" 
+                                       Margin="0, 5, 0, 0"  />
+
+
+                <TextBlock Text="Комментарий:" Margin="0, 11, 0, 0"/>
+                <TextBox Margin="0, 5, 0, 0" 
+                         Style="{StaticResource MultiLineStyle}"
+                         Width="374"
+                         IsEnabled="{Binding IsPropertySelected}"
+                         Height="100"
+                         Text="{Binding Description, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
+
+
+            </StackPanel>
+
+            
+            
+            
+            
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+
+                <telerik:RadButton Content="{Binding ButtonSaveCaption}" 
+                                   Command="{Binding SaveCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+
+                <telerik:RadButton Content="Отмена" 
+                                   Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

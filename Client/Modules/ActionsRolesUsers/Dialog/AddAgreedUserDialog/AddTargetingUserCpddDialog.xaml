@@ -1,0 +1,70 @@
+﻿<telerik:RadWindow x:Class="GazRouter.ActionsRolesUsers.Dialog.AddAgreedUserDialog.AddTargetingUserCpddDialog"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" Name="thisWindow"
+                   xmlns:local="clr-namespace:GazRouter.ActionsRolesUsers.Dialog.AddAgreedUserDialog"
+                   Style="{StaticResource DialogWindowStyle}" 
+                   Height="Auto" 
+                   Width="350"
+                   xmlns:controls1="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:contrls ="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}" 
+                   Header="{Binding Caption}"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common">
+    <telerik:RadWindow.Resources>
+
+    </telerik:RadWindow.Resources>
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid Margin="11">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel>
+
+                <TextBlock Text="Департамент:" Margin="0,11,0,0" />
+                <TextBox Margin="0, 5, 0, 0"
+                                 Text="{Binding Position, Mode=TwoWay,
+                                 UpdateSourceTrigger=PropertyChanged, 
+                                 ValidatesOnNotifyDataErrors=True}"/>
+                
+                <TextBlock Text="Пользователь:" Margin="0,11,0,0" />
+                <TextBox Margin="0, 5, 0, 0"
+                                 Text="{Binding FIO, Mode=TwoWay,
+                                 UpdateSourceTrigger=PropertyChanged, 
+                                 ValidatesOnNotifyDataErrors=True}"/>
+
+                <TextBlock Text="Факс:" Margin="0,11,0,0" />
+                <TextBox Margin="0, 5, 0, 0"
+                                 Text="{Binding Fax, Mode=TwoWay,
+                                 UpdateSourceTrigger=PropertyChanged, 
+                                 ValidatesOnNotifyDataErrors=True}"/>
+
+                <TextBlock TextWrapping="Wrap" Text="Тип объекта:" Margin="0,11,0,0" />
+                <telerik:RadComboBox SelectedItem="{Binding SelectedType, Mode=TwoWay}"
+                                     ItemsSource="{Binding EntityTypeList, Mode=TwoWay}"
+                                     DisplayMemberPath="Name"
+                                                 Width="150"                                     
+                                     EmptyText="Выберите тип..."
+                                     Margin="0, 5, 0, 0" />
+                <TextBlock TextWrapping="Wrap" Text="Очередность вывода:" Margin="0,11,0,0" />
+                <telerik:RadComboBox SelectedItem="{Binding SelectedOrder, Mode=TwoWay}"
+                                     ItemsSource="{Binding OrderList, Mode=TwoWay}"
+                                     DisplayMemberPath="Name"
+                                                 Width="150"                                     
+                                     EmptyText="Выберите очередность..."
+                                     Margin="0, 5, 0, 0" />
+               
+
+            </StackPanel>
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+                <telerik:RadButton Content="{Binding ButtonSaveCaption}" Style="{StaticResource StyleConfirmationButton}"
+                                   Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=MainWindow}" 
+                                   telerik:RadWindow.ResponseButton="Accept" />
+                <telerik:RadButton Content="Отмена" Style="{StaticResource StyleConfirmationButton}"
+                                   Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}" 
+                                   telerik:RadWindow.ResponseButton="Cancel"/>
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

@@ -1,0 +1,505 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- PSI dispatcher-message -->
+  <xs:element name="DispatcherMessage">
+    <xs:annotation>
+      <xs:documentation>Файл информационного обмена диспетчерскими заданиями</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="HeaderSection"/>
+        <xs:element ref="DataSection" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="Attachment" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:double" use="required" fixed="1.0"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- Заголовок -->
+  <xs:element name="HeaderSection">
+    <xs:annotation>
+      <xs:documentation>Заголовок</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Identifier">
+          <xs:annotation>
+            <xs:documentation>Уникальный идентификатор сообщения</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="type" type="string" use="required" fixed="GlobalID"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Type">
+          <xs:annotation>
+            <xs:documentation>Тип сообщения</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="dispMsgType">
+                <xs:attribute name="id" type="string" use="required" fixed="DT"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Sender">
+          <xs:annotation>
+            <xs:documentation>Отправитель</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="id" type="partner" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Receiver">
+          <xs:annotation>
+            <xs:documentation>Получатель</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="id" type="partner" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Generated">
+          <xs:annotation>
+            <xs:documentation>Дата-время создания сообщения</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="at" type="dateTime" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Send">
+          <xs:annotation>
+            <xs:documentation>Дата-время отправки сообщения</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="at" type="dateTime" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Subject" type="string">
+          <xs:annotation>
+            <xs:documentation>Тема</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Status" type="status">
+          <xs:annotation>
+            <xs:documentation>Текущий статус выполнения задания</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Author" type="string" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>ФИО пользователя, создавшего сообщение</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Editor" type="string" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>ФИО пользователя, изменившего статус сообщения</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Comment" type="string" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Комментарий</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="CarbonCopy" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Перечень получателей копии сообщения</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Receiver" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Получатель</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="id" type="partner" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- Параметры -->
+  <xs:element name="DataSection">
+    <xs:annotation>
+      <xs:documentation>Раздел параметров</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Identifier">
+          <xs:annotation>
+            <xs:documentation>Идентификатор параметра задания</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="guid">
+                <xs:attribute name="type" type="string" use="required" fixed="ASDU_ESG"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ParameterFullName" type="string">
+          <xs:annotation>
+            <xs:documentation>Полное наименование параметра</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Value" type="value" minOccurs="0"/>
+        <xs:element name="Scale" type="scaleType">
+          <xs:annotation>
+            <xs:documentation>Временной срез значения параметра</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Dimension" type="string" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Единица измерения параметра</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Setpoint">
+          <xs:annotation>
+            <xs:documentation>Уставка</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="value">
+                <xs:attribute name="type" type="setpointType"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SpecialInterestFlag" type="boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Признак особого контроля параметра</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="HoldValueFlag" type="boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Признак задания типа Держать</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="IsFulfilledFlag" type="boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Признак достижения уставки</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Comment" type="string" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Комментарий к уставке</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Deadline" type="dateTime" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Срок выполнения задания</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="OperationState" type="string" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Состояние оборудования</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="HoldRangePlus">
+          <xs:annotation>
+            <xs:documentation>Уставка для задания типа Держать (положительное отклонение)</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="value">
+                <xs:attribute name="type" type="setpointType"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="HoldRangeMinus">
+          <xs:annotation>
+            <xs:documentation>Уставка для задания типа Держать (отрицательное отклонение)</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="value">
+                <xs:attribute name="type" type="setpointType"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- Файл-вложение -->
+  <xs:element name="Attachment">
+    <xs:annotation>
+      <xs:documentation>Вложение</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Filename" type="string">
+          <xs:annotation>
+            <xs:documentation>Имя файла-вложения</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Content">
+          <xs:annotation>
+            <xs:documentation>Содержимое файла-вложения, закодированное base64</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Comment" type="string">
+          <xs:annotation>
+            <xs:documentation>Комментарий к файлу-вложению</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Date" type="dateTime" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Дата</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="encoding" type="xs:string" use="required" fixed="base64"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- Типы данных -->
+  <xs:simpleType name="partner">
+    <xs:annotation>
+      <xs:documentation xml:lang="ru">Тип для источников и получателей сообщения</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="М АСДУ ЕСГ"/>
+      <xs:enumeration value="ГП ТГ Волгоград"/>
+      <xs:enumeration value="ГП ТГ Екатеринбург"/>
+      <xs:enumeration value="ГП ТГ Казань"/>
+      <xs:enumeration value="ГП ТГ Краснодар"/>
+      <xs:enumeration value="ГП ТГ Махачкала"/>
+      <xs:enumeration value="ГП ТГ Москва"/>
+      <xs:enumeration value="ГП ТГ Н.Новгород"/>
+      <xs:enumeration value="ГП ТГ Самара"/>
+      <xs:enumeration value="ГП ТГ С.Петербург"/>
+      <xs:enumeration value="ГП ТГ Саратов"/>
+      <xs:enumeration value="ГП ТГ Ставрополь"/>
+      <xs:enumeration value="ГП ТГ Сургут"/>
+      <xs:enumeration value="ГП ТГ Томск"/>
+      <xs:enumeration value="ГП ТГ Уфа"/>
+      <xs:enumeration value="ГП ТГ Ухта"/>
+      <xs:enumeration value="ГП ТГ Чайковский"/>
+      <xs:enumeration value="ГП ТГ Югорск"/>
+      <xs:enumeration value="ГП ДБ Астрахань"/>
+      <xs:enumeration value="ГП ДБ Надым"/>
+      <xs:enumeration value="ГП ДБ Ноябрьск"/>
+      <xs:enumeration value="ГП ДБ Оренбург"/>
+      <xs:enumeration value="ГП ДБ Уренгой"/>
+      <xs:enumeration value="ГП ДБ Ямбург"/>
+      <xs:enumeration value="ГП ДБ Краснодар"/>
+      <xs:enumeration value="ГП Переработка"/>
+      <xs:enumeration value="ГП ПХГ"/>
+      <xs:enumeration value="ГП ТГ Беларусь"/>
+      <xs:enumeration value="СеверНГ"/>
+      <xs:enumeration value="ЧеченГП"/>
+      <xs:enumeration value="УкрТГ"/>
+      <xs:enumeration value="Сахалин Энерджи"/>
+      <xs:enumeration value="Томскнефть"/>
+      <xs:enumeration value="Славнефть"/>
+      <xs:enumeration value="ТомскГП"/>
+      <xs:enumeration value="ГП Нефть"/>
+      <xs:enumeration value="Молдовагаз"/>
+      <xs:enumeration value="Салым петролеум"/>
+      <xs:enumeration value="ИЦА"/>
+      <xs:enumeration value="ГП Межрегионгаз"/>
+      <xs:enumeration value="ГП Туркменистан"/>
+      <xs:enumeration value="ГП Казахстан"/>
+      <xs:enumeration value="ГП ДБ Шельф"/>
+      <xs:enumeration value="ГП Армения"/>
+      <xs:enumeration value="ЯкутГП"/>
+      <xs:enumeration value="НорильскГП"/>
+      <xs:enumeration value="ГрузТГ"/>
+      <xs:enumeration value="УргенчТГ"/>
+      <xs:enumeration value="ГП ДБ Иркутск"/>
+      <xs:enumeration value="ЧерноморНГ"/>
+      <xs:enumeration value="ГП Кыргызстан"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dispMsgType">
+    <xs:annotation>
+      <xs:documentation xml:lang="ru">Тип диспетчерского сообщения</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="INSTR">
+        <xs:annotation>
+          <xs:documentation>Диспетчерское задание</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="scaleType">
+    <xs:annotation>
+      <xs:documentation>Тип периодичности значения параметра</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="PACT"/>
+      <xs:enumeration value="PT5M"/>
+      <xs:enumeration value="PT2H"/>
+      <xs:enumeration value="PT24H"/>
+      <xs:enumeration value="P1M"/>
+      <xs:enumeration value="P1Q"/>
+      <xs:enumeration value="P1Y"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="setpointType">
+    <xs:annotation>
+      <xs:documentation>Тип уставки</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="absolute"/>
+      <xs:enumeration value="relative"/>
+      <xs:enumeration value="discrete"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="status">
+    <xs:annotation>
+      <xs:documentation>Статус задания</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Consultative">
+        <xs:annotation>
+          <xs:documentation>Совещательное</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Consultative_Received">
+        <xs:annotation>
+          <xs:documentation>Получено (Совещательное)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Corrected">
+        <xs:annotation>
+          <xs:documentation>Скорректированное</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Agreed">
+        <xs:annotation>
+          <xs:documentation>Согласованное</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Confirmed">
+        <xs:annotation>
+          <xs:documentation>Утвержденное</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Confirmed_Received">
+        <xs:annotation>
+          <xs:documentation>Получено (Утверждённое)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Canceled">
+        <xs:annotation>
+          <xs:documentation>Отменено</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Fulfilled">
+        <xs:annotation>
+          <xs:documentation>Выполнено</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Fulfilled_Recognized">
+        <xs:annotation>
+          <xs:documentation>Исполнение распознано</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Fulfilled_DO">
+        <xs:annotation>
+          <xs:documentation>Исполнение ДО</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Fulfilled_Final">
+        <xs:annotation>
+          <xs:documentation>Исполнение завершено</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Timeout">
+        <xs:annotation>
+          <xs:documentation>Таймаут</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Expired">
+        <xs:annotation>
+          <xs:documentation>Просрочено</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Fulfilled_Expired">
+        <xs:annotation>
+          <xs:documentation>Исполнение (просрочено)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Fulfilled_DO_Expired">
+        <xs:annotation>
+          <xs:documentation>Исполнение ДО (просрочено)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Keep_Violation_Recognized">
+        <xs:annotation>
+          <xs:documentation>Нарушение распознано (Держать)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Keep_Completed">
+        <xs:annotation>
+          <xs:documentation>Завершено (Держать)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="value">
+    <xs:union memberTypes="xs:double discreteValue normalizedValue"/>
+  </xs:simpleType>
+  <xs:simpleType name="normalizedValue">
+    <xs:annotation>
+      <xs:documentation>Нормированное значение</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="***"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="discreteValue">
+    <xs:annotation>
+      <xs:documentation>Значения состояния</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Unknown"/>
+      <xs:enumeration value="Open"/>
+      <xs:enumeration value="Closed"/>
+      <xs:enumeration value="Processing"/>
+      <xs:enumeration value="Repair"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="guid">
+    <xs:annotation>
+      <xs:documentation xml:lang="ru">GUID идентификатора АСДУ ЕСГ</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:pattern value="[a-fA-F0-9]{32}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string">
+    <xs:annotation>
+      <xs:documentation xml:lang="ru">Строковый тип данных</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dateTime">
+    <xs:annotation>
+      <xs:documentation xml:lang="ru">Тип данных дата/время</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime">
+      <xs:minInclusive value="1999-01-01T00:00:00+03:00"/>
+      <xs:maxInclusive value="2099-12-31T23:59:59+03:00"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="boolean">
+    <xs:annotation>
+      <xs:documentation>Булевый тип данных</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+

@@ -1,0 +1,28 @@
+﻿using GazRouter.DAL.Core;
+using GazRouter.DTO.Dashboards.Folders;
+//using GazRouter.DTO.ExcelReports;
+using Oracle.ManagedDataAccess.Client;
+
+namespace GazRouter.DAL.ExcelReport.Folders
+{
+    public class SetForderSortOrderCommand : CommandNonQuery<SetSortOrderParameterSet>
+    {
+        public SetForderSortOrderCommand(ExecutionContext context)
+            : base(context)
+        {
+            IsStoredProcedure = true;
+        }
+
+        protected override void BindParameters(OracleCommand command, SetSortOrderParameterSet parameters)
+        {
+            command.AddInputParameter("P_FOLDER_ID", parameters.Id);
+            command.AddInputParameter("p_sort_order", parameters.SortOrder);
+            command.AddInputParameter("p_user_name", Context.UserIdentifier);
+        }
+
+        protected override string GetCommandText(SetSortOrderParameterSet parameters)
+        {
+            return "rd.P_FOLDER.EDIT";
+        }
+    }
+}

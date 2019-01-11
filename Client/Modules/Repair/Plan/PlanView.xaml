@@ -1,0 +1,226 @@
+﻿<UserControl x:Class="GazRouter.Repair.Plan.PlanView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:GazRouter.Repair.Converters"
+             xmlns:gasTransportSystems="clr-namespace:GazRouter.DTO.Dictionaries.GasTransportSystems;assembly=PortableDTO"
+             xmlns:repair="clr-namespace:GazRouter.Repair"
+             xmlns:repworks="clr-namespace:GazRouter.Repair.RepWorks"
+             xmlns:plan="clr-namespace:GazRouter.Repair.Plan"
+             xmlns:plan1="clr-namespace:GazRouter.DTO.Repairs.Plan;assembly=PortableDTO"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance plan:PlanViewModel}">
+    <UserControl.Resources>
+        
+        <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:PlanningStageToImageSourceConverter x:Key="PlanningStageToImageSource"/>
+        <converters:PlanningStageToDescriptionConverter x:Key="PlanningStageToDescription"/>
+
+        <DataTemplate DataType="plan:Complex"
+                      x:Key="AddToComplexMenuItemTemplate">
+            <telerik:ContainerBinding.ContainerBindings>
+                <telerik:ContainerBindingCollection>
+                    <telerik:ContainerBinding PropertyName="Command"
+                                              Binding="{Binding AddToThisComplexCommand}"/>
+                </telerik:ContainerBindingCollection>
+            </telerik:ContainerBinding.ContainerBindings>
+            <TextBlock Text="{Binding Dto.ComplexName}"
+                       TextWrapping="Wrap"
+                       Width="200"/>
+        </DataTemplate>
+
+    </UserControl.Resources>
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid x:Name="LayoutRoot" Background="White">
+
+            <Grid.Resources>
+
+                <telerik:ContainerBindingCollection x:Key="ContainerBindings">
+                    <telerik:ContainerBinding PropertyName="Command" Binding="{Binding Command}" />
+                    <telerik:ContainerBinding PropertyName="CommandParameter" Binding="{Binding State.}" />
+                </telerik:ContainerBindingCollection>
+                
+                <DataTemplate x:Key="SetStatusMenuItemTemplate"
+                          DataType="repworks:SetStatusItem"
+                          telerik:ContainerBinding.ContainerBindings="{StaticResource ContainerBindings}">
+                    <TextBlock Text="{Binding State.Caption}" />
+                </DataTemplate>
+                
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar>
+                <telerik:RadToolBarSeparator />
+                <telerik:RadComboBox ItemsSource="{Binding YearList}"
+                                     Width="70"
+                                     SelectedItem="{Binding SelectedYear, Mode=TwoWay}" />
+
+
+                <telerik:RadComboBox ItemsSource="{Binding SystemList}"
+                                     Width="150"
+                                     SelectedItem="{Binding SelectedSystem, Mode=TwoWay}">
+                    <telerik:RadComboBox.ItemTemplate>
+                        <DataTemplate DataType="gasTransportSystems:GasTransportSystemDTO">
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </telerik:RadComboBox.ItemTemplate>
+                </telerik:RadComboBox>
+
+                <telerik:RadToolBarSeparator />
+
+                <!--Работы-->
+                <telerik:RadButton Command="{Binding AddRepairCommand}" Style="{StaticResource addButtonStyle}" />
+                <telerik:RadButton Command="{Binding EditRepairCommand}" Style="{StaticResource editButtonStyle}" />
+                <telerik:RadButton Command="{Binding RemoveRepairCommand}" Style="{StaticResource deleteButtonStyle}" />
+
+                <telerik:RadToolBarSeparator />
+             
+                <telerik:RadRibbonDropDownButton Margin="0, 0, 0, 0"
+                                                 SmallImage="/Common;component/Images/16x16/group.png"
+                                                 DropDownButtonPosition="Right"
+                                                 IsEnabled="{Binding IsChangesAllowed}">
+                    <telerik:RadRibbonDropDownButton.DropDownContent>
+                        <telerik:RadContextMenu BorderThickness="0">
+                            <telerik:RadMenuItem Header="Включить в локальный комплекс"
+                                                 ItemsSource="{Binding LocalComplexList}"
+                                                 ItemTemplate="{StaticResource AddToComplexMenuItemTemplate}"/>
+
+                            <telerik:RadMenuItem Header='Включить в комплекс ПАО "Газпром"'
+                                                 ItemsSource="{Binding EnterpriseComplexList}"
+                                                 ItemTemplate="{StaticResource AddToComplexMenuItemTemplate}" />
+
+                            <telerik:RadMenuItem Header="Исключить из текущего комплекса"
+                                                 Command="{Binding RemoveFromComplexCommand}" />
+                        </telerik:RadContextMenu>
+                    </telerik:RadRibbonDropDownButton.DropDownContent>
+                </telerik:RadRibbonDropDownButton>
+
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadComboBox ItemsSource="{Binding PlanningStageList}"
+                                     SelectedItem="{Binding PlanningStage, Mode=TwoWay}"
+                                     IsEnabled="{Binding IsEditPermission}"
+                                     >
+                    <telerik:RadComboBox.ItemTemplate>
+                        <DataTemplate DataType="plan1:PlanningStage">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Converter={StaticResource PlanningStageToImageSource}}"
+                                       Stretch="None"
+                                       VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Converter={StaticResource PlanningStageToDescription}}"
+                                           Margin="5, 0, 0, 0"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:RadComboBox.ItemTemplate>
+                </telerik:RadComboBox>
+
+                <telerik:RadToolBarSeparator />
+
+                <telerik:RadComboBox SelectedIndex="{Binding GanttRange, Mode=TwoWay}"
+                                     Visibility="{Binding IsGanttActive, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                     IsEnabled="{Binding IsEditPermission}"
+                                     >
+                    <telerik:RadComboBoxItem Content="Режим редактирования"/>
+                    <telerik:RadComboBoxItem Content="Обзор за год"/>
+                </telerik:RadComboBox>
+
+                <telerik:RadRibbonDropDownButton SmallImage="/Common;component/Images/16x16/color_select.png"
+                                                 DropDownButtonPosition="Right"
+                                                 Visibility="{Binding IsTableActive, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                 IsEnabled="{Binding IsEditPermission}">
+                    <telerik:RadRibbonDropDownButton.DropDownContent>
+                        <ItemsControl ItemsSource="{Binding MonthColorList.ColorList}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Margin="11" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="repair:MonthToColorWrap">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding MonthName}"
+                                                   FontSize="14"
+                                                   FontFamily="Segoe UI Light"
+                                                   Width="70"
+                                                   VerticalAlignment="Center" />
+                                        <telerik:RadRibbonDropDownButton DropDownButtonPosition="Right"
+                                                                         Margin="0, 5, 0, 0">
+                                            <telerik:RadRibbonDropDownButton.Content>
+                                                <Rectangle Width="20" Height="20" StrokeThickness="0"
+                                                           Fill="{Binding Color, Converter={StaticResource ColorToBrushConverter}}" />
+                                            </telerik:RadRibbonDropDownButton.Content>
+                                            <telerik:RadRibbonDropDownButton.DropDownContent>
+                                                <telerik:RadColorSelector HorizontalAlignment="Left"
+                                                                          HeaderPaletteVisibility="Collapsed"
+                                                                          MainPaletteHeaderText=""
+                                                                          MainPalette="Metro"
+                                                                          StandardPaletteVisibility="Collapsed"
+
+                                                                          SelectedColor="{Binding Path=Color, Mode=TwoWay}"
+                                                                          Width="170" />
+                                            </telerik:RadRibbonDropDownButton.DropDownContent>
+                                        </telerik:RadRibbonDropDownButton>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </telerik:RadRibbonDropDownButton.DropDownContent>
+                </telerik:RadRibbonDropDownButton>
+                <telerik:RadToolBarSeparator Visibility="{Binding IsTableActive, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                <telerik:RadToolBarSeparator/>
+                
+                <telerik:RadRibbonDropDownButton SmallImage="/Common;component/Images/16x16/state_change.png"
+                                             DropDownButtonPosition="Right"
+                                             Margin="5, 0, 0, 0"
+                                             IsEnabled="{Binding IsSetStatusAllowed}"
+                                             telerik:RadToolTipService.ToolTipContent="Изменить статус работ">
+                    <telerik:RadRibbonDropDownButton.DropDownContent>
+                        <telerik:RadContextMenu x:Name="RadContextMenuMenu"
+                                            ItemsSource="{Binding SetStatusItemList, Mode=TwoWay}"
+                                            ItemTemplate="{StaticResource SetStatusMenuItemTemplate}"
+                                            BorderThickness="0" />
+                    </telerik:RadRibbonDropDownButton.DropDownContent>
+                </telerik:RadRibbonDropDownButton>
+
+                <telerik:RadToolBarSeparator/>
+
+                <telerik:RadButton Command="{Binding ExportExcelCommand}" ToolTipService.ToolTip="Сохранить в Excel"  Margin="5,0,0,0"
+                                   Visibility="{Binding IsTableActive, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Image Width="16" Height="16" Source="/Common;component/Images/16x16/export.png" />
+                </telerik:RadButton>
+
+                <telerik:RadButton Command="{Binding ExportGanttCommand}" ToolTipService.ToolTip="Сохранить в Excel"  Margin="5,0,0,0"
+                                   Visibility="{Binding IsGanttActive, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Image Width="16" Height="16" Source="/Common;component/Images/16x16/export.png" />
+                </telerik:RadButton>
+
+            </telerik:RadToolBar>
+
+
+            <telerik:RadTabControl Grid.Row="1">
+                <telerik:RadTabItem Header="Таблица" IsSelected="{Binding IsTableActive, Mode=TwoWay}">
+                    <plan:PlanTableView DataContext="{Binding }" />
+                </telerik:RadTabItem>
+
+                <telerik:RadTabItem Header="Гант" IsSelected="{Binding IsGanttActive, Mode=TwoWay}">
+                    <plan:PlanGanttView x:Name="PlanGanttView" DataContext="{Binding }"/>
+                </telerik:RadTabItem>
+
+                <telerik:RadTabItem Header="Схема" >
+                    <plan:PlanSchemeView DataContext="{Binding RepairSchemeViewModel}"   Name="SchemeView"/>
+                </telerik:RadTabItem>
+
+            </telerik:RadTabControl>
+
+        </Grid>
+
+    </telerik:RadBusyIndicator>
+</UserControl>

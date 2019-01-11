@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="GazRouter.Modes.EventLog.EventLogMainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:eventLog="clr-namespace:GazRouter.Modes.EventLog"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance eventLog:EventLogMainViewModel}">
+    <UserControl.Resources>
+        <DataTemplate DataType="eventLog:MainEventViewModel">
+            <eventLog:MainEventView />
+        </DataTemplate>
+        <DataTemplate DataType="eventLog:AnalyticalViewModel">
+            <eventLog:AnalyticalView />
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <telerik:RadTabControl ItemsSource="{Binding Tabs}"
+                               SelectedItem="{Binding SelectedTab, Mode=TwoWay}" 
+                               DisplayMemberPath="Header" />
+    </Grid>
+</UserControl>

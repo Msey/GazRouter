@@ -1,0 +1,60 @@
+﻿<telerik:RadWindow x:Class="GazRouter.ObjectModel.Model.Dialogs.AddEdit.Pipelines.InletOutletCompShop.AddEditPipelineInletOutletCompShopView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:maskedInput="clr-namespace:Telerik.Windows.Controls.MaskedInput;assembly=Telerik.Windows.Controls.Input"
+                   xmlns:controls1="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:inletOutletCompShop="clr-namespace:GazRouter.ObjectModel.Model.Dialogs.AddEdit.Pipelines.InletOutletCompShop"
+                   d:DesignHeight="459" x:Name="MainWindow"
+                   Header="{Binding Caption}" Style="{StaticResource DialogWindowStyle}" Height="Auto" Width="600"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DataContext="{d:DesignInstance inletOutletCompShop:AddEditPipelineInletOutletCompShopViewModel}">
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid Margin="11">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <StackPanel>
+                <TextBlock Text="Наименование:" />
+                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0, 5, 0, 0" 
+                         HorizontalContentAlignment="Left" VerticalContentAlignment="Top" />
+
+                <TextBlock Text="Километр начала:"  Margin="0, 11, 0, 0" />
+                <telerik:RadMaskedNumericInput  FormatString="n3"  Value="{Binding KilometerOfStartPoint, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                                               HorizontalContentAlignment="Left" IsClearButtonVisible="False" Margin="0, 5, 0, 0" Width="120"
+                                               maskedInput:MaskedInputExtensions.Minimum="0" />
+
+                <TextBlock Text="Километр окончания:"  Margin="0, 11, 0, 0" />
+                <telerik:RadMaskedNumericInput  FormatString="n3"  Value="{Binding KilometerOfEndPoint, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                                               HorizontalContentAlignment="Left" IsClearButtonVisible="False" Margin="0, 5, 0, 0" Width="120"
+                                               maskedInput:MaskedInputExtensions.Minimum="0" />
+
+                <TextBlock Text="Километр подключения к газопроводу"  Margin="0, 11, 0, 0" />
+                <TextBlock Text="{Binding PipelineName}" FontWeight="Bold" />
+                <telerik:RadMaskedNumericInput  FormatString="n3"  Value="{Binding KilometerOfEndPointConn, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                                               HorizontalContentAlignment="Left" IsClearButtonVisible="False" Margin="0, 5, 0, 0" Width="120"
+                                               maskedInput:MaskedInputExtensions.Minimum="0" />
+
+                <TextBlock Text="КЦ:"  Margin="0, 11, 0, 0" />
+                <controls1:EntityPicker AllowedTypes="{Binding Path=StartAllowedTypes}" Margin="0, 5, 0, 0"
+                                    SelectedItem="{Binding EndEntity, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                    SelectedItemId="{Binding EndEntityId, Mode=TwoWay}" HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center" CanUserDelete="False" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}"
+                        Orientation="Horizontal">
+                <telerik:RadButton Content="{Binding ButtonSaveCaption}" Command="{Binding SaveCommand}"
+                                   Name="SaveButton" Style="{StaticResource StyleConfirmationButton}">
+                </telerik:RadButton>
+                <telerik:RadButton Content="Отмена" Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="GazRouter.Controls.Dialogs.ObjectDetails.ReferencedData.ReferencedDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:entity="clr-namespace:GazRouter.Application.Wrappers.Entity;assembly=Application"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance entity:IEntityWrapper}">
+    
+    
+    <Grid>
+        <telerik:RadGridView AutoGenerateColumns="False"
+                             IsReadOnly="True"
+                             ItemsSource="{Binding PropertyList}"
+                             RowIndicatorVisibility="Collapsed"
+                             CanUserFreezeColumns="False"
+                             SelectionMode="Single"
+                             SelectionUnit="Cell"
+                             ShowGroupPanel="False">
+            
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn Width="300"
+                                            DataMemberBinding="{Binding Path=Name}"
+                                            Header="Свойство"
+                                            IsSortable="False"
+                                            IsFilterable="False"
+                                            TextWrapping="Wrap">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="entity:EntityProperty">
+                            <TextBlock Text="{Binding Name}"
+                                       Margin="11, 5, 5, 5"
+                                       TextWrapping="Wrap"/>
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+                
+                
+                <telerik:GridViewDataColumn Width="170"
+                                            DataMemberBinding="{Binding Path=Value}"
+                                            Header="Значение"
+                                            IsSortable="False"
+                                            IsFilterable="False"
+                                            TextWrapping="Wrap">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="entity:EntityProperty">
+                            <TextBlock Text="{Binding Value}"
+                                       Margin="5" 
+                                       TextWrapping="Wrap">
+                                <telerik:RadContextMenu.ContextMenu>
+                                    <telerik:RadContextMenu>
+                                        <telerik:RadMenuItem Header="Копировать"
+                                                             Command="{Binding CopyToClipboardCommand}"/>
+                                    </telerik:RadContextMenu>           
+                                </telerik:RadContextMenu.ContextMenu>
+                            </TextBlock>
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+    </Grid>
+
+</UserControl>

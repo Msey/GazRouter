@@ -1,0 +1,330 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Modes.Infopanels.ShareDashboard.ShareDashboardView2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+    xmlns:shareDashboard="clr-namespace:GazRouter.Modes.ProcessMonitoring.Dashboards.ShareDashboard"
+    xmlns:shareDashboard1="clr-namespace:GazRouter.Modes.Infopanels.ShareDashboard"
+    Style="{StaticResource DialogWindowStyle}" 
+    Header="{Binding Caption}"
+    attachedProperties1:ModelDialogResult.DialogResult="{Binding DialogResult}"
+    Height="600"
+    Width="400"
+>
+    <telerik:RadWindow.Resources>
+        <shareDashboard1:PermissionPanelsStyle x:Key="permissionStyle" >
+            <shareDashboard1:PermissionPanelsStyle.DeniedStyle>
+                <Style TargetType="telerik:GridViewCell" BasedOn="{StaticResource  GridViewCellStyle}">
+                    <Setter Property="Background" Value="#FE2E2E"/>
+                </Style>
+            </shareDashboard1:PermissionPanelsStyle.DeniedStyle>
+            <shareDashboard1:PermissionPanelsStyle.ReadStyle>
+                <Style TargetType="telerik:GridViewCell" BasedOn="{StaticResource  GridViewCellStyle}">
+                    <Setter Property="Background" Value="Yellow"/>
+                </Style>
+            </shareDashboard1:PermissionPanelsStyle.ReadStyle>
+            <shareDashboard1:PermissionPanelsStyle.WriteStyle>
+                <Style TargetType="telerik:GridViewCell" BasedOn="{StaticResource  GridViewCellStyle}">
+                    <Setter Property="Background" Value="Chartreuse"/>
+                </Style>
+            </shareDashboard1:PermissionPanelsStyle.WriteStyle>
+        </shareDashboard1:PermissionPanelsStyle>
+    </telerik:RadWindow.Resources>
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" 
+                              Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid x:Name="LayoutRoot" Margin="11" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <telerik:RadGridView Grid.Row="0" Grid.Column="0" 
+                                     ItemsSource="{Binding RolesPermissions}"
+                                     SelectedItem="{Binding SelectedRole, Mode=TwoWay}"
+                                     AutoGenerateColumns="False"
+                                     IsReadOnly="False"
+                                     IsFilteringAllowed="False" 
+                                     RowIndicatorVisibility="Collapsed" 
+                                     ShowGroupPanel="False" 
+                                     CanUserFreezeColumns="False"
+                                     ShowColumnFooters="False">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="200" DataMemberBinding="{Binding Path=Name}"
+                                                      Header="Наименование" IsReadOnly="True"/>
+                    <telerik:GridViewComboBoxColumn Width="150" DataMemberBinding="{Binding Permission}" 
+                                                    ItemsSource="{Binding Path=DataContext.Permissionses, 
+                                                    ElementName=LayoutRoot}"
+                                                    DisplayMemberPath="DisplayMember"
+                                                    SelectedValueMemberPath="PermissionType"
+                                                    Header="Привилегии"
+                                                    CellStyleSelector="{StaticResource permissionStyle}"/>
+
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+            <StackPanel Grid.Row="1" 
+            Style="{StaticResource StyleStackPanelForConfirmationButton}">
+                <telerik:RadButton Content="{Binding ButtonSaveCaption}" 
+                                   Command="{Binding SaveCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}"/>
+                <telerik:RadButton Content="Отмена" 
+                                   Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

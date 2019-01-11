@@ -1,0 +1,61 @@
+﻿<telerik:RadWindow x:Class="GazRouter.DataExchange.CustomSource.Dialogs.AddEditDataSourceView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:dialogs="clr-namespace:GazRouter.DataExchange.CustomSource.Dialogs"
+                   mc:Ignorable="d" 
+                   d:DesignHeight="405" 
+                   d:DesignWidth="300"
+                   Style="{StaticResource DialogWindowStyle}" 
+                   Header="{Binding Caption}" 
+                   Height="Auto" 
+                   Width="400"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DataContext="{d:DesignInstance dialogs:AddEditDataSourceViewModel}">
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" 
+                              Style="{StaticResource RadBusyIndicatorSmallStyle}">
+
+        <Grid Margin="11">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+           
+            <StackPanel>
+                <TextBlock Text="Наименование источника:" />
+                <TextBox Margin="0, 5, 0, 0" Text="{Binding Name, Mode=TwoWay}" />
+
+
+                <TextBlock Text="Системное наименование:" Margin="0, 11, 0, 0"/>
+                <TextBox Margin="0, 5, 0, 0" Text="{Binding SysName, Mode=TwoWay}" />
+
+                <TextBlock Text="Комментарий:" Margin="0, 11, 0, 0"/>
+                <TextBox Margin="0, 5, 0, 0"
+                         Text="{Binding Description, Mode=TwoWay}"
+                         Style="{StaticResource MultiLineStyle}"
+                         Height="100" />
+
+            </StackPanel>
+           
+
+
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+
+                <telerik:RadButton Content="{Binding ButtonSaveCaption}" 
+                                   Command="{Binding SaveCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+
+                <telerik:RadButton Content="Отмена" 
+                                   Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+
+        </Grid>
+
+
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

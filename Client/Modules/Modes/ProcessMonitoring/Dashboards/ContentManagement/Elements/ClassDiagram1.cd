@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GazRouter.Modes.ProcessMonitoring.Dashboards.ContentManagement.Elements.TextElementView" Collapsed="true">
+    <Position X="5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAEAAAAAAAAACAACQAACAACAABAAAAIAAAAAAAAQAA=</HashCode>
+      <FileName>ProcessMonitoring\Dashboards\ContentManagement\Elements\TextElementView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GazRouter.Modes.ProcessMonitoring.Dashboards.ContentManagement.Elements.AnyViewBase" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAABQBIiAECQgAQAACkBAEBBIIAIAAACAQAAAYAE=</HashCode>
+      <FileName>ProcessMonitoring\Dashboards\ContentManagement\Elements\AnyViewBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GazRouter.Modes.ProcessMonitoring.Dashboards.ContentManagement.Elements.BoxedElementView&lt;T&gt;" Collapsed="true">
+    <Position X="7.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIEAAgBAIAFACQAAAAAgEAAAADAAAIAIBAAQAABAAA=</HashCode>
+      <FileName>ProcessMonitoring\Dashboards\ContentManagement\Elements\BoxedElementView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GazRouter.Modes.ProcessMonitoring.Dashboards.ContentManagement.Elements.ElementViewBase" Collapsed="true">
+    <Position X="6" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAFIAAAAAgAAAAAEAAAAAAAAIACAAAAAAAAAE=</HashCode>
+      <FileName>ProcessMonitoring\Dashboards\ContentManagement\Elements\ElementViewBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GazRouter.Modes.ProcessMonitoring.Dashboards.ContentManagement.Elements.EntityElementView" Collapsed="true">
+    <Position X="7.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAEAAAAEAAAACAECQAAiAACAKBAAAAAAAAAAAQAQAA=</HashCode>
+      <FileName>ProcessMonitoring\Dashboards\ContentManagement\Elements\EntityElementView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GazRouter.Modes.ProcessMonitoring.Dashboards.ContentManagement.Elements.LineElementPointView" Collapsed="true">
+    <Position X="16.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEAAAAAQAAAEACAgAQABCEBEAABAIAAAAAgAAACAAAA=</HashCode>
+      <FileName>ProcessMonitoring\Dashboards\ContentManagement\Elements\LineElementPointView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GazRouter.Modes.ProcessMonitoring.Dashboards.ContentManagement.Elements.LineElementView" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEQEAAAAAIAAICAAiQABCAACAABAAAIAAAAAQAAAAAg=</HashCode>
+      <FileName>ProcessMonitoring\Dashboards\ContentManagement\Elements\LineElementView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GazRouter.Modes.ProcessMonitoring.Dashboards.ContentManagement.Elements.PropertyElementView" Collapsed="true">
+    <Position X="9.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>iBAEAAAAEgAAACAACQAACAACAABAgAAAAAAAAAAAQCA=</HashCode>
+      <FileName>ProcessMonitoring\Dashboards\ContentManagement\Elements\PropertyElementView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GazRouter.Modes.ProcessMonitoring.Dashboards.ContentManagement.Columns.ColumnFieldBase" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AFAAAAAIEIAAACAAAgBAAABEAAFAAAAQAAAgQAAAAgA=</HashCode>
+      <FileName>ProcessMonitoring\Dashboards\ContentManagement\Columns\ColumnFieldBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GazRouter.Modes.ProcessMonitoring.Dashboards.ContentManagement.Columns.ColumnValueField" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAIAAEAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>ProcessMonitoring\Dashboards\ContentManagement\Columns\ColumnValueField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GazRouter.Modes.ProcessMonitoring.Dashboards.ContentManagement.Columns.ColumnViewBase" Collapsed="true">
+    <Position X="12.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEEAAEAAEIAAACAAAAAACAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProcessMonitoring\Dashboards\ContentManagement\Columns\ColumnViewBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GazRouter.Modes.ProcessMonitoring.Dashboards.ContentManagement.Columns.TimestampColumnView" Collapsed="true">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAEAQAACAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProcessMonitoring\Dashboards\ContentManagement\Columns\TimestampColumnView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GazRouter.Modes.ProcessMonitoring.Dashboards.ContentManagement.Columns.ValueColumnView" Collapsed="true">
+    <Position X="14" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAEACAACAAAQAACAAAAEBEAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>ProcessMonitoring\Dashboards\ContentManagement\Columns\ValueColumnView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

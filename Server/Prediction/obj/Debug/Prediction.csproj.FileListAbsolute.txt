@@ -1,0 +1,7 @@
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\bin\Debug\Prediction.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\bin\Debug\Prediction.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\obj\Debug\Prediction.dll
+C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Server\Prediction\obj\Debug\Prediction.pdb

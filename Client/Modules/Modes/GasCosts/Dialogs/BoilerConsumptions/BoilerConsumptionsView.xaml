@@ -1,0 +1,264 @@
+﻿<telerik:RadWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   mc:Ignorable="d"
+                   xmlns:maskedInput="clr-namespace:Telerik.Windows.Controls.MaskedInput;assembly=Telerik.Windows.Controls.Input"
+                   xmlns:controls1="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:model="clr-namespace:GazRouter.Modes.GasCosts.Dialogs.Model"
+                   xmlns:converters1="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   x:Class="GazRouter.Modes.GasCosts.Dialogs.BoilerConsumptions.BoilerConsumptionsView"
+                    xmlns:boilerTemplate="clr-namespace:GazRouter.Modes.GasCosts.Dialogs.HeatingCosts"
+                    xmlns:boilerItemTemplate="clr-namespace:GazRouter.Modes.GasCosts.Dialogs.BoilerConsumptions"
+                   Header="Таблица расходов на котлы"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"     
+                   MinWidth="350" MaxWidth="2000" Width="1000"
+                   MinHeight="450" MaxHeight="700"
+                   Style="{StaticResource DialogWindowStyle}">
+
+    <telerik:RadBusyIndicator DisplayAfter="0" IsBusy="{Binding IsBusyLoading}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.Resources>
+                <telerik:BooleanToVisibilityConverter x:Key="Bool2VisibilityConverter" />
+                <telerik:InvertedBooleanToVisibilityConverter x:Name="InvertedBool2VisibilityConverter" />
+                <converters1:CombHeatToDoubleConverter x:Key="CombHeatToDoubleConverter"/>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition MaxHeight="650"/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{Binding InputDate}" Margin="11"/>
+            <telerik:RadGridView AutoGenerateColumns="False"
+                                         x:Name="radGridView" 
+                                         VerticalAlignment="Top"
+                                         HorizontalAlignment="Stretch"
+                                         RowIndicatorVisibility="Collapsed"                                  
+                                         ItemsSource="{Binding Items}"
+                                         IsReadOnly="true"
+                                         Margin="10,10,10,0"  
+                                         GridLinesVisibility="Both"
+                                         CanUserFreezeColumns="False"    
+                                         CanUserSortColumns="true"
+                                         ShowGroupPanel="False"
+                                         Grid.Row="1">
+                <telerik:RadGridView.Columns>
+
+                    <telerik:GridViewDataColumn Width="160" MinWidth = "40"                                      
+                                                IsSortable="true"
+                                                IsReadOnly="false"
+                                                TextWrapping="Wrap"
+                                                IsFilterable="true" 
+                                                SortMemberPath="LocationName"
+                                                FilterMemberPath="LocationName">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel>
+                                <TextBlock Text="Место установки"
+                                   TextAlignment="Center"
+                                   VerticalAlignment="Top" 
+                                   TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="boilerItemTemplate:BoilerConsumptionsInputModel">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding LocationName}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="215" MinWidth = "40"
+                                                IsSortable="true"
+                                                IsReadOnly="False"
+                                                TextWrapping="Wrap"
+                                                IsFilterable="true" 
+                                                SortMemberPath="ItemName"
+                                                FilterMemberPath="ItemName">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel>
+                                <TextBlock Text="Наименование"
+                                   VerticalAlignment="Top" 
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="boilerItemTemplate:BoilerConsumptionsInputModel">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding ItemName}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="150"  MinWidth = "40"
+                                                IsSortable="true"
+                                                IsReadOnly="False"
+                                                IsFilterable="true" 
+                                                SortMemberPath="BoilerTypeString"
+                                                FilterMemberPath="BoilerTypeString">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel>
+                                <TextBlock Text="Тип котлоагрегата"
+                                   VerticalAlignment="Top"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap" />
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="boilerItemTemplate:BoilerConsumptionsInputModel">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding BoilerTypeString}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width = "60" MinWidth = "40">
+                        <telerik:GridViewDataColumn.Header>
+                            <TextBlock Text="Котел малой мощности"
+                                   VerticalAlignment="Top"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap" />
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="boilerItemTemplate:BoilerConsumptionsInputModel">
+                                <StackPanel Width="16" Height="16" HorizontalAlignment="Center">
+                                    <Image Source="/Common;component/Images/16x16/ok2.png" Visibility="{Binding IsSmallBoiler, Converter={StaticResource Bool2VisibilityConverter}}" Margin="2,2,2,2" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width = "60" MinWidth = "40">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel>
+                                <TextBlock Text="Кол-во растопок"
+                                   TextAlignment="Center"
+                                   VerticalAlignment="Top"
+                                   TextWrapping="Wrap" />
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="boilerItemTemplate:BoilerConsumptionsInputModel">
+                                <StackPanel>
+                                    <telerik:RadMaskedNumericInput  HorizontalAlignment="Stretch" IsClearButtonVisible="False" MinWidth="20"
+                                      Value="{Binding LightingCount, Mode=TwoWay}" Visibility="{Binding IsBigVisibleBoiler, Converter={StaticResource Bool2VisibilityConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width = "60" MinWidth = "40">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel>
+                                <TextBlock Text="Дл. остановки между пусками котла, ч"
+                                   TextAlignment="Center"
+                                   VerticalAlignment="Top"
+                                   TextWrapping="Wrap" />
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="boilerItemTemplate:BoilerConsumptionsInputModel">
+                                <StackPanel>
+                                    <telerik:RadMaskedNumericInput HorizontalAlignment="Stretch" IsClearButtonVisible="False" MinWidth="20"
+                                      Value="{Binding ShutdownPeriod, Mode=TwoWay}" Visibility="{Binding IsBigVisibleBoiler, Converter={StaticResource Bool2VisibilityConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="60" MinWidth="40">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel>
+                                <controls1:SmartTextBlock Text="Низшая теп. сгорания газа, [C]"
+                                                          VerticalAlignment="Top"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="boilerItemTemplate:BoilerConsumptionsInputModel">
+                                <StackPanel>
+                                    <telerik:RadMaskedNumericInput HorizontalAlignment="Stretch" 
+                                                                   IsClearButtonVisible="False" 
+                                                                   MinWidth="20"
+                                                                   Value="{Binding CombHeat, Mode=TwoWay, Converter={StaticResource CombHeatToDoubleConverter}}" 
+                                                                   Visibility="{Binding IsVisibleBoiler, Converter={StaticResource Bool2VisibilityConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    
+
+                    <telerik:GridViewDataColumn Width = "60" MinWidth = "40">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel>
+                                <TextBlock Text="Время работы котлоагрегата, ч"
+                                   VerticalAlignment="Top"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap" />
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="boilerItemTemplate:BoilerConsumptionsInputModel">
+                                <StackPanel>
+                                    <telerik:RadMaskedNumericInput HorizontalAlignment="Stretch" IsClearButtonVisible="False" MinWidth="20"
+                                      Value="{Binding Period, Mode=TwoWay}" Visibility="{Binding IsVisibleBoiler, Converter={StaticResource Bool2VisibilityConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width = "60" MinWidth = "40">
+                        <telerik:GridViewDataColumn.Header>
+                            <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=telerik:RadWindow}, Path=DataContext.VolumeType,StringFormat='Расход газа, {0} (Измерение):'}"
+                                       TextWrapping="Wrap" TextAlignment="Center"/>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="boilerItemTemplate:BoilerConsumptionsInputModel">
+                                <StackPanel>
+                                    <telerik:RadMaskedNumericInput  HorizontalAlignment="Stretch" IsClearButtonVisible="False" MinWidth="20" FormatString="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=telerik:RadWindow}, Path=DataContext.FormatType}"
+                                      Value="{Binding MeasuredInputField, Mode=TwoWay}" Visibility="{Binding IsVisibleBoiler, Converter={StaticResource Bool2VisibilityConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width = "60" MinWidth = "40">
+                        <telerik:GridViewDataColumn.Header>
+                            <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=telerik:RadWindow}, Path=DataContext.VolumeType,StringFormat='Расход газа, {0} (Расчет):'}" 
+                                       TextWrapping="Wrap" TextAlignment="Center"/>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="boilerItemTemplate:BoilerConsumptionsInputModel">
+                                <StackPanel>
+                                    <telerik:RadMaskedNumericInput BorderThickness="0"  HorizontalAlignment="Stretch" IsClearButtonVisible="False" MinWidth="20" IsReadOnly="True" FormatString="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=telerik:RadWindow}, Path=DataContext.FormatType}"
+                                      Value="{Binding Result, Mode=OneWay}" Visibility="{Binding IsVisibleBoiler, Converter={StaticResource Bool2VisibilityConverter}}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+            <StackPanel Grid.Row="2" 
+                        Orientation="Horizontal" 
+                        Margin="11" 
+                        HorizontalAlignment="Right">
+                <telerik:RadButton Width="80" 
+                                   Margin="7, 0, 0, 0" 
+                                   Command="{Binding SaveCommand}" 
+                                   Content="Сохранить" 
+                                   telerik:RadWindow.ResponseButton="Accept"/>
+                <telerik:RadButton Width="80" 
+                                   Margin="7, 0, 0, 0"  
+                                   Command="{Binding CancelCommand}"
+                                   Content="Отмена"
+                                   telerik:RadWindow.ResponseButton="Cancel" />
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>
+    

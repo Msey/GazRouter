@@ -1,0 +1,61 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Flobus.Dialogs.CompShopAddDialog"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   Width="400" Height="400"
+           xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:dialogs1="clr-namespace:GazRouter.Flobus.Dialogs"
+                   mc:Ignorable="d"
+                   Header="Добавление КЦ на схему" 
+                   attachedProperties1:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DataContext="{d:DesignInstance dialogs1:CompShopAddDialogViewModel}" Style="{StaticResource DialogWindowStyle}">
+    
+    <Grid Margin="11">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Width="250" TextWrapping="Wrap" HorizontalAlignment="Left" FontFamily="Segoe UI">
+                Выберите из списка КЦ, который хотите добавить на схему и нажмите кнопку <Bold>Добавить</Bold>
+            </TextBlock>
+            <telerik:RadGridView
+                ItemsSource="{Binding Path=CompShopList}"
+                SelectedItem="{Binding Path=SelectedCompressorShop,Mode=TwoWay}"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                GridLinesVisibility="Both"
+                SelectionMode="Single"
+                SelectionUnit="FullRow"
+                ShowGroupPanel="False"
+                Grid.Row="1"
+                attachedProperties1:ExtendedEvents.MouseLeftDoubleClickEvent="{Binding AddCommand}"
+                Margin="0, 5, 0, 0">
+
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Header="Наименование" Width="250" 
+                                                DataMemberBinding="{Binding ShortPath}" 
+                                                TextWrapping="Wrap"/>
+                    </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0, 11, 0, 0">
+            <telerik:RadButton
+                Content="Добавить" 
+                Command="{Binding Path=AddCommand}" 
+                Width="75" Height="23" 
+                HorizontalAlignment="Right" telerik:RadWindow.ResponseButton="Accept"/>
+            
+            <telerik:RadButton
+                Content="Отмена" 
+                Command="{Binding Path=CancelCommand}" 
+                Width="75" Height="23" 
+                HorizontalAlignment="Right" 
+                Margin="7, 0, 0, 0" telerik:RadWindow.ResponseButton="Cancel"/>
+        
+            
+        </StackPanel>
+    </Grid>
+</telerik:RadWindow>

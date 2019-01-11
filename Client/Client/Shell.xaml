@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="GazRouter.Client.Shell" 
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" 
+			 xmlns:prism="http://www.codeplex.com/prism"
+             xmlns:menu="clr-namespace:GazRouter.Client.Menu"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:frameNavigation="clr-namespace:GazRouter.Client.FrameNavigation"
+             d:DesignHeight="300" d:DesignWidth="400" Language="Ru-ru">
+	<Grid>
+		<Grid.RowDefinitions >
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+	    <menu:MainMenuView DataContext="{Binding Menu}" />
+<!--        <ContentControl Grid.Row="1" VerticalContentAlignment="Stretch" prism:RegionManager.RegionName="MainRegion" HorizontalContentAlignment="Stretch"  />-->
+	    <sdk:Frame Grid.Row="1" 
+                   VerticalContentAlignment="Stretch"  
+                   prism:RegionManager.RegionName="MainRegion" 
+                   HorizontalContentAlignment="Stretch"
+                   BorderThickness="0"
+                   Margin="0">
+	        <sdk:Frame.ContentLoader>
+                <frameNavigation:FrameContentLoader />
+            </sdk:Frame.ContentLoader>
+	        <sdk:Frame.UriMapper>
+              <sdk:UriMapper>
+                    <sdk:UriMapping Uri="" MappedUri="GazRouter.Client.Views.HomeView"/>
+                    <sdk:UriMapping Uri="/{moduleName}/{pageName}" MappedUri="GazRouter.{moduleName}.Views.{pageName}"/>
+                    <sdk:UriMapping Uri="/{pageName}" MappedUri="GazRouter.Client.Views.{pageName}"/>
+<!--                    <sdk:UriMapping Uri="/ObjectModel" MappedUri="GazRouter.ObjectModel.Model.ObjectModelEditorMainView"/>-->
+              </sdk:UriMapper>  
+            </sdk:Frame.UriMapper>
+	        
+        </sdk:Frame>
+	    
+
+
+	</Grid>
+</UserControl>

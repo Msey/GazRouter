@@ -1,0 +1,546 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7826AD23-6934-4F71-9C5B-9A0A21347DD9}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GazRouter.Balances</RootNamespace>
+    <AssemblyName>Balances</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalisys.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Expression.Interactions, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Silverlight, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Unity.2.1.505.2\lib\SL30\Microsoft.Practices.Unity.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Silverlight, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
+    <Reference Include="System.IO, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Threading.Tasks, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Toolkit">
+      <HintPath>..\..\..\Library\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Prism.4.1.0.0\lib\SL5\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Controls, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Chart, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Chart.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Chart.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.DataVisualization, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.DataVisualization.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.DataVisualization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Docking, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Docking.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Docking.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.GridView, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.GridView.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.GridView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Input.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Input.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.Navigation.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.Navigation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RibbonView, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.RibbonView.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.RibbonView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.ScheduleView, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Controls.ScheduleView.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Controls.ScheduleView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data, Version=2017.2.614.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Telerik.Windows.Data.for.Silverlight.2017.2.614\lib\sl5\Telerik.Windows.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BalanceGroups\AddEditBalanceGroupView.xaml.cs">
+      <DependentUpon>AddEditBalanceGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BalanceGroups\AddEditBalanceGroupViewModel.cs" />
+    <Compile Include="BalanceGroups\BalanceGroupsView.xaml.cs">
+      <DependentUpon>BalanceGroupsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BalanceGroups\BalanceGroupsViewModel.cs" />
+    <Compile Include="BalancesModule.cs" />
+    <Compile Include="Commercial\BalanceDiagram\BalanceDiagramView.xaml.cs">
+      <DependentUpon>BalanceDiagramView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\BalanceDiagram\BalanceDiagramViewModel.cs" />
+    <Compile Include="Commercial\BalanceDiagram\BalanceDiagramValue.cs" />
+    <Compile Include="Commercial\Common\BalanceDataBase.cs" />
+    <Compile Include="Commercial\Common\BalanceItemToNameConverter.cs" />
+    <Compile Include="Commercial\Common\BalanceTreeBuilder.cs" />
+    <Compile Include="Commercial\Common\BalanceValues.cs" />
+    <Compile Include="Commercial\Common\ItemActions.cs" />
+    <Compile Include="Commercial\Common\Items.cs" />
+    <Compile Include="Commercial\Common\PlanFactViewModelBase.cs" />
+    <Compile Include="Commercial\Common\TableViewModel.cs" />
+    <Compile Include="Commercial\Common\TestConverter.cs" />
+    <Compile Include="Commercial\Dialogs\ClearValues\ClearValuesView.xaml.cs">
+      <DependentUpon>ClearValuesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Dialogs\ClearValues\ClearValuesViewModel.cs" />
+    <Compile Include="Commercial\Dialogs\DivideVolume\DivideVolumeView.xaml.cs">
+      <DependentUpon>DivideVolumeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Dialogs\DivideVolume\DivideVolumeViewModel.cs" />
+    <Compile Include="Commercial\Dialogs\Redistr\RedistrView.xaml.cs">
+      <DependentUpon>RedistrView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Dialogs\Redistr\RedistrViewModel.cs" />
+    <Compile Include="Commercial\Dialogs\SelectOwner\SelectOwnerView.xaml.cs">
+      <DependentUpon>SelectOwnerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Dialogs\SelectOwner\SelectOwnerViewModel.cs" />
+    <Compile Include="Commercial\Dialogs\ShowHideOwners\ShowHideOwnersView.xaml.cs">
+      <DependentUpon>ShowHideOwnersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Dialogs\ShowHideOwners\ShowHideOwnersViewModel.cs" />
+    <Compile Include="Commercial\Dialogs\Swap\SwapView.xaml.cs">
+      <DependentUpon>SwapView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Dialogs\Swap\SwapViewModel.cs" />
+    <Compile Include="Commercial\Fact\FactItems.cs" />
+    <Compile Include="Commercial\Fact\FactView.xaml.cs">
+      <DependentUpon>FactView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Fact\FactViewModel.cs" />
+    <Compile Include="Commercial\Common\SummaryValues.cs" />
+    <Compile Include="Commercial\Fact\GasSupplyView.xaml.cs">
+      <DependentUpon>GasSupplyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Fact\TableView.xaml.cs">
+      <DependentUpon>TableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\InputState\InputStateView.xaml.cs">
+      <DependentUpon>InputStateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\InputState\InputStateViewModel.cs" />
+    <Compile Include="Commercial\Plan\CorrectionDocs\CorrectionDocsView.xaml.cs">
+      <DependentUpon>CorrectionDocsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Plan\CorrectionDocs\CorrectionDocsViewModel.cs" />
+    <Compile Include="Commercial\Plan\Corrections\CorrectionsSummaryViewModel.cs" />
+    <Compile Include="Commercial\Plan\Corrections\CorrectionsSummaryView.xaml.cs">
+      <DependentUpon>CorrectionsSummaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Plan\Corrections\CorrectionsViewModel.cs" />
+    <Compile Include="Commercial\Plan\Corrections\CorrectionsView.xaml.cs">
+      <DependentUpon>CorrectionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Summary\BalanceSummaryViewModel.cs" />
+    <Compile Include="Commercial\Summary\BalanceSummary.cs" />
+    <Compile Include="Commercial\OwnersSummary\IsBalancedToImageConverter.cs" />
+    <Compile Include="Commercial\OwnersSummary\OwnersSummaryView.xaml.cs">
+      <DependentUpon>OwnersSummaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\OwnersSummary\OwnersSummaryViewModel.cs" />
+    <Compile Include="Commercial\OwnersSummary\OwnerSummary.cs" />
+    <Compile Include="Commercial\Plan\Dialogs\SetVolumeView.xaml.cs">
+      <DependentUpon>SetVolumeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Plan\Dialogs\SetVolumeViewModel.cs" />
+    <Compile Include="Commercial\Plan\Irregularity\DayVolume.cs" />
+    <Compile Include="Commercial\Plan\Irregularity\IrregularityView.xaml.cs">
+      <DependentUpon>IrregularityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Plan\Irregularity\IrregularityViewModel.cs" />
+    <Compile Include="Commercial\Plan\Irregularity\PeriodVolume.cs" />
+    <Compile Include="Commercial\Plan\Irregularity\WrongIrregularityToImageConverter.cs" />
+    <Compile Include="Commercial\Plan\PlanItems.cs" />
+    <Compile Include="Commercial\Plan\TableView.xaml.cs">
+      <DependentUpon>TableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Plan\PlanView.xaml.cs">
+      <DependentUpon>PlanView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Plan\PlanViewModel.cs" />
+    <Compile Include="Commercial\SiteInput\CommercialData.cs" />
+    <Compile Include="Commercial\SiteInput\SiteInputView.xaml.cs">
+      <DependentUpon>SiteInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\SiteInput\SiteInputViewModel.cs" />
+    <Compile Include="Commercial\SiteInput\InputMode.cs" />
+    <Compile Include="Commercial\SiteInput\Items.cs" />
+    <Compile Include="Commercial\SiteInput\TableView.xaml.cs">
+      <DependentUpon>TableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\SiteInput\TableViewModel.cs" />
+    <Compile Include="Commercial\Summary\BalanceSummaryView.xaml.cs">
+      <DependentUpon>BalanceSummaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\SwapSummary\SwapSummaryView.xaml.cs">
+      <DependentUpon>SwapSummaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\SwapSummary\SwapSummaryViewModel.cs" />
+    <Compile Include="Commercial\Transport\TransportView.xaml.cs">
+      <DependentUpon>TransportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Transport\TransportViewModel.cs" />
+    <Compile Include="Common\TreeGroupType\BalanceGroupTypes.cs" />
+    <Compile Include="Common\TreeGroupType\SelectedTreeGroupTypeConverter.cs" />
+    <Compile Include="Common\TreeGroupType\TreeGroupType.cs" />
+    <Compile Include="DayBalance\BalanceData.cs" />
+    <Compile Include="DayBalance\Balance.cs" />
+    <Compile Include="DayBalance\EditAggregators\EditAggregatorsView.xaml.cs">
+      <DependentUpon>EditAggregatorsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DayBalance\EditAggregators\EditAggregatorsViewModel.cs" />
+    <Compile Include="DayBalance\ItemBase.cs" />
+    <Compile Include="DayBalance\TableViewModel.cs" />
+    <Compile Include="DayBalance\TableView.xaml.cs">
+      <DependentUpon>TableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DayBalance\DayBalanceView.xaml.cs">
+      <DependentUpon>DayBalanceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DayBalance\DayBalanceViewModel.cs" />
+    <Compile Include="DistrNetworks\AddEditDistrNetworkView.xaml.cs">
+      <DependentUpon>AddEditDistrNetworkView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DistrNetworks\AddEditDistrNetworkViewModel.cs" />
+    <Compile Include="DistrNetworks\DistrNetworksView.xaml.cs">
+      <DependentUpon>DistrNetworksView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DistrNetworks\DistrNetworksViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GasOwners\AddEditGasOwnersViewModel.cs" />
+    <Compile Include="GasOwners\GasOwnersViewModel.cs" />
+    <Compile Include="GasOwners\AddEditGasOwnersView.xaml.cs">
+      <DependentUpon>AddEditGasOwnersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GasOwners\GasOwnersView.xaml.cs">
+      <DependentUpon>GasOwnersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Routes\AddEditExceptionView.xaml.cs">
+      <DependentUpon>AddEditExceptionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Routes\AddEditExceptionViewModel.cs" />
+    <Compile Include="Routes\RoutesData.cs" />
+    <Compile Include="Routes\RouteExceptionsView.xaml.cs">
+      <DependentUpon>RouteExceptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Routes\RouteExceptionsViewModel.cs" />
+    <Compile Include="Routes\RoutesView.xaml.cs">
+      <DependentUpon>RoutesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Routes\RoutesViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="BalanceGroups\BalanceGroupsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="BalanceGroups\AddEditBalanceGroupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\BalanceDiagram\BalanceDiagramView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Dialogs\ClearValues\ClearValuesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Dialogs\DivideVolume\DivideVolumeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Dialogs\Redistr\RedistrView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Dialogs\SelectOwner\SelectOwnerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Dialogs\ShowHideOwners\ShowHideOwnersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Dialogs\Swap\SwapView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Fact\FactView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Fact\GasSupplyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Fact\TableView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\InputState\InputStateView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\OwnersSummary\OwnersSummaryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Plan\CorrectionDocs\CorrectionDocsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Plan\Corrections\CorrectionsSummaryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Plan\Corrections\CorrectionsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Plan\Dialogs\SetVolumeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Plan\Irregularity\IrregularityView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Plan\TableView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Plan\PlanView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\SiteInput\SiteInputView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\SiteInput\TableView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Summary\BalanceSummaryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\SwapSummary\SwapSummaryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Commercial\Transport\TransportView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DayBalance\EditAggregators\EditAggregatorsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DayBalance\TableView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DayBalance\DayBalanceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <ApplicationDefinition Include="DistrNetworks\DistrNetworksView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="DistrNetworks\AddEditDistrNetworkView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GasOwners\AddEditGasOwnersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <ApplicationDefinition Include="GasOwners\GasOwnersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <ApplicationDefinition Include="Routes\AddEditExceptionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <ApplicationDefinition Include="Routes\RoutesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <ApplicationDefinition Include="Routes\RouteExceptionsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\PortableDTO\PortableDTO.csproj">
+      <Project>{351F17B0-88EC-4255-B351-1D7E86E411A0}</Project>
+      <Name>PortableDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Utils\Utils.csproj">
+      <Project>{01b8b942-8e9b-468b-8873-2514dd40532c}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Application\Application.csproj">
+      <Project>{0C5CFB81-8CE0-4983-87A6-243475D7210E}</Project>
+      <Name>Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{F226804F-0541-43A2-851B-720639A148CF}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Controls\Controls.csproj">
+      <Project>{3D5B8BF8-0D6B-4386-BFCF-D55D81F20408}</Project>
+      <Name>Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataProviders\DataProviders.csproj">
+      <Project>{29E1A896-1450-4381-A720-5FCF7DDFB802}</Project>
+      <Name>DataProviders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Flobus\Flobus.csproj">
+      <Project>{9552AECE-3A17-4FCA-AAE9-A73CE35107B6}</Project>
+      <Name>Flobus</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dialogs\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

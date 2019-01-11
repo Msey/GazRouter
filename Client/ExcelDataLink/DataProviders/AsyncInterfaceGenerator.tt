@@ -1,0 +1,328 @@
+﻿<#@ template debug="true" language="C#" hostspecific="true" #>
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="EnvDTE80" #>
+<#@ import namespace="EnvDTE" #>
+<#@ import namespace="EnvDTE80" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="EF.Utility.CS.ttinclude" #>
+<#
+   
+
+    EnvDTE.DTE dte = GetEnvDTE();
+    Project proj = FindPropjects(dte.Solution.Projects);
+    List<CodeInterface> inter = new List<CodeInterface>();
+    foreach (CodeElement elem in proj.CodeModel.CodeElements)
+    {
+	var elemName = elem.FullName;
+        if (elem.Name == "GazRouter")
+		{
+			 foreach (CodeElement elem2 in ((EnvDTE.CodeNamespace)elem).Members)
+			 {
+			   if (elem2.Name == "DataServices")
+			   {
+				inter = GetInterfaces(((EnvDTE.CodeNamespace)elem).Members);
+					break;
+					}
+			}
+		break;
+		}
+
+    }
+    var fm = EntityFrameworkTemplateFileManager.Create(this);
+    List<string> UsingList = new List<string>() { "System","System.ServiceModel","GazRouter.DTO.Infrastructure.Faults", "System.Threading.Tasks" };
+    fm.StartHeader();
+    foreach(string us in UsingList)
+        WriteLine("using " + us + ";");
+    foreach(CodeInterface interf in inter)
+    {
+        ProjectItem enumProjectItem = interf.ProjectItem;
+        FileCodeModel codeModel = enumProjectItem.FileCodeModel;
+        EnvDTE.CodeNamespace codeNamespace = FindNamespace(codeModel.CodeElements);
+        string newNamespace = codeNamespace.Name.Substring(codeNamespace.Name.LastIndexOf('.') + 1);
+        CodeInterface codeInterface = FindInterface(codeModel.CodeElements);
+        List<CodeFunction> codeFunctions = FindMethods(codeInterface.Children);
+        fm.StartNewFile(Path.GetFileName(interf.Name + ".cs"));        
+        List<string> UsedUsing = ParseUsing(codeModel.CodeElements, UsingList);
+        foreach(string us in UsingList) UsedUsing.Add(us + ".");
+        UsedUsing = UsedUsing.OrderByDescending(p=>p).ToList();
+
+
+#>      
+// ReSharper disable once CheckNamespace
+namespace DataProviders.<#= newNamespace  #>  
+{
+    [ServiceContract]
+    public interface <#= codeInterface.Name #>
+    {                   
+        <#
+            PushIndent("        ");
+           
+            int methodCount = 0;
+            foreach (CodeFunction method in codeFunctions)
+            {
+                if(methodCount > 0)
+                {
+                    WriteLine(String.Empty);
+                }
+                WriteAsyncOperationContract(method, UsedUsing);
+                WriteLine(string.Empty);
+               
+                methodCount++;
+            }
+
+        ClearIndent();         
+        #>
+    }
+
+
+    public class <#= codeInterface.Name.Substring(1) #>Proxy : DataProviderBase<<#= codeInterface.Name #>>
+	{
+        protected override string ServiceUri
+        {
+            get { return "/<#= newNamespace  #>/<#= codeInterface.Name.Substring(1) #>.svc"; }
+        }
+
+        <#
+            PushIndent("        ");
+           
+            foreach (CodeFunction method in codeFunctions)
+            {
+				var t = method.Type;
+				var s = method.Type.AsString;
+
+				string returnType = method.Type.AsString == "void" ? "" : SimplifyType(method.Type.AsString, UsedUsing);
+				var rTypeGen =  method.Type.AsString == "void" ? "" : string.Format("<{0}>", returnType);
+                Write("public Task" + rTypeGen + " " + method.Name + "Async(");
+
+				string exeGen = rTypeGen;
+				var parameters = GetMethodParameters(method.Parameters, UsedUsing);
+				string par = string.Empty;
+				foreach(var param in parameters)
+				{
+					Write(param.Item1 + " " + param.Item2);
+					if (!string.IsNullOrEmpty(returnType))
+					{
+						exeGen = string.Format("<{0},{1}>", returnType, param.Item1);
+					}
+					par = ", " + param.Item2;
+				}
+
+				WriteLine(")");
+				WriteLine("{");
+	            PushIndent("    ");
+				WriteLine("var channel = GetChannel();");
+				WriteLine(string.Format("return ExecuteAsync{2}(channel, channel.Begin{0}, channel.End{0}{1});", method.Name, par, exeGen));
+		        PopIndent();         
+				WriteLine("}");
+
+                WriteLine(string.Empty);
+            }
+
+        ClearIndent();         
+        #>
+    }
+}
+<# 
+    }
+   fm.Process();
+#>
+<#+
+     private List<string> ParseUsing(CodeElements elements, List<string> UsingList)
+    {
+        List<string> result = new List<string>();
+        foreach (CodeElement element in elements)
+        {
+            CodeImport t1 = element as CodeImport;
+            if (t1 != null && !UsingList.Contains(t1.Namespace) && (t1.Namespace.StartsWith("System") || t1.Namespace.StartsWith("GazRouter.DTO") ))
+            {
+                WriteLine("using " + t1.Namespace + ";");
+                result.Add(t1.Namespace + ".");
+            }
+            if (element.Children.Count > 0)
+                result.AddRange( ParseUsing(element.Children, UsingList));
+        }
+        return result;
+    }
+
+    private void WriteAsyncOperationContract(CodeFunction method, List<string> usedUsing)
+    {              
+        WriteLine("[OperationContract(AsyncPattern = true)]");
+        WriteLine("[FaultContract(typeof(FaultDetail))]");        
+        
+        foreach(CodeElement attributeElement in method.Attributes)
+        {
+            int count = 0;
+            CodeAttribute attribute = attributeElement as CodeAttribute;
+            if(attribute != null && attribute.Name == "ServiceKnownType")
+            {
+                Write(string.Format("[ServiceKnownType({0})] ", attribute.Value));
+                if(count < method.Attributes.Count - count)
+                    WriteLine(string.Empty);
+            }
+            count++;
+        }
+
+        Write("IAsyncResult Begin");
+        Write(method.Name);
+        Write("(");
+        if(method.Parameters.Count > 0)    
+        {
+			foreach(var param in GetMethodParameters(method.Parameters, usedUsing))
+			{
+				Write(param.Item1 + " " + param.Item2);
+			}
+        }
+        else
+        {
+            Write("object parameters");
+        }
+        Write(", AsyncCallback callback, object state);");
+       
+        WriteLine(String.Empty);
+        string retType = SimplifyType(method.Type.AsString, usedUsing);
+        Write(retType + " ");
+        Write("End");
+        Write(method.Name);
+        Write("(IAsyncResult result);");       
+    }
+
+	private string SimplifyType(string type, List<string> usedUsing)
+	{
+		foreach(string usi in usedUsing)
+            if (type.IndexOf(usi) > -1)
+                type = type.Replace(usi, "");
+		return type;
+	}
+
+	private List<Tuple<string,string>> GetMethodParameters(CodeElements parameters, List<string> usedUsing)
+	{
+		var list = new List<Tuple<string,string>>();
+		foreach(CodeElement element in parameters)
+        {
+            CodeParameter parameter = element as CodeParameter;
+       
+            if (parameter != null)
+            {
+				list.Add(new Tuple<string,string>(SimplifyType(parameter.Type.AsString, usedUsing), parameter.Name));
+            }
+        }
+		return list;
+	}
+   
+    private EnvDTE.CodeNamespace FindNamespace(CodeElements elements)
+    {
+        foreach (CodeElement element in elements)
+        {
+            EnvDTE.CodeNamespace ns = element as EnvDTE.CodeNamespace;
+       
+            if (ns != null)
+                return ns;
+        }
+   
+        return null;
+    }
+   
+    private CodeInterface FindInterface(CodeElements elements)
+    {
+        foreach (CodeElement element in elements)
+        {
+            CodeInterface codeInterface = element as CodeInterface;
+       
+            if (codeInterface != null)
+                return codeInterface;
+   
+            codeInterface = FindInterface(element.Children);
+   
+            if (codeInterface != null)
+                return codeInterface;
+        }
+   
+        return null;
+    }
+   
+    private List<CodeFunction> FindMethods(CodeElements elements)
+    {
+        List<CodeFunction> methods = new List<CodeFunction>();
+       
+        foreach (CodeElement element in elements)
+        {
+            CodeFunction method = element as CodeFunction;
+       
+            if (method != null)
+                methods.Add(method);           
+        }
+   
+        return methods;
+    }
+
+    private EnvDTE.DTE GetEnvDTE()
+    {
+        IServiceProvider hostServiceProvider = (IServiceProvider)Host;
+       
+        if (hostServiceProvider == null)
+               throw new Exception("Host property returned unexpected value (null)");
+       
+        EnvDTE.DTE dte = (EnvDTE.DTE)hostServiceProvider.GetService(typeof(EnvDTE.DTE));
+       
+        if (dte == null)
+               throw new Exception("Unable to retrieve EnvDTE.DTE");
+   
+        return dte;
+    }
+
+    private Project FindPropjects(EnvDTE.Projects project)
+    {
+        Project result=null;
+        foreach(Project propject in project)
+        {
+            if (propject.Kind == ProjectKinds.vsProjectKindSolutionFolder)
+                result = GetProj(propject);
+            if (result != null) break;
+        }
+       
+        return result;
+    }
+
+    private Project GetProj(Project project)
+    {
+        for (var i = 1; i <= project.ProjectItems.Count; i++)
+        {
+            var sub = project.ProjectItems.Item(i).SubProject;
+            if (sub == null) continue;
+            if (sub.Kind == ProjectKinds.vsProjectKindSolutionFolder)
+            {
+                var t1 = GetProj(sub);
+                if (t1!=null) return t1;
+            }
+            else if (sub.Name=="DataServices")
+                return sub;
+        }
+        return null;
+    }
+
+    private List<CodeInterface> GetInterfaces(CodeElements elements)
+    {
+	int coount = elements.Count;
+        List<CodeInterface> result = new List<CodeInterface>();
+        foreach (CodeElement element in elements)
+        {
+		var elemName = element.FullName;
+            CodeInterface codeInterface = element as CodeInterface;
+            if (codeInterface != null)
+            {
+                foreach (CodeAttribute attr in codeInterface.Attributes)
+                    if (attr.Name == "ServiceContract")
+                    {
+                        result.Add(codeInterface);
+                        break;
+                    }
+            }
+            EnvDTE.CodeNamespace space = element as EnvDTE.CodeNamespace;
+            if (space != null) result.AddRange(GetInterfaces(space.Members));
+        }
+        return result;
+    }
+     #>

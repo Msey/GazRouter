@@ -1,0 +1,48 @@
+﻿<telerik:RadWindow x:Class="GazRouter.ActionsRolesUsers.Dialog.AddRoleToUserDialog.AddRoleToUserDialog"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" Header="Добавление роли пользователю"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:addRoleToUserDialog="clr-namespace:GazRouter.ActionsRolesUsers.Dialog.AddRoleToUserDialog"
+                   mc:Ignorable="d"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}" Style="{StaticResource DialogWindowStyle}"
+                   Width="320" Height="Auto"
+                   d:DataContext="{d:DesignInstance addRoleToUserDialog:AddRoleToUserViewModel}">
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+
+        <Grid Margin="11">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="300" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <telerik:RadBusyIndicator IsBusy="{Binding IsLoadingRoles}">
+                <ListBox SelectedItem="{Binding SelectedRole, Mode=TwoWay}" ItemsSource="{Binding AvaliableRoles}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontWeight="Bold">Название:</TextBlock>
+                                    <TextBlock Text="{Binding Name}" Width="120" Margin="4,0,0,0" TextWrapping="Wrap" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontWeight="Bold" Margin="10,0,0,0">Описание:</TextBlock>
+                                    <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Width="180" Margin="4,0,0,11" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </telerik:RadBusyIndicator>
+
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+                <telerik:RadButton Content="ОК" Command="{Binding SaveCommand}" Name="SaveButton" CommandParameter="{Binding ElementName=MainWindow}"
+                    Style="{StaticResource StyleConfirmationButton}"/>
+                <telerik:RadButton Content="Отмена" Style="{StaticResource StyleConfirmationButton}"
+                    Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=MainWindow}" />
+            </StackPanel>
+        </Grid>
+
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

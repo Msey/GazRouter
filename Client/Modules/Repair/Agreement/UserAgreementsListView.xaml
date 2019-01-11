@@ -1,0 +1,767 @@
+﻿<UserControl x:Class="GazRouter.Repair.Agreement.UserAgreementsListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+             xmlns:behaviors="clr-namespace:GazRouter.Common.Ui.Behaviors;assembly=Common"
+             xmlns:converters="clr-namespace:GazRouter.Repair.Converters"
+             xmlns:plan="clr-namespace:GazRouter.Repair.Plan"
+             xmlns:repworks="clr-namespace:GazRouter.Repair.RepWorks"
+             xmlns:repairWorks="clr-namespace:GazRouter.DTO.Repairs.RepairWorks;assembly=PortableDTO"
+             xmlns:converters1="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance repworks:UserAgreementsListViewModel}">
+    
+    <UserControl.Resources>
+        <telerik:BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        <telerik:InvertedBooleanToVisibilityConverter x:Key="InvertedBoolToVisibility" />
+        <converters:StartDateToColorConverter x:Key="StartDateToColorConverter" />
+        <converters1:TimeSpanConverter x:Key="TimeSpanConverter" />
+        <converters1:TimeSpanHourConverter x:Key="TimeSpanHourConverter" />
+        <converters1:EntityTypeToImageSourceConverter x:Key="EntityTypeToImageConverter" />
+        <converters1:DailyDateTimeConverter x:Key="DailyDateTimeConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            
+        </Grid.RowDefinitions>
+        
+        <telerik:RadToolBar Grid.Row="0">
+
+            <telerik:RadButton Command="{Binding AgreeCommand}">
+                <TextBlock Text="Утвердить" Margin="4,1"/>
+                
+            </telerik:RadButton>
+
+            <telerik:RadButton Command="{Binding DisagreeCommand}">
+                <TextBlock Text="Отклонить" Margin="4,1"/>
+                
+            </telerik:RadButton>
+        </telerik:RadToolBar>
+        
+        
+
+
+        <telerik:RadGridView x:Name="Grid"
+                             ItemsSource="{Binding RepairList}"
+                             SelectedItem="{Binding SelectedRepair, Mode=TwoWay}"
+                             CanUserFreezeColumns="False"
+                             RowIndicatorVisibility="Collapsed"
+                             AutoGenerateColumns="False"
+                             IsReadOnly="True"
+                             RowDetailsVisibilityMode="VisibleWhenSelected"
+                             attachedProperties1:KeepSelectedItemInViewBehavior.IsEnabled="True"
+                             IsFilteringAllowed="True"
+                             CanUserSortColumns="False"
+                             AutoExpandGroups="True"
+                             behaviors:ContextMenuBehavior.ContextMenu="{Binding ElementName=GridContextMenu}"
+                             Filtered="Grid_OnFiltered" Grid.ColumnSpan="{Binding SpanColumns}" Grid.Row="1">
+
+           
+            <telerik:RadGridView.RowDetailsTemplate>
+                <DataTemplate DataType="plan:Repair">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="250" />
+                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+
+                        
+                        <Border Background="WhiteSmoke" Margin="0, 5, 0, 5" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="{Binding SpanColumns}" />
+
+                        
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 0"
+                                Grid.Row="0"
+                                Grid.Column="1">
+                            <TextBlock Text="Работы"
+                                       FontWeight="Bold"
+                                       Margin="5"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" />
+                        </Border>
+
+
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 5"
+                                Grid.Row="1"
+                                Grid.Column="1">
+                            <ContentControl Content="{Binding }">
+                                <ContentControl.Resources>
+                                    <DataTemplate DataType="plan:Repair">
+                                        <ItemsControl ItemsSource="{Binding Dto.Works}"
+                                                      Margin="3">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate DataType="repairWorks:RepairWorkDTO">
+                                                    <StackPanel Orientation="Horizontal"
+                                                                Margin="0, 3, 0, 0">
+                                                        <Border BorderThickness="0"
+                                                                Background="Azure"
+                                                                Width="200"
+                                                                Margin="5, 0, 0, 0">
+                                                            <TextBlock Text="{Binding WorkTypeName}"
+                                                                       HorizontalAlignment="Left"
+                                                                       VerticalAlignment="Center"
+                                                                       TextWrapping="Wrap"
+                                                                       Margin="3" />
+                                                        </Border>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="plan:PipelineRepair">
+                                        <ItemsControl ItemsSource="{Binding Dto.Works}"
+                                                      Margin="3">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate DataType="repairWorks:RepairWorkDTO">
+                                                    <StackPanel Orientation="Horizontal"
+                                                                Margin="0, 3, 0, 0">
+                                                        <Border BorderThickness="0"
+                                                                Background="Azure"
+                                                                Width="45"
+                                                                Visibility="{Binding KilometerStart.HasValue, Converter={StaticResource BoolToVisibility}}">
+                                                            <TextBlock
+                                                                Text="{Binding KilometerStart, StringFormat='0.#'}"
+                                                                HorizontalAlignment="Right"
+                                                                VerticalAlignment="Center"
+                                                                Margin="3" />
+                                                        </Border>
+
+                                                        <Border BorderThickness="0"
+                                                                Background="Azure"
+                                                                Width="45"
+                                                                Margin="5, 0, 0, 0"
+                                                                Visibility="{Binding KilometerEnd.HasValue, Converter={StaticResource BoolToVisibility}}">
+                                                            <TextBlock
+                                                                Text="{Binding KilometerEnd, StringFormat='0.#'}"
+                                                                HorizontalAlignment="Right"
+                                                                VerticalAlignment="Center"
+                                                                Margin="3" />
+                                                        </Border>
+
+                                                        <Border BorderThickness="0"
+                                                                Background="Azure"
+                                                                Width="150"
+                                                                Margin="5, 0, 0, 0">
+                                                            <TextBlock Text="{Binding WorkTypeName}"
+                                                                       HorizontalAlignment="Left"
+                                                                       VerticalAlignment="Center"
+                                                                       TextWrapping="Wrap"
+                                                                       Margin="3" />
+                                                        </Border>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </ContentControl.Resources>
+                            </ContentControl>
+
+
+                        </Border>
+
+                       
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 0"
+                                Grid.Row="0"
+                                Grid.Column="2">
+                            <TextBlock Text="Объем стравл. газа, млн.м³"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       Margin="5"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" />
+                        </Border>
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 5"
+                                Grid.Row="1"
+                                Grid.Column="2">
+                            <TextBlock Text="{Binding Dto.BleedAmount, StringFormat='0.###'}"
+                                       Margin="5"
+                                       FontSize="11"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Center" />
+                        </Border>
+
+
+                        
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 0"
+                                Grid.Row="0"
+                                Grid.Column="3">
+                            <TextBlock Text="Объем выраб. газа, млн.м³"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       Margin="5"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" />
+                        </Border>
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 5"
+                                Grid.Row="1"
+                                Grid.Column="3">
+                            <TextBlock Text="{Binding Dto.SavingAmount, StringFormat='0.###'}"
+                                       Margin="5"
+                                       FontSize="11"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Center" />
+                        </Border>
+
+
+                        
+                        
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 0"
+                                Grid.Row="0"
+                                Grid.Column="4">
+                            <TextBlock Text="Достигнутый объем транспорта газа на участке, млн.м³/сут"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       Margin="5"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" />
+                        </Border>
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 5"
+                                Grid.Row="1"
+                                Grid.Column="4">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Dto.MaxTransferWinter, StringFormat='Зима: 0.###'}"
+                                           Margin="5"
+                                           FontSize="11"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="{Binding Dto.MaxTransferSummer, StringFormat='Лето: 0.###'}"
+                                           Margin="5"
+                                           FontSize="11"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock
+                                    Text="{Binding Dto.MaxTransferTransition, StringFormat='Межсезонье: 0.###'}"
+                                    Margin="5"
+                                    FontSize="11"
+                                    TextWrapping="Wrap"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+
+
+                        
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 0"
+                                Grid.Row="0"
+                                Grid.Column="5">
+                            <TextBlock Text="Расчетная пропускная способность участка, млн.м³/сут"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       Margin="5"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" />
+                        </Border>
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 5"
+                                Grid.Row="1"
+                                Grid.Column="5">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Dto.CapacityWinter, StringFormat='Зима: 0.###'}"
+                                           Margin="5"
+                                           FontSize="11"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="{Binding Dto.CapacitySummer, StringFormat='Лето: 0.###'}"
+                                           Margin="5"
+                                           FontSize="11"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock
+                                    Text="{Binding Dto.CapacityTransition, StringFormat='Межсезонье: 0.###'}"
+                                    Margin="5"
+                                    FontSize="11"
+                                    TextWrapping="Wrap"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+
+                        
+                        
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 0"
+                                Grid.Row="0"
+                                Grid.Column="6">
+                            <TextBlock Text="Расчетный объем транспорта на период проведения работ, млн.м³"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       Margin="5"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" />
+                        </Border>
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 5"
+                                Grid.Row="1"
+                                Grid.Column="6">
+                            <TextBlock Text="{Binding Dto.CalculatedTransfer, StringFormat='0.###'}"
+                                       Margin="5"
+                                       FontSize="11"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Center" />
+                        </Border>
+
+                        
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 0"
+                                Grid.Row="0"
+                                Grid.Column="7">
+                            <TextBlock Text="Примечание"
+                                       FontWeight="Bold"
+                                       Margin="5"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" />
+                        </Border>
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 5"
+                                Grid.Row="1"
+                                Grid.Column="7">
+                            <TextBlock Text="{Binding Dto.DescriptionGtp}"
+                                       Margin="5"
+                                       FontSize="11"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Center" />
+                        </Border>
+
+
+                        
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 0"
+                                Grid.Row="0"
+                                Grid.Column="8">
+                            <TextBlock Text="Изменено"
+                                       FontWeight="Bold"
+                                       Margin="5"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" />
+                        </Border>
+                        <Border Background="WhiteSmoke"
+                                Margin="5, 5, 0, 5"
+                                Grid.Row="1"
+                                Grid.Column="8">
+                            <StackPanel Margin="5">
+                                <TextBlock
+                                    Text="{Binding Dto.LastUpdateDate, Converter={StaticResource DailyDateTimeConverter}}"
+                                    FontSize="11"
+                                    FontWeight="Bold"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Center" />
+                                <TextBlock Text="{Binding Dto.UserName}"
+                                           FontSize="11"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Center"
+                                           Margin="0, 5, 0, 0" />
+                                <TextBlock Text="{Binding Dto.UserSiteName}"
+                                           FontSize="11"
+                                           Margin="0, 5, 0, 0"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Center" />
+
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </telerik:RadGridView.RowDetailsTemplate>
+
+
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn Width="160"
+                                            Header="Газопровод"
+                                            IsGroupable="True"
+                                            DataMemberBinding="{Binding PipelineName}">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <TextBlock Text="{Binding PipelineName}"
+                                       Margin="3"
+                                       TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+
+                <telerik:GridViewDataColumn Width="175"
+                                            Header="Объект"
+                                            IsGroupable="True"
+                                            DataMemberBinding="{Binding ObjectName}">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <StackPanel Margin="3"
+                                        Orientation="Horizontal">
+                                <Image
+                                    Source="{Binding Dto.EntityType, Converter={StaticResource EntityTypeToImageConverter}}"
+                                    Stretch="None"
+                                    VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding ObjectName}"
+                                           Margin="11, 0, 0, 0"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+
+                <telerik:GridViewDataColumn Width="100"
+                                            Header="ЛПУ"
+                                            DataMemberBinding="{Binding Dto.SiteName}"
+                                            IsFilterable="True"
+                                            IsGroupable="True">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <TextBlock Text="{Binding Dto.SiteName}"
+                                       Margin="3"
+                                       TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+
+                <telerik:GridViewDataColumn Width="100"
+                                            Header="Вид"
+                                            IsFilterable="True"
+                                            IsGroupable="True"
+                                            DataMemberBinding="{Binding RepairTypeName}">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <TextBlock Text="{Binding RepairTypeName}"
+                                       Margin="3"
+                                       TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+
+                <telerik:GridViewDataColumn Width="75"
+                                            IsFilterable="True"
+                                            Header="Начало"
+                                            IsGroupable="True"
+                                            DataMemberBinding="{Binding StartDateMonthName}">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <StackPanel Margin="3">
+                                <TextBlock Text="{Binding Dto.StartDate, StringFormat='{}{0:dd.MM}'}"
+                                           HorizontalAlignment="Center" />
+                                <Rectangle Width="30"
+                                           Height="5"
+                                           StrokeThickness="0"
+                                           Fill="{Binding Dto.StartDate, Converter={StaticResource StartDateToColorConverter}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+                <telerik:GridViewDataColumn Width="100"
+                                            IsFilterable="True"
+                                            Header="Начало (факт)"
+                                            IsGroupable="True"
+                                            DataMemberBinding="{Binding StartDateMonthName}">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <StackPanel Margin="3">
+                                <TextBlock Text="{Binding Dto.DateStartFact, StringFormat='{}{0:dd.MM}'}"
+                                           HorizontalAlignment="Center" />
+                                <!--<Rectangle Width="30"
+                                           Height="5"
+                                           StrokeThickness="0"
+                                           Fill="{Binding Dto.DateStartFact, Converter={StaticResource StartDateToColorConverter}}" />-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+                <telerik:GridViewDataColumn Width="100"
+                                            IsFilterable="True"
+                                            Header="Окончание (факт)"
+                                            IsGroupable="True"
+                                            DataMemberBinding="{Binding StartDateMonthName}">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <StackPanel Margin="3">
+                                <TextBlock Text="{Binding Dto.DateEndFact, StringFormat='{}{0:dd.MM}'}"
+                                           HorizontalAlignment="Center" />
+                                <!--<Rectangle Width="30"
+                                           Height="5"
+                                           StrokeThickness="0"
+                                           Fill="{Binding Dto.DateEndFact, Converter={StaticResource StartDateToColorConverter}}" />-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+
+                <telerik:GridViewDataColumn Width="75"
+                                            Header="Оконч.">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Dto.EndDate, StringFormat='{}{0:dd.MM}'}"
+                                           HorizontalAlignment="Center" />
+                                <Rectangle Width="30"
+                                           Height="5"
+                                           StrokeThickness="0"
+                                           Fill="{Binding Dto.EndDate, Converter={StaticResource StartDateToColorConverter}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+
+                <telerik:GridViewDataColumn Width="60"
+                                            Header="Длит.">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <TextBlock
+                                Text="{Binding DurationPlan, Converter={StaticResource TimeSpanHourConverter}}"
+                                HorizontalAlignment="Center"
+                                Margin="3" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+
+                <telerik:GridViewDataColumn Width="80">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel Margin="3">
+                            <TextBlock Text="Дата" />
+                            <TextBlock Text="поставки" />
+                            <TextBlock Text="МТР" />
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Dto.PartsDeliveryDate, StringFormat='{}{0:dd.MM}'}"
+                                           HorizontalAlignment="Center" />
+                                <Rectangle Width="30"
+                                           Height="5"
+                                           StrokeThickness="0"
+                                           Fill="{Binding Dto.PartsDeliveryDate, Converter={StaticResource StartDateToColorConverter}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+
+                <telerik:GridViewDataColumn Width="150"
+                                            Header="Описание">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <TextBlock Text="{Binding Dto.Description}"
+                                       Margin="3"
+                                       TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+
+                <telerik:GridViewDataColumn Width="100"
+                                            DataMemberBinding="{Binding Dto.PipelineGroupName}"
+                                            IsFilterable="True"
+                                            IsGroupable="True">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel Margin="3">
+                            <TextBlock Text="Технол." />
+                            <TextBlock Text="коридор" />
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <TextBlock Text="{Binding Dto.PipelineGroupName}"
+                                       Margin="3"
+                                       FontSize="10"
+                                       TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+
+                <telerik:GridViewDataColumn Width="120"
+                                            DataMemberBinding="{Binding Dto.Complex.ComplexName}"
+                                            IsFilterable="True"
+                                            Header="Комплекс"
+                                            IsGroupable="True">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="3"
+                                        Visibility="{Binding HasComplex, Converter={StaticResource BoolToVisibility}}">
+                                <Image Source="/Common;component/Images/10x10/warning.png"
+                                       ToolTipService.ToolTip="{Binding ComplexErrorString}"
+                                       Stretch="None"
+                                       VerticalAlignment="Center"
+                                       Visibility="{Binding HasComplexError, Converter={StaticResource BoolToVisibility}}" />
+
+                                <Border Background="DodgerBlue"
+                                        BorderThickness="0"
+                                        VerticalAlignment="Center"
+                                        CornerRadius="2"
+                                        Visibility="{Binding Dto.Complex.IsLocal, Converter={StaticResource InvertedBoolToVisibility}}">
+                                    <TextBlock Text="G"
+                                               Foreground="WhiteSmoke"
+                                               FontSize="10"
+                                               FontWeight="Bold"
+                                               Margin="1, 0, 1, 0"
+                                               ToolTipService.ToolTip="Комплекс ПАО Газпром" />
+                                </Border>
+
+                                <TextBlock Text="{Binding Dto.Complex.ComplexName}"
+                                           TextWrapping="Wrap"
+                                           Width="90"
+                                           Margin="5, 0, 0, 0" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+
+                <telerik:GridViewDataColumn Width="100"
+                                            DataMemberBinding="{Binding ExecutionMeansName}"
+                                            IsFilterable="True"
+                                            IsGroupable="True">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel Margin="3">
+                            <TextBlock Text="Способ" />
+                            <TextBlock Text="ведения" />
+                            <TextBlock Text="работ" />
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <TextBlock Text="{Binding ExecutionMeansName}"
+                                       Margin="3"
+                                       TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+                
+                <!---->
+                
+                <telerik:GridViewDataColumn Width="120"
+                                            DataMemberBinding="{Binding WorkflowState}"
+                                            IsFilterable="True"
+                                            IsGroupable="True">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel Margin="3">
+                            <TextBlock Text="Статус" />
+                            <TextBlock Text="согласования" />
+                            <TextBlock Text="работ" />
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <TextBlock Text="{Binding WorkflowState}"
+                                       Margin="3"
+                                       TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn Width="100"
+                                            DataMemberBinding="{Binding RepairState}"
+                                            IsFilterable="True"
+                                            IsGroupable="True">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel Margin="3">
+                            <TextBlock Text="Статус" />
+                            <TextBlock Text="ведения" />
+                            <TextBlock Text="работ" />
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <TextBlock Text="{Binding RepairState}"
+                                       Margin="3"
+                                       TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+                
+                <telerik:GridViewDataColumn Width="100"
+                                            DataMemberBinding="{Binding RepairState}"
+                                            IsFilterable="True"
+                                            IsGroupable="True">
+                    <telerik:GridViewDataColumn.Header>
+                        <StackPanel Margin="3">
+                            <TextBlock Text="Сотрудник" />
+                            <TextBlock Text="от которого" />
+                            <TextBlock Text="необходимо согласование" />
+                        </StackPanel>
+                    </telerik:GridViewDataColumn.Header>
+
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate DataType="plan:Repair">
+                            <TextBlock Text="{Binding Dto.AgreedUserName}"
+                                       Margin="3"
+                                       TextWrapping="Wrap" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+
+
+            </telerik:RadGridView.Columns>
+
+
+        </telerik:RadGridView>
+
+
+        
+    </Grid>
+</UserControl>

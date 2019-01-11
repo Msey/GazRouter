@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="GazRouter.Modes.DispatcherTasks.Common.RecordComments.RecordCommentsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:recordNotes="clr-namespace:GazRouter.DTO.DispatcherTasks.RecordNotes;assembly=PortableDTO"
+    xmlns:recordComments="clr-namespace:GazRouter.Modes.DispatcherTasks.Common.RecordComments"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="500" d:DataContext="{d:DesignInstance recordComments:RecordCommentsViewModel}">
+   
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <telerik:RadToolBar>
+            <telerik:RadButton Command="{Binding RefreshCommand}" 
+                               Style="{StaticResource refreshButtonStyle}" />
+            
+            <telerik:RadToolBarSeparator />
+            
+            <telerik:RadButton Command="{Binding AddCommand}" 
+                               Style="{StaticResource addButtonStyle}" />
+            <telerik:RadButton Command="{Binding EditCommand}" 
+                               Style="{StaticResource editButtonStyle}" />
+            <telerik:RadButton Command="{Binding DeleteCommand}" 
+                               Style="{StaticResource deleteButtonStyle}" />
+        </telerik:RadToolBar>
+
+        <telerik:RadBusyIndicator Grid.Row="1" 
+                                  IsBusy="{Binding IsBusyLoading}">
+
+            <telerik:RadGridView AutoGenerateColumns="False" 
+                                 IsReadOnly="True" 
+                                 ItemsSource="{Binding NoteList}" 
+                                 SelectedItem="{Binding SelectedNote, Mode=TwoWay}" 
+                                 RowIndicatorVisibility="Collapsed"
+                                 CanUserFreezeColumns="False"
+			                     ShowGroupPanel="False">
+                
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Width="150" 
+                                                DataMemberBinding="{Binding CreateDate}" 
+                                                Header="Время" 
+					                            IsSortable="True"  
+                                                IsFilterable="False">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="recordNotes:RecordNoteDTO">
+                                <TextBlock Text="{Binding CreateDate, StringFormat='dd.MM.yyyy HH:mm'}"  
+                                           TextWrapping="Wrap"
+                                           Margin="5" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="200" 
+                                                Header="Комментарий"
+					                            IsSortable="False" 
+                                                IsFilterable="False">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="recordNotes:RecordNoteDTO">
+                                <TextBlock Text="{Binding Note}"  
+                                           TextWrapping="Wrap"
+                                           Margin="5" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="150" 
+                                                FilterMemberPath="CreateUserName" 
+                                                Header="Создал" 
+					                            IsSortable="True"  
+                                                IsFilterable="False" >
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="recordNotes:RecordNoteDTO">
+                                <Grid Margin="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding CreateUserName}"  
+                                               TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding CreateUserDescription, StringFormat='{}({0})'}" 
+                                               TextWrapping="Wrap" 
+                                               Foreground="CadetBlue"
+                                               FontSize="10"
+                                               Grid.Row="1"
+                                               Margin="0, 3, 0, 0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    
+                    
+                </telerik:RadGridView.Columns>
+
+            </telerik:RadGridView>
+
+        </telerik:RadBusyIndicator>
+    </Grid>
+</UserControl>

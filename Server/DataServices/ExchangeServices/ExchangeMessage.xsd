@@ -1,0 +1,95 @@
+﻿<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ExchangeMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="HeaderSection">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:dateTime" name="timestamp"/>
+              <xs:element type="xs:string" name="periodType"/>
+              <xs:element type="xs:string" name="sender"/>
+              <xs:element type="xs:string" name="receiver"/>
+              <xs:element type="xs:dateTime" name="generatedTime"/>
+              <xs:element type="xs:string" name="comment"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DataSection">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="site">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="ID"/>
+                    <xs:element type="xs:string" name="Name"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="compressorStation">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="ID"/>
+                    <xs:element type="xs:string" name="Name"/>
+                    <xs:element type="xs:string" name="SiteId"/>
+                    <xs:element name="valueList">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="temperatureAir"/>
+                          <xs:element type="xs:string" name="temperatureGround"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="compressorShop">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="ID"/>
+                    <xs:element type="xs:string" name="Name"/>
+                    <xs:element type="xs:string" name="compressorShopTypeId"/>
+                    <xs:element type="xs:string" name="pipelineId"/>
+                    <xs:element type="xs:string" name="kilometerConn"/>
+                    <xs:element name="valueList">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="pressureInlet"/>
+                          <xs:element type="xs:string" name="pressureOutlet"/>
+                          <xs:element type="xs:string" name="temperatureInlet"/>
+                          <xs:element type="xs:string" name="temperatureOutlet"/>
+                          <xs:element type="xs:string" name="temperatureCooling"/>
+                          <xs:element name="scheme">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="groupsCount">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="number"/>
+                                      <xs:element type="xs:string" name="value"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="compressionStagesCount">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="number"/>
+                                      <xs:element type="xs:string" name="value"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

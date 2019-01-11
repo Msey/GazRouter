@@ -1,0 +1,266 @@
+﻿<UserControl x:Class="GazRouter.Modes.GasCosts.ConsumptionsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:gasCosts="clr-namespace:GazRouter.Modes.GasCosts"
+             xmlns:behaviors="clr-namespace:GazRouter.Common.Ui.Behaviors;assembly=Common"
+             xmlns:userStamp="clr-namespace:GazRouter.Controls.UserStamp;assembly=Controls"
+             xmlns:gasCosts1="clr-namespace:GazRouter.DTO.GasCosts;assembly=PortableDTO"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance gasCosts:CompStationConsumptionViewModel}"
+>
+    <UserControl.Resources>
+        <telerik:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <telerik:InvertedBooleanToVisibilityConverter x:Key="InvertedBoolToVisibilityConverter" />
+    </UserControl.Resources>
+    <telerik:RadBusyIndicator DisplayAfter="0" IsBusy="{Binding IsBusyLoading}">
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.Resources>
+                <Style x:Key="GasConstHeaderCellStyle" TargetType="telerik:GridViewHeaderCell"
+                       BasedOn="{StaticResource GridViewHeaderCellStyle}">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <StackPanel VerticalAlignment="Top">
+                                    <TextBlock Text="{Binding}" TextAlignment="Center" TextWrapping="Wrap"
+                                               VerticalAlignment="Top" HorizontalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style x:Key="GasConstLongHeaderCellStyle" TargetType="telerik:GridViewHeaderCell"
+                       BasedOn="{StaticResource GridViewHeaderCellStyle}">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <StackPanel VerticalAlignment="Top">
+                                    <TextBlock Text="{Binding}" TextAlignment="Center" TextWrapping="Wrap"
+                                               VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="10" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="65*" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="35*" />
+            </Grid.RowDefinitions>
+            <telerik:RadTreeListView Grid.ColumnSpan="2" 
+                                     ItemsSource="{Binding GasCosts}"
+                                     IsExpandedBinding="{Binding IsExpanded, Mode=TwoWay}"
+                                     x:Name="MainGrid"
+                                     IsReadOnly="True"
+                                     GridLinesVisibility="Both"
+                                     SelectionMode="Single"
+                                     SelectionUnit="FullRow"
+                                     IsFilteringAllowed="False"
+                                     FrozenColumnCount="2"
+                                     CanUserFreezeColumns="False"
+                                     AutoGenerateColumns="False"
+                                     ColumnWidth="120"                                   
+                                     CanUserSortColumns="False"
+                                     MouseRightButtonDown="MainGrid_MouseButtonDown"
+                                     CurrentCellChanged="MainGrid_CurrentCellChanged"
+                                     RowIndicatorVisibility="Collapsed"                                     
+                                     gasCosts:RadGridViewColumnsBinding.DefaultHeaderCellStyle="{StaticResource GasConstHeaderCellStyle}"
+                                     gasCosts:RadGridViewColumnsBinding.LongHeaderCellStyle="{StaticResource GasConstLongHeaderCellStyle}"
+                                     gasCosts:RadGridViewColumnsBinding.ColumnsCollection="{Binding ColumnCollection, Mode=OneWay}"
+                                     gasCosts:RadGridViewColumnsBinding.AppendToExistingColumns="True"
+                                     behaviors:ContextMenuBehavior.ContextMenu="{Binding ElementName=GridContextMenu}">
+                <telerik:RadTreeListView.Columns>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Name}"
+                                                Header="Объект"
+                                                Width="200"
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"  ToolTipService.ToolTip="{Binding Name}" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                </telerik:RadTreeListView.Columns>
+                <telerik:RadContextMenu.ContextMenu>
+                    <telerik:RadContextMenu x:Name="GridContextMenu">
+                        <telerik:RadMenuItem Header="Добавить норму..." Command="{Binding AddNormCostCommand}" />
+                        <telerik:RadMenuItem Header="Добавить план..." Command="{Binding AddPlanCostCommand}" />
+                        <telerik:RadMenuItem Header="Добавить факт..." Command="{Binding AddFactCostCommand}" />
+                    </telerik:RadContextMenu>
+                </telerik:RadContextMenu.ContextMenu>
+                <telerik:RadTreeListView.ChildTableDefinitions>
+                    <telerik:TreeListViewTableDefinition ItemsSource="{Binding Items}"/>
+                </telerik:RadTreeListView.ChildTableDefinitions>
+            </telerik:RadTreeListView>
+
+            <telerik:RadTreeListView Grid.ColumnSpan="2" 
+                                     ItemsSource="{Binding GasCosts}"
+                                     Visibility="{Binding DuplicateTreeListVisible}"
+                                     IsExpandedBinding="{Binding IsExpanded, Mode=TwoWay}"
+                                     x:Name="MainGridDuplicate"
+                                     IsReadOnly="True"
+                                     GridLinesVisibility="Both"
+                                     SelectionMode="Single"
+                                     SelectionUnit="FullRow"
+                                     IsFilteringAllowed="False"
+                                     FrozenColumnCount="2"
+                                     CanUserFreezeColumns="False"
+                                     AutoGenerateColumns="False"
+                                     ColumnWidth="120"                                   
+                                     CanUserSortColumns="False"
+                                     MouseRightButtonDown="MainGrid_MouseButtonDown"
+                                     CurrentCellChanged="MainGrid_CurrentCellChanged"
+                                     RowIndicatorVisibility="Collapsed"                                     
+                                     gasCosts:RadGridViewColumnsBinding.DefaultHeaderCellStyle="{StaticResource GasConstHeaderCellStyle}"
+                                     gasCosts:RadGridViewColumnsBinding.LongHeaderCellStyle="{StaticResource GasConstLongHeaderCellStyle}"
+                                     gasCosts:RadGridViewColumnsBinding.ColumnsCollection="{Binding ColumnCollectionDuplicate, Mode=OneWay}"
+                                     gasCosts:RadGridViewColumnsBinding.AppendToExistingColumns="True"
+                                     behaviors:ContextMenuBehavior.ContextMenu="{Binding ElementName=GridContextMenuDuplicate}">
+                <telerik:RadTreeListView.Columns>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Name}"
+                                                Header="Объект"
+                                                Width="200"
+                                                TextWrapping="Wrap">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"  ToolTipService.ToolTip="{Binding Name}" />
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                </telerik:RadTreeListView.Columns>
+                <telerik:RadContextMenu.ContextMenu>
+                    <telerik:RadContextMenu x:Name="GridContextMenuDuplicate">
+                        <telerik:RadMenuItem Header="Добавить норму..." Command="{Binding AddNormCostCommand}" />
+                        <telerik:RadMenuItem Header="Добавить план..." Command="{Binding AddPlanCostCommand}" />
+                        <telerik:RadMenuItem Header="Добавить факт..." Command="{Binding AddFactCostCommand}" />
+                    </telerik:RadContextMenu>
+                </telerik:RadContextMenu.ContextMenu>
+                <telerik:RadTreeListView.ChildTableDefinitions>
+                    <telerik:TreeListViewTableDefinition ItemsSource="{Binding Items}"/>
+                </telerik:RadTreeListView.ChildTableDefinitions>
+            </telerik:RadTreeListView>
+
+
+            <sdk:GridSplitter Grid.Row="1"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              Background="{telerik:Windows8Resource ResourceKey=AccentBrush}" />
+            <Grid Grid.Row="2" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions><Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <telerik:RadToolBar Grid.Row="0"
+                                        Grid.Column="0"
+                                        Visibility="{Binding IsAccessAllowed, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <telerik:RadButton x:Name="AddStnButton" Style="{StaticResource addButtonStyle}" 
+                                           Command="{Binding AddCostCommand}"/>
+                        <telerik:RadButton Style="{StaticResource editButtonStyle}" 
+                                           Command="{Binding EditCostCommand}"/>
+                        <telerik:RadButton Style="{StaticResource deleteButtonStyle}"
+                                           Command="{Binding DeleteCostCommand}"/>
+                    </telerik:RadToolBar>
+                    <Border Grid.Row="0"
+                            Grid.Column="0"
+                            Background="Crimson"
+                            HorizontalAlignment="Left"
+                            Visibility="{Binding IsAccessAllowed, Converter={StaticResource InvertedBoolToVisibilityConverter}}">
+                        <TextBlock Text="Ввод запрещен"
+                                   FontFamily="Segoe UI"
+                                   FontSize="11"
+                                   Foreground="WhiteSmoke"
+                                   Margin="5"
+                                   VerticalAlignment="Center" />
+                    </Border>
+                    <telerik:RadGridView x:Name="NormGrid"
+                                         ItemsSource="{Binding CurrentCosts}"
+                                         ShowGroupPanel="False"
+                                         AutoGenerateColumns="False"
+                                         IsReadOnly="True"
+                                         RowIndicatorVisibility="Collapsed"
+                                         SelectedItem="{Binding SelectedCost, Mode=TwoWay}"
+                                         IsFilteringAllowed="False"
+                                         CanUserFreezeColumns="False"
+                                         Grid.Row="1"
+                                         Grid.Column="0"
+                                         behaviors:ContextMenuBehavior.ContextMenu="{Binding ElementName=ContextMenu}"
+                                         MinWidth="550">
+
+                        <telerik:RadContextMenu.ContextMenu>
+                            <telerik:RadContextMenu x:Name="ContextMenu">
+                                <telerik:RadMenuItem Header="Изменить..." Command="{Binding EditCostCommand}" />
+                                <telerik:RadMenuItem Header="Удалить" Command="{Binding DeleteCostCommand}" />
+                            </telerik:RadContextMenu>
+                        </telerik:RadContextMenu.ContextMenu>
+
+                        <telerik:RadGridView.Columns>
+                            <telerik:GridViewDataColumn Header="Дата" 
+                                                        DataMemberBinding="{Binding Date}"
+                                                        DataFormatString="dd.MM.yyyy" 
+                                                        Width="120" />
+                            <telerik:GridViewDataColumn Header="Расчет" 
+                                                        DataMemberBinding="{Binding CalculatedVolume}"
+                                                        DataFormatString="{Binding Format}" 
+                                                        TextAlignment="Right" 
+                                                        Width="80" />
+                            <telerik:GridViewDataColumn Header="Измерение" 
+                                                        DataMemberBinding="{Binding MeasuredVolume}"
+                                                        DataFormatString="{Binding Format}"  
+                                                        TextAlignment="Right" 
+                                                        Width="80" />
+                            <telerik:GridViewColumn Header="Изменено"
+                                                    Width="200">
+                                <telerik:GridViewColumn.CellTemplate>
+                                    <DataTemplate DataType="gasCosts1:GasCostDTO">
+                                        <userStamp:UserStamp Timestamp="{Binding ChangeDate}"
+                                                     UserName="{Binding ChangeUserName}"
+                                                     SiteName="{Binding ChangeUserSiteName}"
+                                                     Margin="5" />
+                                    </DataTemplate>
+                                </telerik:GridViewColumn.CellTemplate>
+                            </telerik:GridViewColumn>
+                        </telerik:RadGridView.Columns>
+                    </telerik:RadGridView>
+                </Grid>
+                <sdk:GridSplitter Style="{StaticResource VerticalSplitterStyle}" 
+                                  Grid.Column="1"
+                                  Width="5"/>
+                <telerik:RadCartesianChart Palette="Arctic"
+                                           Grid.Column="1"
+                                           Margin="5, 0, 0, 0"
+                                           Background="WhiteSmoke">
+                    <telerik:BarSeries ItemsSource="{Binding ChartData}"
+                                       CategoryBinding="Date"
+                                       ValueBinding="CalculatedVolume"
+                                       Foreground="{telerik:Windows8Resource ResourceKey=AccentBrush}"
+                                       ShowLabels="True">
+                    </telerik:BarSeries>
+                    <telerik:RadCartesianChart.HorizontalAxis>
+                        <telerik:CategoricalAxis>
+                            <telerik:CategoricalAxis.LabelTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding StringFormat='dd'}"
+                                               FontSize="10"/>
+                                </DataTemplate>
+                            </telerik:CategoricalAxis.LabelTemplate>
+                        </telerik:CategoricalAxis>
+                    </telerik:RadCartesianChart.HorizontalAxis>
+                    <telerik:RadCartesianChart.VerticalAxis>
+                        <telerik:LinearAxis Minimum="0"
+                                            FontSize="10"/>
+                    </telerik:RadCartesianChart.VerticalAxis>
+                </telerik:RadCartesianChart>
+            </Grid>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>

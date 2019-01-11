@@ -1,0 +1,38 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Controls.Dialogs.EntityPicker.EntityPickerDialogView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   Header="Поиск объекта" 
+                   Height="Auto" 
+                   Width="800"
+                   MinWidth="800"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:entityPicker="clr-namespace:GazRouter.Controls.Dialogs.EntityPicker"
+                   Style="{StaticResource StyleMainRadWindow}" 
+                   mc:Ignorable="d"
+                   d:DataContext="{d:DesignInstance entityPicker:EntityPickerDialogViewModel}"
+                   attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}">
+    
+    <Grid Margin="-2, 2, -2, 0">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <entityPicker:EntityPickerView Grid.Row="0" />
+        
+        <StackPanel Grid.Row="1" 
+                    Margin="11" 
+                    Style="{StaticResource StyleStackPanelForConfirmationButton}">
+            <telerik:RadButton Content="Выбрать" 
+                               Command="{Binding SelectCommand}"
+                               Style="{StaticResource StyleConfirmationButton}" />
+            <telerik:RadButton Content="Отмена" 
+                               Command="{Binding CancelCommand}"
+                               Style="{StaticResource StyleConfirmationButton}" />
+        </StackPanel>
+    </Grid>
+</telerik:RadWindow>

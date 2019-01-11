@@ -1,0 +1,96 @@
+﻿<telerik:RadWindow x:Class="GazRouter.ObjectModel.Model.Dialogs.AddEdit.Objects.DistrStation.AddEditDistrStationView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:attachedProperties1="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   xmlns:distrStation="clr-namespace:GazRouter.ObjectModel.Model.Dialogs.AddEdit.Objects.DistrStation"
+                   mc:Ignorable="d" d:DesignHeight="250" d:DesignWidth="400"
+                   Style="{StaticResource DialogWindowStyle}" Header="{Binding Caption}" Height="Auto" Width="320"
+                   attachedProperties1:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   d:DataContext="{d:DesignInstance distrStation:AddEditDistrStationViewModel}">
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid Margin="11">
+
+            <Grid.Resources>
+                            <converters:PressureToDoubleConverter x:Key="PressureToDoubleConverter" />
+
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            
+
+            <StackPanel>
+                <TextBlock Text="Наименование:" />
+                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0, 5, 0, 0" />
+
+                <TextBlock Text="Регион:" Margin="0, 11, 0, 0" />
+                <telerik:RadComboBox ItemsSource="{Binding Path=ListRegion}" 
+                                     Margin="0, 5, 0, 0"
+                                     SelectedItem="{Binding Path=SelectedRegion, Mode=TwoWay}" 
+                                     DisplayMemberPath="Name" 
+                                     IsEditable="False"
+                                     CanAutocompleteSelectItems="True" 
+                                     EmptyText="Выберите регион ..." />
+
+                <controls:SmartTextBlock Margin="0, 11, 0, 0"
+                                         HorizontalAlignment="Left"
+                                         Text="Давление входа проектное, [P]:" />
+                <telerik:RadMaskedNumericInput  FormatString="n2" 
+                                                IsClearButtonVisible="False" 
+                                                MinWidth="80" 
+                                                Value="{Binding PressureRated, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureToDoubleConverter}}" 
+                                                Margin="0, 5, 0, 0" />
+
+                <TextBlock Text="Производительность проектная, тыс.м³/ч:" Margin="0, 11, 0, 0" />
+                <telerik:RadMaskedNumericInput  FormatString="n2" 
+                                                IsClearButtonVisible="False" 
+                                                MinWidth="80" 
+                                                Value="{Binding CapacityRated, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}" 
+                                                Margin="0, 5, 0, 0" />
+
+
+                <CheckBox Content="Участвует в балансе" 
+                          IsChecked="{Binding UseInBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                          VerticalAlignment="Center" 
+                          Margin="0, 11, 0, 0" />
+
+                <TextBlock Text="Балансовая группа:" 
+                           Margin="0, 11, 0, 0"/>
+                <telerik:RadComboBox ItemsSource="{Binding BalGroupList}"
+                                     SelectedItem="{Binding SelectedBalGroup, Mode=TwoWay}"
+                                     DisplayMemberPath="Name"
+                                     IsEditable="False"
+                                     EmptyText="(без группы)"
+                                     ClearSelectionButtonVisibility="Visible"
+                                     ClearSelectionButtonContent="(без группы)"
+                                     IsEnabled="{Binding UseInBalance}"
+                                     Margin="0, 5, 0, 0"/>
+
+                <CheckBox Content="Сторонняя ГРС" 
+                          IsChecked="{Binding IsForeign, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                          VerticalAlignment="Center" 
+                          Margin="0, 11, 0, 0" />
+
+
+                <CheckBox Content="Виртуальный" 
+                          IsChecked="{Binding IsVirtual, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                          VerticalAlignment="Center" 
+                          Margin="0, 11, 0, 0" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+                <telerik:RadButton Content="{Binding ButtonSaveCaption}" Command="{Binding SaveCommand}"
+                                   Name="SaveButton" Style="{StaticResource StyleConfirmationButton}" />
+                <telerik:RadButton Content="Отмена" Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

@@ -1,0 +1,157 @@
+﻿    <UserControl x:Class="GazRouter.Modes.GasCosts.ConsumptionSummaryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:modes="clr-namespace:GazRouter.Modes"
+    mc:Ignorable="d"
+    d:DesignHeight="300" 
+    d:DesignWidth="400"
+    >
+        <UserControl.Resources>
+            <modes:GroupStyleSelector x:Key="groupStyleSelector">
+                <modes:GroupStyleSelector.GroupStyle>
+                    <Style TargetType="telerik:GridViewCell" BasedOn="{StaticResource GridViewCellCoreStyle}">
+                        <Setter Property="FontWeight" Value="Bold"></Setter>
+                    </Style>
+                </modes:GroupStyleSelector.GroupStyle>
+            </modes:GroupStyleSelector>
+        </UserControl.Resources>
+        <Grid x:Name="LayoutRoot" Background="White">
+        <telerik:RadTreeListView IsReadOnly="True" 
+                                 ItemsSource="{Binding GasCostsGroups, Mode=TwoWay}"
+                                 AutoExpandGroups="True"
+                                 AutoExpandItems="True"
+                                 SelectionMode="Single" 
+                                 SelectionUnit="FullRow"
+                                 GridLinesVisibility="Both"
+                                 IsFilteringAllowed="False"
+                                 CanUserFreezeColumns="False" 
+                                 RowIndicatorVisibility="Collapsed"
+                                 AutoGenerateColumns="False" 
+                                 CanUserSortColumns="False" 
+                                 x:Name="TreeListView">
+
+            <telerik:RadTreeListView.Resources>
+                <DataTemplate x:Key="factCellTemplate">
+                    <TextBlock Text="{Binding Fact, StringFormat=n3}"  Foreground="{Binding FactColor}" TextAlignment="Right"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="factTotalToDateCellTemplate">
+                    <TextBlock Text="{Binding FactTotalToDate, StringFormat=n3}"  TextAlignment="Right"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="planCellTemplate">
+                    <TextBlock Text="{Binding Plan, StringFormat=n3}" Foreground="{Binding PlanColor}" TextAlignment="Right" />
+                </DataTemplate>
+
+                <DataTemplate x:Key="normCellTemplate">
+                    <TextBlock Text="{Binding Norm, StringFormat=n3}" TextAlignment="Right" />
+                </DataTemplate>
+            </telerik:RadTreeListView.Resources>
+            <telerik:RadTreeListView.ChildTableDefinitions>
+                <telerik:TreeListViewTableDefinition ItemsSource="{Binding Items, Mode=TwoWay}"  />
+            </telerik:RadTreeListView.ChildTableDefinitions>
+            <telerik:RadTreeListView.Columns>
+                
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Name}" 
+                                            Header="Статья" 
+                                            Width="450" 
+                                            TextWrapping="Wrap" CellStyleSelector="{StaticResource groupStyleSelector}"/>
+                
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Norm}" 
+                                            Header="Норма"  CellTemplate="{StaticResource normCellTemplate}" 
+                                            Width="100" CellStyleSelector="{StaticResource groupStyleSelector}"/>
+                
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Plan}" 
+                                            Header="План" CellTemplate="{StaticResource planCellTemplate}" 
+                                            Width="100" CellStyleSelector="{StaticResource groupStyleSelector}"/>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Fact}" 
+                                            CellTemplate="{StaticResource factCellTemplate}"
+                                            Width="100" CellStyleSelector="{StaticResource groupStyleSelector}">
+                    <telerik:GridViewDataColumn.Header>
+                        <TextBlock Text="{Binding DataContext.FactColumnHeader, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl,AncestorLevel=1}}" 
+                                   TextWrapping="Wrap"/>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding FactTotalToDate}" 
+                                            Header="Факт с начала месяца" HeaderTextWrapping="Wrap" CellTemplate="{StaticResource factTotalToDateCellTemplate}"
+                                            Width="100" CellStyleSelector="{StaticResource groupStyleSelector}"
+                                            IsVisible="{Binding DataContext.IsDayly, ElementName=LayoutRoot}"/>
+
+            </telerik:RadTreeListView.Columns>
+        </telerik:RadTreeListView>
+            
+            
+            
+        <telerik:RadTreeListView IsReadOnly="True" 
+                                 ItemsSource="{Binding GasCostsGroups, Mode=TwoWay}"
+                                 AutoExpandGroups="True"
+                                 AutoExpandItems="True"
+                                 SelectionMode="Single" 
+                                 SelectionUnit="FullRow"
+                                 GridLinesVisibility="Both"
+                                 IsFilteringAllowed="False"
+                                 CanUserFreezeColumns="False" 
+                                 RowIndicatorVisibility="Collapsed"
+                                 AutoGenerateColumns="False" 
+                                 CanUserSortColumns="False" 
+                                 x:Name="TreeListViewDuplicate"
+                                 Visibility="{Binding VisibleDuplicate}">
+
+            <telerik:RadTreeListView.Resources>
+                <DataTemplate x:Key="factCellTemplate">
+                    <TextBlock Text="{Binding Fact, StringFormat=F0}"  Foreground="{Binding FactColor}" TextAlignment="Right"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="factTotalToDateCellTemplate">
+                    <TextBlock Text="{Binding FactTotalToDate, StringFormat=F0}" TextAlignment="Right"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="planCellTemplate">
+                    <TextBlock Text="{Binding Plan, StringFormat=F0}" Foreground="{Binding PlanColor}" TextAlignment="Right" />
+                </DataTemplate>
+
+                <DataTemplate x:Key="normCellTemplate">
+                    <TextBlock Text="{Binding Norm, StringFormat=F0}" TextAlignment="Right" />
+                </DataTemplate>
+            </telerik:RadTreeListView.Resources>
+            <telerik:RadTreeListView.ChildTableDefinitions>
+                <telerik:TreeListViewTableDefinition ItemsSource="{Binding Items, Mode=TwoWay}"  />
+            </telerik:RadTreeListView.ChildTableDefinitions>
+            <telerik:RadTreeListView.Columns>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Name}" 
+                                            Header="Статья" 
+                                            Width="450" 
+                                            TextWrapping="Wrap" CellStyleSelector="{StaticResource groupStyleSelector}"/>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Norm}" 
+                                            Header="Норма"  CellTemplate="{StaticResource normCellTemplate}" 
+                                            Width="100" CellStyleSelector="{StaticResource groupStyleSelector}"/>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Plan}" 
+                                            Header="План" CellTemplate="{StaticResource planCellTemplate}" 
+                                            Width="100" CellStyleSelector="{StaticResource groupStyleSelector}"/>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Fact}" 
+                                            CellTemplate="{StaticResource factCellTemplate}"
+                                            Width="100" CellStyleSelector="{StaticResource groupStyleSelector}">
+                    <telerik:GridViewDataColumn.Header>
+                        <TextBlock  Text="{Binding DataContext.FactColumnHeader, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl,AncestorLevel=1}}" 
+                                    TextWrapping="Wrap"/>
+                    </telerik:GridViewDataColumn.Header>
+                </telerik:GridViewDataColumn>
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding FactTotalToDate}" 
+                                            Header="Факт с начала месяца" HeaderTextWrapping="Wrap" CellTemplate="{StaticResource factTotalToDateCellTemplate}"
+                                            Width="100" CellStyleSelector="{StaticResource groupStyleSelector}"
+                                            IsVisible="{Binding DataContext.IsDayly, ElementName=LayoutRoot}"/>
+
+            </telerik:RadTreeListView.Columns>
+        </telerik:RadTreeListView>
+    </Grid>
+</UserControl>

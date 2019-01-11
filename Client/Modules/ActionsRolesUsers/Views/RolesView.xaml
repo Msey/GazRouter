@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="GazRouter.ActionsRolesUsers.Views.RolesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:controls="clr-namespace:GazRouter.ActionsRolesUsers.Controls"
+             xmlns:viewModels="clr-namespace:GazRouter.ActionsRolesUsers.ViewModels"
+             mc:Ignorable="d" d:DesignHeight="489" d:DesignWidth="692"
+             d:DataContext="{d:DesignInstance viewModels:RolesViewModel}">
+    <Grid>
+        <telerik:RadBusyIndicator Margin="1" Grid.Column="0" IsBusy="{Binding IsBusyLoading}" BusyContent="{Binding BusyMessage}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <telerik:RadToolBar Grid.Row="0" IsOverflowOpen="False" OverflowButtonVisibility="Collapsed"
+                                    GripVisibility="Collapsed">
+                    <telerik:RadButton Margin="3" Style="{StaticResource addButtonStyle}"
+                                       Command="{Binding AddRoleCommand}" />
+                    <telerik:RadButton Margin="3" Style="{StaticResource deleteButtonStyle}"
+                                       Command="{Binding RemoveRoleCommand}" />
+                    <telerik:RadButton Margin="3" Style="{StaticResource saveButtonStyle}"
+                                       Command="{Binding SaveRolesCommand}"/>
+                </telerik:RadToolBar>
+                <controls:DynamicTreeListView Grid.Row="1" ColumnNamesSource="{Binding RoleNames}" Style="{StaticResource RadTreeListViewStyle}"
+                                               AutoGenerateColumns="False"
+                                              RowIndicatorVisibility="Collapsed" ItemsSource="{Binding ActionGroups}">
+                    <controls:DynamicTreeListView.ChildTableDefinitions>
+                        <telerik:TreeListViewTableDefinition ItemsSource="{Binding Path=Actions}" />
+                    </controls:DynamicTreeListView.ChildTableDefinitions>
+
+                    <controls:DynamicTreeListView.Columns>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding Path=Name}" Header="Действие"
+                                                    IsFilterable="False" IsSortable="False" IsReadOnly="True">
+                        </telerik:GridViewDataColumn>
+ 
+                    </controls:DynamicTreeListView.Columns>
+                </controls:DynamicTreeListView>
+            </Grid>
+        </telerik:RadBusyIndicator>
+    </Grid>
+</UserControl>

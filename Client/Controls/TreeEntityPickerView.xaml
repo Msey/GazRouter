@@ -1,0 +1,142 @@
+﻿<telerik:RadWindow x:Class="GazRouter.Controls.TreeEntityPickerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+    xmlns:converters="clr-namespace:GazRouter.Controls.Converters"
+    xmlns:entityPicker="clr-namespace:GazRouter.Controls.Dialogs.EntityPicker"
+    xmlns:controls="clr-namespace:GazRouter.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+    WindowStartupLocation="CenterScreen" 
+    Header="Выбор объекта в дереве"
+    Style="{StaticResource StyleMainRadWindow}"
+    Height="600" Width="600">
+
+    <telerik:RadWindow.Resources>
+        
+        <telerik:BooleanToVisibilityConverter x:Key="BoolToVisibility"></telerik:BooleanToVisibilityConverter>
+        
+        <telerik:ContainerBindingCollection x:Name="BindingsCollection">
+            <telerik:ContainerBinding PropertyName="IsSelected" Binding="{Binding IsSelected, Mode=TwoWay}" />
+            <telerik:ContainerBinding PropertyName="IsExpanded" Binding="{Binding IsExpanded, Mode=TwoWay}" />
+        </telerik:ContainerBindingCollection>
+        <converters:BoolToFontWeightConverter x:Key="BoolToWeightConverter"/>
+
+        <DataTemplate x:Key="EntityTypeDataTemplate" 
+                      DataType="controls:EntityTypeFilterWrapper">
+            <Border Background="{telerik:Windows8Resource ResourceKey=AccentBrush}" 
+                    MinWidth="35" 
+                    MaxHeight="23">
+                    <TextBlock Text="{Binding Name}"
+                           Margin="2, 2, 2, 2"
+                           TextWrapping="Wrap"
+                           FontFamily="Segoe UI Light"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center"
+                           Foreground="WhiteSmoke" />
+                </Border>
+        </DataTemplate>
+
+        <ItemsPanelTemplate x:Key="RadListBoxItemsPanel">
+            <StackPanel Orientation="Horizontal" />
+        </ItemsPanelTemplate>
+    </telerik:RadWindow.Resources>
+
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar Grid.Row="0">
+                <telerik:RadComboBox ItemsSource="{Binding Path=GasTransportList}" 
+                                Width="125" HorizontalAlignment="Right"
+                                SelectedItem="{Binding Path=SelectedGasTransport, Mode=TwoWay}" 
+                                DisplayMemberPath="Name"/>
+            </telerik:RadToolBar>
+
+<!--            <StackPanel Grid.Row="1" Orientation="Horizontal" -->
+<!--                        Visibility="{Binding IsOtherEntityTypeSelectorVisible, -->
+<!--                                     Converter={StaticResource BoolToVisibility}}">-->
+<!--                <telerik:RadListBox -->
+<!--                                Visibility="{Binding IsLinarTabSelected, -->
+<!--                                Converter={StaticResource BoolToVisibility}}"-->
+<!--                                ItemsSource="{Binding FastEntityTypeList}"-->
+<!--                                    ScrollViewer.HorizontalScrollBarVisibility="Hidden"-->
+<!--                                    HorizontalAlignment="Left"-->
+<!--                                    ItemTemplate="{StaticResource EntityTypeDataTemplate}"   -->
+<!--                                    ItemsPanel="{StaticResource RadListBoxItemsPanel}"-->
+<!--                                    BorderThickness="0"/>-->
+<!--                <telerik:RadComboBox Margin="5,0,0,0"-->
+<!--                                    Height="23"-->
+<!--                                    VerticalAlignment="Center"-->
+<!--                                    ItemsSource="{Binding OtherEntityTypeList}"                                     -->
+<!--                                    DisplayMemberPath="Name"-->
+<!--                                    SelectedValue="{Binding SelectedEntityType, Mode=TwoWay}"-->
+<!--                                    Width="150" HorizontalAlignment="Left" />-->
+<!--            </StackPanel>-->
+            <telerik:RadTabControl Grid.Row="2" BorderThickness="0">
+                <telerik:RadTabItem Header="Точечные объекты" IsSelected="{Binding IsLinarTabSelected, Mode=TwoWay}">
+                    <telerik:RadTreeView
+                                         ItemsSource="{Binding Path=TreeLinarModel.Nodes, Mode=TwoWay}"
+                                         SelectedItem="{Binding Path=TreeLinarModel.SelectedNode, Mode=TwoWay}">
+                            <telerik:RadTreeView.ItemTemplate>
+                                <telerik:HierarchicalDataTemplate ItemsSource="{Binding Children}" 
+                                                              telerik:ContainerBinding.ContainerBindings="{StaticResource BindingsCollection}">
+                                    <StackPanel Orientation="Horizontal"
+                                            ToolTipService.ToolTip="{Binding ToolTipType}">
+                                        <Image Source="{Binding ImageSource, Mode=TwoWay}" 
+                                           Margin="0, 0, 5, 0"
+                                           Stretch="None"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+
+                                        <TextBlock Text="{Binding Name}" FontWeight="{Binding IsBold, Converter={StaticResource BoolToWeightConverter}}"
+                                               VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </telerik:HierarchicalDataTemplate>
+                            </telerik:RadTreeView.ItemTemplate>
+                        </telerik:RadTreeView>
+                </telerik:RadTabItem>
+                
+                <telerik:RadTabItem Header="Линейная часть">
+                    <telerik:RadTreeView
+                                     ItemsSource="{Binding Path=TreePipelineModel.Nodes, Mode=TwoWay}"
+                                     SelectedItem="{Binding Path=TreePipelineModel.SelectedNode, Mode=TwoWay}">
+                        <telerik:RadTreeView.ItemTemplate>
+                            <telerik:HierarchicalDataTemplate ItemsSource="{Binding Children}" 
+                                                          telerik:ContainerBinding.ContainerBindings="{StaticResource BindingsCollection}">
+                                <StackPanel Orientation="Horizontal"
+                                        ToolTipService.ToolTip="{Binding ToolTipType}">
+                                    <Image Source="{Binding ImageSource, Mode=TwoWay}" 
+                                       Margin="0, 0, 5, 0"
+                                       Stretch="None"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" />
+
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </telerik:HierarchicalDataTemplate>
+                        </telerik:RadTreeView.ItemTemplate>
+                    </telerik:RadTreeView>
+                </telerik:RadTabItem>
+            </telerik:RadTabControl>
+
+            <StackPanel Grid.Row="3" Style="{StaticResource StyleStackPanelForConfirmationButton}"
+                        Orientation="Horizontal">
+
+                <telerik:RadButton Content="Выбрать" Command="{Binding SelectCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}">
+                </telerik:RadButton>
+                <telerik:RadButton Content="Отмена" Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>
+

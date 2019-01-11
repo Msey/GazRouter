@@ -1,0 +1,64 @@
+﻿<telerik:RadWindow x:Class="GazRouter.ObjectModel.Model.Dialogs.AddEdit.Segments.Pressure.AddEditPressureSegmentView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   xmlns:attachedProperties="clr-namespace:GazRouter.Common.Ui.AttachedProperties;assembly=Common"
+                   xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+                   xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+                   xmlns:pressure="clr-namespace:GazRouter.ObjectModel.Model.Dialogs.AddEdit.Segments.Pressure"
+                   mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400"
+                   Height="Auto" Width="350" attachedProperties:ModelDialogResult.DialogResult="{Binding DialogResult}"
+                   Header="{Binding Caption}" Style="{StaticResource DialogWindowStyle}"
+                   d:DataContext="{d:DesignInstance pressure:AddEditPressureSegmentViewModel}">
+    
+    <telerik:RadWindow.Resources>
+        <telerik:BooleanToVisibilityConverter x:Name="boolToVisible"/>
+                    <converters:PressureToDoubleConverter x:Key="PressureToDoubleConverter" />
+
+    </telerik:RadWindow.Resources>
+    
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}" Style="{StaticResource RadBusyIndicatorSmallStyle}">
+        <Grid Margin="11">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <StackPanel>
+                <Border Background="LightGoldenrodYellow" Margin="0, 0, 0, 11" 
+                        Visibility="{Binding IsWarningMessageVisible, Converter={StaticResource boolToVisible}}">
+                    <TextBlock TextWrapping="Wrap" Margin="5" FontSize="10" Text="{Binding WarningMessage}" />
+                </Border>
+
+                <TextBlock Text="км. начала:" />
+                <telerik:RadMaskedNumericInput  FormatString="n3" Margin="0, 5, 0, 0" Width="100"
+                                               Value="{Binding KilometerOfStartPoint,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" 
+                                               IsClearButtonVisible="False" />
+
+                <TextBlock Text="км. окончания:" Margin="0, 11, 0, 0" />
+                <telerik:RadMaskedNumericInput  FormatString="n3" Margin="0, 5, 0, 0" Width="100"
+                                                Value="{Binding KilometerOfEndPoint,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" 
+                                                IsClearButtonVisible="False"/>
+
+                <controls:SmartTextBlock Text="Максимальное разрешенное давление на участке, [P]:" 
+                                         Margin="0, 11, 0, 0" />
+                <telerik:RadMaskedNumericInput FormatString="n2" 
+                                               IsClearButtonVisible="False" 
+                                               Margin="0, 5, 0, 0" 
+                                               Width="100"
+                                               Value="{Binding Pressure, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, Converter={StaticResource PressureToDoubleConverter}}" />
+                
+            </StackPanel>
+            
+            <StackPanel Grid.Row="1" Style="{StaticResource StyleStackPanelForConfirmationButton}">
+
+                <telerik:RadButton Content="{Binding ButtonSaveCaption}" Command="{Binding SaveCommand}"
+                                   Name="SaveButton" Style="{StaticResource StyleConfirmationButton}" />
+
+                <telerik:RadButton Content="Отмена" Command="{Binding CancelCommand}"
+                                   Style="{StaticResource StyleConfirmationButton}" />
+            </StackPanel>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</telerik:RadWindow>

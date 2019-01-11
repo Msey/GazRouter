@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="GazRouter.Controls.PeriodPicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400" x:Name="selector" Width="250">
+    
+    <UserControl.Resources>
+        <telerik:ContainerBindingCollection x:Key="ContainerBindings">
+            <telerik:ContainerBinding PropertyName="Command" Binding="{Binding Command}" />
+            <telerik:ContainerBinding PropertyName="CommandParameter" Binding="{Binding Type}" />
+        </telerik:ContainerBindingCollection>
+        
+        <DataTemplate x:Key="AddMenuItemTemplate" telerik:ContainerBinding.ContainerBindings="{StaticResource ContainerBindings}">
+            <TextBlock Text="{Binding Header}" />
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Border BorderThickness="1" BorderBrush="LightGray">
+            <TextBox Name="txtDates" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                     Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" />
+        </Border>
+        <telerik:RadButton Grid.Row="0"
+                           Grid.Column="1"
+                           Padding="3 0 3 0"
+                           Click="BtnSelect_OnClick"
+                           Name="btnSelect" IsTabStop="False"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Stretch"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Stretch" 
+                           Content="..." 
+                           Width="20" />
+
+        <Popup IsOpen="False" x:Name="popup" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+            <Border BorderThickness="1" BorderBrush="LightGray" Background="White" Width="{Binding ElementName=popup, Path=ActualWidth}">
+                <Grid Margin="11">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <telerik:RadToolBar Margin="-12, -12, -12, 0" Height="25">
+                        <telerik:RadRibbonDropDownButton SmallImage="/Common;component/Images/16x16/wizard.png"
+                                                         DropDownButtonPosition="Right" 
+                                                         telerik:StyleManager.Theme="Windows7">
+                            <telerik:RadRibbonDropDownButton.DropDownContent>
+                                <telerik:RadContextMenu x:Name="RadContextMenuMenu" 
+                                                        ItemTemplate="{StaticResource AddMenuItemTemplate}"
+                                                        BorderThickness="0" />
+                            </telerik:RadRibbonDropDownButton.DropDownContent>
+                        </telerik:RadRibbonDropDownButton>
+                    </telerik:RadToolBar>
+                    
+                    <StackPanel Orientation="Vertical" Grid.Row="1">
+                        <TextBlock Text="Дата начала:" Margin="0, 11, 0, 0" />
+                        <telerik:RadDateTimePicker Margin="0, 5, 0, 0" x:Name="beginDate"
+                                                   SelectionChanged="BeginDate_OnSelectionChanged"
+                                                   HorizontalAlignment="Stretch" InputMode="DateTimePicker" />
+
+                        <TextBlock Text="Дата окончания:" Margin="0, 11, 0, 0" />
+                        <telerik:RadDateTimePicker Margin="0, 5, 0, 0" x:Name="endDate"
+                                                   SelectionChanged="EndDate_OnSelectionChanged"
+                                                   HorizontalAlignment="Stretch" InputMode="DateTimePicker" />
+
+                        <StackPanel Orientation="Horizontal" Margin="0, 11, 0, 0">
+                            <TextBlock HorizontalAlignment="Left" x:Name="messageCount" />
+                            <TextBlock HorizontalAlignment="Left" x:Name="daysCount" FontWeight="Bold"
+                                       Margin="5, 0, 0, 0" />
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Margin="0, 11, 0, 0" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <telerik:RadButton x:Name="ApplyButton" Content="Выбрать" Click="ApplyButton_OnClick"
+                                           Width="75" Height="23" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" Margin="0,0,7,0" />
+
+                        <telerik:RadButton x:Name="CloseButton" Content="Закрыть" Click="CloseButton_OnClick"
+                                           Width="75" Height="23" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>

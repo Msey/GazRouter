@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="GazRouter.Modes.Infopanels.Tree.DashboardTreeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:tree="clr-namespace:GazRouter.Modes.Infopanels.Tree"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance tree:DashboardTreeViewModel}"
+>
+    <UserControl.Resources>
+        <telerik:BooleanToVisibilityConverter x:Name="Bool2Visibility" />
+        <telerik:InvertedBooleanToVisibilityConverter x:Name="InvertedBool2Visibility" />
+        <Style x:Key="ItemContainerStyle" TargetType="telerik:RadTreeViewItem" 
+               BasedOn="{StaticResource RadTreeViewItemStyle}">
+            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+        </Style>
+    </UserControl.Resources>
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusyLoading}">
+        <Grid Background="WhiteSmoke">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <telerik:RadToolBar>
+                <telerik:RadButton Command="{Binding RefreshCommand}"
+                                   Style="{StaticResource refreshButtonStyle}" />
+                
+                <telerik:RadToolBarSeparator />
+                <telerik:RadButton Command="{Binding AddFolderCommand}"   ToolTipService.ToolTip="Добавить папку" >
+                    <Image Source="/Common;component/Images/16x16/folder.png" Stretch="None"/>
+                </telerik:RadButton>
+                <telerik:RadButton Command="{Binding AddDashboardCommand}"  ToolTipService.ToolTip="Добавить режимный лист">
+                    <Image Source="/Common;component/Images/16x16/dashboard2.png" Stretch="None"/>
+                </telerik:RadButton>
+                <telerik:RadButton Command="{Binding AddReportCommand}"  ToolTipService.ToolTip="Добавить отчет">
+                    <Image Source="/Common;component/Images/16x16/excel.png" Stretch="None"/>
+                </telerik:RadButton>
+                <telerik:RadToolBarSeparator />
+                <telerik:RadButton Command="{Binding EditCommand}"
+                                   Style="{StaticResource editButtonStyle}" />
+                <telerik:RadButton Command="{Binding DeleteCommand}"
+                                   Style="{StaticResource deleteButtonStyle}" />
+                <telerik:RadToolBarSeparator />
+                
+                <telerik:RadButton Command="{Binding CopyCommand}"
+                                   ToolTipService.ToolTip="Копировать">
+                    <Image Source="/Common;component/Images/16x16/clone.png" />
+                </telerik:RadButton>
+                
+                <telerik:RadButton Command="{Binding ShareCommand}"
+                                   ToolTipService.ToolTip="Предоставить доступ...">
+                    <Image Source="/Common;component/Images/hand-share.png" />
+                </telerik:RadButton>
+            </telerik:RadToolBar>
+            <telerik:RadTreeView x:Name="RadTreeView1" 
+                                 ItemContainerStyle="{StaticResource ItemContainerStyle}"
+                                 ItemsSource="{Binding Items}"
+                                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                 BorderThickness="0"
+                                 IsVirtualizing="True"
+                                 telerik:TreeViewPanel.VirtualizationMode="Hierarchical"
+                                 IsDragTooltipEnabled="True"
+                                 IsDropPreviewLineEnabled="True"
+                                 SelectionMode="Single"
+                                 HorizontalAlignment="Stretch"
+                                 HorizontalContentAlignment="Left"
+                                 Background="WhiteSmoke"
+                                 Grid.Row="1">
+                <telerik:RadTreeView.ItemTemplate>
+                    <telerik:HierarchicalDataTemplate DataType="tree:ItemBase" 
+                                                      ItemsSource="{Binding Childs}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding Image}"
+                                   Stretch="None" 
+                                   VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding Name}" 
+                                       Margin="5, 0, 0, 0" />
+                        </StackPanel>
+                    </telerik:HierarchicalDataTemplate>
+                </telerik:RadTreeView.ItemTemplate>
+            </telerik:RadTreeView>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</UserControl>
+
+<!--<Setter Property="telerik:DragDropManager.AllowDrag" Value="True"/>-->
+
+<!--                <telerik:RadButton Command="{Binding UpSortOrderCommand}" -->
+<!--                               ToolTipService.ToolTip="Поднять в списке">-->
+<!--                    <Image Source="/Common;component/Images/16x16/list_item_up.png" />-->
+<!--                </telerik:RadButton>-->
+<!--                <telerik:RadButton Command="{Binding DownSortOrderCommand}" -->
+<!--                                ToolTipService.ToolTip="Понизить в списке">-->
+<!--                    <Image Source="/Common;component/Images/16x16/list_item_down.png" />-->
+<!--                </telerik:RadButton>-->
+
+<!--IsDragDropEnabled="True"-->
+<!--PreviewDragStarted="RadTreeView_OnPreviewDragStarted"-->
+<!--                                 DragStarted="RadTreeView_OnDragStarted"-->
+<!--                                 PreviewDragEnded="RadTreeView_OnPreviewDragEnded"-->
+<!--                                 DragEnded="RadTreeView_OnDragEnded"-->
+
+<!--<telerik:EventToCommandBehavior.EventBindings>-->
+<!--    <telerik:EventBinding Command="{Binding DragEndedCommand}"-->
+<!--                                          EventName="DragEnded"-->
+<!--                                          PassEventArgsToCommand="True" />-->
+<!--</telerik:EventToCommandBehavior.EventBindings>-->
+    
+
+<!--<Setter Property="IsDropAllowed" Value="True" />-->
+<!--PreviewDragStarted="RadTreeView_PreviewDragStarted"-->
+<!--telerik:TreeViewSettings.DragDropExecutionMode="Legacy"-->

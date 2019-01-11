@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?><UserControl x:Class="GazRouter.Client.Menu.UserDrop.UserDropView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:userDrop="clr-namespace:GazRouter.Client.Menu.UserDrop" xmlns:linkListDrop="clr-namespace:GazRouter.Client.Menu.LinkListDrop" mc:Ignorable="d" d:DataContext="{d:DesignInstance userDrop:UserDropView}" xmlns:spy="http://firstfloorsoftware.com/XamlSpy" spy:XamlMetadata.SpyServiceSettings="127.0.0.1|4530|53501|1" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\UserDrop\UserDropView.xaml|1|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+
+    <Grid spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\UserDrop\UserDropView.xaml|11|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+
+        <StackPanel spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\UserDrop\UserDropView.xaml|13|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln">
+            <TextBlock Text="ПОЛЬЗОВАТЕЛЬ:" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\UserDrop\UserDropView.xaml|14|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+            
+            <TextBlock Text="{Binding UserName}" FontSize="16" FontFamily="Segoe UI Light" HorizontalAlignment="Left" Margin="0, 5, 0, 0" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\UserDrop\UserDropView.xaml|19|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+            <TextBlock Text="{Binding SiteName}" FontSize="11" Foreground="CadetBlue" FontFamily="Segoe UI" Margin="0, 3, 0, 0" HorizontalAlignment="Left" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\UserDrop\UserDropView.xaml|25|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+            <Line X1="0" X2="400" Y1="0" Y2="0" StrokeThickness="1" Stroke="Gray" StrokeDashArray="1, 2" HorizontalAlignment="Center" Margin="0, 10, 0, 0" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\UserDrop\UserDropView.xaml|32|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+            <TextBlock Text="ВЕРСИЯ ПРИЛОЖЕНИЯ:" FontSize="11" FontFamily="Segoe UI" FontWeight="Bold" Margin="0, 11, 0, 0" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\UserDrop\UserDropView.xaml|40|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+            <TextBlock Text="{Binding Version}" FontSize="14" FontFamily="Segoe UI Light" Margin="0, 5, 0, 0" FontWeight="Bold" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\UserDrop\UserDropView.xaml|46|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+            <TextBlock Text="{Binding VersionDate}" FontSize="11" Foreground="CadetBlue" FontFamily="Segoe UI" Margin="0, 5, 0, 0" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\UserDrop\UserDropView.xaml|52|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+            <Line X1="0" X2="400" Y1="0" Y2="0" StrokeThickness="1" Stroke="Gray" StrokeDashArray="1, 2" HorizontalAlignment="Center" Margin="0, 10, 0, 20" spy:XamlMetadata.SourceInfo="C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Client\Client\Menu\UserDrop\UserDropView.xaml|58|C:\Users\k.suvorov\Source\Workspaces\Iuspt\MainSolution\Gazprom.Gazauto.ICS.sln" />
+
+            <linkListDrop:LinkItemView DataContext="{Binding LastChangesLink}" />
+            
+            <linkListDrop:LinkItemView DataContext="{Binding GuideLink}" />
+
+            <linkListDrop:LinkItemView DataContext="{Binding SettingsLink}" />
+            
+            <linkListDrop:LinkItemView DataContext="{Binding LogLink}" />
+            
+            <linkListDrop:LinkItemView DataContext="{Binding ClearStorageLink}" />
+            
+
+
+            
+        </StackPanel>
+
+    </Grid>
+</UserControl>

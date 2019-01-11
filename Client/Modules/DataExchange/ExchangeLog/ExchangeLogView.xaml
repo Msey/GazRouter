@@ -1,0 +1,212 @@
+﻿<UserControl x:Class="GazRouter.DataExchange.ExchangeLog.ExchangeLogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:astra="clr-namespace:GazRouter.DataExchange.ASTRA"
+             xmlns:converters="clr-namespace:GazRouter.Controls.Converters;assembly=Controls"
+             xmlns:controls="clr-namespace:GazRouter.Controls;assembly=Controls"
+             xmlns:entityTypes="clr-namespace:GazRouter.DTO.Dictionaries.EntityTypes;assembly=PortableDTO"
+             xmlns:exchangeLog="clr-namespace:GazRouter.DataExchange.ExchangeLog"
+             xmlns:periodPickerEx="clr-namespace:GazRouter.Controls.Dialogs.PeriodPickerEx;assembly=Controls"
+             xmlns:exchangeLog1="clr-namespace:GazRouter.DTO.DataExchange.ExchangeLog;assembly=PortableDTO"
+             xmlns:converters1="clr-namespace:GazRouter.DataExchange.CustomSource.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" 
+             d:DesignWidth="400" 
+             d:DataContext="{d:DesignInstance exchangeLog:ExchangeLogViewModel}">
+
+    <telerik:RadBusyIndicator BusyContent="Загрузка..." IsBusy="{Binding IsBusyLoading}">
+        <Grid>
+            
+            <Grid.Resources>
+                <converters:PeriodTypeToNameConverter x:Key="PeriodTypeToNameConverter" />
+                <converters:BoolToOkBadImageConverter x:Key="BoolToOkBadImageConverter" />
+                <converters1:ExchangeTypeToImageConverter x:Key="ExchangeTypeToImageConverter"/>
+                <converters1:ExchangeTypeToNameConverter x:Key="ExchangeTypeToNameConverter"/>
+                
+            </Grid.Resources>    
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <telerik:RadToolBar Grid.ColumnSpan="2">
+
+                <telerik:RadDatePicker SelectedDate="{Binding SelectedDate, Mode=TwoWay}"
+                                       Width="120"/>
+
+                <telerik:RadButton Command="{Binding RefreshCommand}" 
+                                   Style="{StaticResource refreshButtonStyle}" />
+                
+                <telerik:RadToolBarSeparator />
+            </telerik:RadToolBar>
+            
+            
+
+            <telerik:RadGridView Grid.Row="1" 
+                                 GridLinesVisibility="Both"
+                                 AutoGenerateColumns="False"
+                                 ItemsSource="{Binding LogItems}"
+                                 CanUserFreezeColumns="False"
+                                 RowIndicatorVisibility="Collapsed"
+                                 IsReadOnly="True">
+                <telerik:RadGridView.Columns>
+
+                    <telerik:GridViewDataColumn Width="70"
+                                                Header="Статус"
+                                                IsFilterable="True" 
+                                                IsSortable="False" 
+                                                TextWrapping="Wrap"
+                                                DataMemberBinding="{Binding IsOk}">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="exchangeLog1:ExchangeLogDTO">
+                                <Image Source="{Binding IsOk, Converter={StaticResource BoolToOkBadImageConverter}}"
+                                       Stretch="None"
+                                       Margin="5"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn Width="80"
+                                                IsFilterable="False" 
+                                                IsSortable="True" 
+                                                TextWrapping="Wrap"
+                                                DataMemberBinding="{Binding Timestamp}">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="Метка"/>
+                                <TextBlock Text="времени"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="exchangeLog1:ExchangeLogDTO">
+                                <TextBlock Text="{Binding Timestamp, StringFormat='HH:mm'}"
+                                           TextWrapping="Wrap"
+                                           Margin="5"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="100"
+                                                Header="Период"
+                                                IsFilterable="True" 
+                                                IsSortable="True" 
+                                                TextWrapping="Wrap"
+                                                DataMemberBinding="{Binding PeriodType, Converter={StaticResource PeriodTypeToNameConverter}}">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="exchangeLog1:ExchangeLogDTO">
+                                <TextBlock Text="{Binding PeriodType, Converter={StaticResource PeriodTypeToNameConverter}}"
+                                           Margin="5"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                    <telerik:GridViewDataColumn Width="110"
+                                                IsFilterable="True" 
+                                                IsSortable="True" 
+                                                TextWrapping="Wrap"
+                                                DataMemberBinding="{Binding ExchangeType, Converter={StaticResource ExchangeTypeToNameConverter}}">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="Тип"/>
+                                <TextBlock Text="обмена"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="exchangeLog1:ExchangeLogDTO">
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center">
+                                    <Image Source="{Binding ExchangeType, Converter={StaticResource ExchangeTypeToImageConverter}}" />
+                                    <TextBlock Text="{Binding ExchangeType, Converter={StaticResource ExchangeTypeToNameConverter}}"
+                                               TextWrapping="Wrap"
+                                               Width="70"
+                                               Margin="5, 0, 0, 0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    
+
+                    <telerik:GridViewDataColumn Width="100"
+                                                Header="Источник"
+                                                IsFilterable="True" 
+                                                IsSortable="True" 
+                                                DataMemberBinding="{Binding SourceName}">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="exchangeLog1:ExchangeLogDTO">
+                                <TextBlock Text="{Binding SourceName}"
+                                           TextWrapping="Wrap"
+                                           Margin="5"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="100"
+                                                Header="Задание"
+                                                IsFilterable="True" 
+                                                IsSortable="True" 
+                                                DataMemberBinding="{Binding ExchangeTaskName}">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="exchangeLog1:ExchangeLogDTO">
+                                <TextBlock Text="{Binding ExchangeTaskName}"
+                                           TextWrapping="Wrap"
+                                           Margin="5"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    
+                    <telerik:GridViewDataColumn Width="100"
+                                                IsFilterable="False" 
+                                                IsSortable="True" 
+                                                TextWrapping="Wrap"
+                                                DataMemberBinding="{Binding StartTime}">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="Дата"/>
+                                <TextBlock Text="запуска"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="exchangeLog1:ExchangeLogDTO">
+                                <StackPanel Margin="5"
+                                            HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding StartTime, StringFormat='dd.MM.yyyy'}"
+                                               HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding StartTime, StringFormat='HH:mm:ss'}"
+                                               Margin="0, 5, 0, 0"
+                                               HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn Width="250"
+                                                IsFilterable="False" 
+                                                IsSortable="False" 
+                                                TextWrapping="Wrap"
+                                                DataMemberBinding="{Binding ProcessingError}">
+                        <telerik:GridViewDataColumn.Header>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="Текст"/>
+                                <TextBlock Text="ошибки"/>
+                            </StackPanel>
+                        </telerik:GridViewDataColumn.Header>
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="exchangeLog1:ExchangeLogDTO">
+                                <TextBlock Text="{Binding ProcessingError}"
+                                           TextWrapping="Wrap"
+                                           Margin="5"/>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
+
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </Grid>
+
+    </telerik:RadBusyIndicator>
+</UserControl>
